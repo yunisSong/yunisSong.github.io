@@ -5,9 +5,150 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 05 Apr 2017 16:11:36 +0800</pubDate>
-    <lastBuildDate>Wed, 05 Apr 2017 16:11:36 +0800</lastBuildDate>
+    <pubDate>Wed, 05 Apr 2017 21:20:16 +0800</pubDate>
+    <lastBuildDate>Wed, 05 Apr 2017 21:20:16 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>深入浅出iOS事件机制</title>
+        <description>&lt;h1 id=&quot;深入浅出ios事件机制&quot;&gt;深入浅出iOS事件机制&lt;/h1&gt;
+
+&lt;h3 id=&quot;什么是响应链&quot;&gt;什么是响应链&lt;/h3&gt;
+&lt;p&gt;响应链是一堆可以处理事件的对象构成的具有先后循序的链条。
+iOS 中有一个类叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt; ,它的头文件如下图：
+&lt;img src=&quot;/media/14884333046375/14884344488032.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt; 是可以响应事件的的类的基类，只有继承自 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt;的类才可以响应用户的操作。包括最常见的 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIView&lt;/code&gt;、 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIWindow&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;等。&lt;/p&gt;
+
+&lt;p&gt;在我们的app中，所有的视图都是按照一定的结构组织起来的，即树状层次结构，每一个View 都有自己的superView。当一个View被添加到superView上时，View的&lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt;就被指向superView，&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt; 的self.view 被添加到superView上时，self.view 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 指向&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;的  &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 指向superView。这样整个app 就通过  &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 形成了一条链，也就是我们说的响应链。&lt;/p&gt;
+
+&lt;h3 id=&quot;如何确认第一个响应者&quot;&gt;如何确认第一个响应者&lt;/h3&gt;
+&lt;p&gt;响应链建立后，当用户点击屏幕时，如何确认第一个响应者？&lt;/p&gt;
+
+&lt;p&gt;每当手指接触屏幕，UIApplication接收到手指的事件之后，就会去调用UIWindow的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;，看看当前点击的点是不是在window内，如果点击的点不在UIWindow内，第一响应者就是UIApplication，如果点击的点在UIApplication内部，则继续依次调用window的subView的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;方法，查看点击的点是否在当前subView试图内,如果不在则第一响应者就是window，如果在就继续上面的流程，遍历子视图，直到找到最终的视图。最后找到的视图就是第一个响应者。&lt;/p&gt;
+
+&lt;p&gt;其实只是单纯的说点击的点在不在视图内是不准确的，因为&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;方法判断的不只是点范围的问题，具体的还包括视图是否隐藏、视图是否可交互、视图的透明度是否大于0.01等，这些都满足后，才能确认这个视图是否响应事件。下面这张图很清楚的画出了这个流程：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/14884333046375/14884368969345.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;其实还有一种容易疑惑的情景，当两个视图有重叠时，如何确认那个视图响应事件。
+&lt;img src=&quot;/media/14884333046375/14884375762669.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;当用户点击红色和蓝色重叠的部分时，系统是如何确认红色和蓝色那个视图响应事件呢？&lt;/p&gt;
+
+&lt;p&gt;这就牵扯到subview调用&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event&lt;/code&gt;的顺序，调用的顺序是根据subview的index顺序，index越大越先被访问（越后被添加到父视图，index越大）。如果确认是蓝色视图响应事件，红色视图的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event&lt;/code&gt;方法就不会再被调用。&lt;/p&gt;
+
+&lt;h3 id=&quot;响应链的工作机制&quot;&gt;响应链的工作机制&lt;/h3&gt;
+&lt;p&gt;当确认了第一个响应者后，事件就被传递到这个响应者处理。
+如果他不出理，就会通过&lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt;传递到下一个响应者处理，知道找到一个响应者处理，或者到了AppDelegate仍未找到响应者处理，事件丢弃。&lt;/p&gt;
+&lt;h3 id=&quot;可以用来做什么&quot;&gt;可以用来做什么&lt;/h3&gt;
+&lt;p&gt;最常见的应用就是改变按钮的点击相应区域。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;参考链接&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE#响应链应用&quot;&gt;事件传递响应链&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;http://zhoon.github.io/ios/2015/04/12/ios-event.html&quot;&gt;深入浅出iOS事件机制&lt;/a&gt;
+&lt;a href=&quot;https://www.zybuluo.com/MicroCai/note/66142&quot;&gt;iOS Events and Responder Chain&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        <pubDate>Wed, 05 Apr 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</guid>
+        
+        <category>iOS</category>
+        
+        <category>响应链</category>
+        
+        <category>事件机制</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>一个好用的UIButton扩展</title>
+        <description>&lt;h1 id=&quot;一个好用的uibutton扩展&quot;&gt;一个好用的UIButton扩展&lt;/h1&gt;
+
+&lt;h4 id=&quot;uibuttonextendtouchrecth&quot;&gt;UIButton+ExtendTouchRect.h&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &amp;lt;UIKit/UIKit.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIButton&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;ExtendTouchRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEdgeInsets&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;touchExtendInset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;uibuttonextendtouchrectm&quot;&gt;UIButton+ExtendTouchRect.m&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;UIButton+ExtendTouchRect.h&quot;
+#import &amp;lt;objc/runtime.h&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Swizzle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Class&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SEL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SEL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;origMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class_getInstanceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class_addMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getImplementation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getTypeEncoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;class_replaceMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getImplementation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method_getTypeEncoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;method_exchangeImplementations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;ExtendTouchRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Swizzle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;@selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pointInside&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;withEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;@selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myPointInside&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;withEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myPointInside&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;withEvent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEvent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEdgeInsetsEqualToEdgeInsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIEdgeInsetsZero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hidden&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isKindOfClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIControl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIControl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myPointInside&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;withEvent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// original implementation
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;CGRect&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIEdgeInsetsInsetRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// don't allow negative sizes
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGRectContainsPoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hitFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;touchExtendInsetKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;setTouchExtendInset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEdgeInsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;touchExtendInset&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;objc_setAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInsetKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSValue&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;valueWithUIEdgeInsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                             &lt;span class=&quot;n&quot;&gt;OBJC_ASSOCIATION_RETAIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIEdgeInsets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInset&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;objc_getAssociatedObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;touchExtendInsetKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UIEdgeInsetsValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;使用&quot;&gt;使用&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;    [self.editButton setTouchExtendInset:UIEdgeInsetsMake(-10, -10, -10, -10)];
+&lt;/code&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 05 Apr 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/04/05/%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84UIButton%E6%89%A9%E5%B1%95/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/04/05/%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84UIButton%E6%89%A9%E5%B1%95/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Category</category>
+        
+        <category>UIButton</category>
+        
+        
+      </item>
     
       <item>
         <title>利用CallKit 实现来电识别</title>
@@ -109,6 +250,913 @@
         <category>CallKit</category>
         
         <category>来电识别</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（12）Access Control and Code Organization</title>
+        <description>&lt;h1 id=&quot;swift-学习12-access-control-and-code-organization&quot;&gt;#swift 学习（12） Access Control and Code Organization&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;private: Accessible only to the defining type, which includes any and all nested types.&lt;/li&gt;
+  &lt;li&gt;fileprivate: Accessible from anywhere within the source file in which it’s defined.&lt;/li&gt;
+  &lt;li&gt;internal: Accessible from anywhere within the module in which it’s defined. This is the default access level.&lt;/li&gt;
+  &lt;li&gt;public: Accessible from anywhere within the module in which it is defined, as well as another software module that imports this module.&lt;/li&gt;
+  &lt;li&gt;open: The same as public, with the additional ability of being able to be overridden from within another module.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift12-Access-Control-and-Code-Organization/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift12-Access-Control-and-Code-Organization/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（11）Generics</title>
+        <description>&lt;p&gt;#swift 学习（11）Generics 泛型&lt;/p&gt;
+
+&lt;p&gt;[TOc]&lt;/p&gt;
+
+&lt;p&gt;generics are a way to systematically define sets of types.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift11-Generics-%E6%B3%9B%E5%9E%8B/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift11-Generics-%E6%B3%9B%E5%9E%8B/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（10）Protocols</title>
+        <description>&lt;p&gt;#swift 学习（10）Protocols
+[TOC]&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There’s one final type that can bridge common behaviors between structs, classes and enums. In fact, it is itself a user-defined named type: the protocol.
+A protocol can be adopted by a class, struct, or enum — and when another type adopts a protocol, it’s required to implement the methods and properties defined in the protocol. Once a type implements all members of a protocol, the type is said to conform to the protocol.
+协议可以由类，结构或枚举采用 - 当另一种类型采用协议时，需要实现协议中定义的方法和属性。 一旦类型实现了协议的所有成员，那么该类型被认为符合协议。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;methods-in-protocols&quot;&gt;&lt;strong&gt;Methods in protocols&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;在协议中定义的方法都不需要实现。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum Direction {
+  case left
+case right
+}
+protocol DirectionalVehicle {
+  func accelerate()
+  func stop()
+  func turn(direction: Direction)
+  func description() -&amp;gt; String
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;properties-in-protocols&quot;&gt;&lt;strong&gt;Properties in protocols&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;在协议中声明的属性，需要明确的标记是get 或者 get 和 set。
+协议中定义的属性，协议本身并不关心具体如何实现，你可以使用计算属性实现、也可以使用存储属性存储。所有的协议定义属性都要明确要求属性是只读还是 读与写。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Account {
+  var value: Double { get set }
+  init(initialAmount: Double)
+  init?(transferAccount: Account)
+}
+
+class BitcoinAccount: Account {
+  var value: Double
+  required init(initialAmount: Double) {
+    value = initialAmount
+  }
+  required init?(transferAccount: Account) {
+    guard transferAccount.value &amp;gt; 0.0 else {
+return nil
+}
+    value = transferAccount.value
+  }
+}
+var accountType: Account.Type = BitcoinAccount.self
+let account = accountType.init(initialAmount: 30.00)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;protocol-inheritance&quot;&gt;&lt;strong&gt;Protocol inheritance&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;协议定义时可以继承自其他的协议。&lt;/p&gt;
+
+&lt;h4 id=&quot;implementing-protocols&quot;&gt;&lt;strong&gt;Implementing protocols&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Vehicle {
+  func accelerate()
+func stop() }
+class Bike: Vehicle {
+  var peddling = false
+  var brakesApplied = false
+  func accelerate() {
+    peddling = true
+    brakesApplied = false
+  }
+  func stop() {
+    peddling = false
+    brakesApplied = true
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;associated-types-in-protocols&quot;&gt;&lt;strong&gt;Associated types in protocols&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol WeightCalculatable {
+  associatedtype WeightType
+  func calculateWeight() -&amp;gt; WeightType
+}
+
+
+class HeavyThing: WeightCalculatable {
+  // This heavy thing only needs integer accuracy
+  typealias WeightType = Int
+  func calculateWeight() -&amp;gt; Int {
+        return 100 
+    }
+}
+
+class LightThing: WeightCalculatable {
+  // This light thing needs decimal places
+  typealias WeightType = Double
+  func calculateWeight() -&amp;gt; Double {
+    return 0.0025
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;因为swift 具有类型推导，所有上面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;typealias WeightType&lt;/code&gt; 可以不写,直接使用。&lt;/p&gt;
+
+&lt;h4 id=&quot;implementing-multiple-protocols&quot;&gt;&lt;strong&gt;Implementing multiple protocols&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;每个类只能继承自一个类，但是它可以遵守多个协议。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Bike: Vehicle, Wheeled {
+  // Implement both Vehicle and Wheeled
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;类也可以使用扩展接收协议。这样就很好的实现了代码分离。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Bike {
+    var wheelNumber : String = &quot;&quot;
+    var wheelSize = 0.0
+    init(wheelNumber:String,wheelSize:Double) {
+        self.wheelSize = wheelSize
+        self.wheelNumber = wheelNumber
+    }
+}
+
+extension Bike : Hashable
+{
+    var hashValue: Int {
+        return self.wheelNumber.hashValue
+    }
+}
+extension Bike : CustomStringConvertible
+{
+    
+    var description: String {
+        return &quot;\(self.wheelNumber) &quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;requiring-reference-semantics&quot;&gt;&lt;strong&gt;Requiring reference semantics&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Protocols can be adopted by both value types (structs and enums) and reference types (classes), so you might wonder if protocols have reference or value semantics.
+协议可以由两种值类型（结构和枚举）和引用类型（类）采用，因此您可能想知道协议是否具有引用或值语义。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Named {
+  var name: String { get set }
+}
+class ClassyName: Named {
+  var name: String
+  init(name: String) {
+    self.name = name
+  }
+}
+struct StructyName: Named {
+  var name: String
+}
+
+//指针指向同一块内存地址。
+var named: Named = ClassyName(name: &quot;Classy&quot;)
+var copy = named
+named.name = &quot;Still Classy&quot;
+named.name // Still Classy
+copy.name // Still Classy
+
+//值COPY
+named = StructyName(name: &quot;Structy&quot;)
+copy = named
+named.name = &quot;Still Structy?&quot;
+named.name // Still Structy?
+copy.name // Structy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;容易引起歧义。如果我们设计了一个专门让类引用的协议，可以在声明协议时加一个关键字&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol Named: class {
+  var name: String { get set }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样就只有类可以引用该协议。&lt;/p&gt;
+
+&lt;h4 id=&quot;protocols-in-the-standard-library&quot;&gt;&lt;strong&gt;Protocols in the standard library&lt;/strong&gt;&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The Swift standard library uses protocols extensively in ways that may surprise you. Understanding the roles protocols play in Swift can help you write clean, decoupled “Swifty” code.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Equatable&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;如果是两个int类型常量 或者 stirng 类型的常量 的可以直接使用 == 进行比较操作的。但是struct 类型就不能直接使用 == 进行比较。&lt;/p&gt;
+
+&lt;p&gt;这是因为Int 和 String 引用了 Equatable 协议。
+如何struct 也想使用 == 操作符，引用 Equatable 就行了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Record {
+  var wins: Int
+  var losses: Int
+}
+
+extension Record: Equatable {
+  static func ==(lhs: Record, rhs: Record) -&amp;gt; Bool                                  
+    {   
+        return lhs.wins == rhs.wins &amp;amp;&amp;amp;
+             lhs.losses == rhs.losses
+    } 
+}
+
+let recordA = Record(wins: 10, losses: 5)
+let recordB = Record(wins: 10, losses: 5)
+recordA == recordB // true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Protocols define a contract classes, structs and enums can adopt.协议定义了一个契约类，结构体和枚举可以采用。&lt;/li&gt;
+  &lt;li&gt;By adopting a protocol, a type is required to conform to the protocol by implementing all methods and properties of the protocol.采用协议，需要实现协议的所有方法和属性来遵循协议的类型。&lt;/li&gt;
+  &lt;li&gt;A type can adopt any number of protocols, which allows for a quasi-multiple inheritance not permitted through subclassing.数据可以通过使用多个协议来达到多继承的效果。&lt;/li&gt;
+  &lt;li&gt;You can use extensions for protocol adoption and conformance.&lt;/li&gt;
+  &lt;li&gt;The Swift standard library uses protocols extensively(大量的). You can use many of them, such as Equatable and Hashable, on your own named types.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift10-Protocols/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift10-Protocols/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（9）Enumerations</title>
+        <description>&lt;p&gt;#swift 学习（9）Enumerations
+[toc]&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;An enumeration is a list of related values that define a common type and let you work with values in a type-safe way.
+枚举是定义一个公共类型的相关值的列表，可让您以类型安全的方式使用值。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;声明枚举&quot;&gt;&lt;strong&gt;声明枚举&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum Month {
+  case january
+  case february
+  case march
+  case april
+  case may
+  case june
+  case july
+  case august
+  case september
+  case october
+  case november
+  case december
+}
+
+enum Month {
+  case january, february, march, april, may, june, july, august,
+  september, october, november, december
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;声明带有计算属性的枚举&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum Month {
+    case january, february, march, april, may, june, july, august,
+    september, october, november, december
+    //let semester = month.semester // &quot;Autumn&quot;
+    var semester : String {
+        switch self {
+        case .august, .september, .october, .november, .december:
+            return &quot;Autumn&quot;
+        case .january, .february, .march, .april, .may:
+            return &quot;Spring&quot;
+        case .june, .july:
+            return &quot;Summer&quot;
+        }
+    }
+    
+}
+var month = Month.april
+month = .september
+let semester = month.semester // &quot;Autumn&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;raw-values&quot;&gt;&lt;strong&gt;Raw values&lt;/strong&gt;&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Unlike enumeration values in C, Swift enum values are not backed by integers as a default. 
+与C中的枚举值不同，Swift枚举值默认不支持整数。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;需要手动设定&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum Month: Int {
+  case january = 1, february, march, april, may, june, july,
+  august, september, october, november, december
+}
+
+Month.october.rawValue // 10
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;initializing-with-the-raw-value&quot;&gt;&lt;strong&gt;Initializing with the raw value&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fifthMonth = Month(rawValue: 5)
+monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
+
+ let fifthMonth = Month(rawValue: 5)!
+monthsUntilWinterBreak(from: fifthMonth)  // 7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;string-raw-values&quot;&gt;&lt;strong&gt;String raw values&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum Icon: String {
+  case music
+  case sports
+  case weather
+  var filename: String {
+    // 2
+    return &quot;\(rawValue.capitalized).png&quot;
+  }
+}
+let icon = Icon.weather
+icon.filename // Weather.png
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;associated-values&quot;&gt;&lt;strong&gt;Associated values&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;每个枚举值都有0个或者多个关联值&lt;/li&gt;
+  &lt;li&gt;每个枚举值的关联值都有自己的数据类型&lt;/li&gt;
+  &lt;li&gt;你可以像定义方法参数一样定义关联值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum WithdrawalResult {
+  case success(newBalance: Int)
+  case error(message: String)
+}
+
+let result = WithdrawalResult.success(newBalance: 100)
+//let result = WithdrawalResult.error(message: &quot;测试错误数据&quot;)
+
+switch result {
+case .success(let newBalance):
+    print(&quot;Your new balance is: \(newBalance)&quot;)
+case .error(let message):
+    print(message)
+}
+
+
+switch result {
+case .success(let newBalance):
+  print(&quot;Your new balance is: \(newBalance)&quot;)
+case .error(let message):
+  print(message)
+}
+
+//多个关联值
+enum WithdrawalResult {
+    case success(newBalance: Int,parameters: Int)
+    case error(message: String)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;特殊的条件判断&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;enum HTTPMethod {
+  case get
+  case post(body: String)
+}
+
+let request = HTTPMethod.post(body: &quot;Hi there&quot;)
+/* 
+ In this code, guard case checks to see 
+ if request contains the post enumeration case and if so,
+ reads and binds the associated value.
+ guard case 判断 request 是否是post ，如果是post，读取并且关联值到body
+ */
+guard case .post(let body) = request else {
+  fatalError(&quot;No message was posted&quot;)
+}
+print(body)
+
+//与上面语句判断等同
+if case .post(let body) = request  {
+    print(body)
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;optionals&quot;&gt;&lt;strong&gt;Optionals&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;Optionals 的底层实现就是枚举，只是编译器隐藏了实现细节，包括可选值绑定 ？ 和 ！ 操作符，以及nil的实现。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var age: Int?
+age = 17
+age = nil
+
+switch age {
+case .none:
+  print(&quot;No value&quot;)
+case .some(let value):
+  print(&quot;Got a value: \(value)&quot;)
+}
+
+if let age = age {
+    print(&quot;\(age)&quot;)//17
+
+}
+
+if (age != nil)  {
+    print(&quot;\(age)&quot;)//Optional(17)
+
+}
+
+error
+//Optional type 'Int?' cannot be used as a boolean; test for '!= nil' instead
+if age {
+    print(&quot;\(age)&quot;)
+
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;An enumeration is a list of related values that define a common type. 枚举是定义公共类型的相关值的列表。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Enumerations provide an alternative to old-fashioned integer values.枚举提供了一种替代老式整数值的方法&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can use enumerations to handle responses, store state and encapsulate values.您可以使用枚举来处理响应，存储状态和封装值。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Case-less enumerations prevent the creation of instances.枚举里枚举值为空不允许创建实例。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift09-Enumerations/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift09-Enumerations/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（8）Class</title>
+        <description>&lt;p&gt;#swift 学习（8）Class&lt;/p&gt;
+
+&lt;h6 id=&quot;reference-types&quot;&gt;&lt;strong&gt;Reference types&lt;/strong&gt;&lt;/h6&gt;
+&lt;p&gt;Struts 是值类型  class 是引用类型
+类不会提供自动自动初始化方法，需要自己实现。
+类里面的存储类型必须在初始化方法结束之前完成赋值。&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;In Swift, a structure is an immutable value. A class, on the other hand, is a mutable reference.
+在swift中 Struts 是一个不可变的值，Class是可变的引用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;struct 的赋值是copy  class的赋值是指针指向的。具体见下方代码。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+class Person {
+    var name : String
+    init(_ name : String) {
+        self.name = name
+    }
+}
+var t1 = Person.init(&quot;Yunis&quot;)
+var t2 = t1
+print(t1.name)//Yunis
+print(t2.name)//Yunis
+t1.name = &quot;Change&quot;
+print(t1.name)//Change
+print(t2.name)//Change
+
+
+struct Contact {
+    var name: String
+}
+var t3 = Contact.init(name: &quot;Yunis&quot;)
+var t4 = t3
+print(t3.name)//Yunis
+print(t4.name)//Yunis
+t3.name = &quot;Change&quot;
+print(t3.name)//Change
+print(t4.name)//Yunis
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h6 id=&quot;堆和栈区别-the-heap-vs-the-stack&quot;&gt;&lt;strong&gt;堆和栈区别 The heap vs. the stack&lt;/strong&gt;&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The system uses the stack to store anything on the immediate thread of execution; it is tightly managed and optimized by the CPU. When a function creates a variable, the stack stores that variable and then destroys it when the function exits. Since the stack is so well organized, it’s very efficient, and thus quite fast.
+系统使用栈来存储在执行的即时线程上的任何东西;它由CPU严格管理和优化。当函数创建一个变量时，堆栈存储该变量，然后在函数退出时将其销毁。由于栈是如此良好的组织，它是非常高效的，因此相当快。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The system uses the heap to store data referenced by other objects. The heap is generally a large pool of memory from which the system can request and dynamically allocate blocks of memory. The heap doesn’t automatically destroy its objects like the stack does; additional work is required to do that. This makes creating and removing data on the heap a slower process, compared to on the stack.
+系统使用堆来存储其他对象引用的数据。堆通常是一个大的内存池，系统可以从内存池中请求和动态分配内存块。堆不会像堆栈那样自动破坏它的对象;需要额外的工作来做到这一点。相比与堆栈，创建和删除堆上的数据是一个较慢的过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Person {
+    var name : String
+    var lastName : String
+    init(_ name : String,_ lastName : String) {
+        self.name = name
+        self.lastName = lastName
+    }
+    var FullName : String {
+        return&quot;\(name) \(lastName)&quot;
+    }
+    
+}
+
+var variable = Person.init(&quot;Yunis&quot;,&quot;Last&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;media/14882645981379/14882717990005.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When you create an instance of a class, your code requests a block of memory on the heap to store the instance itself; that’s the first name and last name inside the instance on the right side of the diagram. It stores the address of that memory in your named variable on the stack; that’s the reference stored on the left side of the diagram.&lt;/p&gt;
+
+  &lt;p&gt;当你创建一个类的实例的时间，会向系统申请在堆上的一块内存用来存储类的实例，包括name 和 lastName。同时在栈上存储内存地址。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;object-identity&quot;&gt;&lt;strong&gt;Object identity&lt;/strong&gt;&lt;/h6&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+var t1 = Person.init(&quot;Yunis&quot;,&quot;Last&quot;)
+var t2 = t1
+var t3 = Person.init(&quot;Yunis&quot;,&quot;Last&quot;)
+
+t1 === t2//true
+t1 === t3//true
+t2 === t3//true
+
+t2 = t3
+
+t1 === t2//true
+t1 === t3//true
+t2 === t3//true
+
+
+t1.FullName == t2.FullName//true
+t1.FullName == t3.FullName//true
+t2.FullName == t3.FullName//true
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Jut as the == operator checks if two values are equal, the === identity operator
+compares the memory address of two references.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;== 是比较两个值是否一致，=== 是比较两个引用地址是否一致。&lt;/p&gt;
+
+&lt;h6 id=&quot;structures&quot;&gt;Structures&lt;/h6&gt;
+&lt;ul&gt;
+  &lt;li&gt;用于表示值&lt;/li&gt;
+  &lt;li&gt;隐式的值copy&lt;/li&gt;
+  &lt;li&gt;数据不可变&lt;/li&gt;
+  &lt;li&gt;内存分配速度快（栈）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h6 id=&quot;classes&quot;&gt;Classes&lt;/h6&gt;
+&lt;ul&gt;
+  &lt;li&gt;用于表示对象&lt;/li&gt;
+  &lt;li&gt;隐式的对象共享&lt;/li&gt;
+  &lt;li&gt;数据可变&lt;/li&gt;
+  &lt;li&gt;内存分配较慢（堆）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h6 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h6&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;和structures一样，类是具有方法和属性的命名类型（named type）&lt;/li&gt;
+  &lt;li&gt;类通过指针共享对象&lt;/li&gt;
+  &lt;li&gt;类的实例叫做对象（objects）&lt;/li&gt;
+  &lt;li&gt;对象是可变的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;===========&lt;/p&gt;
+
+&lt;h6 id=&quot;继承inheritance&quot;&gt;&lt;strong&gt;继承（inheritance）&lt;/strong&gt;&lt;/h6&gt;
+
+&lt;p&gt;通过继承，子类可以完全继承自父类的全部属性和方法。
+子类定义的属性和方法只要子类用于，父类不拥有。
+swift 和oc 一样都是单一继承，只能继承一个其他类。
+继承没有层级，子类的父类也可以是另外一个类的子类。&lt;/p&gt;
+&lt;h6 id=&quot;多态-polymorphism&quot;&gt;&lt;strong&gt;多态 （Polymorphism）&lt;/strong&gt;&lt;/h6&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;In brief, polymorphism is a programming languages ability to treat an object differently based on context.
+简而言之，多态性是一种基于上下文以不同方式处理对象的编程语言能力。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;作用：
+把不同的子类对象都当作父类来看，可以屏蔽不同子类对象之间的差异，写出通用的代码，做出通用的编程，以适应需求的不断变化。&lt;/p&gt;
+
+&lt;h6 id=&quot;runtime-hierarchy-checks&quot;&gt;&lt;strong&gt;Runtime hierarchy checks&lt;/strong&gt;&lt;/h6&gt;
+
+&lt;p&gt;• as: Cast to a specific type that is known at compile time to succeed, such as casting to a supertype.
+• as?: An optional downcast (to a subtype). If the downcast fails, the result of the expression will be nil.
+• as!: A forced downcast. If the downcast fails, the program will crash. Use this rarely, and only when you are certain the cast will never fail.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift08-Class/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift08-Class/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（7）Methods</title>
+        <description>&lt;p&gt;#swift 学习（7）Methods&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Methods, as you’ve already seen, are merely functions that reside inside a structure.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Comparing methods to computed properties&lt;/strong&gt;
+使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
+&lt;img src=&quot;media/14881881247903/14881881273899.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;mutating-methods&quot;&gt;&lt;strong&gt;mutating methods&lt;/strong&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Methods in structures cannot change the values of the instance without being marked as mutating. You can imagine a method in the Date structure that advances to the next day:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mutating func advance() {
+    day += 1 
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;type-methods&quot;&gt;&lt;strong&gt;Type methods&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Like type properties, you can use type methods to access data across all instances. You call type methods on the type itself, instead of on an instance. To define a type method, you prefix it with the static modifier.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Math {
+  // 1
+  static func factorial(of number: Int) -&amp;gt; Int {
+    // 2
+    return (1...number).reduce(1, *)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;extensions&quot;&gt;&lt;strong&gt;extensions&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Methods are behaviors that extend the functionality of a type.&lt;/li&gt;
+  &lt;li&gt;A method is a function defined inside of a named type.&lt;/li&gt;
+  &lt;li&gt;A method can access the value of an instance by using the keyword self.&lt;/li&gt;
+  &lt;li&gt;Initializers are methods that aid in the creation of a new instance.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift07-Methods/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift07-Methods/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>swift 学习（6）Properties</title>
+        <description>&lt;p&gt;#swift 学习（6）Properties&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[x] 实在无法用自己的语言表示出来，以后就当是读书摘录吧。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;• Properties are variables and constants that are part of a named type.
+• Stored properties allocate memory to store a value.
+• Computed properties are calculated each time your code requests them and aren’t stored as a value in memory.
+• The static keyword marks a type property that’s universal to all instances of a particular type.
+• The lazy keyword prevents a value of a stored property from being calculated until your code uses it for the first time. You’ll want to use lazy initialization when a property’s initial value is computationally intensive or when you won’t know the initial value of a property until after you’ve initialized the object.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;符号&quot;&gt;&lt;strong&gt;===符号&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;=== 是比较引用指向的地址是否一致。
+== 是比较值是否一致。&lt;/p&gt;
+
+&lt;h3 id=&quot;stored-properties&quot;&gt;&lt;strong&gt;stored properties&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Car {
+  let make: String
+  let color: String
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Values like these are called properties. The two properties of Car are both stored properties, which means they store actual string values for each instance of Car.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Default values&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Contact {
+  var fullName: String
+  let emailAddress: String
+  var type = &quot;Friend&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;computed-properties&quot;&gt;&lt;strong&gt;computed properties&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Some properties calculate values rather than store them; that means there’s no actual memory allocated for them, but they get calculated on-the-fly each time you access them. Naturally, these are called computed properties.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;有些属性是没有为他们分配实际的存储空间的，每次读取他们都是经过即时计算得到的。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Getter and setter&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;计算属性会默认实现get，可选实现set方法。当不写get、set关键字是默认当做get实现。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct TV {
+    var heigth : Double
+    var width : Double
+    var diagonal : Int {
+        get {
+            let result = sqrt(heigth * heigth + width * width)
+            let roundResult = result.rounded()
+            return Int(roundResult);
+        }
+        set {
+            //设定屏幕比例
+            let ratioWidth = 16.0
+            let ratioHeight = 9.0
+            //设置计算属性的值，实际上还是设置存储属性的值
+            heigth = Double(newValue) * ratioHeight / sqrt(ratioWidth * ratioWidth + ratioHeight * ratioHeight)
+            width = heigth * ratioWidth / ratioHeight
+        }
+       
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;存储属性可以是常量也可以是变量，但是计算属性只能是变量。&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;While a stored property can be a constant or a variable, a computed property must be defined as a variable&lt;/p&gt;
+  &lt;h3 id=&quot;type-properties&quot;&gt;&lt;strong&gt;Type properties&lt;/strong&gt;&lt;/h3&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;However, the type itself may also need properties that are common across all
+instances. These properties are called type properties.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;然而，类型本身也可能需要在所有的共同的属性
+实例。 这些属性称为类型属性。&lt;/p&gt;
+
+&lt;p&gt;使用 static 修饰。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Level {
+  static var highestLevel = 1
+  let id: Int
+  var boss: String
+  var unlocked: Bool
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;property-observers&quot;&gt;&lt;strong&gt;Property observers&lt;/strong&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;willSet 
+didSet&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;lazy-properties&quot;&gt;&lt;strong&gt;Lazy properties&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If you have a property that might take some time to calculate, you don’t want to slow things down until you actually need the property. Say hello to the lazy stored property. This could be useful for such things as downloading a user’s profile picture or making a serious calculation.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如果你有一个属性可能需要一些时间来计算，你不想减慢的事情，直到你实际需要的属性。 向懒惰的存储属性打个招呼吧。 这可能对下载用户的个人资料图片或进行严重的计算有用。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Circle {
+  lazy var pi = {
+    return ((4.0 * atan(1.0 / 5.0)) - atan(1.0 / 239.0)) * 4.0
+  }()
+  var radius = 0.0
+  var circumference: Double {
+    mutating get {
+      return pi * radius * 2
+    }
+  }
+  init (radius: Double) {
+    self.radius = radius
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Properties are variables and constants that are part of a named type.&lt;/li&gt;
+  &lt;li&gt;Stored properties allocate memory to store a value.&lt;/li&gt;
+  &lt;li&gt;Computed properties are calculated each time your code requests them and aren’t stored as a value in memory.&lt;/li&gt;
+  &lt;li&gt;The static keyword marks a type property that’s universal to all instances of a particular type.&lt;/li&gt;
+  &lt;li&gt;The lazy keyword prevents a value of a stored property from being calculated until your code uses it for the first time. You’ll want to use lazy initialization when a property’s initial value is computationally intensive or when you won’t know the initial value of a property until after you’ve initialized the object.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/01/swift06-Properties/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift06-Properties/</guid>
+        
+        <category>iOS</category>
+        
+        <category>Swift</category>
         
         
       </item>

@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>利用CallKit 实现来电识别 - 三十一的博客 | Hux Blog</title>
+    <title>swift 学习（7）Methods - 三十一的博客 | Hux Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/29/CallKit/">
+    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift07-Methods/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-nextgen-web-pwa01.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-nextgen-web-pwa01.jpg')
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
     }
 
     
@@ -183,17 +183,15 @@
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
-                        <a class="tag" href="/tags/#CallKit" title="CallKit">CallKit</a>
-                        
-                        <a class="tag" href="/tags/#来电识别" title="来电识别">来电识别</a>
+                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
                         
                     </div>
-                    <h1>利用CallKit 实现来电识别</h1>
+                    <h1>swift 学习（7）Methods</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 29, 2017</span>
+                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
                 </div>
             </div>
         </div>
@@ -211,93 +209,52 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="利用callkit-实现来电识别">利用CallKit 实现来电识别</h1>
-
+				<p>#swift 学习（7）Methods</p>
 <blockquote>
-  <p>最近项目中新增了一个需求，需要使用 <code class="highlighter-rouge">iOS 10</code> 中新增的 <code class="highlighter-rouge">CallKit</code> 来实现一个来电识别的功能。按照惯例，先在网上搜索了一下，看了几篇文章，觉得实现起来很简单嘛。于是就愉快的开始了，然后就开始遇见一个个坑，网上目前存在的文章都避重就轻的简单的实现了号码识别，但是关于号码规则、大数量的数据如何处理等都没有提及。这篇文字就记录下我个人在实现这个功能时遇到的坑以及如何解决的。</p>
+  <p>Methods, as you’ve already seen, are merely functions that reside inside a structure.</p>
 </blockquote>
 
-<h3 id="一简单实现">一，简单实现</h3>
+<p><strong>Comparing methods to computed properties</strong>
+使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
+<img src="media/14881881247903/14881881273899.jpg" alt="" /></p>
 
-<p>如何实现就不在详细描写了，网上已经有很多的文章写了。</p>
+<h3 id="mutating-methods"><strong>mutating methods</strong></h3>
+<blockquote>
+  <p>Methods in structures cannot change the values of the instance without being marked as mutating. You can imagine a method in the Date structure that advances to the next day:</p>
+</blockquote>
 
-<h3 id="二具体功能实现遇到的各种坑">二，具体功能实现遇到的各种坑</h3>
-
-<h4 id="号码规则"><code class="highlighter-rouge">号码规则</code></h4>
-
-<ol>
-  <li>号码必须进行排列，添加顺序为优先添加小的号码。譬如：123和132两个号码要先添加123，然后添加132.</li>
-  <li>号码的格式化，手机号码前面需要添加国家码，固话需要带有区号，然后区号去零，然后前面添加国家码。譬如手机号：185XXXXX8497  需要格式化为86185XXXXX8497；固话 0755-12345678 需要格式化为：8675512345678.</li>
-  <li>号码去重，一个手机号码只能添加一次，添加多次会开启失败。</li>
-</ol>
-
-<h4 id="大数量是数据如何添加"><code class="highlighter-rouge">大数量是数据如何添加</code></h4>
-<p>大数据不能一下读取到内存中，否则会导致打开失败。解决办法：从文件中一行行读取数据，使用后释放。我的号码库文件，大概这样的形式：</p>
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="w"> </span><span class="p">[</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86196852102"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86196852201"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86196852202"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86196852213"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86201008613"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86202096585"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86211008611"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86216618834"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
- </span><span class="p">{</span><span class="nt">"86219506524"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
- </span><span class="p">]</span><span class="w">
-</span></code></pre>
-</div>
-<p>具体代码如下：</p>
-
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>  <span class="no">NSURL</span> <span class="o">*</span><span class="n">containerURL</span> <span class="o">=</span> <span class="p">[[</span><span class="no">NSFileManager</span> <span class="n">defaultManager</span><span class="p">]</span> <span class="n">containerURLForSecurityApplicationGroupIdentifier</span><span class="ss">:groupIdentifierExtension</span><span class="p">];</span>
-    <span class="sr">//</span><span class="err">文件路径</span>
-    <span class="n">containerURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">containerURL</span> <span class="no">URLByAppendingPathComponent</span><span class="ss">:LocalstorageName</span><span class="p">];</span>
-    <span class="no">NSString</span><span class="o">*</span> <span class="n">fileRoot</span> <span class="o">=</span> <span class="n">containerURL</span><span class="p">.</span><span class="nf">path</span><span class="p">;</span>
-    <span class="no">FILE</span> <span class="o">*</span><span class="n">file</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">([</span><span class="n">fileRoot</span> <span class="no">UTF8String</span><span class="p">],</span> <span class="s2">"r"</span><span class="p">);</span>
-    <span class="n">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="o">!=</span> <span class="no">NULL</span><span class="p">){</span>
-        <span class="vi">@autoreleasepool</span> <span class="p">{</span>
-            <span class="no">NSString</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="no">NSString</span> <span class="n">stringWithUTF8String</span><span class="ss">:buffer</span><span class="p">];</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="n">stringByReplacingOccurrencesOfString</span><span class="p">:</span><span class="err">@</span><span class="s2">","</span> <span class="n">withString</span><span class="p">:</span><span class="err">@</span><span class="s2">""</span><span class="p">];</span>
-            <span class="no">NSData</span> <span class="o">*</span><span class="n">jsonData</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="n">dataUsingEncoding</span><span class="ss">:NSUTF8StringEncoding</span><span class="p">];</span>
-            <span class="no">NSError</span> <span class="o">*</span><span class="n">err</span><span class="p">;</span>
-            <span class="no">NSDictionary</span> <span class="o">*</span><span class="n">dic</span> <span class="o">=</span> <span class="p">[</span><span class="no">NSJSONSerialization</span> <span class="no">JSONObjectWithData</span><span class="ss">:jsonData</span>
-                                                                <span class="n">options</span><span class="ss">:NSJSONReadingAllowFragments</span>
-                                                                  <span class="n">error</span><span class="ss">:&amp;</span><span class="n">err</span><span class="p">];</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-            <span class="p">{</span>
-            <span class="p">}</span><span class="k">else</span>
-            <span class="p">{</span>
-                <span class="no">NSString</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="n">dic</span><span class="p">.</span><span class="nf">allKeys</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-                <span class="no">NSString</span> <span class="o">*</span><span class="nb">name</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">number</span><span class="p">];</span>
-                
-                <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">==</span> <span class="kp">nil</span> <span class="o">||</span> <span class="nb">name</span> <span class="o">==</span> <span class="kp">nil</span><span class="p">)</span>
-                <span class="p">{</span>
-                <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
-<span class="sr">//</span>                    <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="nb">self</span> <span class="n">fixPhone</span><span class="ss">:number</span><span class="p">];</span>
-                    <span class="no">CXCallDirectoryPhoneNumber</span> <span class="n">phoneNumber</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="n">longLongValue</span><span class="p">];</span>
-                    <span class="p">[</span><span class="n">context</span> <span class="n">addIdentificationEntryWithNextSequentialPhoneNumber</span><span class="ss">:phoneNumber</span> <span class="n">label</span><span class="ss">:name</span><span class="p">];</span>
-                <span class="p">}</span>
-
-            <span class="p">}</span>
-            <span class="n">dic</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">;</span>
-        <span class="p">}</span>
-        
-    <span class="p">}</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>mutating func advance() {
+    day += 1 
+}
 </code></pre>
 </div>
 
-<p>实际测试，将近100万的数据在 6S Plus 30S内可以完成加载。</p>
+<h3 id="type-methods"><strong>Type methods</strong></h3>
 
-<h4 id="如何更新数据"><code class="highlighter-rouge">如何更新数据</code></h4>
+<blockquote>
+  <p>Like type properties, you can use type methods to access data across all instances. You call type methods on the type itself, instead of on an instance. To define a type method, you prefix it with the static modifier.</p>
+</blockquote>
 
-<p>号码库可以通过下载进行更新，一般下载的是压缩包，解压缩后，把数据写进共享文件内，更新数据后，需要通知系统去刷新数据库，是数据生效。具体解压缩可以搜索： <code class="highlighter-rouge">SSZipArchive</code> ,扩展和主APP数据扩展可以看这篇文章：<a href="http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/">WWDC2014之App Extensions学习笔记</a> 通知系统刷新号码数据库的具体代码：</p>
-
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>  <span class="sr">//</span><span class="no">IdentifierExtension</span> <span class="err">为扩展的</span> <span class="no">Bundle</span> <span class="no">Identifier</span>
-   <span class="no">CXCallDirectoryManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="no">CXCallDirectoryManager</span> <span class="n">sharedInstance</span><span class="p">];</span>
-    <span class="p">[</span><span class="n">manager</span> <span class="n">reloadExtensionWithIdentifier</span><span class="ss">:IdentifierExtension</span> <span class="n">completionHandler</span><span class="ss">:^</span><span class="p">(</span><span class="no">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="p">}];</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Math {
+  // 1
+  static func factorial(of number: Int) -&gt; Int {
+    // 2
+    return (1...number).reduce(1, *)
+  }
+}
 </code></pre>
 </div>
+
+<h3 id="extensions"><strong>extensions</strong></h3>
+
+<h3 id="key-points"><strong>Key points</strong></h3>
+
+<ul>
+  <li>Methods are behaviors that extend the functionality of a type.</li>
+  <li>A method is a function defined inside of a named type.</li>
+  <li>A method can access the value of an instance by using the keyword self.</li>
+  <li>Initializers are methods that aid in the creation of a new instance.</li>
+</ul>
 
 
 
@@ -309,17 +266,17 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift12-Access-Control-and-Code-Organization/" data-toggle="tooltip" data-placement="top" title="swift 学习（12）Access Control and Code Organization">
+                        <a href="/2017/03/01/swift06-Properties/" data-toggle="tooltip" data-placement="top" title="swift 学习（6）Properties">
                         Previous<br>
-                        <span>swift 学习（12）Access Control and Code Organization</span>
+                        <span>swift 学习（6）Properties</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/04/05/%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84UIButton%E6%89%A9%E5%B1%95/" data-toggle="tooltip" data-placement="top" title="一个好用的UIButton扩展">
+                        <a href="/2017/03/01/swift08-Class/" data-toggle="tooltip" data-placement="top" title="swift 学习（8）Class">
                         Next<br>
-                        <span>一个好用的UIButton扩展</span>
+                        <span>swift 学习（8）Class</span>
                         </a>
                     </li>
                     
