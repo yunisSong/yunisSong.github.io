@@ -233,56 +233,56 @@
 
 <h4 id="大数量是数据如何添加"><code class="highlighter-rouge">大数量是数据如何添加</code></h4>
 <p>大数据不能一下读取到内存中，否则会导致打开失败。解决办法：从文件中一行行读取数据，使用后释放。我的号码库文件，大概这样的形式：</p>
-<div class="highlighter-rouge"><pre class="highlight"><code> [
- {"86196852102": "骚扰电话"},
- {"86196852201": "诈骗电话"},
- {"86196852202": "骚扰电话"},
- {"86196852213": "诈骗电话"},
- {"86201008613": "广告推销"},
- {"86202096585": "诈骗电话"},
- {"86211008611": "广告推销"},
- {"86216618834": "广告推销"},
- {"86219506524": "骚扰电话"},
- ]
-</code></pre>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="w"> </span><span class="p">[</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86196852102"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86196852201"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86196852202"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86196852213"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86201008613"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86202096585"</span><span class="p">:</span><span class="w"> </span><span class="s2">"诈骗电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86211008611"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86216618834"</span><span class="p">:</span><span class="w"> </span><span class="s2">"广告推销"</span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="nt">"86219506524"</span><span class="p">:</span><span class="w"> </span><span class="s2">"骚扰电话"</span><span class="p">},</span><span class="w">
+ </span><span class="p">]</span><span class="w">
+</span></code></pre>
 </div>
 <p>具体代码如下：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupIdentifierExtension];
-    //文件路径
-    containerURL = [containerURL URLByAppendingPathComponent:LocalstorageName];
-    NSString* fileRoot = containerURL.path;
-    FILE *file = fopen([fileRoot UTF8String], "r");
-    char buffer[1024];
-    while (fgets(buffer, 1024, file) != NULL){
-        @autoreleasepool {
-            NSString* result = [NSString stringWithUTF8String:buffer];
-            result = [result stringByReplacingOccurrencesOfString:@"," withString:@""];
-            NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
-            NSError *err;
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                                options:NSJSONReadingAllowFragments
-                                                                  error:&amp;err];
-            if(err)
-            {
-            }else
-            {
-                NSString *number = dic.allKeys[0];
-                NSString *name = dic[number];
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>  <span class="no">NSURL</span> <span class="o">*</span><span class="n">containerURL</span> <span class="o">=</span> <span class="p">[[</span><span class="no">NSFileManager</span> <span class="n">defaultManager</span><span class="p">]</span> <span class="n">containerURLForSecurityApplicationGroupIdentifier</span><span class="ss">:groupIdentifierExtension</span><span class="p">];</span>
+    <span class="sr">//</span><span class="err">文件路径</span>
+    <span class="n">containerURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">containerURL</span> <span class="no">URLByAppendingPathComponent</span><span class="ss">:LocalstorageName</span><span class="p">];</span>
+    <span class="no">NSString</span><span class="o">*</span> <span class="n">fileRoot</span> <span class="o">=</span> <span class="n">containerURL</span><span class="p">.</span><span class="nf">path</span><span class="p">;</span>
+    <span class="no">FILE</span> <span class="o">*</span><span class="n">file</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">([</span><span class="n">fileRoot</span> <span class="no">UTF8String</span><span class="p">],</span> <span class="s2">"r"</span><span class="p">);</span>
+    <span class="n">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="o">!=</span> <span class="no">NULL</span><span class="p">){</span>
+        <span class="vi">@autoreleasepool</span> <span class="p">{</span>
+            <span class="no">NSString</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="no">NSString</span> <span class="n">stringWithUTF8String</span><span class="ss">:buffer</span><span class="p">];</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="n">stringByReplacingOccurrencesOfString</span><span class="p">:</span><span class="err">@</span><span class="s2">","</span> <span class="n">withString</span><span class="p">:</span><span class="err">@</span><span class="s2">""</span><span class="p">];</span>
+            <span class="no">NSData</span> <span class="o">*</span><span class="n">jsonData</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="n">dataUsingEncoding</span><span class="ss">:NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="no">NSError</span> <span class="o">*</span><span class="n">err</span><span class="p">;</span>
+            <span class="no">NSDictionary</span> <span class="o">*</span><span class="n">dic</span> <span class="o">=</span> <span class="p">[</span><span class="no">NSJSONSerialization</span> <span class="no">JSONObjectWithData</span><span class="ss">:jsonData</span>
+                                                                <span class="n">options</span><span class="ss">:NSJSONReadingAllowFragments</span>
+                                                                  <span class="n">error</span><span class="ss">:&amp;</span><span class="n">err</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="p">{</span>
+            <span class="p">}</span><span class="k">else</span>
+            <span class="p">{</span>
+                <span class="no">NSString</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="n">dic</span><span class="p">.</span><span class="nf">allKeys</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="no">NSString</span> <span class="o">*</span><span class="nb">name</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">number</span><span class="p">];</span>
                 
-                if (number == nil || name == nil)
-                {
-                }else {
-//                    number = [self fixPhone:number];
-                    CXCallDirectoryPhoneNumber phoneNumber = [number longLongValue];
-                    [context addIdentificationEntryWithNextSequentialPhoneNumber:phoneNumber label:name];
-                }
+                <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">==</span> <span class="kp">nil</span> <span class="o">||</span> <span class="nb">name</span> <span class="o">==</span> <span class="kp">nil</span><span class="p">)</span>
+                <span class="p">{</span>
+                <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+<span class="sr">//</span>                    <span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="nb">self</span> <span class="n">fixPhone</span><span class="ss">:number</span><span class="p">];</span>
+                    <span class="no">CXCallDirectoryPhoneNumber</span> <span class="n">phoneNumber</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="n">longLongValue</span><span class="p">];</span>
+                    <span class="p">[</span><span class="n">context</span> <span class="n">addIdentificationEntryWithNextSequentialPhoneNumber</span><span class="ss">:phoneNumber</span> <span class="n">label</span><span class="ss">:name</span><span class="p">];</span>
+                <span class="p">}</span>
 
-            }
-            dic = nil;
-        }
+            <span class="p">}</span>
+            <span class="n">dic</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">;</span>
+        <span class="p">}</span>
         
-    }
+    <span class="p">}</span>
 </code></pre>
 </div>
 
@@ -292,10 +292,10 @@
 
 <p>号码库可以通过下载进行更新，一般下载的是压缩包，解压缩后，把数据写进共享文件内，更新数据后，需要通知系统去刷新数据库，是数据生效。具体解压缩可以搜索： <code class="highlighter-rouge">SSZipArchive</code> ,扩展和主APP数据扩展可以看这篇文章：<a href="http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/">WWDC2014之App Extensions学习笔记</a> 通知系统刷新号码数据库的具体代码：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  //IdentifierExtension 为扩展的 Bundle Identifier
-   CXCallDirectoryManager *manager = [CXCallDirectoryManager sharedInstance];
-    [manager reloadExtensionWithIdentifier:IdentifierExtension completionHandler:^(NSError * _Nullable error) {
-    }];
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code>  <span class="sr">//</span><span class="no">IdentifierExtension</span> <span class="err">为扩展的</span> <span class="no">Bundle</span> <span class="no">Identifier</span>
+   <span class="no">CXCallDirectoryManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="no">CXCallDirectoryManager</span> <span class="n">sharedInstance</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">manager</span> <span class="n">reloadExtensionWithIdentifier</span><span class="ss">:IdentifierExtension</span> <span class="n">completionHandler</span><span class="ss">:^</span><span class="p">(</span><span class="no">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}];</span>
 </code></pre>
 </div>
 
@@ -303,34 +303,6 @@
 
                 <hr style="visibility: hidden;">
 
-                
-                <!-- 多说 Share start -->
-                <div class="ds-share"
-                    style="text-align: right"
-                    data-thread-key="/2017/03/29/CallKit"
-                    data-title="利用CallKit 实现来电识别"
-                    data-url="http://localhost:4000/2017/03/29/CallKit/"
-                    data-images="http://localhost:4000/img/post-bg-nextgen-web-pwa.jpg"
-                    data-content="利用CallKit 实现来电识别
-
-
-  最近项目中新增了一个需求，需要使用 iOS 10 中新增的 CallKit 来实现一个来电识别的功能。按照惯例，... | 三十一的博客 | Hux Blog " >
-                    <div class="ds-share-inline">
-                      <style> 
-                        .ds-share-icons-16 {display:none;} 
-                      </style>
-                      <ul class="ds-share-icons-16">
-                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
-                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
-                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
-                      </ul>
-                      <div class="ds-share-icons-more">
-                      </div>
-                    </div>
-                <hr>
-                </div>
-                <!-- 多说 Share end-->
                 
 
 
@@ -340,16 +312,6 @@
                 </ul>
 
 
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                        data-thread-key="/2017/03/29/CallKit"
-                        data-title="利用CallKit 实现来电识别"
-                        data-url="http://localhost:4000/2017/03/29/CallKit/" >
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
                 
 
                 
@@ -398,58 +360,12 @@
 
                 <!-- Friends Blog -->
                 
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a href="http://su.gallery/">Su</a></li>
-                    
-                        <li><a href="http://mida.re/">乱序</a></li>
-                    
-                        <li><a href="http://qianduan.guru/">前端外刊评论</a></li>
-                    
-                        <li><a href="http://lingyu.wang/">天镶的博客</a></li>
-                    
-                        <li><a href="http://hmqk1995.github.io">Luke 的自留地</a></li>
-                    
-                        <li><a href="http://ebnbin.com/">Ebn's Blog</a></li>
-                    
-                        <li><a href="http://blog.smdcn.net">SmdCn's Blog</a></li>
-                    
-                        <li><a href="http://xieminis.me/">解旻的博客</a></li>
-                    
-                        <li><a href="http://dhong.co">DHong Say</a></li>
-                    
-                        <li><a href="http://ingf.github.io/">尹峰以为</a></li>
-                    
-                        <li><a href="http://wepiaofei.github.io/blog/">前端神盾局</a></li>
-                    
-                </ul>
-                
             </div>
         </div>
     </div>
 </article>
 
 
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = '三十一的博客';
-
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
 
 
 
@@ -531,7 +447,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; 三十一 2017
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> |
+                    Theme by <a href="https://yunissong.github.io/">三十一</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"
@@ -625,8 +541,8 @@
 
 <script>
     // dynamic User by Hux
-    var _gaId = 'UA-49627206-1';
-    var _gaDomain = 'huangxuan.me';
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
 
     // Originial
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
