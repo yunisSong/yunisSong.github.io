@@ -1,0 +1,108 @@
+---
+layout:     post
+title:      "利用CallKit 实现来电识别"
+subtitle:   "在不断填坑中前进。。"
+date:       2017-03-29 12:00:00
+author:     "三十一"
+header-img: "img/post-bg-nextgen-web-pwa.jpg"
+header-mask: 0.3
+catalog:    true
+tags:
+    - iOS
+    - CallKit
+    - 来电识别
+---
+
+
+# 利用CallKit 实现来电识别
+
+> 最近项目中新增了一个需求，需要使用 `iOS 10` 中新增的 `CallKit` 来实现一个来电识别的功能。按照惯例，先在网上搜索了一下，看了几篇文章，觉得实现起来很简单嘛。于是就愉快的开始了，然后就开始遇见一个个坑，网上目前存在的文章都避重就轻的简单的实现了号码识别，但是关于号码规则、大数量的数据如何处理等都没有提及。这篇文字就记录下我个人在实现这个功能时遇到的坑以及如何解决的。
+
+### 一，简单实现
+
+如何实现就不在详细描写了，网上已经有很多的文章写了。
+
+### 二，具体功能实现遇到的各种坑
+
+#### `号码规则`
+
+ 1. 号码必须进行排列，添加顺序为优先添加小的号码。譬如：123和132两个号码要先添加123，然后添加132.
+ 2. 号码的格式化，手机号码前面需要添加国家码，固话需要带有区号，然后区号去零，然后前面添加国家码。譬如手机号：185XXXXX8497  需要格式化为86185XXXXX8497；固话 0755-12345678 需要格式化为：8675512345678.
+ 3. 号码去重，一个手机号码只能添加一次，添加多次会开启失败。
+
+
+ 
+#### `大数量是数据如何添加`
+ 大数据不能一下读取到内存中，否则会导致打开失败。解决办法：从文件中一行行读取数据，使用后释放。我的号码库文件，大概这样的形式：
+ ```json
+ [
+ {"86196852102": "骚扰电话"},
+ {"86196852201": "诈骗电话"},
+ {"86196852202": "骚扰电话"},
+ {"86196852213": "诈骗电话"},
+ {"86201008613": "广告推销"},
+ {"86202096585": "诈骗电话"},
+ {"86211008611": "广告推销"},
+ {"86216618834": "广告推销"},
+ {"86219506524": "骚扰电话"},
+ ]
+ ```
+ 具体代码如下：
+ 
+ ```ruby
+  NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupIdentifierExtension];
+    //文件路径
+    containerURL = [containerURL URLByAppendingPathComponent:LocalstorageName];
+    NSString* fileRoot = containerURL.path;
+    FILE *file = fopen([fileRoot UTF8String], "r");
+    char buffer[1024];
+    while (fgets(buffer, 1024, file) != NULL){
+        @autoreleasepool {
+            NSString* result = [NSString stringWithUTF8String:buffer];
+            result = [result stringByReplacingOccurrencesOfString:@"," withString:@""];
+            NSData *jsonData = [result dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *err;
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                options:NSJSONReadingAllowFragments
+                                                                  error:&err];
+            if(err)
+            {
+            }else
+            {
+                NSString *number = dic.allKeys[0];
+                NSString *name = dic[number];
+                
+                if (number == nil || name == nil)
+                {
+                }else {
+//                    number = [self fixPhone:number];
+                    CXCallDirectoryPhoneNumber phoneNumber = [number longLongValue];
+                    [context addIdentificationEntryWithNextSequentialPhoneNumber:phoneNumber label:name];
+                }
+
+            }
+            dic = nil;
+        }
+        
+    }
+ ```
+ 
+ 
+ 实际测试，将近100万的数据在 6S Plus 30S内可以完成加载。
+ 
+#### `如何更新数据`
+
+  号码库可以通过下载进行更新，一般下载的是压缩包，解压缩后，把数据写进共享文件内，更新数据后，需要通知系统去刷新数据库，是数据生效。具体解压缩可以搜索： `SSZipArchive` ,扩展和主APP数据扩展可以看这篇文章：[WWDC2014之App Extensions学习笔记](http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/) 通知系统刷新号码数据库的具体代码：
+  
+  ```ruby
+  //IdentifierExtension 为扩展的 Bundle Identifier
+   CXCallDirectoryManager *manager = [CXCallDirectoryManager sharedInstance];
+    [manager reloadExtensionWithIdentifier:IdentifierExtension completionHandler:^(NSError * _Nullable error) {
+    }];
+  ```
+
+
+
+
+
+
