@@ -16,7 +16,7 @@ tags:
 
 **Comparing methods to computed properties**
 使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
-![](media/14881881247903/14881881273899.jpg)
+![](/media/14881881247903/14881881273899.jpg)
 
 
 
