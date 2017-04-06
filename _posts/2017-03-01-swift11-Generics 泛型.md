@@ -15,5 +15,7 @@ tags:
 
 [TOc]
 
-generics are a way to systematically define sets of types.
+> generics are a way to systematically define sets of types.
+
+之前其实学习的时间已经接触过泛型，譬如，Array、
 
