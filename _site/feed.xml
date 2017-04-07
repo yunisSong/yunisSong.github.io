@@ -5,8 +5,8 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 06 Apr 2017 16:24:14 +0800</pubDate>
-    <lastBuildDate>Thu, 06 Apr 2017 16:24:14 +0800</lastBuildDate>
+    <pubDate>Fri, 07 Apr 2017 14:33:07 +0800</pubDate>
+    <lastBuildDate>Fri, 07 Apr 2017 14:33:07 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
@@ -250,6 +250,122 @@ iOS 中有一个类叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIResp
         <category>CallKit</category>
         
         <category>来电识别</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>大文件内容使用shell 排序、去重</title>
+        <description>&lt;p&gt;最近做一个基于iOS 10 来电拦截的东西，需要向系统中添加数据，数据要求必须排序，且不能有重复的号码。
+刚开始试了用oc 写了个排序去重的算法，麻蛋开着电脑吃完饭回来还没有跑完，就去网上搜了下shell ，搞起来那叫一个酸爽。有了下面3行命令，速度杠杠的，三十几M的东西，几秒钟搞定。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sort -u simple.json         
+删除完全相同的行 并排序 
+
+例：
+
+
+111111  222
+
+222222  222
+
+3333333 222
+
+4444444 222
+
+222222  222
+
+=&amp;gt; sort -u simple02.json  
+
+111111  222
+222222  222
+3333333 222
+4444444 222
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;awk '!a[$1]++' simple.json   
+
+删除指定区域相同内容的行,$1 代表第1列
+
+例:
+
+111111  123
+222222  456
+3333333 789
+4444444 123
+222222  345
+
+=&amp;gt; awk '!a[$1]++' simple02.json
+111111  123
+222222  456
+3333333 789
+4444444 123
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sort -n -k 2 -t '&quot;' simple.json
+
+根据指定分隔符分割后对指定区域进行排序
+
+
+例如
+ {&quot;861004&quot;: &quot;广告推销&quot;},
+ {&quot;861100&quot;: &quot;诈骗电话&quot;},
+ {&quot;861101&quot;: &quot;骚扰电话&quot;},
+ {&quot;861314&quot;: &quot;骚扰电话&quot;},
+ {&quot;861300&quot;: &quot;诈骗电话&quot;},
+ {&quot;861110&quot;: &quot;骚扰电话&quot;},
+ {&quot;861301&quot;: &quot;骚扰电话&quot;},
+ {&quot;861322&quot;: &quot;诈骗电话&quot;},
+ {&quot;861111&quot;: &quot;骚扰电话&quot;},
+ {&quot;861212&quot;: &quot;骚扰电话&quot;},
+ {&quot;861110&quot;: &quot;部分重复&quot;},
+ {&quot;861322&quot;: &quot;部分重复&quot;},
+
+=&amp;gt;awk '!a[$1]++' simple02.json
+// 除去重复的手机号 {&quot;861110&quot;: &quot;部分重复&quot;}, {&quot;861322&quot;: &quot;部分重复&quot;},被除去 
+
+ {&quot;861004&quot;: &quot;广告推销&quot;},
+ {&quot;861100&quot;: &quot;诈骗电话&quot;},
+ {&quot;861101&quot;: &quot;骚扰电话&quot;},
+ {&quot;861314&quot;: &quot;骚扰电话&quot;},
+ {&quot;861300&quot;: &quot;诈骗电话&quot;},
+ {&quot;861110&quot;: &quot;骚扰电话&quot;},
+ {&quot;861301&quot;: &quot;骚扰电话&quot;},
+ {&quot;861322&quot;: &quot;诈骗电话&quot;},
+ {&quot;861111&quot;: &quot;骚扰电话&quot;},
+ {&quot;861212&quot;: &quot;骚扰电话&quot;},
+=&amp;gt;sort -n -k 2 -t '&quot;' simple02.json
+//-t '&quot;' 表示 根据&quot; 进行分割
+//-k 2 表示分割后的第2个选项   {&quot;861004&quot;: &quot;广告推销&quot;},根据 &quot; 分割后，第一个选项是{ 第2个选项为861004
+//整体的意思就是 根据 &quot; 分割后的第2个选项进行排序。
+
+ {&quot;861004&quot;: &quot;广告推销&quot;},
+ {&quot;861100&quot;: &quot;诈骗电话&quot;},
+ {&quot;861101&quot;: &quot;骚扰电话&quot;},
+ {&quot;861110&quot;: &quot;部分重复&quot;},
+ {&quot;861110&quot;: &quot;骚扰电话&quot;},
+ {&quot;861111&quot;: &quot;骚扰电话&quot;},
+ {&quot;861212&quot;: &quot;骚扰电话&quot;},
+ {&quot;861300&quot;: &quot;诈骗电话&quot;},
+ {&quot;861301&quot;: &quot;骚扰电话&quot;},
+ {&quot;861314&quot;: &quot;骚扰电话&quot;},
+ {&quot;861322&quot;: &quot;诈骗电话&quot;},
+ {&quot;861322&quot;: &quot;部分重复&quot;},
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 29 Mar 2017 20:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/03/29/%E5%A4%A7%E6%96%87%E4%BB%B6%E5%8E%BB%E9%87%8D/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/03/29/%E5%A4%A7%E6%96%87%E4%BB%B6%E5%8E%BB%E9%87%8D/</guid>
+        
+        <category>Shell</category>
+        
+        <category>大数据重复文件处理</category>
         
         
       </item>
@@ -997,166 +1113,6 @@ swift 和oc 一样都是单一继承，只能继承一个其他类。
         <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/03/01/swift07-Methods/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift07-Methods/</guid>
-        
-        <category>iOS</category>
-        
-        <category>Swift</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>swift 学习（6）Properties</title>
-        <description>&lt;p&gt;#swift 学习（6）Properties&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[x] 实在无法用自己的语言表示出来，以后就当是读书摘录吧。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;• Properties are variables and constants that are part of a named type.
-• Stored properties allocate memory to store a value.
-• Computed properties are calculated each time your code requests them and aren’t stored as a value in memory.
-• The static keyword marks a type property that’s universal to all instances of a particular type.
-• The lazy keyword prevents a value of a stored property from being calculated until your code uses it for the first time. You’ll want to use lazy initialization when a property’s initial value is computationally intensive or when you won’t know the initial value of a property until after you’ve initialized the object.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;符号&quot;&gt;&lt;strong&gt;===符号&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;=== 是比较引用指向的地址是否一致。
-== 是比较值是否一致。&lt;/p&gt;
-
-&lt;h3 id=&quot;stored-properties&quot;&gt;&lt;strong&gt;stored properties&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Car {
-  let make: String
-  let color: String
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;Values like these are called properties. The two properties of Car are both stored properties, which means they store actual string values for each instance of Car.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Default values&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Contact {
-  var fullName: String
-  let emailAddress: String
-  var type = &quot;Friend&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;computed-properties&quot;&gt;&lt;strong&gt;computed properties&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Some properties calculate values rather than store them; that means there’s no actual memory allocated for them, but they get calculated on-the-fly each time you access them. Naturally, these are called computed properties.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;有些属性是没有为他们分配实际的存储空间的，每次读取他们都是经过即时计算得到的。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Getter and setter&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;计算属性会默认实现get，可选实现set方法。当不写get、set关键字是默认当做get实现。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct TV {
-    var heigth : Double
-    var width : Double
-    var diagonal : Int {
-        get {
-            let result = sqrt(heigth * heigth + width * width)
-            let roundResult = result.rounded()
-            return Int(roundResult);
-        }
-        set {
-            //设定屏幕比例
-            let ratioWidth = 16.0
-            let ratioHeight = 9.0
-            //设置计算属性的值，实际上还是设置存储属性的值
-            heigth = Double(newValue) * ratioHeight / sqrt(ratioWidth * ratioWidth + ratioHeight * ratioHeight)
-            width = heigth * ratioWidth / ratioHeight
-        }
-       
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;存储属性可以是常量也可以是变量，但是计算属性只能是变量。&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;While a stored property can be a constant or a variable, a computed property must be defined as a variable&lt;/p&gt;
-  &lt;h3 id=&quot;type-properties&quot;&gt;&lt;strong&gt;Type properties&lt;/strong&gt;&lt;/h3&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;However, the type itself may also need properties that are common across all
-instances. These properties are called type properties.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;然而，类型本身也可能需要在所有的共同的属性
-实例。 这些属性称为类型属性。&lt;/p&gt;
-
-&lt;p&gt;使用 static 修饰。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Level {
-  static var highestLevel = 1
-  let id: Int
-  var boss: String
-  var unlocked: Bool
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;property-observers&quot;&gt;&lt;strong&gt;Property observers&lt;/strong&gt;&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;willSet 
-didSet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;lazy-properties&quot;&gt;&lt;strong&gt;Lazy properties&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If you have a property that might take some time to calculate, you don’t want to slow things down until you actually need the property. Say hello to the lazy stored property. This could be useful for such things as downloading a user’s profile picture or making a serious calculation.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;如果你有一个属性可能需要一些时间来计算，你不想减慢的事情，直到你实际需要的属性。 向懒惰的存储属性打个招呼吧。 这可能对下载用户的个人资料图片或进行严重的计算有用。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;struct Circle {
-  lazy var pi = {
-    return ((4.0 * atan(1.0 / 5.0)) - atan(1.0 / 239.0)) * 4.0
-  }()
-  var radius = 0.0
-  var circumference: Double {
-    mutating get {
-      return pi * radius * 2
-    }
-  }
-  init (radius: Double) {
-    self.radius = radius
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;key-points&quot;&gt;&lt;strong&gt;Key points&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Properties are variables and constants that are part of a named type.&lt;/li&gt;
-  &lt;li&gt;Stored properties allocate memory to store a value.&lt;/li&gt;
-  &lt;li&gt;Computed properties are calculated each time your code requests them and aren’t stored as a value in memory.&lt;/li&gt;
-  &lt;li&gt;The static keyword marks a type property that’s universal to all instances of a particular type.&lt;/li&gt;
-  &lt;li&gt;The lazy keyword prevents a value of a stored property from being calculated until your code uses it for the first time. You’ll want to use lazy initialization when a property’s initial value is computationally intensive or when you won’t know the initial value of a property until after you’ve initialized the object.&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Wed, 01 Mar 2017 20:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/03/01/swift06-Properties/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/03/01/swift06-Properties/</guid>
         
         <category>iOS</category>
         
