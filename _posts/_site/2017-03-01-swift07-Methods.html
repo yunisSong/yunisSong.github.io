@@ -1,0 +1,47 @@
+<p>#swift 学习（7）Methods</p>
+<blockquote>
+  <p>Methods, as you’ve already seen, are merely functions that reside inside a structure.</p>
+</blockquote>
+
+<p><strong>Comparing methods to computed properties</strong>
+使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
+<img src="/media/14881881247903/14881881273899.jpg" alt="" /></p>
+
+<h3 id="mutating-methods"><strong>mutating methods</strong></h3>
+<blockquote>
+  <p>Methods in structures cannot change the values of the instance without being marked as mutating. You can imagine a method in the Date structure that advances to the next day:</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mutating func advance() {
+    day += 1 
+}
+</code></pre>
+</div>
+
+<h3 id="type-methods"><strong>Type methods</strong></h3>
+
+<blockquote>
+  <p>Like type properties, you can use type methods to access data across all instances. You call type methods on the type itself, instead of on an instance. To define a type method, you prefix it with the static modifier.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>struct Math {
+  // 1
+  static func factorial(of number: Int) -&gt; Int {
+    // 2
+    return (1...number).reduce(1, *)
+  }
+}
+</code></pre>
+</div>
+
+<h3 id="extensions"><strong>extensions</strong></h3>
+
+<h3 id="key-points"><strong>Key points</strong></h3>
+
+<ul>
+  <li>Methods are behaviors that extend the functionality of a type.</li>
+  <li>A method is a function defined inside of a named type.</li>
+  <li>A method can access the value of an instance by using the keyword self.</li>
+  <li>Initializers are methods that aid in the creation of a new instance.</li>
+</ul>
+

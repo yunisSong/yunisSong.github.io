@@ -1,0 +1,299 @@
+<h1 id="swift-3-学习-2">swift 3 学习 （2）</h1>
+<h6 id="1当多个不同类型的数据进行操作时需要转化为形同的数据类型">1，当多个不同类型的数据进行操作时，需要转化为形同的数据类型。</h6>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">num1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">let</span> <span class="nv">num2</span> <span class="o">=</span> <span class="mf">2.3</span>
+<span class="k">var</span> <span class="nv">count</span>  <span class="o">=</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span>
+
+<span class="nv">error</span> <span class="p">:</span>
+<span class="kt">Binary</span> <span class="k">operator</span> <span class="sc">'+'</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">operands</span> <span class="n">of</span> <span class="n">type</span> <span class="err">'</span><span class="kt">Int</span><span class="err">'</span> <span class="n">and</span> <span class="err">'</span><span class="kt">Double</span><span class="err">'</span>
+
+<span class="c1">//正确做法</span>
+<span class="k">var</span> <span class="nv">count</span>  <span class="o">=</span> <span class="n">num1</span> <span class="o">+</span> <span class="kt">Int</span><span class="p">(</span><span class="n">num2</span><span class="p">)</span>
+
+
+</code></pre>
+</div>
+
+<p>因为swift有类型推导：当swift 知道你输入的类型时，你可以不写数据的类型
+Type inference allows you to omit the type when Swift already knows it.</p>
+
+<h6 id="2循环">2，循环</h6>
+<p>while 循环</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">var</span> <span class="nv">aLotOfAs</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">while</span> <span class="n">aLotOfAs</span><span class="o">.</span><span class="n">characters</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="p">{</span>
+    <span class="n">aLotOfAs</span> <span class="o">+=</span> <span class="s">"a"</span>
+<span class="p">}</span>
+
+
+<span class="k">var</span> <span class="nv">repeatCount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">repeat</span> <span class="p">{</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="s">"我是最帅的"</span><span class="p">)</span>
+    <span class="n">repeatCount</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="p">}</span> <span class="k">while</span> <span class="n">repeatCount</span> <span class="o">&lt;</span> <span class="mi">100</span>
+</code></pre>
+</div>
+<p>跳出循环
+ break</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">var</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+  <span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="p">(</span><span class="n">sum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">sum</span> <span class="o">&gt;=</span> <span class="mi">1000</span> <span class="p">{</span>
+<span class="k">break</span>
+<span class="p">}</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<p>终止本次剩余操作，继续执行下一步操作
+continue</p>
+
+<blockquote>
+  <p>The continue statement lets you finish the current iteration of a loop and begin the next iteration.</p>
+</blockquote>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..&lt;</span><span class="n">count</span><span class="p">{</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">9</span> <span class="p">{</span>
+        <span class="k">continue</span>
+    <span class="p">}</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"i = </span><span class="se">\(</span><span class="n">i</span><span class="se">)</span><span class="s"> sum = </span><span class="se">\(</span><span class="n">sum</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="cm">/*
+     i = 9 sum = 9
+     */</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h6 id="3ranges">3,Ranges</h6>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">...</span><span class="n">count</span> <span class="p">{</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span> 
+     <span class="nf">print</span><span class="p">(</span><span class="s">"i = </span><span class="se">\(</span><span class="n">i</span><span class="se">)</span><span class="s"> sum = </span><span class="se">\(</span><span class="n">sum</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="cm">/*
+     i = 1 sum = 1
+     i = 2 sum = 3
+     i = 3 sum = 6
+     i = 4 sum = 10
+     i = 5 sum = 15
+     i = 6 sum = 21
+     i = 7 sum = 28
+     i = 8 sum = 36
+     i = 9 sum = 45
+     i = 10 sum = 55
+     */</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..&lt;</span><span class="n">count</span> <span class="p">{</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span> 
+     <span class="nf">print</span><span class="p">(</span><span class="s">"i = </span><span class="se">\(</span><span class="n">i</span><span class="se">)</span><span class="s"> sum = </span><span class="se">\(</span><span class="n">sum</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="cm">/*
+     i = 1 sum = 1
+     i = 2 sum = 3
+     i = 3 sum = 6
+     i = 4 sum = 10
+     i = 5 sum = 15
+     i = 6 sum = 21
+     i = 7 sum = 28
+     i = 8 sum = 36
+     i = 9 sum = 45
+     */</span>
+<span class="p">}</span>
+
+
+<span class="k">let</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">...</span><span class="n">count</span> <span class="k">where</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"i = </span><span class="se">\(</span><span class="n">i</span><span class="se">)</span><span class="s"> sum = </span><span class="se">\(</span><span class="n">sum</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="cm">/*
+     i = 1 sum = 1
+     i = 3 sum = 4
+     i = 5 sum = 9
+     i = 7 sum = 16
+     i = 9 sum = 25
+     */</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<h6 id="4switch">4，Switch</h6>
+
+<p>选择语句</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code>
+    <span class="k">let</span> <span class="nv">number</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">switch</span> <span class="n">number</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Zero"</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+         <span class="nf">print</span><span class="p">(</span><span class="s">"Non-zero"</span><span class="p">)</span>
+    <span class="p">}</span>    
+    
+    <span class="k">let</span> <span class="nv">string</span> <span class="o">=</span> <span class="s">"Dog"</span>
+    <span class="k">switch</span> <span class="n">string</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s">"Cat"</span><span class="p">,</span> <span class="s">"Dog"</span><span class="p">:</span>
+     <span class="nf">print</span><span class="p">(</span><span class="s">"Animal is a house pet."</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Animal is not a house pet."</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">hourOfDay</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="k">let</span> <span class="nv">timeOfDay</span><span class="p">:</span> <span class="kt">String</span>
+<span class="k">switch</span> <span class="n">hourOfDay</span> <span class="p">{</span>
+<span class="k">case</span> <span class="mi">0</span><span class="o">...</span><span class="mi">5</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"Early morning"</span>
+<span class="k">case</span> <span class="mi">6</span><span class="o">...</span><span class="mi">11</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"Morning"</span>
+<span class="k">case</span> <span class="mi">12</span><span class="o">...</span><span class="mi">16</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"Afternoon"</span>
+<span class="k">case</span> <span class="mi">17</span><span class="o">...</span><span class="mi">19</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"Evening"</span>
+<span class="k">case</span> <span class="mi">20</span><span class="o">..&lt;</span><span class="mi">24</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"Late evening"</span>
+<span class="k">default</span><span class="p">:</span>
+  <span class="n">timeOfDay</span> <span class="o">=</span> <span class="s">"INVALID HOUR!"</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">number</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">switch</span> <span class="n">number</span> <span class="p">{</span>
+<span class="k">case</span> <span class="n">_</span> <span class="k">where</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Even"</span><span class="p">)</span>
+<span class="k">default</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Odd"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nv">z</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">switch</span> <span class="n">coordinates</span> <span class="p">{</span>
+<span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="c1">// 1</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Origin"</span><span class="p">)</span>
+<span class="k">case</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="c1">// 2</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"On the x-axis."</span><span class="p">)</span>
+<span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="c1">// 3</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"On the y-axis."</span><span class="p">)</span>
+<span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span> <span class="c1">// 4</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"On the z-axis."</span><span class="p">)</span>
+<span class="k">default</span><span class="p">:</span>        <span class="c1">// 5</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Somewhere in space"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">coordinates1</span> <span class="o">=</span> <span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="nv">z</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">switch</span> <span class="n">coordinates1</span> <span class="p">{</span>
+<span class="k">case</span> <span class="nf">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">where</span> <span class="n">y</span> <span class="o">==</span> <span class="nv">x</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Along the y = x line."</span><span class="p">)</span>
+<span class="k">case</span> <span class="nf">let</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">where</span> <span class="n">y</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span> <span class="nv">x</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Along the y = x^2 line."</span><span class="p">)</span>
+<span class="k">default</span><span class="p">:</span>
+    <span class="k">break</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h6 id="5函数-function">5，函数 Function</h6>
+
+<p><strong>参数</strong></p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">printMultipleOf</span><span class="p">(</span><span class="nv">multiplier</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">andValue</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">multiplier</span><span class="se">)</span><span class="s"> * </span><span class="se">\(</span><span class="n">andValue</span><span class="se">)</span><span class="s"> = </span><span class="se">\(</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">andValue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nf">printMultipleOf</span><span class="p">(</span><span class="nv">multiplier</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">andValue</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+
+
+
+<span class="kd">func</span> <span class="nf">printMultipleOf</span><span class="p">(</span><span class="nv">multiplier</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">multiplier</span><span class="se">)</span><span class="s"> * </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s"> = </span><span class="se">\(</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">printMultipleOf</span><span class="p">(</span><span class="nv">multiplier</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">and</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">printMultipleOf</span><span class="p">(</span><span class="n">_</span> <span class="nv">multiplier</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">multiplier</span><span class="se">)</span><span class="s"> * </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s"> = </span><span class="se">\(</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">printMultipleOf</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nv">and</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">//默认给value一个值 为1  当不设置value是，value值为1</span>
+<span class="kd">func</span> <span class="nf">printMultipleOf</span><span class="p">(</span><span class="n">_</span> <span class="nv">multiplier</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">multiplier</span><span class="se">)</span><span class="s"> * </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s"> = </span><span class="se">\(</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">printMultipleOf</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>带有返回类型</strong></p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">_</span> <span class="nv">number</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">by</span> <span class="nv">multiplier</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">number</span> <span class="o">*</span> <span class="n">multiplier</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="nf">multiply</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nv">by</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>函数可以有一个特殊的返回类型：Never,编译器会知道这个函数会一直运行，不会退出。</p>
+<blockquote>
+  <p>Functions can have a special Never return type to inform Swift that this function will never exit.</p>
+</blockquote>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">infiniteLoop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Never</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+<span class="p">}</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>直接修改传入参数：inout</strong></p>
+
+<p>一般说来，方法传入的参数是不能改变的。因为传入的参数相当于一个let的常量。
+如果你想直接修改传入的参数，就需要inout参数。copy-in copy-out</p>
+<blockquote>
+  <p>Parameters are passed as constants, unless you mark them as inout in which case they are copied-in and copied-out.</p>
+</blockquote>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">incrementAndPrint</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="c1">//6</span>
+<span class="p">}</span>
+
+<span class="n">参数类型前面的inout关键字表示该参数应该被复制到方法内</span><span class="err">，</span><span class="n">在函数内使用的</span> <span class="n">copy</span> <span class="n">副本</span><span class="err">，</span><span class="n">然后在函数返回时复制出来</span><span class="err">。</span>
+
+<span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nf">incrementAndPrint</span><span class="p">(</span><span class="o">&amp;</span><span class="n">value</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="c1">//6</span>
+</code></pre>
+</div>
+
+<p><strong>把函数当参数传递</strong></p>
+
+<p>函数可以作为参数传递</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">add</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">_</span> <span class="nv">b</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">_</span> <span class="nv">b</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">_</span> <span class="nv">function</span><span class="p">:</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">_</span> <span class="nv">b</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nf">printResult</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nf">printResult</span><span class="p">(</span><span class="n">subtract</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre>
+</div>
+

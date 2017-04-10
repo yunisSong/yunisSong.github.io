@@ -1,0 +1,236 @@
+<h1 id="swift-学习3">swift 学习（3）</h1>
+
+<h6 id="1optionals">1，Optionals</h6>
+
+<blockquote>
+  <p>Swift introduces a whole new type, optional, that handles the possibility a value could be nil. If you’re handling a non-optional type, then you’re guaranteed to have a value and don’t need to worry about the existence of a valid value. Similarly, if you are using an optional type then you know you must handle the nil case. It removes the ambiguity introduced by using sentinel values.</p>
+</blockquote>
+
+<blockquote>
+  <p>Optionals are Swift’s solution to the problem of representing both a value and the absence of a value. An optional type is allowed to reference either a value or nil.</p>
+</blockquote>
+
+<p>Optionals 相当于一个容器，里面可以存放一个确切存在的值或者nil。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var errorCode: Int?
+errorCode = 100
+print(errorCode)//Optional(100)
+errorCode = nil
+print(errorCode)//nil
+</code></pre>
+</div>
+
+<p>可见当errorCode 有值时，打印的是Optional(100) 并不是我们想要的 100这个值，如何获得呢。</p>
+
+<p><strong>!</strong></p>
+
+<p>可以使用!强制获得。但当值为nil的时间会报错。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> var errorCode: Int?
+errorCode = 100
+print(errorCode!)// 100
+errorCode = nil
+print(errorCode!)//报错
+</code></pre>
+</div>
+<p><strong>安全的做法</strong>
+ <strong>??</strong></p>
+
+<p>使用？？给一个默认值。当只为nil时使用默认值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> var errorCode: Int?
+errorCode = 100
+print(errorCode!)//Optional(100)
+errorCode = nil
+print(errorCode ?? 0)//0
+</code></pre>
+</div>
+
+<p><strong>Optional binding</strong></p>
+
+<blockquote>
+  <p>Swift includes a feature known as optional binding, which lets you safely access the value inside an optional. You use it like so:</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> var authorName: String? = "Matt Galloway"
+ if let unwrappedAuthorName = authorName {
+  print("Author is \(unwrappedAuthorName)")
+} else {
+  print("No author.")
+}
+</code></pre>
+</div>
+
+<h6 id="2数组">2，数组</h6>
+
+<p>相同类型的数据的有序集合。</p>
+<blockquote>
+  <p>An array is an ordered collection of values of the same type. The elements in the array are zero-indexed, which means the index of the first element is 0, the index of the second element is 1 and so on. Knowing this, you can work out that the last element’s index is the number of values in the array minus 1.</p>
+</blockquote>
+
+<p><strong>创建数组</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let evenNumbers = [2, 4, 6, 8]
+var subscribers: [String] = []
+let allZeros = [Int](repeating: 0, count: 5)
+let allY = [String](repeating: "Y", count: 5)
+let allZerosInferred = Array(repeating: 0, count: 5)
+</code></pre>
+</div>
+<p><strong>判断数组是否为空</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var players = ["Alice", "Bob", "Cindy", "Dan"]
+
+if !players.isEmpty {
+    print(players)
+}
+
+if players.count &gt; 0 {
+    print(players)
+}
+
+</code></pre>
+</div>
+<p>推荐使用isEmpty 方法，isEmpty 应该是只要判断数组中有元素，就直接返回值了，而count会把数组中所有的元素都统计一遍，然后返回。如果数组的元素非常非常多，就很耗时间了。</p>
+
+<p><strong>读取操作</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var currentPlayer = players.first
+print(currentPlayer)
+// &gt; Optional("Alice")
+
+print(players.last)
+// &gt; Optional("Dan")
+
+
+currentPlayer = players.min()
+print(currentPlayer)
+// &gt; Optional("Alice")
+</code></pre>
+</div>
+
+<p>使用下表读取</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var players = ["Alice", "Bob", "Cindy", "Dan"]
+var firstPlayer = players[0]
+var firstPlayer01 = players.first
+print(firstPlayer)//Alice
+print(firstPlayer01)//Optional("Alice")
+
+</code></pre>
+</div>
+
+<p>使用rang读取</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+var players = ["Alice", "Bob", "Cindy", "Dan"]
+var firstPlayer = players[0]
+var firstPlayer01 = players.first
+print(firstPlayer)//Alice
+print(firstPlayer01)//Optional("Alice")
+
+let upcomingPlayers = players[1...2]
+print(upcomingPlayers)
+// &gt; ["Bob", "Cindy"]
+</code></pre>
+</div>
+
+<p><strong>操作数组</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>players.append("Eli")
+players += ["Gina"]
+players.insert("Frank", at: 5)
+var removedPlayer = players.removeLast()
+removedPlayer = players.remove(at: 2)
+players[0] = "100"
+
+print(players)//["100", "Bob", "Dan", "Eli", "Frank"]
+players[0...1] = ["Donna", "Craig", "Brian", "Anna"]
+print(players)//["Donna", "Craig", "Brian", "Anna", "Dan", "Eli", "Frank"]
+</code></pre>
+</div>
+
+<p><strong>迭代</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>for player in players {
+    print(player)
+//    Donna
+//    Craig
+//    Brian
+//    Anna
+//    Dan
+//    Eli
+//    Frank
+}
+
+
+for (index, player) in players.enumerated() {
+    print("\(index + 1). \(player)")
+//    1. Donna
+//    2. Craig
+//    3. Brian
+//    4. Anna
+//    5. Dan
+//    6. Eli
+//    7. Frank
+}
+</code></pre>
+</div>
+
+<h6 id="3字典">3，字典</h6>
+
+<blockquote>
+  <p>A dictionary is an unordered collection of pairs, where each pair is comprised of a key and a value.</p>
+</blockquote>
+
+<p>字典包含键、值，键是唯一的，不同的键指向的值可以相同。键必须是同一类型，值也是同一类型。</p>
+
+<p><strong>创建字典</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var namesAndScores = ["Anna": 2, "Brian": 2, "Craig": 8, "Donna": 6]
+print(namesAndScores)
+// &gt; ["Craig": 8, "Anna": 2, "Donna": 6, "Brian": 2]
+var pairs: [String: Int] = [:]
+</code></pre>
+</div>
+
+<p><strong>判断是否为空</strong></p>
+
+<p>isEmpty</p>
+
+<p>count</p>
+
+<p>推荐使用  isEmpty 理由通array</p>
+
+<p><strong>读取</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var pairs: [String: Int] = [:]
+var namesAndScores = ["Anna": 2, "Brian": 2, "Craig": 8, "Donna": 6]
+print(namesAndScores["Anna"] ?? "测试")
+print(namesAndScores["不存在Key"] ?? "测试")
+</code></pre>
+</div>
+
+<p><strong>Modifying dictionaries</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bobData.updateValue("CA", forKey: "state")
+bobData["city"] = "San Francisco"
+</code></pre>
+</div>
+
+<p>上面两个方法的区别是updateValue 会把原有的key的值返回回来，如果之前没有这个key对应的值，返回nil。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bobData.removeValue(forKey: "city")
+bobData["city"] = nil
+</code></pre>
+</div>
+<p>上面两个方法的区别是removeValue 会把原有的key的值返回回来，如果之前没有这个key对应的值，返回nil。</p>
+
+<p><strong>迭代</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>for (player, score) in namesAndScores {
+    print("\(player) - \(score)")
+}
+</code></pre>
+</div>
+
