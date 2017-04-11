@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（9）Enumerations - 三十一的博客 | Yunis Blog</title>
+    <title>使用脚本做一些重复的事情 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift09-Enumerations/">
+    <link rel="canonical" href="http://localhost:4000/2017/04/10/%E8%84%9A%E6%9C%AC/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,17 +181,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        <a class="tag" href="/tags/#Shell" title="Shell">Shell</a>
                         
                     </div>
-                    <h1>swift 学习（9）Enumerations</h1>
+                    <h1>使用脚本做一些重复的事情</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on April 10, 2017</span>
                 </div>
             </div>
         </div>
@@ -209,220 +207,45 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（9）Enumerations
-[toc]</p>
-<blockquote>
-  <p>An enumeration is a list of related values that define a common type and let you work with values in a type-safe way.
-枚举是定义一个公共类型的相关值的列表，可让您以类型安全的方式使用值。</p>
-</blockquote>
+				<h1 id="使用脚本做一些重复的事情">使用脚本做一些重复的事情</h1>
+<p>使用的这个模板建立了<a href="https://yunissong.github.io/">这个博客</a>以后，发现每篇文章前面都需要加入默认的文件头，每次都需要从其他的文件复制过来，就想着能不能使用脚本来完成。于是就边搜索边捣鼓出来了这样一个脚本，请勿见笑。</p>
 
-<h4 id="声明枚举"><strong>声明枚举</strong></h4>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#!bin/sh</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month {
-  case january
-  case february
-  case march
-  case april
-  case may
-  case june
-  case july
-  case august
-  case september
-  case october
-  case november
-  case december
-}
+<span class="c">#进入当前目录</span>
+<span class="nv">basepath</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span> <span class="sb">`</span>dirname <span class="nv">$0</span><span class="sb">`</span>; <span class="nb">pwd</span><span class="k">)</span>
 
-enum Month {
-  case january, february, march, april, may, june, july, august,
-  september, october, november, december
-}
-</code></pre>
-</div>
+<span class="c">#读取当前时间</span>
+<span class="nv">DATE</span><span class="o">=</span><span class="k">$(</span>date +%Y-%m-%d<span class="k">)</span><span class="s2">" "</span><span class="k">$(</span>date +%H:%M:%S<span class="k">)</span>
+<span class="nv">Year</span><span class="o">=</span><span class="k">$(</span>date +%Y-%m-%d<span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">"输入文章标题"</span>
+<span class="nb">read </span>name
+<span class="c">#拼接得到文件名称</span>
+<span class="nv">filename</span><span class="o">=</span><span class="k">${</span><span class="nv">Year</span><span class="k">}</span><span class="s1">'-'</span><span class="k">${</span><span class="nv">name</span><span class="k">}</span><span class="s1">'.md'</span>
+<span class="c">#创建文件</span>
+touch <span class="nv">$filename</span>
 
-<p>声明带有计算属性的枚举</p>
+<span class="c">#写入默认 文件头 到文件</span>
+<span class="nb">echo</span> <span class="s2">"---
+layout:     post
+title:      </span><span class="nv">$name</span><span class="s2">
+subtitle:   "</span>在不断填坑中前进。。<span class="s2">"
+date:       </span><span class="nv">$DATE</span><span class="s2">
+author:     "</span>三十一<span class="s2">"
+header-img: "</span>img/post-bg-nextgen-web-pwa.jpg<span class="s2">"
+header-mask: 0.3
+catalog:    true
+tags:
+- iOS
+- Swift
+---"</span> &gt;&gt; ./<span class="nv">$filename</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month {
-    case january, february, march, april, may, june, july, august,
-    september, october, november, december
-    //let semester = month.semester // "Autumn"
-    var semester : String {
-        switch self {
-        case .august, .september, .october, .november, .december:
-            return "Autumn"
-        case .january, .february, .march, .april, .may:
-            return "Spring"
-        case .june, .july:
-            return "Summer"
-        }
-    }
-    
-}
-var month = Month.april
-month = .september
-let semester = month.semester // "Autumn"
-</code></pre>
-</div>
+<span class="c">#打开文件进行编辑</span>
+open <span class="nv">$filename</span>
 
-<h4 id="raw-values"><strong>Raw values</strong></h4>
-<blockquote>
-  <p>Unlike enumeration values in C, Swift enum values are not backed by integers as a default. 
-与C中的枚举值不同，Swift枚举值默认不支持整数。</p>
-</blockquote>
-
-<p>需要手动设定</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month: Int {
-  case january = 1, february, march, april, may, june, july,
-  august, september, october, november, december
-}
-
-Month.october.rawValue // 10
 
 </code></pre>
 </div>
-
-<h4 id="initializing-with-the-raw-value"><strong>Initializing with the raw value</strong></h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>let fifthMonth = Month(rawValue: 5)
-monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
-
- let fifthMonth = Month(rawValue: 5)!
-monthsUntilWinterBreak(from: fifthMonth)  // 7
-</code></pre>
-</div>
-<h4 id="string-raw-values"><strong>String raw values</strong></h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Icon: String {
-  case music
-  case sports
-  case weather
-  var filename: String {
-    // 2
-    return "\(rawValue.capitalized).png"
-  }
-}
-let icon = Icon.weather
-icon.filename // Weather.png
-</code></pre>
-</div>
-
-<h4 id="associated-values"><strong>Associated values</strong></h4>
-
-<ul>
-  <li>每个枚举值都有0个或者多个关联值</li>
-  <li>每个枚举值的关联值都有自己的数据类型</li>
-  <li>你可以像定义方法参数一样定义关联值</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum WithdrawalResult {
-  case success(newBalance: Int)
-  case error(message: String)
-}
-
-let result = WithdrawalResult.success(newBalance: 100)
-//let result = WithdrawalResult.error(message: "测试错误数据")
-
-switch result {
-case .success(let newBalance):
-    print("Your new balance is: \(newBalance)")
-case .error(let message):
-    print(message)
-}
-
-
-switch result {
-case .success(let newBalance):
-  print("Your new balance is: \(newBalance)")
-case .error(let message):
-  print(message)
-}
-
-//多个关联值
-enum WithdrawalResult {
-    case success(newBalance: Int,parameters: Int)
-    case error(message: String)
-}
-</code></pre>
-</div>
-
-<p>特殊的条件判断</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum HTTPMethod {
-  case get
-  case post(body: String)
-}
-
-let request = HTTPMethod.post(body: "Hi there")
-/* 
- In this code, guard case checks to see 
- if request contains the post enumeration case and if so,
- reads and binds the associated value.
- guard case 判断 request 是否是post ，如果是post，读取并且关联值到body
- */
-guard case .post(let body) = request else {
-  fatalError("No message was posted")
-}
-print(body)
-
-//与上面语句判断等同
-if case .post(let body) = request  {
-    print(body)
-
-}
-
-</code></pre>
-</div>
-<h4 id="optionals"><strong>Optionals</strong></h4>
-<p>Optionals 的底层实现就是枚举，只是编译器隐藏了实现细节，包括可选值绑定 ？ 和 ！ 操作符，以及nil的实现。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var age: Int?
-age = 17
-age = nil
-
-switch age {
-case .none:
-  print("No value")
-case .some(let value):
-  print("Got a value: \(value)")
-}
-
-if let age = age {
-    print("\(age)")//17
-
-}
-
-if (age != nil)  {
-    print("\(age)")//Optional(17)
-
-}
-
-error
-//Optional type 'Int?' cannot be used as a boolean; test for '!= nil' instead
-if age {
-    print("\(age)")
-
-}
-
-</code></pre>
-</div>
-
-<h4 id="key-points"><strong>Key points</strong></h4>
-
-<ul>
-  <li>
-    <p>An enumeration is a list of related values that define a common type. 枚举是定义公共类型的相关值的列表。</p>
-  </li>
-  <li>
-    <p>Enumerations provide an alternative to old-fashioned integer values.枚举提供了一种替代老式整数值的方法</p>
-  </li>
-  <li>
-    <p>You can use enumerations to handle responses, store state and encapsulate values.您可以使用枚举来处理响应，存储状态和封装值。</p>
-  </li>
-  <li>
-    <p>Case-less enumerations prevent the creation of instances.枚举里枚举值为空不允许创建实例。</p>
-  </li>
-</ul>
 
 
 
@@ -434,17 +257,17 @@ if age {
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift08-Class/" data-toggle="tooltip" data-placement="top" title="swift 学习（8）Class">
+                        <a href="/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" data-toggle="tooltip" data-placement="top" title="深入浅出iOS事件机制">
                         Previous<br>
-                        <span>swift 学习（8）Class</span>
+                        <span>深入浅出iOS事件机制</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/03/01/swift10-Protocols/" data-toggle="tooltip" data-placement="top" title="swift 学习（10）Protocols">
+                        <a href="/2017/04/11/%E4%BD%BF%E7%94%A8Swift%E5%81%9A%E4%B8%80%E4%BA%9B%E9%87%8D%E5%A4%8D%E6%80%A7%E7%9A%84%E5%B7%A5%E4%BD%9C/" data-toggle="tooltip" data-placement="top" title="使用Swift做一些重复性的工作">
                         Next<br>
-                        <span>swift 学习（10）Protocols</span>
+                        <span>使用Swift做一些重复性的工作</span>
                         </a>
                     </li>
                     
