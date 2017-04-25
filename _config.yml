@@ -87,11 +87,27 @@ service-worker: true
 
 
 
-# Friends
-#friends: [
- #   {
- #       title: "Su",
- #       href: "http://su.gallery/"
- #   },
+Friends
+friends: [
+   {
+       title: "sindri的小巢",
+       href: "http://sindrilin.com/"
+   },
+    {
+       title: "onevcat",
+       href: "https://onevcat.com/#blog"
+   },
+    {
+       title: "ObjC 中国",
+       href: "https://objccn.io/issues/"
+   },
+    {
+       title: "Draveness",
+       href: "http://draveness.me/"
+   },
+    {
+       title: "我就叫Sunny怎么了",
+       href: "http://blog.sunnyxx.com/"
+   },
         
-#]
+]
