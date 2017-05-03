@@ -109,5 +109,14 @@ friends: [
        title: "我就叫Sunny怎么了",
        href: "http://blog.sunnyxx.com/"
    },
+   {
+       title: "nixzhu",
+       href: "https://github.com/nixzhu/dev-blog"
+   },
+    {
+       title: "Draveness",
+       href: "http://draveness.me/"
+   },
+
         
 ]
