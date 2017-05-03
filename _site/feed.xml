@@ -5,8 +5,8 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 03 May 2017 15:26:23 +0800</pubDate>
-    <lastBuildDate>Wed, 03 May 2017 15:26:23 +0800</lastBuildDate>
+    <pubDate>Wed, 03 May 2017 16:38:48 +0800</pubDate>
+    <lastBuildDate>Wed, 03 May 2017 16:38:48 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
@@ -31,6 +31,63 @@
 &lt;h4 id=&quot;具体如何实现&quot;&gt;具体如何实现&lt;/h4&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/SYrequest.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;提供调用的方法：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (apiAddress )requestURLString;
++ (apiAddress)Get;
++ (apiAddress)Post;
+- (apiAddress )requestURLString;
+- (apiAddress)Get;
+- (apiAddress)Post;
+
+- (head)addHeadersy;
+- (params)addParameters;
+- (body)addBody;
+- (httpMethod)httpMethod;
+- (parameterEncoding)addParameterEncoding;
+
+- (startRequest)start;
+- (cancelRequest)cancel;
+- (suspendRequest)suspend;
+- (resumeRequest)resume;
+
+
+- (response)response;
+
+
+- (void)clearCompletionBlock;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用示例：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    SYRequest *requset = [[SYRequest alloc] init];
+    requset.requestURLString(@&quot;https://www.metaweather.com/api/location/search/&quot;)
+            .httpMethod(SYHTTPMethod_GET)
+            .addParameters(@{@&quot;query&quot;:@&quot;sa&quot;})
+            .start(^(BOOL sucess,id responseData,NSError *error){
+                NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                NSLog(@&quot;jsonDic = %@&quot;,jsonDic);
+            });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;或者：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    SYRequest.requestURLString(@&quot;https://www.metaweather.com/api/location/search/&quot;)
+    .httpMethod(SYHTTPMethod_GET)
+    .addParameters(@{@&quot;query&quot;:@&quot;sa&quot;})
+    .start(^(BOOL sucess,id responseData,NSError *error){
+        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+        NSLog(@&quot;jsonDic = %@&quot;,jsonDic);
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;具体的就没什么说的，实现起来就是这样： &lt;code class=&quot;highlighter-rouge&quot;&gt;方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）&lt;/code&gt;,只要按照这个条件写，就可以写出一个自己的链式库。&lt;/p&gt;
+
+&lt;p&gt;具体代码地址 &lt;a href=&quot;https://github.com/yunisSong/SYRequest&quot;&gt;SYRequest&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 25 Apr 2017 00:00:00 +0800</pubDate>

@@ -228,6 +228,63 @@
 
 <p><img src="/img/SYrequest.png" alt="" /></p>
 
+<p>提供调用的方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+ (apiAddress )requestURLString;
++ (apiAddress)Get;
++ (apiAddress)Post;
+- (apiAddress )requestURLString;
+- (apiAddress)Get;
+- (apiAddress)Post;
+
+- (head)addHeadersy;
+- (params)addParameters;
+- (body)addBody;
+- (httpMethod)httpMethod;
+- (parameterEncoding)addParameterEncoding;
+
+- (startRequest)start;
+- (cancelRequest)cancel;
+- (suspendRequest)suspend;
+- (resumeRequest)resume;
+
+
+- (response)response;
+
+
+- (void)clearCompletionBlock;
+</code></pre>
+</div>
+
+<p>使用示例：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    SYRequest *requset = [[SYRequest alloc] init];
+    requset.requestURLString(@"https://www.metaweather.com/api/location/search/")
+            .httpMethod(SYHTTPMethod_GET)
+            .addParameters(@{@"query":@"sa"})
+            .start(^(BOOL sucess,id responseData,NSError *error){
+                NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+                NSLog(@"jsonDic = %@",jsonDic);
+            });
+</code></pre>
+</div>
+
+<p>或者：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    SYRequest.requestURLString(@"https://www.metaweather.com/api/location/search/")
+    .httpMethod(SYHTTPMethod_GET)
+    .addParameters(@{@"query":@"sa"})
+    .start(^(BOOL sucess,id responseData,NSError *error){
+        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+        NSLog(@"jsonDic = %@",jsonDic);
+    });
+</code></pre>
+</div>
+
+<p>具体的就没什么说的，实现起来就是这样： <code class="highlighter-rouge">方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）</code>,只要按照这个条件写，就可以写出一个自己的链式库。</p>
+
+<p>具体代码地址 <a href="https://github.com/yunisSong/SYRequest">SYRequest</a></p>
+
 
 
                 <hr style="visibility: hidden;">
@@ -355,6 +412,10 @@
                         <li><a href="http://draveness.me/">Draveness</a></li>
                     
                         <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
                     
                 </ul>
                 
