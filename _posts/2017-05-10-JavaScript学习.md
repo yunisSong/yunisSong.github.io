@@ -16,7 +16,7 @@ tags:
 > 开始观看这系列文章 
   [从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件](https://yq.aliyun.com/articles/30980)
  
-### `<script>` 与 `</script>` 标签 
+### `script` 标签 
 HTML的脚本必须位于 `<script>` 和 `</script>` 之中。
 
 ```
