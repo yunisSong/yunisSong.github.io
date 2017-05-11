@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-js-version.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+        background-image: url('/img/post-bg-js-version.jpg')
     }
 
     
@@ -268,7 +268,7 @@
 <p><code class="highlighter-rouge">JavaScript</code> 中的变量是松散类型，就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是一个用于保存值的占位符。未初始化的变量，会保存一个特殊值 <code class="highlighter-rouge">undefined</code>。变量在初始化后，可以改变变量的类型，虽然并不推荐，但是这样做是可以的。</p>
 
 <h4 id="数据类型">数据类型</h4>
-<p><code class="highlighter-rouge">JavaScript</code> 中包括5种简单的数据类型 <code class="highlighter-rouge">Undefined、Null、Boolean、Number、String</code>。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 <code class="highlighter-rouge">Object</code>，<code class="highlighter-rouge">Object</code> 本质是有一组无序的键值对组成的。<code class="highlighter-rouge">JavaScript</code> 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 <code class="highlighter-rouge">JavaScript</code> 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。</p>
+<p><code class="highlighter-rouge">JavaScript</code> 中包括5种简单的数据类型 <code class="highlighter-rouge">Undefined</code>、<code class="highlighter-rouge">Null</code>、<code class="highlighter-rouge">Boolean</code>、<code class="highlighter-rouge">Number</code>、<code class="highlighter-rouge">String</code>。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 <code class="highlighter-rouge">Object</code>，<code class="highlighter-rouge">Object</code> 本质是有一组无序的键值对组成的。<code class="highlighter-rouge">JavaScript</code> 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 <code class="highlighter-rouge">JavaScript</code> 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。</p>
 
 <h5 id="typeof-操作符">typeof 操作符</h5>
 <p>typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
@@ -399,11 +399,11 @@ parseFloat("3.125e7"); //31250000
 ###### 转换为字符串
 要把一个值转换为字符串有两种方法：
 
-* 第一种是几乎每个值都有的 toString() 方法。
-* 在不知道要转换的值是不是 null 或 undefined 的情况下，还可以使用 String() ，这个函数可以将任何类型转换为字符串。String() 函数遵循以下规则：
-    1. 如果值有 toString() 方法，使用 toString() 方法并返回响应结果；
-    2. 如果值是 null ，则返回 "null";
-    3. 如果值是 undefined ，则返回 "undefined"
+* 第一种是几乎每个值都有的 `toString()` 方法。
+* 在不知道要转换的值是不是 `null` 或 `undefined` 的情况下，还可以使用 `String()` ，这个函数可以将任何类型转换为字符串。`String()` 函数遵循以下规则：
+    1. 如果值有 `toString()` 方法，使用 `toString()` 方法并返回响应结果；
+    2. 如果值是 `null` ，则返回 "null";
+    3. 如果值是 `undefined` ，则返回 "undefined"
 
 
 
@@ -437,20 +437,57 @@ alert(String(value4));// "undefined"
 
 <h5 id="object-类型">Object 类型</h5>
 
-<p>ECMAScript 中对象其实就是一组数据和功能的集合。对象可以通过执行 new 操作符后跟要创建的对象类型名称来创建。
-object 的每一个实例都有如下方法。</p>
+<p><code class="highlighter-rouge">ECMAScript</code> 中对象其实就是一组数据和功能的集合。对象可以通过执行 <code class="highlighter-rouge">new</code> 操作符后跟要创建的对象类型名称来创建。
+<code class="highlighter-rouge">object</code> 的每一个实例都有如下方法。</p>
 
 <ul>
-  <li>constructor 保存着用于创建当前对象的函数</li>
-  <li>hasOwnProperty(propertyName) 用于检测 propertyName 是否在当前实例的属性中。</li>
-  <li>isPrototypeOf(object) 用于检测传入的对象 object 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。</li>
-  <li>propertyIsEnumerable(propertyName) 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute</li>
-  <li>toLocaleString() 返回对象的字符串表示，该字符串与执行环境的地区对应。</li>
-  <li>toString() 返回对象的字符串表示</li>
-  <li>valueOf() 返回对象的字符串、数值、布尔值表示 。通常与 toString() 方法的返回值一致。</li>
+  <li><code class="highlighter-rouge">constructor</code> 保存着用于创建当前对象的函数</li>
+  <li><code class="highlighter-rouge">hasOwnProperty(propertyName)</code> 用于检测 <code class="highlighter-rouge">propertyName</code> 是否在当前实例的属性中。</li>
+  <li><code class="highlighter-rouge">isPrototypeOf(object)</code> 用于检测传入的对象 <code class="highlighter-rouge">object</code> 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。</li>
+  <li><code class="highlighter-rouge">propertyIsEnumerable(propertyName)</code> 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute</li>
+  <li><code class="highlighter-rouge">toLocaleString()</code> 返回对象的字符串表示，该字符串与执行环境的地区对应。</li>
+  <li><code class="highlighter-rouge">toString()</code> 返回对象的字符串表示</li>
+  <li><code class="highlighter-rouge">valueOf()</code> 返回对象的字符串、数值、布尔值表示 。通常与 <code class="highlighter-rouge">toString()</code> 方法的返回值一致。</li>
 </ul>
 
-<h4 id="操作符">操作符</h4>
+<h4 id="函数">函数</h4>
+<h5 id="理解参数">理解参数</h5>
+<p><code class="highlighter-rouge">JavaScript</code> 中函数的参数与其他大多数语言不同，<code class="highlighter-rouge">JavaScript</code> 函数不介意传递的参数有多少个，也不在乎传递过来的是什么类型。出现这样的原因是，<code class="highlighter-rouge">JavaScript</code> 中参数在内部通过数组来表示的。函数接收到的始终是一个数组，而不关心数组的个数、以及数组里面的数据类型。在函数体内部，可以使用 <code class="highlighter-rouge">arguments</code> 对象来访问参数数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function howManyArgs() {
+    alert(arguments.length);
+}
+howManyArgs("string", 45);  //2
+howManyArgs();              //0
+howManyArgs(12);            //1
+</code></pre>
+</div>
+<h5 id="没有重载">没有重载</h5>
+<p><code class="highlighter-rouge">JavaScript</code> 没有传统意义的那样实现重载。
+如果在 <code class="highlighter-rouge">JavaScript</code> 定义两个名字完全相同的函数，则改名字只属于后定义的函数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function addSomeNumber(num){
+    return num + 100;
+}
+function addSomeNumber(num) {
+    return num + 200;
+}
+var result = addSomeNumber(100);//300
+</code></pre>
+</div>
+
+<h4 id="小结">小结</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">JavaScript</code> 中基本的数据类型包括 <code class="highlighter-rouge">Undefined</code>、<code class="highlighter-rouge">Null</code>、<code class="highlighter-rouge">Boolean</code>、<code class="highlighter-rouge">Number</code>、<code class="highlighter-rouge">String</code>。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 中没有区分 整数和浮点数，Number 用于表示所有数值。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 中的复杂数据类型 <code class="highlighter-rouge">Object</code> 类型，是这门语言中所有对象的基础类型。</li>
+  <li>严格模式为这门语言容易出错的地方加了限制。</li>
+  <li>无需指定函数的返回值，<code class="highlighter-rouge">JavaScript</code> 的函数可以在任何时间返回任何值。实际上未指定返回值的函数返回的是一个特殊的 <code class="highlighter-rouge">undefined</code> 值。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 也没有函数签名的概念，因为其函数参数是一个包含零个过多个值的数组形式传递的。</li>
+  <li>可以向 <code class="highlighter-rouge">JavaScript</code> 的函数传递任意数量的参数，可以通过 <code class="highlighter-rouge">arguments</code> 对象来访问参数。</li>
+  <li>由于不存在函数签名的特性，<code class="highlighter-rouge">JavaScript</code> 函数不能重载。</li>
+</ul>
 
 
 
@@ -468,6 +505,13 @@ object 的每一个实例都有如下方法。</p>
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计(第3版)读书笔记02">
+                        Next<br>
+                        <span>Javascrpt高级程序设计(第3版)读书笔记02</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -569,7 +613,7 @@ object 的每一个实例都有如下方法。</p>
                             
         				
                             
-                				<a href="/tags/#JavaScript" title="JavaScript" rel="2">
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="3">
                                     JavaScript
                                 </a>
                             

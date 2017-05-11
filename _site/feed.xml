@@ -5,9 +5,202 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 11 May 2017 14:04:15 +0800</pubDate>
-    <lastBuildDate>Thu, 11 May 2017 14:04:15 +0800</lastBuildDate>
+    <pubDate>Thu, 11 May 2017 17:44:40 +0800</pubDate>
+    <lastBuildDate>Thu, 11 May 2017 17:44:40 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>Javascrpt高级程序设计(第3版)读书笔记02</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计第3版读书笔记02&quot;&gt;Javascrpt高级程序设计(第3版)读书笔记02&lt;/h1&gt;
+
+&lt;h2 id=&quot;变量作用域和内存问题&quot;&gt;变量、作用域和内存问题&lt;/h2&gt;
+&lt;h3 id=&quot;基本类型和引用类型的值&quot;&gt;基本类型和引用类型的值&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 存在两种不同的数据类型的值：&lt;code class=&quot;highlighter-rouge&quot;&gt;基本类型值&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;引用类型值&lt;/code&gt;。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;基本类型值&lt;/code&gt; 指的是简单的数据段，为 &lt;code class=&quot;highlighter-rouge&quot;&gt;引用类型值&lt;/code&gt; 指那些可能由多个值构成的对象。
+引用类型的值是保存在内存中的对象，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不允许直接访问内存中的位置，也就是不能直接操作对象的内存空间。操作对象时，实际是操作对象的引用而不是实际对象。（这种说法并不严格，当复制保存对象的某个变量时，操作的是对象的引用，但在为对象添加属性时，操作的是实际的对象。）&lt;/p&gt;
+&lt;h4 id=&quot;动态的属性&quot;&gt;动态的属性&lt;/h4&gt;
+&lt;p&gt;可以在 引用类型 创建后，对他添加属性和方法。&lt;/p&gt;
+&lt;h4 id=&quot;复制变量值&quot;&gt;复制变量值&lt;/h4&gt;
+&lt;p&gt;基本数据类型的复制是直接复制了一份值，引用数据类型，是复制了引用对象的指针，而不是引用对象本身。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; var obj1 = new Object();
+    var obj2 = obj1;
+    obj1.name = &quot;Nicholas&quot;;
+    alert(obj2.name);  //&quot;Nicholas&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;传递参数&quot;&gt;传递参数&lt;/h4&gt;
+&lt;p&gt;JavaScript 中的参数都是按照值传递的。&lt;/p&gt;
+
+&lt;h4 id=&quot;检查类型&quot;&gt;检查类型&lt;/h4&gt;
+&lt;p&gt;要检查一个变量是不是基本的数据类型，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 是最佳的工具。而通常我们需要的是知道这个对象是什么类型的对象，这个时间，就需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;result = variable instanceof constructor
+
+alert(person instanceof Object); //变量 person 是 Object 吗？
+alert(colors instanceof Array); //变量 colors 是 Array 吗？
+alert(pattern instanceof RegExp); //变量 pattern 是 RegExp 吗？
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;执行环境及作用域&quot;&gt;执行环境及作用域&lt;/h2&gt;
+
+&lt;p&gt;在一个页面中，第一次载入JS代码时创建一个全局执行环境，全局执行环境是最外围的执行环境，在Web浏览器中，全局执行环境被认为是window对象。因此，所有的全局变量和函数都是作为window对象的属性和方法创建的。
+每进入一个执行环境，都会建立一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象（Variable Object）&lt;/code&gt;，环境中定义的变量和函数都保存在这个对象中。虽然我们编写的代码无法直接访问它，但是解析器在处理数据时在后台使用它。
+每个函数都有自己的执行环境。当执行流进入一个函数时，函数的环境就会被推入一个环境栈中，当函数执行完毕，栈将环境弹出，把控制权返还给之前的执行环境。
+当代码在一个执行环境中执行时，会创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象(Variable Object)&lt;/code&gt; 的一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt; 的用途是保证对执行环境有权访问的所有变量和函数的有序访问。 &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt; 的顶端始终是当前执行代码所在环境的&lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象(Variable Object)&lt;/code&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        var color = &quot;blue&quot;;
+        function changeColor() {
+            var anotherColor = &quot;red&quot;;
+            function swapColors() {
+                var tempColor = anotherColor;
+                anotherColor = color;
+                color = tempColor;
+                //这里可以访问 color anotherColor和tempColor
+            }
+            //  这里可以访问color anotherColor，但不能访问tempColor
+            swapColors();
+        }
+        //这里只能访问 color
+        changeColor();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;如果这个环境是函数（如 swapColors()），则将其活动对象（activation object)作为变量对象。活动对象在最开始时只包含一个变量，就是函数内部的arguments对象。作用域链中的下一个Variable Object来自该函数(swapColors())的包含环境（也就是changeColor())，而再下一个Variable object来自再下一个包含环境。这样，一直延续到全局执行环境，全局执行环境的Variable Object始终是作用域链中的最后一个对象&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/ScopeChain.png&quot; alt=&quot;ScopeChain&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;全局环境有1个变量color和1个函数changecolor()。&lt;/li&gt;
+  &lt;li&gt;changecolor()函数的局部环境中具有1个anothercolor属性和1个swapcolors函数，当然，changecolor函数中可以访问自身以及它外围（也就是全局环境）中的变量。&lt;/li&gt;
+  &lt;li&gt;swapcolor()函数的局部环境中具有1个变量tempcolor。在该函数内部可以访问上面的2个环境（changecolor和window）中的所有变量，因为那2个环境都是它的父执行环境。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;通过上面的分析，我们可以得知内部环境可以通过作用域链访问所有的外部环境，但外部环境不能访问内部环境中的任何变量和函数。这些环境之间是线性、有次序的。每个环境都可以向上搜索作用域链，以便查询变量和函数名；但任何环境不能通过向下搜索作用域链条而进入另一个执行环境。对于上述例子的swapcolor()函数而言，其作用域链包括：swapcolor()的变量对象、changecolor（）变量对象和全局对象。swapcolor（）的局部环境开始先在自己的Variable Object中搜索变量和函数名，找不到，则向上搜索changecolor作用域链。。。。。以此类推。但是，changecolor()函数是无法访问swapcolor中的变量。&lt;/p&gt;
+
+&lt;h3 id=&quot;延长作用域链&quot;&gt;延长作用域链&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript&lt;/code&gt; 的执行环境的类型共有两种：全局和局部（函数）。不过可以通过别的方法来延长作用域链。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;try-catch语句的catch块&lt;/li&gt;
+  &lt;li&gt;with语句&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;对于catch语句来说，会创建一个新的变量对象，其中包含的是被抛出的错误对象的声明。在IE8及之前的javascript实现中，存在一个与标准不一样的地方，即在catch语句中捕获的错误对象会被添加到执行环境的变量对象，而不是catch语句的变量对象中。换句话说，即使是在catch块的外部也可以访问到错误对象。IE9中修复了这个问题。也就是说，在IE9以后的版本中，只能在catch的内部访问到错误对象。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;person={name:&quot;yhb&quot;,age:22,height:175,wife:{name:&quot;lwy&quot;,age:21}};  
+with(person.wife){  
+    console.log(name);  
+}  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;with语句将person.wife添加到当前作用域链的头部，所以输出的就是：“lwy”.
+with语句主要用来临时扩展作用域链，将语句中的对象添加到作用域的头部。&lt;/p&gt;
+
+&lt;h3 id=&quot;没有块级作用域&quot;&gt;没有块级作用域&lt;/h3&gt;
+&lt;p&gt;在其他语言中，由 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;&lt;/code&gt; 包含的代码块有自己的作用域，但是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持块级作用域。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (true) {
+    // color 会被加入离它最近的执行环境中。
+     var color = &quot;blue&quot;;
+}
+alert(color);    //&quot;blue&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;声明变量&quot;&gt;声明变量&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function add(num1, num2) {
+    var sum = num1 + num2;
+    return sum; 
+}
+var result = add(10, 20); //30
+alert(sum); //由于sum 不是有效的变量，因此会导致错误。
+
+
+function add(num1, num2) {
+    //如果不添加 var 关键字，sum 会被添加到全局环境中。
+    sum = num1 + num2;
+    return sum; 
+}
+var result = add(10, 20); //30 
+alert(sum); //30 
+        
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;查找标识符&quot;&gt;查找标识符&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var scope=&quot;global&quot;;  
+function t(){  
+    console.log(scope);  //输出undefined
+    var scope=&quot;local&quot;  
+    console.log(scope); //输出  local
+}  
+t(); 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;第一句输出的是： “undefined”，而不是 “global”
+第二讲输出的是：”local”
+  你可能会认为第一句会输出：”global”,因为代码还没执行var scope=”local”,所以肯定会输出“global”。
+  我说这想法完全没错，只不过用错了对象。我们首先要区分&lt;code class=&quot;highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;的函数作用域与我们熟知的C/C++等的块级作用域。
+  在C/C++中，花括号内中的每一段代码都具有各自的作用域，而且变量在声明它们的代码段之外是不可见的。而&lt;code class=&quot;highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;压根没有块级作用域，而是函数作用域.
+所谓函数作用域就是说：-》变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。
+所以根据函数作用域的意思，可以将上述代码重写如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var scope=&quot;global&quot;;  
+function t(){  
+    var scope;  
+    console.log(scope);  
+    scope=&quot;local&quot;  
+    console.log(scope);  
+}  
+t(); 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;垃圾搜集&quot;&gt;垃圾搜集&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 具有自动垃圾收集机制，采用的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;标记清除(mark-and-sweep)&lt;/code&gt;,当变量进入环境，就将标量标记为 “进入环境”，理论上来说，只要被标记为 “进入环境” 就不会释放变量占用的内存，而当变量离开环境是，将其标记为 “离开环境”。&lt;/p&gt;
+
+&lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 变量可以用来保存两种类型的值：基本类型和引用类型。&lt;/li&gt;
+  &lt;li&gt;基本类型在内存中占用固定大小，因此被保存在栈内存中。&lt;/li&gt;
+  &lt;li&gt;从一个变量向另一个变量复制基本类型的值，会创建这个值的一个副本。&lt;/li&gt;
+  &lt;li&gt;引用类型的值是对象，保存在堆内存中。&lt;/li&gt;
+  &lt;li&gt;包含引用类型值的变量实际上包含的并不是对象本身，而是一个指向该对象的指针。&lt;/li&gt;
+  &lt;li&gt;从一个变量向另一个变量复制引用类型的值，复制的其实是指针，因此两个变量最终都指向同一个对象。&lt;/li&gt;
+  &lt;li&gt;确定一个值是那种基本的类型可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 操作符，而确定一个值是哪种引用类型可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所有的变量都存在于一个执行环境（也就是作用域）当中，这个执行环境决定了变量的声明周期，以及哪部分代码可以访问其中的变量。以下是关于执行环境总结：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;执行环境有全局执行环境和函数执行环境。&lt;/li&gt;
+  &lt;li&gt;每一次进入一个新的执行环境，都会创建一个用于搜索变量和函数的作用域链。&lt;/li&gt;
+  &lt;li&gt;函数的局部环境不仅有权访问函数作用域的变量，而且有权访问其包含环境（父环境），乃至全局环境。&lt;/li&gt;
+  &lt;li&gt;全局环境只能访问全局环境中定义的变量和函数，不能直接访问局部环境的任何数据。&lt;/li&gt;
+  &lt;li&gt;变量的执行环境有助于确定应该何时释放内存。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;JavaScript 是一门自动回收垃圾的语言，开发人员不用关心内存分配和回收的问题。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;离开作用域的值将被自动标记为可以回收，因此 将在垃圾回收期间被删除。&lt;/li&gt;
+  &lt;li&gt;”标记清除“是目前主流的垃圾收集算法，这种算法的思想是给当前不使用的值加上标记，然后在回收其内存。&lt;/li&gt;
+  &lt;li&gt;另一种垃圾收集算法是”引用计数“，这种算法的思想是跟踪记录所有值被引用的次数。 JavaScript 引擎目前都不再使用这种算法，但在IE 中访问非原生的 JavaScript 对象（如 DOM 元素）时，这种算法仍然可能导致问题。&lt;/li&gt;
+  &lt;li&gt;但代码中出现循环引用时的，”引用计数”的算法就会导致问题。&lt;/li&gt;
+  &lt;li&gt;解除变量的引用不仅有助于消除循环引用的现象，而且对垃圾回收也有好处。为了确保有效的回收内存，应该及时的解除不在使用的全局变量、全局对象属性已经循环引用变量的引用。&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</guid>
+        
+        <category>JavaScript</category>
+        
+        
+      </item>
     
       <item>
         <title>Javascrpt高级程序设计(第3版)读书笔记01</title>
@@ -72,7 +265,7 @@
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的变量是松散类型，就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是一个用于保存值的占位符。未初始化的变量，会保存一个特殊值 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;。变量在初始化后，可以改变变量的类型，虽然并不推荐，但是这样做是可以的。&lt;/p&gt;
 
 &lt;h4 id=&quot;数据类型&quot;&gt;数据类型&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中包括5种简单的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined、Null、Boolean、Number、String&lt;/code&gt;。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 本质是有一组无序的键值对组成的。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中包括5种简单的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 本质是有一组无序的键值对组成的。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。&lt;/p&gt;
 
 &lt;h5 id=&quot;typeof-操作符&quot;&gt;typeof 操作符&lt;/h5&gt;
 &lt;p&gt;typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
@@ -203,11 +396,11 @@ parseFloat(&quot;3.125e7&quot;); //31250000
 ###### 转换为字符串
 要把一个值转换为字符串有两种方法：
 
-* 第一种是几乎每个值都有的 toString() 方法。
-* 在不知道要转换的值是不是 null 或 undefined 的情况下，还可以使用 String() ，这个函数可以将任何类型转换为字符串。String() 函数遵循以下规则：
-    1. 如果值有 toString() 方法，使用 toString() 方法并返回响应结果；
-    2. 如果值是 null ，则返回 &quot;null&quot;;
-    3. 如果值是 undefined ，则返回 &quot;undefined&quot;
+* 第一种是几乎每个值都有的 `toString()` 方法。
+* 在不知道要转换的值是不是 `null` 或 `undefined` 的情况下，还可以使用 `String()` ，这个函数可以将任何类型转换为字符串。`String()` 函数遵循以下规则：
+    1. 如果值有 `toString()` 方法，使用 `toString()` 方法并返回响应结果；
+    2. 如果值是 `null` ，则返回 &quot;null&quot;;
+    3. 如果值是 `undefined` ，则返回 &quot;undefined&quot;
 
 
 
@@ -241,20 +434,57 @@ alert(String(value4));// &quot;undefined&quot;
 
 &lt;h5 id=&quot;object-类型&quot;&gt;Object 类型&lt;/h5&gt;
 
-&lt;p&gt;ECMAScript 中对象其实就是一组数据和功能的集合。对象可以通过执行 new 操作符后跟要创建的对象类型名称来创建。
-object 的每一个实例都有如下方法。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ECMAScript&lt;/code&gt; 中对象其实就是一组数据和功能的集合。对象可以通过执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 操作符后跟要创建的对象类型名称来创建。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 的每一个实例都有如下方法。&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;constructor 保存着用于创建当前对象的函数&lt;/li&gt;
-  &lt;li&gt;hasOwnProperty(propertyName) 用于检测 propertyName 是否在当前实例的属性中。&lt;/li&gt;
-  &lt;li&gt;isPrototypeOf(object) 用于检测传入的对象 object 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。&lt;/li&gt;
-  &lt;li&gt;propertyIsEnumerable(propertyName) 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute&lt;/li&gt;
-  &lt;li&gt;toLocaleString() 返回对象的字符串表示，该字符串与执行环境的地区对应。&lt;/li&gt;
-  &lt;li&gt;toString() 返回对象的字符串表示&lt;/li&gt;
-  &lt;li&gt;valueOf() 返回对象的字符串、数值、布尔值表示 。通常与 toString() 方法的返回值一致。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 保存着用于创建当前对象的函数&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hasOwnProperty(propertyName)&lt;/code&gt; 用于检测 &lt;code class=&quot;highlighter-rouge&quot;&gt;propertyName&lt;/code&gt; 是否在当前实例的属性中。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;isPrototypeOf(object)&lt;/code&gt; 用于检测传入的对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;propertyIsEnumerable(propertyName)&lt;/code&gt; 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toLocaleString()&lt;/code&gt; 返回对象的字符串表示，该字符串与执行环境的地区对应。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toString()&lt;/code&gt; 返回对象的字符串表示&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;valueOf()&lt;/code&gt; 返回对象的字符串、数值、布尔值表示 。通常与 &lt;code class=&quot;highlighter-rouge&quot;&gt;toString()&lt;/code&gt; 方法的返回值一致。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;操作符&quot;&gt;操作符&lt;/h4&gt;
+&lt;h4 id=&quot;函数&quot;&gt;函数&lt;/h4&gt;
+&lt;h5 id=&quot;理解参数&quot;&gt;理解参数&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中函数的参数与其他大多数语言不同，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 函数不介意传递的参数有多少个，也不在乎传递过来的是什么类型。出现这样的原因是，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中参数在内部通过数组来表示的。函数接收到的始终是一个数组，而不关心数组的个数、以及数组里面的数据类型。在函数体内部，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 对象来访问参数数组。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function howManyArgs() {
+    alert(arguments.length);
+}
+howManyArgs(&quot;string&quot;, 45);  //2
+howManyArgs();              //0
+howManyArgs(12);            //1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;没有重载&quot;&gt;没有重载&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 没有传统意义的那样实现重载。
+如果在 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 定义两个名字完全相同的函数，则改名字只属于后定义的函数。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addSomeNumber(num){
+    return num + 100;
+}
+function addSomeNumber(num) {
+    return num + 200;
+}
+var result = addSomeNumber(100);//300
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;小结&quot;&gt;小结&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中基本的数据类型包括 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中没有区分 整数和浮点数，Number 用于表示所有数值。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的复杂数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 类型，是这门语言中所有对象的基础类型。&lt;/li&gt;
+  &lt;li&gt;严格模式为这门语言容易出错的地方加了限制。&lt;/li&gt;
+  &lt;li&gt;无需指定函数的返回值，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的函数可以在任何时间返回任何值。实际上未指定返回值的函数返回的是一个特殊的 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt; 值。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 也没有函数签名的概念，因为其函数参数是一个包含零个过多个值的数组形式传递的。&lt;/li&gt;
+  &lt;li&gt;可以向 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的函数传递任意数量的参数，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 对象来访问参数。&lt;/li&gt;
+  &lt;li&gt;由于不存在函数签名的特性，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 函数不能重载。&lt;/li&gt;
+&lt;/ul&gt;
 
 </description>
         <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
@@ -2109,618 +2339,6 @@ png.src=&quot;01.png&quot;;
         <pubDate>Thu, 13 Apr 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/04/13/%E8%BD%ACGCD%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/04/13/%E8%BD%ACGCD%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</guid>
-        
-        <category>GCD</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>（转）GCD 深入理解：第一部分</title>
-        <description>&lt;h1 id=&quot;转gcd-深入理解第一部分&quot;&gt;（转）GCD 深入理解：第一部分&lt;/h1&gt;
-
-&lt;p&gt;本文翻译自 &lt;a href=&quot;http://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1&quot;&gt;http://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;原作者：&lt;a href=&quot;http://www.raywenderlich.com/u/Lolgrep&quot;&gt;Derek Selander&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;译者：&lt;a href=&quot;https://twitter.com/nixzhu&quot;&gt;@nixzhu&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;==========================================&lt;/p&gt;
-
-&lt;p&gt;虽然 GCD 已经出现过一段时间了，但不是每个人都明了其主要内容。这是可以理解的；并发一直很棘手，而 GCD 是基于 C 的 API ，它们就像一组尖锐的棱角戳进 Objective-C 的平滑世界。我们将分两个部分的教程来深入学习 GCD 。&lt;/p&gt;
-
-&lt;p&gt;在这两部分的系列中，第一个部分的将解释 GCD 是做什么的，并从许多基本的 GCD 函数中找出几个来展示。在&lt;a href=&quot;https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md&quot;&gt;第二部分&lt;/a&gt;，你将学到几个 GCD 提供的高级函数。&lt;/p&gt;
-
-&lt;h2 id=&quot;什么是-gcd&quot;&gt;什么是 GCD&lt;/h2&gt;
-
-&lt;p&gt;GCD 是 &lt;code class=&quot;highlighter-rouge&quot;&gt;libdispatch&lt;/code&gt; 的市场名称，而 libdispatch 作为 Apple 的一个库，为并发代码在多核硬件（跑 iOS 或 OS X ）上执行提供有力支持。它具有以下优点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;GCD 能通过推迟昂贵计算任务并在后台运行它们来改善你的应用的响应性能。&lt;/li&gt;
-  &lt;li&gt;GCD 提供一个易于使用的并发模型而不仅仅只是锁和线程，以帮助我们避开并发陷阱。&lt;/li&gt;
-  &lt;li&gt;GCD 具有在常见模式（例如单例）上用更高性能的原语优化你的代码的潜在能力。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;本教程假设你对 Block 和 GCD 有基础了解。如果你对 GCD 完全陌生，先看看 &lt;a href=&quot;http://www.raywenderlich.com/4295/multithreading-and-grand-central-dispatch-on-ios-for-beginners-tutorial&quot;&gt;iOS 上的多线程和 GCD 入门教程&lt;/a&gt; 学习其要领。&lt;/p&gt;
-
-&lt;h2 id=&quot;gcd-术语&quot;&gt;GCD 术语&lt;/h2&gt;
-
-&lt;p&gt;要理解 GCD ，你要先熟悉与线程和并发相关的几个概念。这两者都可能模糊和微妙，所以在开始 GCD 之前先简要地回顾一下它们。&lt;/p&gt;
-
-&lt;h4 id=&quot;serial-vs-concurrent-串行-vs-并发&quot;&gt;Serial vs. Concurrent 串行 vs. 并发&lt;/h4&gt;
-
-&lt;p&gt;这些术语描述当任务相对于其它任务被执行，任务串行执行就是每次只有一个任务被执行，任务并发执行就是在同一时间可以有多个任务被执行。&lt;/p&gt;
-
-&lt;p&gt;虽然这些术语被广泛使用，本教程中你可以将任务设定为一个 Objective-C 的 Block 。不明白什么是 Block ？看看 &lt;a href=&quot;http://www.raywenderlich.com/9328/creating-a-diner-app-using-blocks-part-1&quot;&gt;iOS 5 教程中的如何使用 Block&lt;/a&gt; 。实际上，你也可以在 GCD 上使用函数指针，但在大多数场景中，这实际上更难于使用。Block 就是更加容易些！&lt;/p&gt;
-
-&lt;h4 id=&quot;synchronous-vs-asynchronous-同步-vs-异步&quot;&gt;Synchronous vs. Asynchronous 同步 vs. 异步&lt;/h4&gt;
-
-&lt;p&gt;在 GCD 中，这些术语描述当一个函数相对于另一个任务完成，此任务是该函数要求 GCD 执行的。一个_同步_函数只在完成了它预定的任务后才返回。&lt;/p&gt;
-
-&lt;p&gt;一个_异步_函数，刚好相反，会立即返回，预定的任务会完成但不会等它完成。因此，一个异步函数不会阻塞当前线程去执行下一个函数。&lt;/p&gt;
-
-&lt;p&gt;注意——当你读到同步函数“阻塞（Block）”当前线程，或函数是一个“阻塞”函数或阻塞操作时，不要被搞糊涂了！动词“阻塞”描述了函数如何影响它所在的线程而与名词“代码块（Block）”没有关系。代码块描述了用 Objective-C 编写的一个匿名函数，它能定义一个任务并被提交到 GCD 。&lt;/p&gt;
-
-&lt;p&gt;译者注：中文不会有这个问题，“阻塞”和“代码块”是两个词。&lt;/p&gt;
-
-&lt;h4 id=&quot;critical-section-临界区&quot;&gt;Critical Section 临界区&lt;/h4&gt;
-
-&lt;p&gt;就是一段代码不能被并发执行，也就是，两个线程不能同时执行这段代码。这很常见，因为代码去操作一个共享资源，例如一个变量若能被并发进程访问，那么它很可能会变质（译者注：它的值不再可信）。&lt;/p&gt;
-
-&lt;h4 id=&quot;race-condition-竞态条件&quot;&gt;Race Condition 竞态条件&lt;/h4&gt;
-
-&lt;p&gt;这种状况是指基于特定序列或时机的事件的软件系统以不受控制的方式运行的行为，例如程序的并发任务执行的确切顺序。竞态条件可导致无法预测的行为，而不能通过代码检查立即发现。&lt;/p&gt;
-
-&lt;h4 id=&quot;deadlock-死锁&quot;&gt;Deadlock 死锁&lt;/h4&gt;
-
-&lt;p&gt;两个（有时更多）东西——在大多数情况下，是线程——所谓的死锁是指它们都卡住了，并等待对方完成或执行其它操作。第一个不能完成是因为它在等待第二个的完成。但第二个也不能完成，因为它在等待第一个的完成。&lt;/p&gt;
-
-&lt;h4 id=&quot;thread-safe-线程安全&quot;&gt;Thread Safe 线程安全&lt;/h4&gt;
-
-&lt;p&gt;线程安全的代码能在多线程或并发任务中被安全的调用，而不会导致任何问题（数据损坏，崩溃，等）。线程不安全的代码在某个时刻只能在一个上下文中运行。一个线程安全代码的例子是 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt; 。你可以在同一时间在多个线程中使用它而不会有问题。另一方面，&lt;code class=&quot;highlighter-rouge&quot;&gt;NSMutableDictionary&lt;/code&gt; 就不是线程安全的，应该保证一次只能有一个线程访问它。&lt;/p&gt;
-
-&lt;h4 id=&quot;context-switch-上下文切换&quot;&gt;Context Switch 上下文切换&lt;/h4&gt;
-
-&lt;p&gt;一个上下文切换指当你在单个进程里切换执行不同的线程时存储与恢复执行状态的过程。这个过程在编写多任务应用时很普遍，但会带来一些额外的开销。&lt;/p&gt;
-
-&lt;h3 id=&quot;concurrency-vs-parallelism-并发与并行&quot;&gt;Concurrency vs Parallelism 并发与并行&lt;/h3&gt;
-
-&lt;p&gt;并发和并行通常被一起提到，所以值得花些时间解释它们之间的区别。&lt;/p&gt;
-
-&lt;p&gt;并发代码的不同部分可以“同步”执行。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉，如下图所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn1.raywenderlich.com/wp-content/uploads/2014/01/Concurrency_vs_Parallelism.png&quot; alt=&quot;Concurrency_vs_Parallelism&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;虽然你可以编写代码在 GCD 下并发执行，但 GCD 会决定有多少并行的需求。并行_要求_并发，但并发并不能_保证_并行。&lt;/p&gt;
-
-&lt;p&gt;更深入的观点是并发实际上是关于_构造_。当你在脑海中用 GCD 编写代码，你组织你的代码来暴露能同时运行的多个工作片段，以及不能同时运行的那些。如果你想深入此主题，看看 &lt;a href=&quot;http://vimeo.com/49718712&quot;&gt;这个由Rob Pike做的精彩的讲座&lt;/a&gt; 。&lt;/p&gt;
-
-&lt;h3 id=&quot;queues-队列&quot;&gt;Queues 队列&lt;/h3&gt;
-
-&lt;p&gt;GCD 提供有 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch queues&lt;/code&gt; 来处理代码块，这些队列管理你提供给 GCD 的任务并用 FIFO 顺序执行这些任务。这就保证了第一个被添加到队列里的任务会是队列中第一个开始的任务，而第二个被添加的任务将第二个开始，如此直到队列的终点。&lt;/p&gt;
-
-&lt;p&gt;所有的调度队列（dispatch queues）自身都是线程安全的，你能从多个线程并行的访问它们。当你了解了调度队列如何为你自己代码的不同部分提供线程安全后，GCD的优点就是显而易见的。关于这一点的关键是选择正确_类型_的调度队列和正确的_调度函数_来提交你的工作。&lt;/p&gt;
-
-&lt;p&gt;在本节你会看到两种调度队列，都是由 GCD 提供的，然后看一些描述如何用调度函数添加工作到队列的例子。&lt;/p&gt;
-
-&lt;h4 id=&quot;serial-queues-串行队列&quot;&gt;Serial Queues 串行队列&lt;/h4&gt;
-
-&lt;p&gt;串行队列中的任务一次执行一个，每个任务只在前一个任务完成时才开始。而且，你不知道在一个 Block 结束和下一个开始之间的时间长度，如下图所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn4.raywenderlich.com/wp-content/uploads/2014/01/Serial-Queue-480x272.png&quot; alt=&quot;Serial-Queue&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这些任务的执行时机受到 GCD 的控制；唯一能确保的事情是 GCD 一次只执行一个任务，并且按照我们添加到队列的顺序来执行。&lt;/p&gt;
-
-&lt;p&gt;由于在串行队列中不会有两个任务并发运行，因此不会出现同时访问临界区的风险；相对于这些任务来说，这就从竞态条件下保护了临界区。所以如果访问临界区的唯一方式是通过提交到调度队列的任务，那么你就不需要担心临界区的安全问题了。&lt;/p&gt;
-
-&lt;h4 id=&quot;concurrent-queues-并发队列&quot;&gt;Concurrent Queues 并发队列&lt;/h4&gt;
-
-&lt;p&gt;在并发队列中的任务能得到的保证是它们会按照被添加的顺序开始执行，但这就是全部的保证了。任务可能以任意顺序完成，你不会知道何时开始运行下一个任务，或者任意时刻有多少 Block 在运行。再说一遍，这完全取决于 GCD 。&lt;/p&gt;
-
-&lt;p&gt;下图展示了一个示例任务执行计划，GCD 管理着四个并发任务：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://koenig-media.raywenderlich.com/uploads/2014/01/Concurrent-Queue.png&quot; alt=&quot;Concurrent-Queue&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;注意 Block 1,2 和 3 都立马开始运行，一个接一个。在 Block 0 开始后，Block 1等待了好一会儿才开始。同样， Block 3 在 Block 2 之后才开始，但它先于 Block 2 完成。&lt;/p&gt;
-
-&lt;p&gt;何时开始一个 Block 完全取决于 GCD 。如果一个 Block 的执行时间与另一个重叠，也是由 GCD 来决定是否将其运行在另一个不同的核心上，如果那个核心可用，否则就用上下文切换的方式来执行不同的 Block 。&lt;/p&gt;
-
-&lt;p&gt;有趣的是， GCD 提供给你至少五个特定的队列，可根据队列类型选择使用。&lt;/p&gt;
-
-&lt;h4 id=&quot;queue-types-队列类型&quot;&gt;Queue Types 队列类型&lt;/h4&gt;
-
-&lt;p&gt;首先，系统提供给你一个叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;主队列（main queue）&lt;/code&gt; 的特殊队列。和其它串行队列一样，这个队列中的任务一次只能执行一个。然而，它能保证所有的任务都在主线程执行，而主线程是唯一可用于更新 UI 的线程。这个队列就是用于发生消息给 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIView&lt;/code&gt; 或发送通知的。&lt;/p&gt;
-
-&lt;p&gt;系统同时提供给你好几个并发队列。它们叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;全局调度队列（Global Dispatch Queues）&lt;/code&gt; 。目前的四个全局队列有着不同的优先级：&lt;code class=&quot;highlighter-rouge&quot;&gt;background&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;low&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 以及 &lt;code class=&quot;highlighter-rouge&quot;&gt;high&lt;/code&gt;。要知道，Apple 的 API 也会使用这些队列，所以你添加的任何任务都不会是这些队列中唯一的任务。&lt;/p&gt;
-
-&lt;p&gt;最后，你也可以创建自己的串行队列或并发队列。这就是说，至少有_五个_队列任你处置：主队列、四个全局调度队列，再加上任何你自己创建的队列。&lt;/p&gt;
-
-&lt;p&gt;以上是调度队列的大框架！&lt;/p&gt;
-
-&lt;p&gt;GCD 的“艺术”归结为选择合适的队列来调度函数以提交你的工作。体验这一点的最好方式是走一遍下边的列子，我们沿途会提供一些一般性的建议。&lt;/p&gt;
-
-&lt;h2 id=&quot;入门&quot;&gt;入门&lt;/h2&gt;
-
-&lt;p&gt;既然本教程的目标是优化且安全的使用 GCD 调用来自不同线程的代码，那么你将从一个近乎完成的叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;GooglyPuff&lt;/code&gt; 的项目入手。&lt;/p&gt;
-
-&lt;p&gt;GooglyPuff 是一个没有优化，线程不安全的应用，它使用 Core Image 的人脸检测 API 来覆盖一对曲棍球眼睛到被检测到的人脸上。对于基本的图像，可以从相机胶卷选择，或用预设好的URL从互联网下载。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://koenig-media.raywenderlich.com/uploads/2014/01/GooglyPuff_Start_1.zip&quot;&gt;点击此处下载项目&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;完成项目下载之后，将其解压到某个方便的目录，再用 Xcode 打开它并编译运行。这个应用看起来如下图所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://koenig-media.raywenderlich.com/uploads/2014/01/Workflow1.png&quot; alt=&quot;Workflow&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;注意当你选择 &lt;code class=&quot;highlighter-rouge&quot;&gt;Le Internet&lt;/code&gt; 选项下载图片时，一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIAlertView&lt;/code&gt; 过早地弹出。你将在本系列教程地第二部分修复这个问题。&lt;/p&gt;
-
-&lt;p&gt;这个项目中有四个有趣的类：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;PhotoCollectionViewController：它是应用开始的第一个视图控制器。它用缩略图展示所有选定的照片。&lt;/li&gt;
-  &lt;li&gt;PhotoDetailViewController：它执行添加曲棍球眼睛到图像上的逻辑，并用一个 UIScrollView 来显示结果图片。&lt;/li&gt;
-  &lt;li&gt;Photo：这是一个类簇，它根据一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSURL&lt;/code&gt; 的实例或一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;ALAsset&lt;/code&gt; 的实例来实例化照片。这个类提供一个图像、缩略图以及从 URL 下载的状态。&lt;/li&gt;
-  &lt;li&gt;PhotoManager：它管理所有 &lt;code class=&quot;highlighter-rouge&quot;&gt;Photo&lt;/code&gt; 的实例.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;用-dispatch_async-处理后台任务&quot;&gt;用 dispatch_async 处理后台任务&lt;/h2&gt;
-
-&lt;p&gt;回到应用并从你的相机胶卷添加一些照片或使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Le Internet&lt;/code&gt; 选项下载一些。&lt;/p&gt;
-
-&lt;p&gt;注意在按下 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoCollectionViewController&lt;/code&gt; 中的一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;UICollectionViewCell&lt;/code&gt; 到生成一个新的 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoDetailViewController&lt;/code&gt; 之间花了多久时间；你会注意到一个明显的滞后，特别是在比较慢的设备上查看很大的图。&lt;/p&gt;
-
-&lt;p&gt;在重载 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController 的 viewDidLoad&lt;/code&gt; 时容易加入太多杂乱的工作（too much clutter），这通常会引起视图控制器出现前更长的等待。如果可能，最好是卸下一些工作放到后台，如果它们不是绝对必须要运行在加载时间里。&lt;/p&gt;
-
-&lt;p&gt;这听起来像是 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 能做的事情！&lt;/p&gt;
-
-&lt;p&gt;打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoDetailViewController&lt;/code&gt; 并用下面的实现替换 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; ：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)viewDidLoad
-{   
-    [super viewDidLoad];
-    NSAssert(_image, @&quot;Image not set; required to use view controller&quot;);
-    self.photoImageView.image = _image;
- 
-    //Resize if neccessary to ensure it's not pixelated
-    if (_image.size.height &amp;lt;= self.photoImageView.bounds.size.height &amp;amp;&amp;amp;
-        _image.size.width &amp;lt;= self.photoImageView.bounds.size.width) {
-        [self.photoImageView setContentMode:UIViewContentModeCenter];
-    }
- 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
-        UIImage *overlayImage = [self faceOverlayImageFromImage:_image];
-        dispatch_async(dispatch_get_main_queue(), ^{ // 2
-            [self fadeInNewImage:overlayImage]; // 3
-        });
-    });
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;下面来说明上面的新代码所做的事：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;你首先将工作从主线程移到全局线程。因为这是一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async()&lt;/code&gt; ，Block 会被异步地提交，意味着调用线程地执行将会继续。这就使得 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 更早地在主线程完成，让加载过程感觉起来更加快速。同时，一个人脸检测过程会启动并将在稍后完成。&lt;/li&gt;
-  &lt;li&gt;在这里，人脸检测过程完成，并生成了一个新的图像。既然你要使用此新图像更新你的 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIImageView&lt;/code&gt; ，那么你就添加一个新的 Block 到主线程。记住——你必须总是在主线程访问 UIKit 的类。&lt;/li&gt;
-  &lt;li&gt;最后，你用 &lt;code class=&quot;highlighter-rouge&quot;&gt;fadeInNewImage:&lt;/code&gt; 更新 UI ，它执行一个淡入过程切换到新的曲棍球眼睛图像。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;编译并运行你的应用；选择一个图像然后你会注意到视图控制器加载明显变快，曲棍球眼睛稍微在之后就加上了。这给应用带来了不错的效果，和之前的显示差别巨大。&lt;/p&gt;
-
-&lt;p&gt;进一步，如果你试着加载一个超大的图像，应用不会在加载视图控制器上“挂住”，这就使得应用具有很好伸缩性。&lt;/p&gt;
-
-&lt;p&gt;正如之前提到的， &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 添加一个 Block 到队列就立即返回了。任务会在之后由 GCD 决定执行。当你需要在后台执行一个基于网络或 CPU 紧张的任务时就使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; ，这样就不会阻塞当前线程。&lt;/p&gt;
-
-&lt;p&gt;下面是一个关于在 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 上如何以及何时使用不同的队列类型的快速指导：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;自定义串行队列：当你想串行执行后台任务并追踪它时就是一个好选择。这消除了资源争用，因为你知道一次只有一个任务在执行。注意若你需要来自某个方法的数据，你必须内联另一个 Block 来找回它或考虑使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;主队列（串行）：这是在一个并发队列上完成任务后更新 UI 的共同选择。要这样做，你将在一个 Block 内部编写另一个 Block 。以及，如果你在主队列调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 到主队列，你能确保这个新任务将在当前方法完成后的某个时间执行。&lt;/li&gt;
-  &lt;li&gt;并发队列：这是在后台执行非 UI 工作的共同选择。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;使用-dispatch_after-延后工作&quot;&gt;使用 dispatch_after 延后工作&lt;/h2&gt;
-
-&lt;p&gt;稍微考虑一下应用的 UX 。是否用户第一次打开应用时会困惑于不知道做什么？你是这样吗？ :]&lt;/p&gt;
-
-&lt;p&gt;如果用户的 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager&lt;/code&gt; 里还没有任何照片，那么显示一个提示会是个好主意！然而，你同样要考虑用户的眼睛会如何在主屏幕上浏览：如果你太快的显示一个提示，他们的眼睛还徘徊在视图的其它部分上，他们很可能会错过它。&lt;/p&gt;
-
-&lt;p&gt;显示提示之前延迟一秒钟就足够捕捉到用户的注意，他们此时已经第一次看过了应用。&lt;/p&gt;
-
-&lt;p&gt;添加如下代码到到 PhotoCollectionViewController.m 中 showOrHideNavPrompt 的废止实现里：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)showOrHideNavPrompt
-{
-    NSUInteger count = [[PhotoManager sharedManager] photos].count;
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1 
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){ // 2 
-        if (!count) {
-            [self.navigationItem setPrompt:@&quot;Add photos with faces to Googlyify them!&quot;];
-        } else {
-            [self.navigationItem setPrompt:nil];
-        }
-    });
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;showOrHideNavPrompt 在 viewDidLoad 中执行，以及 UICollectionView 被重新加载的任何时候。按照注释数字顺序看看：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;你声明了一个变量指定要延迟的时长。&lt;/li&gt;
-  &lt;li&gt;然后等待 &lt;code class=&quot;highlighter-rouge&quot;&gt;delayInSeconds&lt;/code&gt; 给定的时长，再异步地添加一个 Block 到主线程。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;编译并运行应用。应该有一个轻微地延迟，这有助于抓住用户的注意力并展示所要做的事情。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; 工作起来就像一个延迟版的 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 。你依然不能控制实际的执行时间，且一旦 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; 返回也就不能再取消它。&lt;/p&gt;
-
-&lt;p&gt;不知道何时适合使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; ？&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;自定义串行队列：在一个自定义串行队列上使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; 要小心。你最好坚持使用主队列。&lt;/li&gt;
-  &lt;li&gt;主队列（串行）：是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; 的好选择；Xcode 提供了一个不错的自动完成模版。&lt;/li&gt;
-  &lt;li&gt;并发队列：在并发队列上使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_after&lt;/code&gt; 也要小心；你会这样做就比较罕见。还是在主队列做这些操作吧。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;让你的单例线程安全&quot;&gt;让你的单例线程安全&lt;/h2&gt;
-
-&lt;p&gt;单例，不论喜欢还是讨厌，它们在 iOS 上的流行情况就像网上的猫。 :]&lt;/p&gt;
-
-&lt;p&gt;一个常见的担忧是它们常常不是线程安全的。这个担忧十分合理，基于它们的用途：单例常常被多个控制器同时访问。&lt;/p&gt;
-
-&lt;p&gt;单例的线程担忧范围从初始化开始，到信息的读和写。&lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager&lt;/code&gt; 类被实现为单例——它在目前的状态下就会被这些问题所困扰。要看看事情如何很快地失去控制，你将在单例实例上创建一个控制好的竞态条件。&lt;/p&gt;
-
-&lt;p&gt;导航到 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager.m&lt;/code&gt; 并找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;sharedManager&lt;/code&gt; ；它看起来如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;+ (instancetype)sharedManager    
-{
-    static PhotoManager *sharedPhotoManager = nil;
-    if (!sharedPhotoManager) {
-        sharedPhotoManager = [[PhotoManager alloc] init];
-        sharedPhotoManager-&amp;gt;_photosArray = [NSMutableArray array];
-    }
-    return sharedPhotoManager;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;当前状态下，代码相当简单；你创建了一个单例并初始化一个叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;photosArray&lt;/code&gt; 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSMutableArray&lt;/code&gt; 属性。&lt;/p&gt;
-
-&lt;p&gt;然而，&lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; 条件分支不是&lt;a href=&quot;http://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1#Terminology&quot;&gt;线程安全&lt;/a&gt;的；如果你多次调用这个方法，有一个可能性是在某个线程（就叫它线程A）上进入 &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; 语句块并可能在 &lt;code class=&quot;highlighter-rouge&quot;&gt;sharedPhotoManager&lt;/code&gt; 被分配内存前发生一个上下文切换。然后另一个线程（线程B）可能进入 &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; ，分配单例实例的内存，然后退出。&lt;/p&gt;
-
-&lt;p&gt;当系统上下文切换回线程A，你会分配另外一个单例实例的内存，然后退出。在那个时间点，你有了两个单例的实例——很明显这不是你想要的（译者注：这还能叫单例吗？）！&lt;/p&gt;
-
-&lt;p&gt;要强制这个（竞态）条件发生，替换 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager.m&lt;/code&gt; 中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;sharedManager&lt;/code&gt; 为下面的实现：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;+ (instancetype)sharedManager  
-{
-    static PhotoManager *sharedPhotoManager = nil;
-    if (!sharedPhotoManager) {
-        [NSThread sleepForTimeInterval:2];
-        sharedPhotoManager = [[PhotoManager alloc] init];
-        NSLog(@&quot;Singleton has memory address at: %@&quot;, sharedPhotoManager);
-        [NSThread sleepForTimeInterval:2];
-        sharedPhotoManager-&amp;gt;_photosArray = [NSMutableArray array];
-    }
-    return sharedPhotoManager;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;上面的代码中你用 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSThread 的 sleepForTimeInterval:&lt;/code&gt; 类方法来强制发生一个上下文切换。&lt;/p&gt;
-
-&lt;p&gt;打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDelegate.m&lt;/code&gt; 并添加如下代码到 &lt;code class=&quot;highlighter-rouge&quot;&gt;application:didFinishLaunchingWithOptions:&lt;/code&gt; 的最开始处：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    [PhotoManager sharedManager];
-});
- 
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    [PhotoManager sharedManager];
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这里创建了多个异步并发调用来实例化单例，然后引发上面描述的竞态条件。&lt;/p&gt;
-
-&lt;p&gt;编译并运行项目；查看控制台输出，你会看到多个单例被实例化，如下所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://koenig-media.raywenderlich.com/uploads/2014/01/NSLog-Race-Condition.png&quot; alt=&quot;NSLog-Race-Condition&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;注意到这里有好几行显示着不同地址的单例实例。这明显违背了单例的目的，对吧？:]&lt;/p&gt;
-
-&lt;p&gt;这个输出向你展示了临界区被执行多次，而它只应该执行一次。现在，固然是你自己强制这样的状况发生，但你可以想像一下这个状况会怎样在无意间发生。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意：基于其它你无法控制的系统事件，NSLog 的数量有时会显示多个。线程问题极其难以调试，因为它们往往难以重现。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;要纠正这个状况，实例化代码应该只执行一次，并阻塞其它实例在 &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; 条件的临界区运行。这刚好就是 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_once&lt;/code&gt; 能做的事。&lt;/p&gt;
-
-&lt;p&gt;在单例初始化方法中用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_once&lt;/code&gt; 取代 &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; 条件判断，如下所示：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;+ (instancetype)sharedManager
-{
-    static PhotoManager *sharedPhotoManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&amp;amp;onceToken, ^{
-        [NSThread sleepForTimeInterval:2];
-        sharedPhotoManager = [[PhotoManager alloc] init];
-        NSLog(@&quot;Singleton has memory address at: %@&quot;, sharedPhotoManager);
-        [NSThread sleepForTimeInterval:2];
-        sharedPhotoManager-&amp;gt;_photosArray = [NSMutableArray array];
-    });
-    return sharedPhotoManager;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;编译并运行你的应用；查看控制台输出，你会看到有且仅有一个单例的实例——这就是你对单例的期望！:]&lt;/p&gt;
-
-&lt;p&gt;现在你已经明白了防止竞态条件的重要性，从 &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDelegate.m&lt;/code&gt; 中移除 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 语句，并用下面的实现替换 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager&lt;/code&gt; 单例的初始化：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;+ (instancetype)sharedManager
-{
-    static PhotoManager *sharedPhotoManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&amp;amp;onceToken, ^{
-        sharedPhotoManager = [[PhotoManager alloc] init];
-        sharedPhotoManager-&amp;gt;_photosArray = [NSMutableArray array];
-    });
-    return sharedPhotoManager;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_once()&lt;/code&gt; 以线程安全的方式执行且仅执行其代码块一次。试图访问临界区（即传递给 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_once&lt;/code&gt; 的代码）的不同的线程会在临界区已有一个线程的情况下被阻塞，直到临界区完成为止。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn3.raywenderlich.com/wp-content/uploads/2014/01/Highlander_dispatch_once-480x274.png&quot; alt=&quot;Highlander_dispatch_once&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;需要记住的是，这只是让访问共享实例线程安全。它绝对没有让类本身线程安全。类中可能还有其它竞态条件，例如任何操纵内部数据的情况。这些需要用其它方式来保证线程安全，例如同步访问数据，你将在下面几个小节看到。&lt;/p&gt;
-
-&lt;h2 id=&quot;处理读者与写者问题&quot;&gt;处理读者与写者问题&lt;/h2&gt;
-
-&lt;p&gt;线程安全实例不是处理单例时的唯一问题。如果单例属性表示一个可变对象，那么你就需要考虑是否那个对象自身线程安全。&lt;/p&gt;
-
-&lt;p&gt;如果问题中的这个对象是一个 Foundation 容器类，那么答案是——“很可能不安全”！Apple 维护一个&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/cocoa/conceptual/multithreading/ThreadSafetySummary/ThreadSafetySummary.html&quot;&gt;有用且有些心寒的列表&lt;/a&gt;，众多的 Foundation 类都不是线程安全的。 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSMutableArray&lt;/code&gt;，已用于你的单例，正在那个列表里休息。&lt;/p&gt;
-
-&lt;p&gt;虽然许多线程可以同时读取 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSMutableArray&lt;/code&gt; 的一个实例而不会产生问题，但当一个线程正在读取时让另外一个线程修改数组就是不安全的。你的单例在目前的状况下不能预防这种情况的发生。&lt;/p&gt;
-
-&lt;p&gt;要分析这个问题，看看 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager.m&lt;/code&gt; 中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;addPhoto:&lt;/code&gt;，转载如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)addPhoto:(Photo *)photo
-{
-    if (photo) {
-        [_photosArray addObject:photo];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self postContentAddedNotification];
-        });
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这是一个&lt;code class=&quot;highlighter-rouge&quot;&gt;写&lt;/code&gt;方法，它修改一个私有可变数组对象。&lt;/p&gt;
-
-&lt;p&gt;现在看看 &lt;code class=&quot;highlighter-rouge&quot;&gt;photos&lt;/code&gt; ，转载如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (NSArray *)photos
-{
-  return [NSArray arrayWithArray:_photosArray];
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这是所谓的&lt;code class=&quot;highlighter-rouge&quot;&gt;读&lt;/code&gt;方法，它读取可变数组。它为调用者生成一个不可变的拷贝，防止调用者不当地改变数组，但这不能提供任何保护来对抗当一个线程调用读方法 &lt;code class=&quot;highlighter-rouge&quot;&gt;photos&lt;/code&gt; 的同时另一个线程调用写方法 &lt;code class=&quot;highlighter-rouge&quot;&gt;addPhoto:&lt;/code&gt; 。&lt;/p&gt;
-
-&lt;p&gt;这就是软件开发中经典的&lt;code class=&quot;highlighter-rouge&quot;&gt;读者写者问题&lt;/code&gt;。GCD 通过用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch barriers&lt;/code&gt; 创建一个&lt;code class=&quot;highlighter-rouge&quot;&gt;读者写者锁&lt;/code&gt; 提供了一个优雅的解决方案。&lt;/p&gt;
-
-&lt;p&gt;Dispatch barriers 是一组函数，在并发队列上工作时扮演一个串行式的瓶颈。使用 GCD 的障碍（barrier）API 确保提交的 Block 在那个特定时间上是指定队列上唯一被执行的条目。这就意味着所有的先于调度障碍提交到队列的条目必能在这个 Block 执行前完成。&lt;/p&gt;
-
-&lt;p&gt;当这个 Block 的时机到达，调度障碍执行这个 Block 并确保在那个时间里队列不会执行任何其它 Block 。一旦完成，队列就返回到它默认的实现状态。 GCD 提供了同步和异步两种障碍函数。&lt;/p&gt;
-
-&lt;p&gt;下图显示了障碍函数对多个异步队列的影响：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn1.raywenderlich.com/wp-content/uploads/2014/01/Dispatch-Barrier-480x272.png&quot; alt=&quot;Dispatch-Barrier&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;注意到正常部分的操作就如同一个正常的并发队列。但当障碍执行时，它本质上就如同一个串行队列。也就是，障碍是唯一在执行的事物。在障碍完成后，队列回到一个正常并发队列的样子。&lt;/p&gt;
-
-&lt;p&gt;下面是你何时会——和不会——使用障碍函数的情况：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;自定义串行队列：一个很坏的选择；障碍不会有任何帮助，因为不管怎样，一个串行队列一次都只执行一个操作。&lt;/li&gt;
-  &lt;li&gt;全局并发队列：要小心；这可能不是最好的主意，因为其它系统可能在使用队列而且你不能垄断它们只为你自己的目的。&lt;/li&gt;
-  &lt;li&gt;自定义并发队列：这对于原子或临界区代码来说是极佳的选择。任何你在设置或实例化的需要线程安全的事物都是使用障碍的最佳候选。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;由于上面唯一像样的选择是自定义并发队列，你将创建一个你自己的队列去处理你的障碍函数并分开读和写函数。且这个并发队列将允许多个多操作同时进行。&lt;/p&gt;
-
-&lt;p&gt;打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager.m&lt;/code&gt;，添加如下私有属性到类扩展中：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;@interface PhotoManager ()
-@property (nonatomic,strong,readonly) NSMutableArray *photosArray;
-@property (nonatomic, strong) dispatch_queue_t concurrentPhotoQueue; ///&amp;lt; Add this
-@end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;addPhoto:&lt;/code&gt; 并用下面的实现替换它：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)addPhoto:(Photo *)photo
-{
-    if (photo) { // 1
-        dispatch_barrier_async(self.concurrentPhotoQueue, ^{ // 2 
-            [_photosArray addObject:photo]; // 3
-            dispatch_async(dispatch_get_main_queue(), ^{ // 4
-                [self postContentAddedNotification]; 
-            });
-        });
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;你新写的函数是这样工作的：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;在执行下面所有的工作前检查是否有合法的相片。&lt;/li&gt;
-  &lt;li&gt;添加写操作到你的自定义队列。当临界区在稍后执行时，这将是你队列中唯一执行的条目。&lt;/li&gt;
-  &lt;li&gt;这是添加对象到数组的实际代码。由于它是一个障碍 Block ，这个 Block 永远不会同时和其它 Block 一起在 concurrentPhotoQueue 中执行。&lt;/li&gt;
-  &lt;li&gt;最后你发送一个通知说明完成了添加图片。这个通知将在主线程被发送因为它将会做一些 UI 工作，所以在此为了通知，你异步地调度另一个任务到主线程。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;这就处理了写操作，但你还需要实现 &lt;code class=&quot;highlighter-rouge&quot;&gt;photos&lt;/code&gt; 读方法并实例化 &lt;code class=&quot;highlighter-rouge&quot;&gt;concurrentPhotoQueue&lt;/code&gt; 。&lt;/p&gt;
-
-&lt;p&gt;在写者打扰的情况下，要确保线程安全，你需要在 &lt;code class=&quot;highlighter-rouge&quot;&gt;concurrentPhotoQueue&lt;/code&gt; 队列上执行读操作。既然你需要从函数返回，你就不能异步调度到队列，因为那样在读者函数返回之前不一定运行。&lt;/p&gt;
-
-&lt;p&gt;在这种情况下，&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 就是一个绝好的候选。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync()&lt;/code&gt; 同步地提交工作并在返回前等待它完成。使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 跟踪你的调度障碍工作，或者当你需要等待操作完成后才能使用 Block 处理过的数据。如果你使用第二种情况做事，你将不时看到一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;__block&lt;/code&gt; 变量写在 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 范围之外，以便返回时在 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 使用处理过的对象。&lt;/p&gt;
-
-&lt;p&gt;但你需要很小心。想像如果你调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 并放在你已运行着的当前队列。这会导致死锁，因为调用会一直等待直到 Block 完成，但 Block 不能完成（它甚至不会开始！），直到当前已经存在的任务完成，而当前任务无法完成！这将迫使你自觉于你正从哪个队列调用——以及你正在传递进入哪个队列。&lt;/p&gt;
-
-&lt;p&gt;下面是一个快速总览，关于在何时以及何处使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; ：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;自定义串行队列：在这个状况下要非常小心！如果你正运行在一个队列并调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 放在同一个队列，那你就百分百地创建了一个死锁。&lt;/li&gt;
-  &lt;li&gt;主队列（串行）：同上面的理由一样，必须非常小心！这个状况同样有潜在的导致死锁的情况。&lt;/li&gt;
-  &lt;li&gt;并发队列：这才是做同步工作的好选择，不论是通过调度障碍，或者需要等待一个任务完成才能执行进一步处理的情况。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;继续在 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager.m&lt;/code&gt; 上工作，用下面的实现替换 &lt;code class=&quot;highlighter-rouge&quot;&gt;photos&lt;/code&gt; ：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (NSArray *)photos
-{
-    __block NSArray *array; // 1
-    dispatch_sync(self.concurrentPhotoQueue, ^{ // 2
-        array = [NSArray arrayWithArray:_photosArray]; // 3
-    });
-    return array;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这就是你的读函数。按顺序看看编过号的注释，有这些：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;__block&lt;/code&gt; 关键字允许对象在 Block 内可变。没有它，&lt;code class=&quot;highlighter-rouge&quot;&gt;array&lt;/code&gt; 在 Block 内部就只是只读的，你的代码甚至不能通过编译。&lt;/li&gt;
-  &lt;li&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;concurrentPhotoQueue&lt;/code&gt; 上同步调度来执行读操作。&lt;/li&gt;
-  &lt;li&gt;将相片数组存储在 &lt;code class=&quot;highlighter-rouge&quot;&gt;array&lt;/code&gt; 内并返回它。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;最后，你需要实例化你的 &lt;code class=&quot;highlighter-rouge&quot;&gt;concurrentPhotoQueue&lt;/code&gt; 属性。修改 &lt;code class=&quot;highlighter-rouge&quot;&gt;sharedManager&lt;/code&gt; 以便像下面这样初始化队列：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;+ (instancetype)sharedManager
-{
-    static PhotoManager *sharedPhotoManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&amp;amp;onceToken, ^{
-        sharedPhotoManager = [[PhotoManager alloc] init];
-        sharedPhotoManager-&amp;gt;_photosArray = [NSMutableArray array];
- 
-        // ADD THIS:
-        sharedPhotoManager-&amp;gt;_concurrentPhotoQueue = dispatch_queue_create(&quot;com.selander.GooglyPuff.photoQueue&quot;,
-                                                    DISPATCH_QUEUE_CONCURRENT); 
-    });
- 
-    return sharedPhotoManager;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这里使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_queue_create&lt;/code&gt; 初始化 &lt;code class=&quot;highlighter-rouge&quot;&gt;concurrentPhotoQueue&lt;/code&gt; 为一个并发队列。第一个参数是反向DNS样式命名惯例；确保它是描述性的，将有助于调试。第二个参数指定你的队列是串行还是并发。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意：当你在网上搜索例子时，你会经常看人们传递 &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;NULL&lt;/code&gt; 给 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_queue_create&lt;/code&gt; 的第二个参数。这是一个创建串行队列的过时方式；明确你的参数总是更好。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;恭喜——你的 &lt;code class=&quot;highlighter-rouge&quot;&gt;PhotoManager&lt;/code&gt; 单例现在是线程安全的了。不论你在何处或怎样读或写你的照片，你都有这样的自信，即它将以安全的方式完成，不会出现任何惊吓。&lt;/p&gt;
-
-&lt;h2 id=&quot;a-visual-review-of-queueing-队列的虚拟回顾&quot;&gt;A Visual Review of Queueing 队列的虚拟回顾&lt;/h2&gt;
-
-&lt;p&gt;依然没有 100% 地掌握 GCD 的要领？确保你可以使用 GCD 函数轻松地创建简单的例子，使用断点和 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSLog&lt;/code&gt; 语句保证自己明白当下发生的情况。&lt;/p&gt;
-
-&lt;p&gt;我在下面提供了两个 GIF动画来帮助你巩固对 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 的理解。包含在每个 GIF 中的代码可以提供视觉辅助；仔细注意 GIF 左边显示代码断点的每一步，以及右边相关队列的状态。&lt;/p&gt;
-
-&lt;h3 id=&quot;dispatch_sync-回顾&quot;&gt;dispatch_sync 回顾&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)viewDidLoad
-{
-  [super viewDidLoad];
- 
-  dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
- 
-      NSLog(@&quot;First Log&quot;);
- 
-  });
- 
-  NSLog(@&quot;Second Log&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn1.raywenderlich.com/wp-content/uploads/2014/01/dispatch_sync_in_action.gif&quot; alt=&quot;dispatch_sync_in_action&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;下面是图中几个步骤的说明：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;主队列一路按顺序执行任务——接着是一个实例化 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt; 的任务，其中包含了 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 在主线程执行。&lt;/li&gt;
-  &lt;li&gt;主线程目前在 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 内，正要到达 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; Block 被添加到一个全局队列中，将在稍后执行。进程将在主线程挂起直到该 Block 完成。同时，全局队列并发处理任务；要记得 Block 在全局队列中将按照 FIFO 顺序出列，但可以并发执行。&lt;/li&gt;
-  &lt;li&gt;全局队列处理 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; Block 加入之前已经出现在队列中的任务。&lt;/li&gt;
-  &lt;li&gt;终于，轮到 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; Block 。&lt;/li&gt;
-  &lt;li&gt;这个 Block 完成，因此主线程上的任务可以恢复。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 方法完成，主队列继续处理其他任务。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_sync&lt;/code&gt; 添加任务到一个队列并等待直到任务完成。&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 做类似的事情，但不同之处是它不会等待任务的完成，而是立即继续“调用线程”的其它任务。&lt;/p&gt;
-
-&lt;h3 id=&quot;dispatch_async-回顾&quot;&gt;dispatch_async 回顾&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Objective-C&quot;&gt;- (void)viewDidLoad
-{
-  [super viewDidLoad];
- 
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
- 
-      NSLog(@&quot;First Log&quot;);
- 
-  });
- 
-  NSLog(@&quot;Second Log&quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://cdn1.raywenderlich.com/wp-content/uploads/2014/01/dispatch_async_in_action.gif&quot; alt=&quot;dispatch_async_in_action&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;主队列一路按顺序执行任务——接着是一个实例化 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt; 的任务，其中包含了 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 在主线程执行。&lt;/li&gt;
-  &lt;li&gt;主线程目前在 &lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 内，正要到达 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; Block 被添加到一个全局队列中，将在稍后执行。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;viewDidLoad&lt;/code&gt; 在添加 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 到全局队列后继续进行，主线程把注意力转向剩下的任务。同时，全局队列并发地处理它未完成地任务。记住 Block 在全局队列中将按照 FIFO 顺序出列，但可以并发执行。&lt;/li&gt;
-  &lt;li&gt;添加到 &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; 的代码块开始执行。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dispatch_async&lt;/code&gt; Block 完成，两个 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSLog&lt;/code&gt; 语句将它们的输出放在控制台上。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;在这个特定的实例中，第二个 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSLog&lt;/code&gt; 语句执行，跟着是第一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSLog&lt;/code&gt; 语句。并不总是这样——着取决于给定时刻硬件正在做的事情，而且你无法控制或知晓哪个语句会先执行。“第一个” &lt;code class=&quot;highlighter-rouge&quot;&gt;NSLog&lt;/code&gt; 在某些调用情况下会第一个执行。&lt;/p&gt;
-
-&lt;h2 id=&quot;下一步怎么走&quot;&gt;下一步怎么走？&lt;/h2&gt;
-
-&lt;p&gt;在本教程中，你学习了如何让你的代码线程安全，以及在执行 CPU 密集型任务时如何保持主线程的响应性。&lt;/p&gt;
-
-&lt;p&gt;你可以下载&lt;a href=&quot;https://koenig-media.raywenderlich.com/uploads/2014/01/GooglyPuff_End_1.zip&quot;&gt; GooglyPuff 项目&lt;/a&gt;，它包含了目前所有本教程中编写的实现。在本教程的&lt;a href=&quot;https://github.com/nixzhu/dev-blog/blob/master/2014-05-14-grand-central-dispatch-in-depth-part-2.md&quot;&gt;第二部分&lt;/a&gt;，你将继续改进这个项目。&lt;/p&gt;
-
-&lt;p&gt;如果你计划优化你自己的应用，那你应该用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Instruments&lt;/code&gt; 中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Time Profile&lt;/code&gt; 模版分析你的工作。对这个工具的使用超出了本教程的范围，你可以看看 &lt;a href=&quot;http://www.raywenderlich.com/23037/how-to-use-instruments-in-xcode&quot;&gt;如何使用Instruments&lt;/a&gt; 来得到一个很好的概述。&lt;/p&gt;
-
-&lt;p&gt;同时请确保在真实设备上分析，而在模拟器上测试会对程序速度产生非常不准确的印象。&lt;/p&gt;
-
-&lt;p&gt;在教程的下一部分，你将更加深入到 GCD 的 API 中，做一些更 Cool 的东西。&lt;/p&gt;
-
-&lt;p&gt;如果你有任何问题或评论，可自由地加入下方的讨论！&lt;/p&gt;
-
-&lt;p&gt;===============================================&lt;/p&gt;
-
-&lt;p&gt;译者注：欢迎转载，但请一定注明出处！ &lt;a href=&quot;https://github.com/nixzhu/dev-blog&quot;&gt;https://github.com/nixzhu/dev-blog&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;欢迎转发此条微博 &lt;a href=&quot;http://weibo.com/2076580237/B0tjrEQr9&quot;&gt;http://weibo.com/2076580237/B0tjrEQr9&lt;/a&gt;  以分享给更多人！&lt;/p&gt;
-
-&lt;p&gt;如果你认为这篇翻译不错，也有闲钱，那你可以用支付宝随便捐助一点，以慰劳译者的辛苦：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/nixzhu/dev-blog/raw/master/images/nixzhu_alipay.png&quot; alt=&quot;nixzhu的支付宝二维码&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 12 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/12/%E8%BD%AC-GCD/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/12/%E8%BD%AC-GCD/</guid>
         
         <category>GCD</category>
         
