@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（8）Class - 三十一的博客 | Yunis Blog</title>
+    <title>关于 App Store 审核的一些事 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift08-Class/">
+    <link rel="canonical" href="http://localhost:4000/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+<!-- <img src="/img/home-bg-APPStore.png" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+        background-image: url('/img/home-bg-APPStore.png')
     }
 
     
@@ -181,17 +181,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        <a class="tag" href="/tags/#App Store" title="App Store">App Store</a>
                         
                     </div>
-                    <h1>swift 学习（8）Class</h1>
+                    <h1>关于 App Store 审核的一些事</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on May 8, 2017</span>
                 </div>
             </div>
         </div>
@@ -209,163 +207,40 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（8）Class</p>
+				<h1 id="关于-app-store-审核的一些事">关于 App Store 审核的一些事</h1>
 
-<h6 id="reference-types"><strong>Reference types</strong></h6>
-<p>Struts 是值类型  class 是引用类型
-类不会提供自动自动初始化方法，需要自己实现。
-类里面的存储类型必须在初始化方法结束之前完成赋值。</p>
+<h4 id="事情经过">事情经过</h4>
+<p>因为一个功能应不应该使用内购，跟苹果爸爸来回周旋了一个月，其间又是邮件又是电话，直到最后申诉，苹果爸爸才正视我的述求，最终通过了审核。
+当我几次 态度明确的 通过邮件、视频回复审核人员，我们基于付费的功能是与 app 的使用没有关系的，对方打来电话，告诉我：您这个 app 我们也是几次商讨后才认为是需要使用内购的，巴拉巴拉一堆话。我就说根据你们的审核条例：</p>
 <blockquote>
-  <p>In Swift, a structure is an immutable value. A class, on the other hand, is a mutable reference.
-在swift中 Struts 是一个不可变的值，Class是可变的引用。</p>
+  <p>3.1.5 App 之外的实物商品和服务：如果 app 允许用户购买将在 app 之外使用的商品或服务，则必须使用 IAP 以外的购买方式来收取相应款项，如 Apple Pay 或传统的信用卡入口。App 可支持获批虚拟货币的流通（如比特币、狗币），前提条件是，在该 app 能够正常使用的地区，前述做法必须遵守各州法律和联邦法律。</p>
 </blockquote>
 
-<p>struct 的赋值是copy  class的赋值是指针指向的。具体见下方代码。</p>
+<p>我们这个app是不需要通过内购的。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-class Person {
-    var name : String
-    init(_ name : String) {
-        self.name = name
-    }
-}
-var t1 = Person.init("Yunis")
-var t2 = t1
-print(t1.name)//Yunis
-print(t2.name)//Yunis
-t1.name = "Change"
-print(t1.name)//Change
-print(t2.name)//Change
+<p>审核人员：如果您觉得我们的审核有问题的话，您向审查委员会提起申诉好了，但是我需要告诉您，审查委员会也是我们的人，而且我们之前已经请求过审查委员会的意见，所以如果您提起申诉，结果还是一样的。</p>
 
+<p>我：难道你们的审核条款是摆设吗（大概是这样的话，有点记不清楚了。）</p>
 
-struct Contact {
-    var name: String
-}
-var t3 = Contact.init(name: "Yunis")
-var t4 = t3
-print(t3.name)//Yunis
-print(t4.name)//Yunis
-t3.name = "Change"
-print(t3.name)//Change
-print(t4.name)//Yunis
-</code></pre>
-</div>
+<p>审核人员：只要你通过 Apple 这个平台进行推广你的付费服务，就需要使用内购。</p>
 
-<h6 id="堆和栈区别-the-heap-vs-the-stack"><strong>堆和栈区别 The heap vs. the stack</strong></h6>
-<blockquote>
-  <p>The system uses the stack to store anything on the immediate thread of execution; it is tightly managed and optimized by the CPU. When a function creates a variable, the stack stores that variable and then destroys it when the function exits. Since the stack is so well organized, it’s very efficient, and thus quite fast.
-系统使用栈来存储在执行的即时线程上的任何东西;它由CPU严格管理和优化。当函数创建一个变量时，堆栈存储该变量，然后在函数退出时将其销毁。由于栈是如此良好的组织，它是非常高效的，因此相当快。</p>
-</blockquote>
+<p>日了狗了！！</p>
 
-<blockquote>
-  <p>The system uses the heap to store data referenced by other objects. The heap is generally a large pool of memory from which the system can request and dynamically allocate blocks of memory. The heap doesn’t automatically destroy its objects like the stack does; additional work is required to do that. This makes creating and removing data on the heap a slower process, compared to on the stack.
-系统使用堆来存储其他对象引用的数据。堆通常是一个大的内存池，系统可以从内存池中请求和动态分配内存块。堆不会像堆栈那样自动破坏它的对象;需要额外的工作来做到这一点。相比与堆栈，创建和删除堆上的数据是一个较慢的过程。</p>
-</blockquote>
+<p>抱着一线生机的提起了申诉，今天早上一来，申诉通过了，并且审核也已经通过了。</p>
+<h4 id="收获">收获</h4>
+<p>通过这件事，知道了几点：</p>
+<h5 id="1苹果审核人员的标准不一致">1，苹果审核人员的标准不一致。</h5>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class Person {
-    var name : String
-    var lastName : String
-    init(_ name : String,_ lastName : String) {
-        self.name = name
-        self.lastName = lastName
-    }
-    var FullName : String {
-        return"\(name) \(lastName)"
-    }
-    
-}
+<p>我们的app 是一个上线时间很长的app，之前每次更新基本上第二天就可以审核上线了。但这次扯淡就扯了一个月。猜测是不同的审核人员的审核标准不一致。</p>
+<h5 id="2审核人员会言语上误导你">2，审核人员会言语上误导你。</h5>
 
-var variable = Person.init("Yunis","Last")
-</code></pre>
-</div>
-<p><img src="/media/14882645981379/14882717990005.jpg" alt="" /></p>
+<p>审核人员告诉我是经过了审查委员会的意见进行的处理，但是当我提起申诉，app 就通过了审核。要么是审核人员说谎了，要么就是审查委员会之前的标准也是不一致的。</p>
+<h5 id="3只要你确认你是-app-符合审核规则一定要坚持">3，只要你确认你是 app 符合审核规则，一定要坚持</h5>
 
-<blockquote>
-  <p>When you create an instance of a class, your code requests a block of memory on the heap to store the instance itself; that’s the first name and last name inside the instance on the right side of the diagram. It stores the address of that memory in your named variable on the stack; that’s the reference stored on the left side of the diagram.</p>
+<p>在审核人员打来电话后，通过她的话语，感觉申诉通过的几率也不是很大，我们这边差点要改一系列的逻辑实现，最后领导拍板，我们的app 符合他们的审核条例，为什么审核不给过，去申诉，先看看申诉结果以后再讨论。</p>
 
-  <p>当你创建一个类的实例的时间，会向系统申请在堆上的一块内存用来存储类的实例，包括name 和 lastName。同时在栈上存储内存地址。</p>
-</blockquote>
-
-<h6 id="object-identity"><strong>Object identity</strong></h6>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-var t1 = Person.init("Yunis","Last")
-var t2 = t1
-var t3 = Person.init("Yunis","Last")
-
-t1 === t2//true
-t1 === t3//true
-t2 === t3//true
-
-t2 = t3
-
-t1 === t2//true
-t1 === t3//true
-t2 === t3//true
-
-
-t1.FullName == t2.FullName//true
-t1.FullName == t3.FullName//true
-t2.FullName == t3.FullName//true
-
-</code></pre>
-</div>
-
-<blockquote>
-  <p>Jut as the == operator checks if two values are equal, the === identity operator
-compares the memory address of two references.</p>
-
-</blockquote>
-
-<p>== 是比较两个值是否一致，=== 是比较两个引用地址是否一致。</p>
-
-<h6 id="structures">Structures</h6>
-<ul>
-  <li>用于表示值</li>
-  <li>隐式的值copy</li>
-  <li>数据不可变</li>
-  <li>内存分配速度快（栈）</li>
-</ul>
-
-<h6 id="classes">Classes</h6>
-<ul>
-  <li>用于表示对象</li>
-  <li>隐式的对象共享</li>
-  <li>数据可变</li>
-  <li>内存分配较慢（堆）</li>
-</ul>
-
-<h6 id="key-points"><strong>Key points</strong></h6>
-
-<ul>
-  <li>和structures一样，类是具有方法和属性的命名类型（named type）</li>
-  <li>类通过指针共享对象</li>
-  <li>类的实例叫做对象（objects）</li>
-  <li>对象是可变的</li>
-</ul>
-
-<p>===========</p>
-
-<h6 id="继承inheritance"><strong>继承（inheritance）</strong></h6>
-
-<p>通过继承，子类可以完全继承自父类的全部属性和方法。
-子类定义的属性和方法只要子类用于，父类不拥有。
-swift 和oc 一样都是单一继承，只能继承一个其他类。
-继承没有层级，子类的父类也可以是另外一个类的子类。</p>
-<h6 id="多态-polymorphism"><strong>多态 （Polymorphism）</strong></h6>
-<blockquote>
-  <p>In brief, polymorphism is a programming languages ability to treat an object differently based on context.
-简而言之，多态性是一种基于上下文以不同方式处理对象的编程语言能力。</p>
-</blockquote>
-
-<p>作用：
-把不同的子类对象都当作父类来看，可以屏蔽不同子类对象之间的差异，写出通用的代码，做出通用的编程，以适应需求的不断变化。</p>
-
-<h6 id="runtime-hierarchy-checks"><strong>Runtime hierarchy checks</strong></h6>
-
-<p>• as: Cast to a specific type that is known at compile time to succeed, such as casting to a supertype.
-• as?: An optional downcast (to a subtype). If the downcast fails, the result of the expression will be nil.
-• as!: A forced downcast. If the downcast fails, the program will crash. Use this rarely, and only when you are certain the cast will never fail.</p>
+<h4 id="最后">最后</h4>
+<p>也许只是因为最近 微信 的打赏功能闹得沸沸扬扬，苹果爸爸审核的严格了。。</p>
 
 
 
@@ -377,17 +252,17 @@ swift 和oc 一样都是单一继承，只能继承一个其他类。
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift07-Methods/" data-toggle="tooltip" data-placement="top" title="swift 学习（7）Methods">
+                        <a href="/2017/05/05/%E8%AE%A9%E4%BD%A0%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E4%BB%A3%E7%A0%81/" data-toggle="tooltip" data-placement="top" title="让你眼前一亮的代码">
                         Previous<br>
-                        <span>swift 学习（7）Methods</span>
+                        <span>让你眼前一亮的代码</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/03/01/swift09-Enumerations/" data-toggle="tooltip" data-placement="top" title="swift 学习（9）Enumerations">
+                        <a href="/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/" data-toggle="tooltip" data-placement="top" title="(转)Tips:取消UICollectionView的隐式动画">
                         Next<br>
-                        <span>swift 学习（9）Enumerations</span>
+                        <span>(转)Tips:取消UICollectionView的隐式动画</span>
                         </a>
                     </li>
                     

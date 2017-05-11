@@ -5,9 +5,714 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 05 May 2017 14:57:32 +0800</pubDate>
-    <lastBuildDate>Fri, 05 May 2017 14:57:32 +0800</lastBuildDate>
+    <pubDate>Thu, 11 May 2017 14:04:15 +0800</pubDate>
+    <lastBuildDate>Thu, 11 May 2017 14:04:15 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>Javascrpt高级程序设计(第3版)读书笔记01</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计第3版读书笔记01&quot;&gt;Javascrpt高级程序设计(第3版)读书笔记01&lt;/h1&gt;
+
+&lt;h3 id=&quot;script-元素&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素&lt;/h3&gt;
+&lt;p&gt;向 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 页面加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的主要方法，就是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 。
+包括6个属性：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;async&lt;/code&gt; 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;charset&lt;/code&gt; 可选。 表示通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个属性很少有人用。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;defer&lt;/code&gt; 可选。表示脚本可以延迟到文档完全被解析和显示之后再执行。只对外部脚本有效。IE7 级更早的版本对嵌入脚本也支持这个属性。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;language&lt;/code&gt; 已废弃。用来表示编写代码使用的脚本语言。（如JavaScript、VBScript）。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 可选。表示包含要执行代码的外部文件。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; 可选。可以看成是 language 的替代属性。 表示编写代码使用脚本语言的类型（也称为MIME类型）。虽然 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/javascript&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/ecmascript&lt;/code&gt; 都已经不被推荐使用,但人们一直以来使用个还是 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/javascript&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 的方式有两种在：直接在页面中嵌入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码和包含外部 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件。&lt;/p&gt;
+
+&lt;p&gt;包含在 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 内部的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的代码会被从上到下依次解释。浏览器会先解析完不使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;defer&lt;/code&gt; 的属性的 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素中的代码，然后再解析后面的内容，所以一般应该把 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素放在页面最后，即主要内容后面，&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;标签前面。
+带有 &lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 属性的 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签会忽略 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签之间包含的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码。&lt;/p&gt;
+
+&lt;h4 id=&quot;应当尽量使用外部文件&quot;&gt;应当尽量使用外部文件&lt;/h4&gt;
+&lt;p&gt;虽然直接在 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素 中直接嵌入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码没什么问题，但是一般认为最好的做法还是尽可能的使用外部文件来包含 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码，好处包括：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可维护性 避免 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 页面过于臃肿，同时把 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件放在一个文件夹下面，利于维护。&lt;/li&gt;
+  &lt;li&gt;可缓存 浏览器能够根据具体的设置 缓存链接的所有外部 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件。也就是如果两个页面使用同一个文件，就无需再次下载。加快了页面的加载速度。&lt;/li&gt;
+  &lt;li&gt;适应未来 通过外部文件来包含 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 无需使用 XHTML 或注释hack。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;noscript-元素&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;noscript&lt;/code&gt; 元素&lt;/h3&gt;
+&lt;p&gt;兼容早期不支持 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的浏览器，这个元素可以包含能够出现在 &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; 的任何 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 元素 （&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 除外），包含在 &lt;code class=&quot;highlighter-rouge&quot;&gt;noscript&lt;/code&gt; 元素的内容会在下面两张情况显示：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;浏览器不支持脚本；&lt;/li&gt;
+  &lt;li&gt;浏览器支持脚本，但是脚本被禁止。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;基本概念&quot;&gt;基本概念&lt;/h3&gt;
+&lt;h4 id=&quot;语法&quot;&gt;语法&lt;/h4&gt;
+&lt;h5 id=&quot;区分大小写&quot;&gt;区分大小写&lt;/h5&gt;
+&lt;p&gt;变量、函数名、操作符、语言中的一切，都区分大小写。&lt;/p&gt;
+&lt;h5 id=&quot;标识符&quot;&gt;标识符&lt;/h5&gt;
+&lt;p&gt;标识符指的是变量、函数、属性的名字，或者函数的参数。有以下规则：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;第一个字符必须是一个字母、下划线（_）或者一个美元符号（$）；&lt;/li&gt;
+  &lt;li&gt;其他字符可以是字母、下划线、美元符号或者数字；&lt;/li&gt;
+  &lt;li&gt;惯例是采用驼峰命名法。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;注释&quot;&gt;注释&lt;/h5&gt;
+&lt;p&gt;// 单行注释
+/* */ 多行注释&lt;/p&gt;
+
+&lt;h5 id=&quot;严格模式&quot;&gt;严格模式&lt;/h5&gt;
+&lt;p&gt;目前来说就是对一些不确定的行为进行处理、对某些不安全的操作抛出错误。 还不是很理解。启用的话 需要在函数体前面加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;use strict&quot;&lt;/code&gt;.&lt;/p&gt;
+&lt;h5 id=&quot;语句&quot;&gt;语句&lt;/h5&gt;
+&lt;p&gt;语句已一个分号结尾，如果没有分号，由编译器决定什么时间结尾。&lt;/p&gt;
+
+&lt;h5 id=&quot;变量&quot;&gt;变量&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的变量是松散类型，就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是一个用于保存值的占位符。未初始化的变量，会保存一个特殊值 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;。变量在初始化后，可以改变变量的类型，虽然并不推荐，但是这样做是可以的。&lt;/p&gt;
+
+&lt;h4 id=&quot;数据类型&quot;&gt;数据类型&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中包括5种简单的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined、Null、Boolean、Number、String&lt;/code&gt;。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 本质是有一组无序的键值对组成的。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。&lt;/p&gt;
+
+&lt;h5 id=&quot;typeof-操作符&quot;&gt;typeof 操作符&lt;/h5&gt;
+&lt;p&gt;typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
+它返回值是一个字符串，该字符串说明运算数的类型。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;对于数字类型的操作数而言， typeof 返回的值是 number。&lt;/li&gt;
+  &lt;li&gt;对于字符串类型， typeof 返回的值是 string。&lt;/li&gt;
+  &lt;li&gt;对于布尔类型， typeof 返回的值是 boolean 。&lt;/li&gt;
+  &lt;li&gt;对于对象、数组、null 返回的值是 object 。&lt;/li&gt;
+  &lt;li&gt;对于函数类型，返回的值是 function。&lt;/li&gt;
+  &lt;li&gt;如果运算数是没有定义的（比如说不存在的变量、函数或者undefined），将返回undefined。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&quot;undefined-类型&quot;&gt;Undefined 类型&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt; 类型只有一个值，即特殊的 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;， 一个没有被赋值的变量会有个默认值 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;null-类型&quot;&gt;Null 类型&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt; 是第二个只有一个值的数据类型，这个特殊的值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt;。从逻辑角度来看， &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt; 值表示一个空对象的指针，而这也正是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 操作符检查 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt; 值时会返回 &lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 的原因。
+如果一个变量准备保存对象，那么最好将该变量初始化为 null 而不是其他值。这样一来只需要检查 null 值就可以判断变量是否已经保存了一个对象的引用。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (car != null){
+    //   car         
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;undefined 值是派生自 null。因此比较 null 和 undefined 是返回值是 true。&lt;/p&gt;
+&lt;h5 id=&quot;boolean-类型&quot;&gt;Boolean 类型&lt;/h5&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt; 类型 只有两个字面值： &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;number-类型&quot;&gt;Number 类型&lt;/h5&gt;
+&lt;h6 id=&quot;浮点数值&quot;&gt;浮点数值&lt;/h6&gt;
+&lt;p&gt;浮点数值，就是数值中必须包含一个小数点，且小数点后面必须至少有以为数字。如果浮点数本身表示是一个整数（如1.0或者1.），会被转换为整数（1）。
+对于那些极大或者极小的数，可以使用科学计数法表示：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;3.125e7 表示31250000  计算方法为：3.125 * 10^7&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h6 id=&quot;数值范围&quot;&gt;数值范围&lt;/h6&gt;
+&lt;p&gt;Number.MIN_VALUE 表示最小数，一般为 5e-324，Number.MAX_VALUE 表示最大数,一般为1.7976931348623157e+308。如果超出这个范围，会被转换为 &lt;code class=&quot;highlighter-rouge&quot;&gt;Infinity&lt;/code&gt;，将无法再参与计算。判断一个数值是个超出范围，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;isFinite()&lt;/code&gt; 函数。&lt;/p&gt;
+
+&lt;h6 id=&quot;nan&quot;&gt;NaN&lt;/h6&gt;
+
+&lt;p&gt;NaN,非数值的一个特殊的数值。这个数值用来表示本来要返回数值的操作数未返回数值的情况（这样做的好处是不会抛出错误）。
+NaN 本身有两个特点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;任何涉及 NaN 的操作，都会返回 NaN，&lt;/li&gt;
+  &lt;li&gt;NaN 与任何值都不等，包括 NaN本身。判断是否是 NaN 需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;isNaN()&lt;/code&gt; 函数。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h6 id=&quot;数值转换&quot;&gt;数值转换&lt;/h6&gt;
+
+&lt;p&gt;有3个函数可以把非数值转换为数值：&lt;code class=&quot;highlighter-rouge&quot;&gt;Number() parseInt()  parseFloat()&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Number()&lt;/code&gt; 转换有如下规则：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如果是 Boolean 值，true 和 false 分别转换为 1 和 0；&lt;/li&gt;
+  &lt;li&gt;如果是数字值，只是简单的传入传出；&lt;/li&gt;
+  &lt;li&gt;如果是 null，返回 0；&lt;/li&gt;
+  &lt;li&gt;如果是 undefined ，返回 NaN；&lt;/li&gt;
+  &lt;li&gt;如果是字符串，有以下规则：
+    &lt;ol&gt;
+      &lt;li&gt;如果字符串只包含数字，转换为十进制的数值。（”1” -&amp;gt; 1,”011”-&amp;gt; 11）&lt;/li&gt;
+      &lt;li&gt;如果字符串中包含有效的浮点格式，转换为对应的浮点数值。&lt;/li&gt;
+      &lt;li&gt;如果对象包含有效的十六进制格式，转换为相同大小的十进制整数值。(“1.1” -&amp;gt; 1.1)&lt;/li&gt;
+      &lt;li&gt;如果字符串是空的（不包含任何字符），转为 0；(“”-&amp;gt;0)&lt;/li&gt;
+      &lt;li&gt;如果字符串中包含上述格式之外的字符，转换为 NaN。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;如果是对象，调用对象的 valueOf()，然后依据前面的规则转换返回值。如果转换的结果是NaN，调用对象的 toString()方法，然后在依次调用前面的规则转换返回的字符串值。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;parseInt()&lt;/code&gt; 函数：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;忽略字符串前面的空格，直到找到第一非空格的字符。&lt;/li&gt;
+  &lt;li&gt;如果第一个字符不是数字或者负号，返回NaN；&lt;/li&gt;
+  &lt;li&gt;空字符串返回NaN&lt;/li&gt;
+  &lt;li&gt;如果第一个字符就是数字，继续解析下面的字符，直到完全解析完或者遇到了非数字字符。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;例子：&lt;/p&gt;
+
+&lt;p&gt;``` parseInt(“1234blue”); //1234
+parseInt(“”); //NaN
+parseInt(“0xA”); //10 (16进制)
+parseInt(22.5); //22
+parseInt(“070”) //56(8进制)
+parseInt(“70”); //70
+parseInt(“0xf”); //15(16进制)&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
+`parseFloat()` 函数：
+
+
+```parseFloat(&quot;1234blue&quot;); //1234
+parseFloat(&quot;0xA&quot;); //0
+parseFloat(&quot;22.5&quot;); //22.5
+parseFloat(&quot;22.34.5&quot;); //22.34
+parseFloat(&quot;0908.5&quot;); 908.5
+parseFloat(&quot;3.125e7&quot;); //31250000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;string-类型&quot;&gt;String 类型&lt;/h5&gt;
+
+&lt;p&gt;可以使用单引号和双引号来表示字符串，”hello” 和 ‘hello’都是正确的，但是不能使用一个单引号和一个双引号。&lt;/p&gt;
+
+&lt;h6 id=&quot;字符字面量&quot;&gt;字符字面量&lt;/h6&gt;
+&lt;p&gt;String 数据类型包含一些特殊的字符字面量，也就转义序列，用于表示非打印字符，或者具有其他用途的字符。&lt;/p&gt;
+
+&lt;p&gt;```\n 换行
+\t 制表
+\b 空格
+\r 回车
+\f 换页 
+\ 斜杠
+' 单引号
+&quot; 双引号
+\xnn 16进制 n 为 （0 -F）例： \x41 表示为 A
+\unnn 以16进制代码 nnnn 表示的 Unicode 字符，其中n 为 0 - F ，例如\u03a3 表示希腊字符Σ。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;###### 字符串的特点
+字符串的值类型，是不可变的。要改变某个变量保存的值，必须先销毁原来的字符串，然后创建新的字符串填充给变量。
+###### 转换为字符串
+要把一个值转换为字符串有两种方法：
+
+* 第一种是几乎每个值都有的 toString() 方法。
+* 在不知道要转换的值是不是 null 或 undefined 的情况下，还可以使用 String() ，这个函数可以将任何类型转换为字符串。String() 函数遵循以下规则：
+    1. 如果值有 toString() 方法，使用 toString() 方法并返回响应结果；
+    2. 如果值是 null ，则返回 &quot;null&quot;;
+    3. 如果值是 undefined ，则返回 &quot;undefined&quot;
+
+
+
+例子：
+
+```JavaScript
+var age = 11;
+var ageAsString = age.toString(); //    &quot;11&quot; var found = true;
+var foundAsString = found.toString(); //    &quot;true&quot;
+
+
+var num = 10;
+alert(num.toString());// &quot;10&quot;
+alert(num.toString(2));// &quot;1010&quot;
+alert(num.toString(8));// &quot;12&quot;
+alert(num.toString(10));// &quot;10&quot;
+alert(num.toString(16));// &quot;a&quot;
+
+
+var value1 = 10;
+var value2 = true;
+var value3 = null;
+var value4;
+alert(String(value1));// &quot;10&quot;
+alert(String(value2));// &quot;true&quot;
+alert(String(value3));// &quot;null&quot;
+alert(String(value4));// &quot;undefined&quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;object-类型&quot;&gt;Object 类型&lt;/h5&gt;
+
+&lt;p&gt;ECMAScript 中对象其实就是一组数据和功能的集合。对象可以通过执行 new 操作符后跟要创建的对象类型名称来创建。
+object 的每一个实例都有如下方法。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;constructor 保存着用于创建当前对象的函数&lt;/li&gt;
+  &lt;li&gt;hasOwnProperty(propertyName) 用于检测 propertyName 是否在当前实例的属性中。&lt;/li&gt;
+  &lt;li&gt;isPrototypeOf(object) 用于检测传入的对象 object 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。&lt;/li&gt;
+  &lt;li&gt;propertyIsEnumerable(propertyName) 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute&lt;/li&gt;
+  &lt;li&gt;toLocaleString() 返回对象的字符串表示，该字符串与执行环境的地区对应。&lt;/li&gt;
+  &lt;li&gt;toString() 返回对象的字符串表示&lt;/li&gt;
+  &lt;li&gt;valueOf() 返回对象的字符串、数值、布尔值表示 。通常与 toString() 方法的返回值一致。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;操作符&quot;&gt;操作符&lt;/h4&gt;
+
+</description>
+        <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-01/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-01/</guid>
+        
+        <category>JavaScript</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>JavaScript学习01</title>
+        <description>&lt;h1 id=&quot;javascript学习01&quot;&gt;JavaScript学习01&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;开始观看这系列文章 
+  &lt;a href=&quot;https://yq.aliyun.com/articles/30980&quot;&gt;从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;script-标签&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签&lt;/h3&gt;
+&lt;p&gt;HTML的脚本必须位于 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 之中。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;script&amp;gt;
+
+JS脚本
+
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;标签&quot;&gt;标签&lt;/h3&gt;
+&lt;p&gt;成对出现的&amp;lt;&amp;gt;（共2组）就是标签。
+如 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p&amp;gt;文本&amp;lt;/p&amp;gt;&lt;/code&gt; 就是一组标签。&lt;/p&gt;
+
+&lt;p&gt;标签可以加id，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p id=&quot;abc&quot;&amp;gt;文本&amp;lt;/p&amp;gt;&lt;/code&gt; ，id用于之后寻找其使用。&lt;/p&gt;
+
+&lt;p&gt;寻找id使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;getElementById(&quot;abc&quot;)&lt;/code&gt; 这样的办法。&lt;/p&gt;
+
+&lt;p&gt;然后在这样的命令后面加对应的东西，如innerHTML（文本替换），value（得到值）。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p id=&quot;abc&quot;&amp;gt;abc&amp;lt;/p&amp;gt;
+
+&amp;lt;button type=&quot;button&quot; onclick=&quot;run()&quot;&amp;gt;点击&amp;lt;/button&amp;gt;
+
+&amp;lt;script&amp;gt;
+
+function run()
+{
+document.getElementById(&quot;abc&quot;).innerHTML=&quot;ppp&quot;;
+
+}
+
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;像这样的代码，在执行时，用ppp文本替换abc文本。&lt;/p&gt;
+
+&lt;p&gt;第一行是输出文字abc，然后给他一个id（用来找她）。&lt;/p&gt;
+
+&lt;p&gt;第二行是输出一个按钮（button），按钮上面的文字是点击。&lt;/p&gt;
+
+&lt;p&gt;第三行到最后 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 是js脚本。这个脚本里面包含了一个函数（function）；&lt;/p&gt;
+
+&lt;p&gt;函数的效果是，在标签id为abc的地方（通过getElementById获得），用文本ppp替换之。&lt;/p&gt;
+
+&lt;h3 id=&quot;输出时间&quot;&gt;输出时间&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p id=&quot;time&quot;&amp;gt;&amp;lt;/p&amp;gt;
+
+&amp;lt;script&amp;gt;
+
+var nowtime=new Date(); //获得时间
+
+localtime=nowtime.toString(); //将时间转为字符串
+
+document.getElementById(&quot;time&quot;).innerHTML=localtime; //在id为time的地方输出时间，注意，time需要在这行之前才可以
+
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;关于时间的其他函数&quot;&gt;关于时间的其他函数：&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hour=nowtime.getHours(); //将小时赋给hour
+
+min=nowtime.getMinutes(); //分钟
+
+second=nowtime.getSeconds(); //秒
+
+day=nowtime.getDate(); //天
+
+mon=nowtime.getMonth(); //月
+
+year=nowtime.getFullYear(); //年
+
+datashow=year+&quot;年&quot;+mon+&quot;月&quot;+day+&quot;日&quot;+hour+&quot;时&quot;+min+&quot;分&quot;+second+&quot;秒&quot;;
+
+document.getElementById(&quot;time&quot;).innerHTML=datashow; //在id为time的地方输出时间，注意，time需要在这行之前才可以
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;导入一个js文件&quot;&gt;导入一个js文件&lt;/h3&gt;
+
+&lt;p&gt;使用&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script src=&quot;time.js&quot;&amp;gt;&lt;/code&gt; //读取time.js这个JavaScript文件内容&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;/script&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;然后可以将之前的关于time的js命令，放入time.js文件内（无需加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt;标签）即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;事件处理程序&quot;&gt;事件处理程序&lt;/h3&gt;
+
+&lt;p&gt;在发生某种事件时，怎么处理。&lt;/p&gt;
+
+&lt;p&gt;先上代码：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;01.png&quot; onmouseover=&quot;src='02.png'&quot; onmouseout=&quot;src='01.png'&quot;&amp;gt; &amp;lt;!-- 这行的意思是，插入一个图片，初始是01.png，鼠标移动上去后，是02.png，移动走又变回01.png了--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;位置是在第一个标签之中，类型有（似乎对大小写并不敏感，即onMouseOver和onmouseover是一样的）&lt;/p&gt;
+
+&lt;p&gt;①按下时：onclick=”执行的语句”;&lt;/p&gt;
+
+&lt;p&gt;②鼠标移动到上面时：onMouseOver=”执行的语句”;&lt;/p&gt;
+
+&lt;p&gt;③鼠标离开：onMouseOut=”执行的语句”;&lt;/p&gt;
+
+&lt;p&gt;④点击后生效：onClick=”执行的语句”;（仅限鼠标左键）&lt;/p&gt;
+
+&lt;p&gt;⑤鼠标按下后生效：onMouseDown=”执行的语句”;（左右键都有用）&lt;/p&gt;
+
+&lt;p&gt;⑥增加条件判断（初始1#图片，第一次点击更换为2#图片，再次点击更换为1#图片，然后交替）&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot;onclick=&quot;png01()&quot;&amp;gt;
+
+&amp;lt;script&amp;gt;
+
+i=0;//需要在外面声明才行
+
+function png01()
+
+{
+
+if(i==0){i=1;document.getElementById(&quot;01png&quot;).src=&quot;02.png&quot;;}//判断更改图片
+
+else{i=0;document.getElementById(&quot;01png&quot;).src=&quot;01.png&quot;;}//判断更改图片
+
+}
+
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;⑦鼠标在上面是一个鼠标，鼠标离开又是另外一个图片&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot; onmouseover=&quot;src='02.png'&quot; onmouseout=&quot;src='01.png'&quot;&amp;gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;⑧判断路径中，文件名是否有某个关键词；&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function mouseover()
+
+{
+
+png=document.getElementById(&quot;01png&quot;);
+
+if(png.src.match(&quot;01.png&quot;)) //如果路径中有关键词01，
+
+{
+
+png.src=&quot;02.png&quot;;
+
+}
+
+else
+
+{
+
+png.src=&quot;01.png&quot;;
+
+}
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;注释&quot;&gt;注释&lt;/h3&gt;
+&lt;p&gt;html注释的语法是：&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &amp;lt;!--这里面写注释--&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;js注释的语法：&lt;/p&gt;
+
+&lt;p&gt;js标签之内（即 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 之间的部分），可以像c++那样用双斜线。&lt;/p&gt;
+
+&lt;h3 id=&quot;图片&quot;&gt;图片&lt;/h3&gt;
+
+&lt;p&gt;①标签&amp;lt;img src=”图片链接”&amp;gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;②限制高度和宽度（会导致图片变形）：width=””和height=””;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot; width=&quot;100&quot; heigth=&quot;100&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;③在文字之中插入图片：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p&amp;gt;右边是一个美女图片&amp;lt;img id=&quot;01png&quot; src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot;  width=&quot;200&quot; height=&quot;200&quot; onmouseover=&quot;mouseover()&quot; onmouseout=&quot;mouseover()&quot;&amp;gt; 左边是美女图片&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;超链接&quot;&gt;超链接&lt;/h3&gt;
+
+&lt;p&gt;在使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a href=”链接地址”&amp;gt;&amp;lt;/a&amp;gt;&lt;/code&gt; 即可，将触发链接的内容加入到 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 中间如：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;a href=&quot;http://baidu.com&quot; target=&quot;_blank&quot;&amp;gt; &amp;lt;!--加入target=&quot;_blank&quot;表示是新窗口，不加则是在之前的窗口--&amp;gt;
+
+    &amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot;  width=&quot;100&quot; height=&quot;100&quot; onmouseover=&quot;mouseover()&quot; onmouseout=&quot;mouseover()&quot;&amp;gt;
+
+&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;①如果是链接到本地（或者网站某个地址），则使用相对路径；&lt;/p&gt;
+
+&lt;p&gt;②链接到同一个页面的不同位置，参考链接：http://www.w3school.com.cn/tiy/t.asp?f=html_link_locations&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#C4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;查看 Chapter 4。&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;C4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chapter 4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 5&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 6&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 7&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 8&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 10&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 11&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 12&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 13&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 14&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 15&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 16&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 17&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;③如果图片不能存在的话，用文本替代：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;不存在的图片.png&quot; alt=&quot;这里是不存在的图片&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;使用div来布局&quot;&gt;使用div来布局&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 布局的好处是，提前把网站页面划分为若干个区域，然后设置好每个区域的大小。&lt;/p&gt;
+
+&lt;p&gt;如图片，先将页面分为3个区域。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160331173243153&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后在每个区域中再细分。
+①一般在div中使用class属性：&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=”某个样式”&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;然后这个div则使用class的这个样式了。&lt;/p&gt;
+
+&lt;p&gt;②一个div实际上是一行（也就是说不同div之间是换行），但貌似可以通过class来让其位于不同的位置。&lt;/p&gt;
+
+&lt;p&gt;更深的话，是跟DOM有关的。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/</guid>
+        
+        <category>JavaScript</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>(转)Tips:取消UICollectionView的隐式动画</title>
+        <description>&lt;h1 id=&quot;转tips取消uicollectionview的隐式动画&quot;&gt;(转)Tips:取消UICollectionView的隐式动画&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;原文地址在串哥的博客 &lt;a href=&quot;http://adad184.com/2015/11/10/disable-uicollectionview-implicit-animation/&quot;&gt;Tips:取消UICollectionView的隐式动画&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;UICollectionView在 &lt;code class=&quot;highlighter-rouge&quot;&gt;reloadItems&lt;/code&gt; 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)&lt;/p&gt;
+
+&lt;p&gt;下面几种方法都可以帮你去除这些动画&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//方法一
+[UIView performWithoutAnimation:^{
+
+    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+}];
+
+//方法二
+[UIView animateWithDuration:0 animations:^{
+    [collectionView performBatchUpdates:^{
+        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+    } completion:nil];
+}];
+    
+//方法三
+[UIView setAnimationsEnabled:NO];
+[self.trackPanel performBatchUpdates:^{
+    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+} completion:^(BOOL finished) {
+    [UIView setAnimationsEnabled:YES];
+}];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;如果你的APP只支持iOS7+ 推荐使用第一种方式 &lt;code class=&quot;highlighter-rouge&quot;&gt;performWithoutAnimation&lt;/code&gt; (感谢@sunnyxx的tip) 简单方便&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;but&lt;/p&gt;
+
+&lt;p&gt;问题还没有结束 上面介绍的方法只能解决UIView的Animation 如果你的cell中还包含有CALayer的动画 比如这样&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.frameLayer.frame = self.frameView.bounds;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上述情况多用于自定义控件使用了layer.mask的情况 如果有这种情况 上面提到的方法是无法取消CALayer的动画的 但是解决办法也很简单&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    
+    self.frameLayer.frame = self.frameView.bounds;
+    
+    [CATransaction commit];
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;done!&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 09 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/</guid>
+        
+        <category>动画</category>
+        
+        <category>Tips</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>关于 App Store 审核的一些事</title>
+        <description>&lt;h1 id=&quot;关于-app-store-审核的一些事&quot;&gt;关于 App Store 审核的一些事&lt;/h1&gt;
+
+&lt;h4 id=&quot;事情经过&quot;&gt;事情经过&lt;/h4&gt;
+&lt;p&gt;因为一个功能应不应该使用内购，跟苹果爸爸来回周旋了一个月，其间又是邮件又是电话，直到最后申诉，苹果爸爸才正视我的述求，最终通过了审核。
+当我几次 态度明确的 通过邮件、视频回复审核人员，我们基于付费的功能是与 app 的使用没有关系的，对方打来电话，告诉我：您这个 app 我们也是几次商讨后才认为是需要使用内购的，巴拉巴拉一堆话。我就说根据你们的审核条例：&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;3.1.5 App 之外的实物商品和服务：如果 app 允许用户购买将在 app 之外使用的商品或服务，则必须使用 IAP 以外的购买方式来收取相应款项，如 Apple Pay 或传统的信用卡入口。App 可支持获批虚拟货币的流通（如比特币、狗币），前提条件是，在该 app 能够正常使用的地区，前述做法必须遵守各州法律和联邦法律。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我们这个app是不需要通过内购的。&lt;/p&gt;
+
+&lt;p&gt;审核人员：如果您觉得我们的审核有问题的话，您向审查委员会提起申诉好了，但是我需要告诉您，审查委员会也是我们的人，而且我们之前已经请求过审查委员会的意见，所以如果您提起申诉，结果还是一样的。&lt;/p&gt;
+
+&lt;p&gt;我：难道你们的审核条款是摆设吗（大概是这样的话，有点记不清楚了。）&lt;/p&gt;
+
+&lt;p&gt;审核人员：只要你通过 Apple 这个平台进行推广你的付费服务，就需要使用内购。&lt;/p&gt;
+
+&lt;p&gt;日了狗了！！&lt;/p&gt;
+
+&lt;p&gt;抱着一线生机的提起了申诉，今天早上一来，申诉通过了，并且审核也已经通过了。&lt;/p&gt;
+&lt;h4 id=&quot;收获&quot;&gt;收获&lt;/h4&gt;
+&lt;p&gt;通过这件事，知道了几点：&lt;/p&gt;
+&lt;h5 id=&quot;1苹果审核人员的标准不一致&quot;&gt;1，苹果审核人员的标准不一致。&lt;/h5&gt;
+
+&lt;p&gt;我们的app 是一个上线时间很长的app，之前每次更新基本上第二天就可以审核上线了。但这次扯淡就扯了一个月。猜测是不同的审核人员的审核标准不一致。&lt;/p&gt;
+&lt;h5 id=&quot;2审核人员会言语上误导你&quot;&gt;2，审核人员会言语上误导你。&lt;/h5&gt;
+
+&lt;p&gt;审核人员告诉我是经过了审查委员会的意见进行的处理，但是当我提起申诉，app 就通过了审核。要么是审核人员说谎了，要么就是审查委员会之前的标准也是不一致的。&lt;/p&gt;
+&lt;h5 id=&quot;3只要你确认你是-app-符合审核规则一定要坚持&quot;&gt;3，只要你确认你是 app 符合审核规则，一定要坚持&lt;/h5&gt;
+
+&lt;p&gt;在审核人员打来电话后，通过她的话语，感觉申诉通过的几率也不是很大，我们这边差点要改一系列的逻辑实现，最后领导拍板，我们的app 符合他们的审核条例，为什么审核不给过，去申诉，先看看申诉结果以后再讨论。&lt;/p&gt;
+
+&lt;h4 id=&quot;最后&quot;&gt;最后&lt;/h4&gt;
+&lt;p&gt;也许只是因为最近 微信 的打赏功能闹得沸沸扬扬，苹果爸爸审核的严格了。。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 08 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</guid>
+        
+        <category>App Store</category>
+        
+        
+      </item>
     
       <item>
         <title>让你眼前一亮的代码</title>
@@ -72,6 +777,10 @@
 &lt;p&gt;我这边就显示了一个提示的文字，简单的实现了，如果需要显示美观的视图，自己修改下就可以用了，思路都是一样的。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/yunisSong/MagicCode/master/Pic/tableviewEmptyDemo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;uiimageview&quot;&gt;UIImageView&lt;/h3&gt;
+&lt;h4 id=&quot;0行代码完成头像设置功能&quot;&gt;0行代码完成头像设置功能&lt;/h4&gt;
+&lt;p&gt;最初是在 &lt;a href=&quot;https://github.com/FengDeng/DFHeadImageView&quot;&gt;DFHeadImageView&lt;/a&gt; ,通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIImageView&lt;/code&gt; 封装，使用 &lt;a href=&quot;https://github.com/FengDeng/DFHeadImageView&quot;&gt;DFHeadImageView&lt;/a&gt; 可以直接完成设置头像的功能，不需要再额外写获取图片的方法。最好自己试着仿写了一遍。&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
@@ -2014,507 +2723,6 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         <guid isPermaLink="true">http://localhost:4000/2017/04/12/%E8%BD%AC-GCD/</guid>
         
         <category>GCD</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>（转）如何优雅地编写 iOS 第三方库</title>
-        <description>&lt;h1 id=&quot;转如何优雅地编写-ios-第三方库&quot;&gt;（转）如何优雅地编写 iOS 第三方库&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;本文为转载文章 ，原文地址 &lt;a href=&quot;https://xcoder.tips/how-to-write-elegant-thirdpart-ios-library/&quot;&gt;如何优雅地编写 iOS 第三方库&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;iOS 经过八年多的发展，已经涌现出诸多优秀的第三方库，但怎样才算是优雅？总体来说，&lt;code class=&quot;highlighter-rouge&quot;&gt;AFNetworking&lt;/code&gt; 就十分优雅，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;GPUImage&lt;/code&gt; 就只是可用，而不算优雅。编写优雅的第三方库，就像制作一件精美的艺术品一样，过程让人沉醉，结果令人赏心悦目。否则就是单纯的代码堆积与功能实现，过程像搬砖，完成后也没有成就感。下面就本人的一点经验，分享下如何优雅地封装第三方库。&lt;/p&gt;
-
-&lt;h4 id=&quot;命名&quot;&gt;命名&lt;/h4&gt;
-
-&lt;p&gt;好的命名规则是一个成功的第三库的开始，然而现实中很许多人随性命名，导致沟通成本上升。事实上命名问题上，苹果有其官方统一的标准，即首字母小写的驼峰式，如：&lt;code class=&quot;highlighter-rouge&quot;&gt;setName:&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;reloadDataWithName:andEmail: &lt;/code&gt; 等，且一般约定在 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 不使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;getName&lt;/code&gt;，而直接使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;。&lt;/p&gt;
-&lt;h4 id=&quot;属性&quot;&gt;属性&lt;/h4&gt;
-&lt;p&gt;属性的命名最好是能直接表达其意义的英文名词，当然合适的时候添加形容词，如：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTUser&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fullName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;phoneNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果是数组或集合等，用名词的复数形式：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTDownloadManager&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;downloadURLs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;表达数量的属性，可以加 &lt;code class=&quot;highlighter-rouge&quot;&gt;numberOfXXX&lt;/code&gt;，或 &lt;code class=&quot;highlighter-rouge&quot;&gt;XXXCount&lt;/code&gt; 如：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTBook&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSInteger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfPages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSInteger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pageCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;表示对象状态的属性，使用英文的正在&lt;code class=&quot;highlighter-rouge&quot;&gt;进行时&lt;/code&gt;，或&lt;code class=&quot;highlighter-rouge&quot;&gt;完成时&lt;/code&gt;等可以表示状态的词，如：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;@property (nonatomic, assign) BOOL isClosed; ，已经关闭&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assign) BOOL isClosing; ，正在关闭&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assign) BOOL isAvaliable;，目前可用&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assign) BOOL hasChanged;，已经被改变&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;而以下写法表意是不明确的：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;del&gt;@property (nonatomic, assing) BOOL isClose;&lt;/del&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;当然，前面的代码还能有更优雅的写法：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;@property (nonatomic, assign, getter=isClosed) BOOL closed;&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assing, getter=isClosing) BOOL closing;&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assing, getter=isAvaliable) BOOL avaliable;&lt;/li&gt;
-  &lt;li&gt;@property (nonatomic, assign, getter=hasChanged) BOOL changed;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;枚举&quot;&gt;枚举&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;iOS&lt;/strong&gt; 基础类库有着比其它任何官方库都好用的枚举类型，因为在使用过程中没有任何痛苦，也无需查文档，照着它的类型打完然后就有表意明确的自动补全，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIKit&lt;/code&gt; 中很常用的：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_ENUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSInteger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIControlContentHorizontalAlignment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;kt&quot;&gt;UIControlContentHorizontalAlignmentCenter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlContentHorizontalAlignmentLeft&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlContentHorizontalAlignmentRight&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlContentHorizontalAlignmentFill&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_OPTIONS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSUInteger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIControlState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateNormal&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateHighlighted&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;                  &lt;span class=&quot;c1&quot;&gt;// used when UIControl isHighlighted is set&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateDisabled&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateSelected&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;                  &lt;span class=&quot;c1&quot;&gt;// flag usable by app (see below)&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateFocused&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_ENUM_AVAILABLE_IOS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9_0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Applicable only when the screen supports focus&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateApplication&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x00FF0000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;              &lt;span class=&quot;c1&quot;&gt;// additional flags available for application use&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;UIControlStateReserved&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0xFF000000&lt;/span&gt;               &lt;span class=&quot;c1&quot;&gt;// flags reserved for internal framework use&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;等等。它的特点也很明显，就是&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;类型名&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-  &lt;span class=&quot;n&quot;&gt;类型名&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;枚举名0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;枚举值0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;类型名&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;枚举名1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;枚举值1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;类型名&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;枚举名2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;枚举值2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;于是有一段时间，本人都想把 OpenGL 里那些恶心的宏重写成这样形式（https://github.com/rickytan/Cocoa-Style-OpenGL），如：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;CC_ENUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GLUnsignedType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;kt&quot;&gt;GLUnsignedTypeByte&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_UNSIGNED_BYTE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLUnsignedTypeShort&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_UNSIGNED_SHORT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLUnsignedTypeInt&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_UNSIGNED_INT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;CC_ENUM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GLDrawMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModePoints&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_POINTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeLines&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_LINES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeLineLoop&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_LINE_LOOP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeLineStrip&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_LINE_STRIP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeTriangles&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_TRIANGLES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeTriangleStrip&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_TRIANGLE_STRIP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeTriangleFan&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_TRIANGLE_FAN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeQuads&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_QUADS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModeQuadStrip&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_QUAD_STRIP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;GLDrawModePolygon&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;GL_POLYGON&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;然而苦于功底有限，同时对 OpenGL 底层了解也不够，作罢。&lt;/p&gt;
-
-&lt;p&gt;而当前市面上已有的部分厂商并没有按照这个约定来发布 SDK，以致于要不断查看文档才知道如何操作。如一直倍受诟病的鹅厂：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;QQApiInterfaceReqType&lt;/span&gt;  
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;EGETMESSAGEFROMQQREQTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;///&amp;lt; 手Q -&amp;gt; 第三方应用，请求第三方应用向手Q发送消息&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;ESENDMESSAGETOQQREQTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;///&amp;lt; 第三方应用 -&amp;gt; 手Q，第三方应用向手Q分享消息&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;ESHOWMESSAGEFROMQQREQTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;///&amp;lt; 手Q -&amp;gt; 第三方应用，请求第三方应用展现消息中的数据&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/**
- QQApi请求消息基类
- */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;QQBaseReq&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/** 请求消息类型，参见\ref QQApiInterfaceReqType */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;以上 SDK 有三个问题：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;QQBaseRequest&lt;/code&gt; 不需要缩写为 &lt;code class=&quot;highlighter-rouge&quot;&gt;QQBaseReq&lt;/code&gt;，在 &lt;strong&gt;Objective-C&lt;/strong&gt; 的世界，名字再长都不过份，而要能将类、方法等功能表述清楚；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; 应当明确指定类型，就一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; 让使用者不知所措；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;QQApiInterfaceReqType&lt;/code&gt; 的枚举名应当以 &lt;code class=&quot;highlighter-rouge&quot;&gt;QQApiInterfaceReqType&lt;/code&gt; 开头，且以驼峰式命名，方便自动补全。全大写一般是宏定义。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;接口及实现&quot;&gt;接口及实现&lt;/h4&gt;
-&lt;p&gt;在编写第三方库时，尽量面向接口编程，并给一个默认的实现，方便使用者扩展。&lt;/p&gt;
-
-&lt;p&gt;例如，你实现了一个照片显示的 &lt;strong&gt;View&lt;/strong&gt;，你的类定义如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnailImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyPhotoGalleryView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;然而在实际项目中，使用者一般会有自定义的照片对象（如：&lt;code class=&quot;highlighter-rouge&quot;&gt;@class XTPhoto&lt;/code&gt;），为了使用你的实现，他不得不将他的对象转成你的，再设置到 &lt;code class=&quot;highlighter-rouge&quot;&gt;photos&lt;/code&gt; 属性，造成不必要的内存浪费。&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTPhoto&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;NSMutableArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSMutableArray&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;arrayWithCapacity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoGallery&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;XTPhoto&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photo&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoGallery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  
-    &lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;photoGalleryView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;arrayWithArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;而如果换一种实现，定义一个接口，就可以一定程度上避免这种问题：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@protocol&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@required&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readonly&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnailImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readonly&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@optional&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readonly&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnailImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyPhotoGalleryView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSArray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTPhoto&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;MyPhoto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTPhoto&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;thumbnailImage&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoPath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastPathComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;originURL&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;URLWithString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;photoPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这样可以直接将 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.photoGallery&lt;/code&gt; 直接赋值到 &lt;code class=&quot;highlighter-rouge&quot;&gt;photoGalleryView.photos&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;除了面向接口编程，在类的实现上也应遵循以下原则：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;保持简单。只向外暴露能实现功能的最少的接口。假如你有一个视图，里面有一个 Label 显示了剩余的金币数，大于 0 时为红色，小于 0 时为绿色，那么应当只暴露一个 NSInteger 接口。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTStatsView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSInteger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfGold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;然后在具体的实现中设置 Label 的值：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTStatsView&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UILabel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goldLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-
-&lt;span class=&quot;kd&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;XTStatsView&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;setNumberOfGold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSInteger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numberOfGold&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_numberOfGold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfGold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goldLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;stringWithFormat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;%d 金币&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_numberOfGold&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_numberOfGold&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goldLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;redColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;goldLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;greenColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;一种比较懒的办法是直接暴露 &lt;code class=&quot;highlighter-rouge&quot;&gt;goldLabel&lt;/code&gt;，给了使用者较多的灵活性，但也容易造成一些不可预料的结果。&lt;/p&gt;
-
-&lt;p&gt;另外有一些情况属于暴露多余接口，如你自定义了一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;Cell&lt;/code&gt;，用来展示某个 &lt;code class=&quot;highlighter-rouge&quot;&gt;Entity&lt;/code&gt; 的内容，于是定义如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyCell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UITableViewCell&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyEntity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;renderData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;使用者设置了 &lt;code class=&quot;highlighter-rouge&quot;&gt;Entity &lt;/code&gt;后还要调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)renderData&lt;/code&gt; 才能显示出来，这其实是多余的，可以去掉 &lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)renderData&lt;/code&gt; 而在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Entity&lt;/code&gt; 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 中内部调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;- (void)renderData&lt;/code&gt; 或其他类似的方法。使用者所设置的，即是所看到（所得到）的，不需要再调用其他方法。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;调用顺序无关。如果你实现的类有较多的状态无关的属性，它应该是调用顺序无关的。例如，一个 VC 暴露了一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;titleColor&lt;/code&gt; 属性，可以设置视图中 &lt;code class=&quot;highlighter-rouge&quot;&gt;Label&lt;/code&gt; 的颜色，一个比较常见的错误是如下实现：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyViewController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIViewController&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-
-&lt;span class=&quot;kd&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyViewController&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;以上实现的问题在于，如果 &lt;strong&gt;VC&lt;/strong&gt; 的视图已经加载，那么设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;titleColor&lt;/code&gt; 将无效。正确的实现应该如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyViewController&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;super&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;setTitleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_titleColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_titleColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isViewLoaded&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleLabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;textColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;这样保证使用者无论何时设置都是有效的。&lt;/p&gt;
-
-&lt;h4 id=&quot;宏&quot;&gt;宏&lt;/h4&gt;
-&lt;p&gt;合理地使用 &lt;strong&gt;NS&lt;/strong&gt; 自带的编译器预处理宏定义可以马上提高整个代码的逼格，如：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;UIKIT_EXTERN&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyUserDidLoginNotification&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;DEPRECATED_MSG_ATTRIBUTE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Use userName instead!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instancetype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;initWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_DESIGNATED_INITIALIZER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reloadData&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_REQUIRES_SUPER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;MyUserManager&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSObject&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instancetype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instancetype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;init&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NS_UNAVAILABLE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;更多宏请参见 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Foundation/NSObjCRuntime.h&amp;gt;&lt;/code&gt;。&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/11/%E8%BD%AC-%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E7%BC%96%E5%86%99-iOS-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/11/%E8%BD%AC-%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E7%BC%96%E5%86%99-iOS-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</guid>
-        
-        <category>iOS</category>
-        
-        <category>转载</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>使用Swift做一些重复性的工作</title>
-        <description>&lt;h1 id=&quot;使用swift做一些重复性的工作&quot;&gt;使用Swift做一些重复性的工作&lt;/h1&gt;
-
-&lt;p&gt;之前已经使用Shell 实现了这个工作 &lt;a href=&quot;https://yunissong.github.io/2017/04/10/%E8%84%9A%E6%9C%AC/&quot;&gt;使用脚本做一些重复的事情&lt;/a&gt; ,想到正在学习Swift，并且前端时间看看喵神直播编写 &lt;a href=&quot;https://github.com/onevcat/FengNiao&quot;&gt;FengNiao&lt;/a&gt; 的过程，就按照喵神的步骤用swift 实现了一遍，用起来是真心爽。附上动图。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/yunisSong/yunisSong.github.io/master/_posts/media/SwiftShell.gif&quot; alt=&quot;测试github&quot; /&gt;
-&lt;img src=&quot;http://on9bzb5yp.bkt.clouddn.com/SwiftShell.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;安装方式&quot;&gt;安装方式&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;$ git clone https://github.com/yunisSong/YunisTool.git&lt;/li&gt;
-  &lt;li&gt;$  swift build&lt;/li&gt;
-  &lt;li&gt;$ swift build -c release&lt;/li&gt;
-  &lt;li&gt;$ cp ./.build/release/BlogTool /usr/local/bin/BlogTool&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;使用方式&quot;&gt;使用方式&lt;/h4&gt;
-&lt;p&gt;$ BlogTool -t 使用Swift做一些重复性的工作 -tags Swift&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 11 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/11/%E4%BD%BF%E7%94%A8Swift%E5%81%9A%E4%B8%80%E4%BA%9B%E9%87%8D%E5%A4%8D%E6%80%A7%E7%9A%84%E5%B7%A5%E4%BD%9C/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/11/%E4%BD%BF%E7%94%A8Swift%E5%81%9A%E4%B8%80%E4%BA%9B%E9%87%8D%E5%A4%8D%E6%80%A7%E7%9A%84%E5%B7%A5%E4%BD%9C/</guid>
-        
-        <category>Swift</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>使用脚本做一些重复的事情</title>
-        <description>&lt;h1 id=&quot;使用脚本做一些重复的事情&quot;&gt;使用脚本做一些重复的事情&lt;/h1&gt;
-&lt;p&gt;使用的这个模板建立了&lt;a href=&quot;https://yunissong.github.io/&quot;&gt;这个博客&lt;/a&gt;以后，发现每篇文章前面都需要加入默认的文件头，每次都需要从其他的文件复制过来，就想着能不能使用脚本来完成。于是就边搜索边捣鼓出来了这样一个脚本，请勿见笑。&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!bin/sh&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#进入当前目录&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;basepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;dirname &lt;span class=&quot;nv&quot;&gt;$0&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;; &lt;span class=&quot;nb&quot;&gt;pwd&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#读取当前时间&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;DATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;date +%Y-%m-%d&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;date +%H:%M:%S&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;Year&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;date +%Y-%m-%d&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;输入文章标题&quot;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;read &lt;/span&gt;name
-&lt;span class=&quot;c&quot;&gt;#拼接得到文件名称&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Year&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'-'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'.md'&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#创建文件&lt;/span&gt;
-touch &lt;span class=&quot;nv&quot;&gt;$filename&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#写入默认 文件头 到文件&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;---
-layout:     post
-title:      &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
-subtitle:   &quot;&lt;/span&gt;在不断填坑中前进。。&lt;span class=&quot;s2&quot;&gt;&quot;
-date:       &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DATE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
-author:     &quot;&lt;/span&gt;三十一&lt;span class=&quot;s2&quot;&gt;&quot;
-header-img: &quot;&lt;/span&gt;img/post-bg-nextgen-web-pwa.jpg&lt;span class=&quot;s2&quot;&gt;&quot;
-header-mask: 0.3
-catalog:    true
-tags:
-- iOS
-- Swift
----&quot;&lt;/span&gt; &amp;gt;&amp;gt; ./&lt;span class=&quot;nv&quot;&gt;$filename&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;#打开文件进行编辑&lt;/span&gt;
-open &lt;span class=&quot;nv&quot;&gt;$filename&lt;/span&gt;
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-</description>
-        <pubDate>Mon, 10 Apr 2017 17:23:26 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/10/%E8%84%9A%E6%9C%AC/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/10/%E8%84%9A%E6%9C%AC/</guid>
-        
-        <category>Shell</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>深入浅出iOS事件机制</title>
-        <description>&lt;h1 id=&quot;深入浅出ios事件机制&quot;&gt;深入浅出iOS事件机制&lt;/h1&gt;
-
-&lt;h3 id=&quot;什么是响应链&quot;&gt;什么是响应链&lt;/h3&gt;
-&lt;p&gt;响应链是一堆可以处理事件的对象构成的具有先后循序的链条。
-iOS 中有一个类叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt; ,它的头文件如下图：
-&lt;img src=&quot;/media/14884333046375/14884344488032.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt; 是可以响应事件的的类的基类，只有继承自 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIResponder&lt;/code&gt;的类才可以响应用户的操作。包括最常见的 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIView&lt;/code&gt;、 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIWindow&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;等。&lt;/p&gt;
-
-&lt;p&gt;在我们的app中，所有的视图都是按照一定的结构组织起来的，即树状层次结构，每一个View 都有自己的superView。当一个View被添加到superView上时，View的&lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt;就被指向superView，&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt; 的self.view 被添加到superView上时，self.view 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 指向&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;UIViewController&lt;/code&gt;的  &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 指向superView。这样整个app 就通过  &lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt; 形成了一条链，也就是我们说的响应链。&lt;/p&gt;
-
-&lt;h3 id=&quot;如何确认第一个响应者&quot;&gt;如何确认第一个响应者&lt;/h3&gt;
-&lt;p&gt;响应链建立后，当用户点击屏幕时，如何确认第一个响应者？&lt;/p&gt;
-
-&lt;p&gt;每当手指接触屏幕，UIApplication接收到手指的事件之后，就会去调用UIWindow的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;，看看当前点击的点是不是在window内，如果点击的点不在UIWindow内，第一响应者就是UIApplication，如果点击的点在UIApplication内部，则继续依次调用window的subView的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;方法，查看点击的点是否在当前subView试图内,如果不在则第一响应者就是window，如果在就继续上面的流程，遍历子视图，直到找到最终的视图。最后找到的视图就是第一个响应者。&lt;/p&gt;
-
-&lt;p&gt;其实只是单纯的说点击的点在不在视图内是不准确的，因为&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event; &lt;/code&gt;方法判断的不只是点范围的问题，具体的还包括视图是否隐藏、视图是否可交互、视图的透明度是否大于0.01等，这些都满足后，才能确认这个视图是否响应事件。下面这张图很清楚的画出了这个流程：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/14884333046375/14884368969345.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;其实还有一种容易疑惑的情景，当两个视图有重叠时，如何确认那个视图响应事件。
-&lt;img src=&quot;/media/14884333046375/14884375762669.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当用户点击红色和蓝色重叠的部分时，系统是如何确认红色和蓝色那个视图响应事件呢？&lt;/p&gt;
-
-&lt;p&gt;这就牵扯到subview调用&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event&lt;/code&gt;的顺序，调用的顺序是根据subview的index顺序，index越大越先被访问（越后被添加到父视图，index越大）。如果确认是蓝色视图响应事件，红色视图的&lt;code class=&quot;highlighter-rouge&quot;&gt;- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event&lt;/code&gt;方法就不会再被调用。&lt;/p&gt;
-
-&lt;h3 id=&quot;响应链的工作机制&quot;&gt;响应链的工作机制&lt;/h3&gt;
-&lt;p&gt;当确认了第一个响应者后，事件就被传递到这个响应者处理。
-如果他不出理，就会通过&lt;code class=&quot;highlighter-rouge&quot;&gt;nextResponder&lt;/code&gt;传递到下一个响应者处理，知道找到一个响应者处理，或者到了AppDelegate仍未找到响应者处理，事件丢弃。&lt;/p&gt;
-&lt;h3 id=&quot;可以用来做什么&quot;&gt;可以用来做什么&lt;/h3&gt;
-&lt;p&gt;最常见的应用就是改变按钮的点击相应区域。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;参考链接&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE#响应链应用&quot;&gt;事件传递响应链&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;http://zhoon.github.io/ios/2015/04/12/ios-event.html&quot;&gt;深入浅出iOS事件机制&lt;/a&gt;
-&lt;a href=&quot;https://www.zybuluo.com/MicroCai/note/66142&quot;&gt;iOS Events and Responder Chain&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Wed, 05 Apr 2017 20:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/</guid>
-        
-        <category>iOS</category>
-        
-        <category>响应链</category>
-        
-        <category>事件机制</category>
         
         
       </item>
