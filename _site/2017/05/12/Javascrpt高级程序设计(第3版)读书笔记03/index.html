@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>Javascrpt高级程序设计(第3版)读书笔记03 - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Javascrpt" title="Javascrpt">Javascrpt</a>
+                        
+                    </div>
+                    <h1>Javascrpt高级程序设计(第3版)读书笔记03</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on May 12, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="javascrpt高级程序设计第3版读书笔记03">Javascrpt高级程序设计(第3版)读书笔记03</h1>
+<h2 id="引用类型">引用类型</h2>
+<p>引用类型是一种数据结构，用于将数据和功能组织在一起。通常也被称为类。引用类型的对象本身是放置在堆中的，对象引用是存在栈中的。</p>
+<h3 id="堆栈">堆、栈</h3>
+<p><a href="http://www.cnblogs.com/jeffchen/archive/2006/12/28/605689.html">堆栈的区别</a>
+堆（Heap）栈（Stack）</p>
+
+<p>1、内存分配方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收 。注意它与数据结构中的堆是两回事，分配方式是类似于链表。可能用到的关键字如下：new、malloc、delete、free等等。
+
+栈：由编译器(Compiler)自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。
+</code></pre>
+</div>
+
+<p>2、申请方式方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：需要程序员自己申请，并指明大小。在c中malloc函数如p1 = (char *)malloc(10)；在C++中用new运算符，但是注意p1、p2本身是在栈中的。因为他们还是可以认为是局部变量。
+
+栈：由系统自动分配。 例如，声明在函数中一个局部变量 int b；系统自动在栈中为b开辟空间。
+</code></pre>
+</div>
+
+<p>3、系统响应方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样代码中的delete语句才能正确的释放本内存空间。另外由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。
+
+栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。
+</code></pre>
+</div>
+
+<p>4、大小限制方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。
+
+栈：在Windows下, 栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在WINDOWS下，栈的大小是固定的（是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。
+</code></pre>
+</div>
+
+<p>5、效率方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：是由new分配的内存，一般速度比较慢，而且容易产生内存碎片，不过用起来最方便，另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是直接在进程的地址空间中保留一快内存，虽然用起来最不方便。但是速度快，也最灵活。
+
+栈：由系统自动分配，速度较快。但程序员是无法控制的。
+</code></pre>
+</div>
+
+<p>6、存放内容方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。
+
+栈：在函数调用时第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈，然后是函数中的局部变量。 注意: 静态变量是不入栈的。当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。
+</code></pre>
+</div>
+
+<p>7、存取效率方面：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>堆：char *s1 = "Hellow Word"；是在编译时就确定的；
+
+栈：char s1[] = "Hellow Word"； 是在运行时赋值的；用数组比用指针速度要快一些，因为指针在底层汇编中需要用edx寄存器中转一下，而数组在栈上直接读取。 ### Object 类型 目前看到的大多数引用类型值都是 `Object` 类型的实例。OC 里面的 `NSObject` 一样。 `Object` 实例有两种创建方式，第一张是使用 `new` 操作符后跟 `Object` 构造函数：
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var person = new Object();
+</code></pre>
+</div>
+<p>另一种就是使用字面量表示法。目的是简化创建过程中包含大量属性的对象。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var person = {
+    name : "Yunis",
+    age : 16
+}
+
+var person = {}; // new Object()  
+person.name = "Nicholas";
+person.age = 29;
+</code></pre>
+</div>
+
+<p>一般来说，访问对象的属性使用都是点语法，但是 <code class="highlighter-rouge">JavaScript</code> 中可以使用方括号来访问对象的属性：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>alert(person["name"]);//Yunis
+alert(person.name);//Yunis
+</code></pre>
+</div>
+
+<p>通过方括号访问属性，还有另外一个用处，有些属性中包含导致语法错误的字符、或者关键字、保留字：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>person["first name"] = "Yunis";
+</code></pre>
+</div>
+<p>一般来说，尽量使用点语法访问属性。</p>
+
+<h3 id="array-类型">Array 类型</h3>
+<p><code class="highlighter-rouge">JavaScript</code> 中的数组与其他语言的数组有很大的不同。
+<code class="highlighter-rouge">JavaScript</code> 中数组中每一项都可以保存任何类型的数据。就是不同于其他语言，一个数组对象中，可以同时存在 字符串、数字、对象和数组等。<code class="highlighter-rouge">JavaScript</code> 的数组还可以动态调整大小，可以随着数据的添加自动增长。 <code class="highlighter-rouge">Array</code> 的创建方式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//创建一个空数组
+var colors = new Array();
+
+//这个是创建一个包含3个元素的数组
+var colors = new Array("red", "blue", "green");
+
+//这个是创建一个长度为20 的数组
+var colors = new Array(20);
+</code></pre>
+</div>
+
+<p>创建的过程可以省略 <code class="highlighter-rouge">new</code> 关键字：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//创建一个空数组
+var colors = Array();
+
+//这个是创建一个包含3个元素的数组
+var colors = Array("red", "blue", "green");
+
+//这个是创建一个长度为20 的数组
+var colors = Array(20);
+</code></pre>
+</div>
+
+<p>也可以使用字面量创建：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//创建一个空数组
+var colors = [];
+
+//这个是创建一个包含3个元素的数组
+var colors = ["red","blue","green"];
+
+
+❗️❗️❗️❗️❗️各个浏览器的处理也不一致，不哟啊使用下面的写法❗️❗️❗️❗️
+//❗️❗️❗️ 这样会创建一个包含两个数组的数组，一个数组长度是2，一个数组长度是3. ❗️❗️❗️ 
+var colors = [2,3，];
+
+//❗️❗️❗️ 这样会创建一个长度是4或者5的数组 ❗️❗️❗️ 
+var colors = [,,,,];
+</code></pre>
+</div>
+
+<p>与其他语言不通，数组读取超过了初始化的长度，不会报错。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = ["u","j",];
+alert(colors[100]); // "undefined"
+
+</code></pre>
+</div>
+
+<p>并且 数组的 length 属性 不是只读的，是可以修改的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = ["u","j",];
+colors.length = 100;
+alert(colors.length); // 100
+
+var colors = ["a","b","c","d","e"];
+//设置长度后，位于这个长度后的数据都会被清空，变为 undefined
+colors.length = 2;
+alert(colors); // a,b
+
+
+//可以使用 length 属性 方便的在数组尾部添加数据
+//因为数组的最后一项的索引始终是 length - 1 ，因此下一项的索引就是 length。
+var colors = ["red", "blue", "green"];
+colors[colors.length] = "black";//"red", "blue", "green","black"
+colors[colors.length] = "brown";//"red", "blue", "green","black","brown"
+
+
+
+
+//如果我们超出当前数组的 长度添加一个元素
+var colors = ["red", "blue", "green"];
+colors[99] = "black";
+//长度就变成了 100  但是 索引 3 - 98 之间值都是 undefined
+alert(colors.length); // 100
+</code></pre>
+</div>
+
+<h4 id="检测数组">检测数组</h4>
+<p>对于一个网页、或者一个全局作用域而言，使用 <code class="highlighter-rouge">instanceof</code> 操作符就可以得到满意的结果：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//判断 value 是不是数组
+if (value instanceof Array){ 
+    // 是，执行相应的操作
+}
+</code></pre>
+</div>
+<p>但是在多个框架或者说多个不同的全局执行环境，就存在了不同版本的 Array 的构造函数，<code class="highlighter-rouge">instanceof</code> 就无法正确的工作了，需要使用 <code class="highlighter-rouge">Array.isArray()</code> 方法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//判断 value 是不是数组
+
+if (Array.isArray(value)){
+    // 是，执行相应的操作
+}
+</code></pre>
+</div>
+
+<h4 id="转换方法">转换方法</h4>
+<p>可以使用 join() 方法使用不同的分割符来构建字符串。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = ["red", "green", "blue"];
+alert(colors.join(","));       //red,green,blue
+alert(colors.join("||"));      //red||green||blue
+</code></pre>
+</div>
+
+<h4 id="栈方法">栈方法</h4>
+<p><code class="highlighter-rouge">JavaScript</code> 中的数组可以表现的跟栈一样。栈的访问规则是后进先出（LIFO，Last-In-First-Out），也就是最后添加的数据会最早被移除。在栈中的推入和弹出操作只会发生在栈的顶部。<code class="highlighter-rouge">JavaScript</code> 为数组提供了 <code class="highlighter-rouge">push()</code> 和 <code class="highlighter-rouge">pop()</code> 方法。</p>
+
+<p><code class="highlighter-rouge">push()</code> 方法可以接受任意数量的参数，把他们逐个添加到数组尾部，并返回修改后的数组长度。
+<code class="highlighter-rouge">pop()</code> 方法从数组末尾移除最后一项，并修改数组长度，然后返回移除的项。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = new Array();
+var count = colors.push("red", "green");
+alert(colors); //red,green
+
+alert(count); //2
+count = colors.push("black");
+alert(count);     //3
+var item = colors.pop();
+alert(item);      //"black"
+alert(colors.length);   //2
+
+
+
+
+var colors = new Array("测试数据占位","测试数据占位01");
+var count = colors.push("red", "green");
+alert(colors); //测试数据占位,测试数据占位01,red,green
+
+alert(count); //4
+count = colors.push("black");
+alert(count);     //5
+var item = colors.pop();
+alert(item);      //"black"
+alert(colors.length);   //4
+
+
+</code></pre>
+</div>
+
+<h4 id="队列方法">队列方法</h4>
+
+<p>数组也可以像队列一样使用，队列的访问规则是先进先出（FIFO，First-In-First-Out）。从队列的首部移除项，尾部添加项。</p>
+
+<p><code class="highlighter-rouge"> shift()</code> 能够移除数组中的第一个项并返回该项，同时数组长度加1.</p>
+
+<p>结合之前的 <code class="highlighter-rouge">push()</code> 方法，就可以像使用队列一样使用数组了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//创建数组
+var colors = new Array();
+//推入两项 colors 变为  red green
+var count = colors.push("red", "green");
+alert(count); //2
+//推入一项 colors 变为  red green black
+count = colors.push("black");
+alert(count);     //3
+
+//取得第一项并移除 colors 变为  green black
+var item = colors.shift();
+alert(item); //"red"
+alert(colors.length); //2
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">unshift()</code>  与 ` shift()<code class="highlighter-rouge"> 方法相反，可以在数组前面添加任意多个项并返回新数组的长度。因此 </code>unshift()<code class="highlighter-rouge"> 和 </code>pop()` 方法也可以以相反的方向模拟队列。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> var colors = new Array();
+ var count = colors.unshift("red", "green");
+ alert(colors);//red green
+
+ alert(count); //2
+ count = colors.unshift("black","llll");
+ alert(colors);//black llll red green
+
+ alert(count);//4
+ var item = colors.pop();
+ alert(item);//green
+ alert(colors.length);//3
+</code></pre>
+</div>
+
+<h4 id="重排序方法">重排序方法</h4>
+<p><code class="highlighter-rouge">reverse()</code> 反转数组[1,2,3] -&gt; [3,2,1]
+<code class="highlighter-rouge">sort()</code> 默认排序是按照每一项的 Unicode 编码排序的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = new Array("b","c","1","3","a","z","f");
+colors.sort();
+alert(colors);//1,3,a,b,c,f,z
+
+
+
+var colors = new Array("b","c","1","111","3","a","z","f");
+colors.sort();
+alert(colors);//1,111,3,a,b,c,f,z
+</code></pre>
+</div>
+
+<p>可以自己写一个比较规则的函数当做参数传递给 <code class="highlighter-rouge">sort()</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+function compare(value1, value2) {
+    if (Number(value1) &lt; Number(value2)) {
+        return -1;
+    } else if (Number(value1) &gt; Number(value2)) {
+        return 1;
+    } else {                    
+        return 0; 
+    }                
+}
+
+var colors = new Array("1","2","5","4","3","22","11","9");
+colors.sort(compare);
+alert(colors);//1,2,3,4,5,9,11,22
+   
+   
+           
+var colors = new Array("b","c","1","111","3","a","z","f");
+colors.sort(compare);
+//❗️❗️❗️❗️  这到底是为什么。。有点晕
+alert(colors);//b,c,1,3,111,a,z,f
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">sort()</code> 有点坑爹啊。</p>
+
+<h4 id="操作方法">操作方法</h4>
+<h5 id="concat"><code class="highlighter-rouge">concat()</code></h5>
+<p><code class="highlighter-rouge">concat()</code> 可以根据单签数组中的所有项创建一个新的数组。这个方法会先创建一个当前数组的副本，然后将他接收的参数添加到这个副本的末尾，组合返回新构建的数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = ["red", "green", "blue"];
+var colors2 = colors.concat("yellow", ["black", "brown"]);
+alert(colors);     //red,green,blue
+alert(colors2);    //red,green,blue,yellow,black,brown
+</code></pre>
+</div>
+<h5 id="slice"><code class="highlighter-rouge">slice()</code></h5>
+<p><code class="highlighter-rouge">slice()</code> 方法可以根据当前数组的一项或者多项创建一个新数组。可以接受一个或者两个参数（返回项的起始和结束位置）。如果只有一个参数，则该方法返回从改参数指定位置开始到当前数组末尾的所有项。如果有两个参数，该方法返回起始和结束位置之前的项，但不包括结束位置的项。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var colors = ["red", "green", "blue", "yellow", "purple"];
+var colors2 = colors.slice(1);
+var colors3 = colors.slice(1,4);
+alert(colors2);   //green,blue,yellow,purple
+alert(colors3);   //green,blue,yellow
+</code></pre>
+</div>
+
+<h5 id="splice"><code class="highlighter-rouge">splice()</code></h5>
+<p><code class="highlighter-rouge">splice()</code> 方法是数组中很强大的方法，有多中用法，主要的用法有3种：</p>
+
+<ul>
+  <li>删除 可以删除任意数量的项，只需要指定两个参数：要删除的第一项的位置和要删除的项数。例如：<code class="highlighter-rouge">splice(0,2)</code> 会删除数组的前两项。</li>
+  <li>插入 可以向指定位置插入任意数量的项，需要提供3个参数：起始位置、0（要删除的项个数）和要插入的项。如果需要插入多个项，可以再传入第4、5.以及任意多个项。例如：<code class="highlighter-rouge">splice(2,0,"red","green")</code> 会从当前数组的位置2开始插入 <code class="highlighter-rouge">"red"</code> 和  <code class="highlighter-rouge">"green"</code>。</li>
+  <li>替换 可以向指定位置插入任意数量的项，切同时删除任意数量的项。需要提供3个参数：起始位置、要删除的项个数 和 要插入的项，插入的项数不必与删除的项数相同。</li>
+</ul>
+
+<p><code class="highlighter-rouge">splice()</code> 方法始终会返回一个数组，该数组包含从原始数组中删除的项，如果没有删除返回一个空数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//删除
+var colors = ["red", "green", "blue"];
+var removed = colors.splice(0,1);
+alert(colors); // green,blue
+alert(removed); // red 
+
+//插入
+removed = colors.splice(1, 0, "yellow", "orange");
+alert(colors); // green,yellow,orange,blue
+alert(removed); //返回一个空的数组
+
+//替换
+removed = colors.splice(1, 1, "red", "purple");
+alert(colors); // green,red,purple,orange,blue
+alert(removed); // yellow 
+</code></pre>
+</div>
+
+<h4 id="位置方法">位置方法</h4>
+
+<p><code class="highlighter-rouge">indexOf()</code> 方法是从数组的开始位置向后查找
+<code class="highlighter-rouge">lastIndexOf()</code> 方法是从数组的末尾位置向前查找。
+这两个方法都接收两个参数：要查找的项和 表示查找起点位置的索引（可选）。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var numbers = [1,2,3,4,5,4,3,2,1];
+
+alert(numbers.indexOf(4));        //3
+alert(numbers.indexOf(4, 4));     //5
+
+alert(numbers.lastIndexOf(4)); //5
+alert(numbers.lastIndexOf(4, 4)); //3
+</code></pre>
+</div>
+
+<h4 id="迭代方法">迭代方法</h4>
+<p>JavaScript 提供了5个迭代方法。每个方法都接收两个参数：<strong>要在每一项上运行的函数</strong> 和 <strong>运行该函数的作用域对象</strong>（可选，影响 <code class="highlighter-rouge">this</code> 的值）。</p>
+
+<ul>
+  <li>every() 对数组中每一项都运行特定函数，如果改函数每一项都返回 true，则返回true。</li>
+  <li>some() 对数组中每一项都运行特定函数，如果改函数有任意一项返回 true，则返回true。</li>
+  <li>forEach() 对数组的每一项运行特定函数。没有返回值。</li>
+  <li>filter() 对数组的每一项运行特定函数。返回该函数会返回 true 的选项组成的数组。</li>
+  <li>map() 对数组的每一项运行特定函数。返回每次函数调用的结果组成的数组。</li>
+</ul>
+
+<pre><code class="language-JavaScript">var numbers = [1,2,3,4,5,4,3,2,1];
+var everyResult = numbers.every(function(item, index, array){
+    return (item &gt; 2);
+});
+alert(everyResult); //false
+
+
+var someResult = numbers.some(function(item, index, array){
+    return (item &gt; 2);
+});
+alert(someResult); //true
+
+
+
+var filterResult = numbers.filter(function(item, index, array){
+    return (item &gt; 2);
+});
+alert(filterResult); //[3,4,5,4,3]
+
+
+
+var mapResult = numbers.map(function(item, index, array){
+    return item * 2;
+});
+alert(mapResult);  //[2,4,6,8,10,8,6,4,2]
+
+
+numbers.forEach(function(item, index, array){
+    //对每一项进行处理 for 循环
+});
+</code></pre>
+
+<h4 id="归并方法">归并方法</h4>
+
+<p><code class="highlighter-rouge">JavaScript</code> 提供了两个归并数组的方法 <code class="highlighter-rouge">reduce()</code> 和 <code class="highlighter-rouge">reduceRight()</code>。都会迭代数组中的所有项区别是，<code class="highlighter-rouge">reduce()</code> 是从数组的第一项开始，<code class="highlighter-rouge">reduceRight()</code> 是从数组的最后一项开始。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var values = [1,2,3,4,5];
+var sum = values.reduce(function(prev, cur, index, array){
+    return prev + cur;
+});
+
+
+第1次执行 prev 是1，cur 是2.
+第2次执行 prev 是3，cur 是3.
+第3次执行 prev 是6，cur 是4.
+...
+最后的结果
+
+alert(sum); //15
+
+
+
+var sum = values.reduceRight(function(prev, cur, index, array){
+    return prev + cur;
+});
+第1次执行 prev 是5，cur 是4.
+第2次执行 prev 是9，cur 是3.
+第3次执行 prev 是12，cur 是2.
+...
+最后的结果
+
+alert(sum);
+
+</code></pre>
+</div>
+
+<h3 id="date-类型">Date 类型</h3>
+<p>创建一个日期对象：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var now = new Date();
+</code></pre>
+</div>
+<p>调用 Date 构造函数而不传递参数的情况下，新创建的对象自动获取当前日期和时间。</p>
+
+<p>代码来说明一切：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 2005 年 5月 5日 下午 5点55分55秒
+//这里5月是因为月份是基于0 为其实月份，即：0 表示一月。
+var allFives = new Date(Date.UTC(2005, 4, 5, 17, 55, 55));
+
+//计算执行时间
+var start = Date.now();
+doSomething();
+var stop = Date.now(),
+    result = stop   start;
+</code></pre>
+</div>
+<h3 id="regexp-类型">RegExp 类型</h3>
+<p>JavaScript 通过 RegExp 来支持正则表达式。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var expression = / pattern / flags ;
+</code></pre>
+</div>
+<p>pattern 代表正则表达式。
+flags 代表正则表达式flags .</p>
+
+<ul>
+  <li>g 全局（global）模式，匹配所有。</li>
+  <li>i case-insensitive，不区分大小写。</li>
+  <li>m 表示多行（multiline）模式。在达到一行文本的末尾是还会继续查找下一行中是否存在与模式匹配的项。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//匹配所有的 “at”
+var pattern1 = /at/g;
+
+//匹配第一个 bat 或者 cat，不区分大小写
+var pattern2 = /[bc]at/i;
+
+//匹配所有以 at 结尾的3个字符的集合，不区分大小写
+var pattern3 = /.at/gi;
+</code></pre>
+</div>
+
+<p>在 JavaScript 使用正则表达式下列字符需要使用转义字符
+<code class="highlighter-rouge">( [ { \ ^ $ | ) ? * + .]}</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//匹配第一个 “bat” 或者 “cat” 不区分大小写
+var pattern1 = /[bc]at/i;
+
+//匹配第一个"[bc]at" ，不区分大小写
+var pattern2 = /\[bc\]at/i;
+
+//匹配所有以 at 结尾的3个字符的集合，不区分大小写
+var pattern3 = /.at/gi;
+
+//匹配所有 “.at”，不区分大小写
+var pattern4 var pattern4 = /\.at/gi;
+</code></pre>
+</div>
+
+<p>待续。。。。看到头晕 5.4</p>
+
+<h3 id="function-类型">Function 类型</h3>
+<p>函数也是对象，函数名 实际上就是指向函数对象的指针，不会与某个函数绑定。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function sum (num1, num2) {
+    return num1 + num2;
+}
+var sum = function(num1, num2){
+    return num1 + num2;
+};
+
+alert(sum(10,10));        //20
+
+var anotherSum = sum;
+alert(anotherSum(10,10)); //20
+
+sum = null;
+alert(anotherSum(10,10)); //20
+</code></pre>
+</div>
+
+<h4 id="没有重载">没有重载</h4>
+<p>将函数名称想象为指针，就很好理解了为什么 JavaScript 中没有函数重载的概念了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function addSomeNumber(num){
+    return num + 100;
+}
+function addSomeNumber(num) {
+    return num + 200;
+}
+
+var result = addSomeNumber(100); //300
+
+var addSomeNumber = function (num){
+    return num + 100;
+};
+
+addSomeNumber = function (num) { 
+    return num + 200;
+};
+var result = addSomeNumber(100); //300
+</code></pre>
+</div>
+
+<h4 id="函数声明-和-函数表达式">函数声明 和 函数表达式</h4>
+<p>解析器在向执行环境中加载数据时，对函数声明和函数表达式不是相同的处理，解析器会先读取函数声明，并使其在执行任何代码之前可用（可用访问），至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真正的被解释执行。下面的代码完全可以正确的执行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>alert(sum(10,10));
+function sum(num1, num2){
+    return num1 + num2;
+}
+</code></pre>
+</div>
+
+<p>这是因为在代码执行之前，解析器就已经通过一个名为 函数声明提升（function declaration hoisting）的过程，读取并将函数声明添加到执行环境中。读取并将函数声明添加到执行环境中。对代码求值时， JavaScript 引擎 在第一遍会声明函数并将它们放到代码树的顶部。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>alert(sum(10,10));
+var sum = function(num1, num2){
+    return num1 + num2;
+};
+</code></pre>
+</div>
+
+<p>上面代码会在运行期产生错误，原因是函数位于一个初始化语句中，而不是一个函数声明中。</p>
+
+<h4 id="作为值的函数">作为值的函数</h4>
+<p><code class="highlighter-rouge">JavaScript</code> 中 函数名本身就是变量，所以函数可以当做值来传递，还可以当做另一个函数的结果返回。</p>
+<h4 id="函数的内部属性">函数的内部属性</h4>
+<p>在函数内部有两个特殊的对象：<code class="highlighter-rouge">arguments</code> 和 <code class="highlighter-rouge">this</code> 。<code class="highlighter-rouge">arguments</code> 主要是用来保存函数的参数，这个对象还有一个名叫 <code class="highlighter-rouge">callee</code> 的属性，这个属性是一个指针，指向拥有 <code class="highlighter-rouge">arguments</code> 的函数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+function factorial(num){
+        if (num &lt;=1) {
+            return 1;
+        } else {
+            return num * factorial(num-1)
+        }
+}
+
+function factorial(num){
+    if (num &lt;=1) {
+        return 1;
+    } else {
+        return num * arguments.callee(num-1)
+} }
+</code></pre>
+</div>
+
+<p>函数内部还有一个特殊对象是 <code class="highlighter-rouge">this</code>，<code class="highlighter-rouge">this</code>引用的是函数的执行环境对象。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>window.color = "red";
+var o = { color: "blue" };
+function sayColor(){
+    alert(this.color);
+}
+sayColor();     //"red"
+o.sayColor = sayColor;
+o.sayColor();   //"blue"
+</code></pre>
+</div>
+
+<h4 id="函数的属性和方法">函数的属性和方法</h4>
+
+<p><code class="highlighter-rouge">length</code> 表示函数希望接收的命名参数的个数。
+<code class="highlighter-rouge">prototype</code> 保存了对象的所有实例方法。但是不能枚举。</p>
+
+<p>每个函数还包括两个非继承来的方法： <code class="highlighter-rouge">apply()</code> 和 <code class="highlighter-rouge">call()</code>，这两个方法的用途是在给特定的作用域调用函数，实际上等于设置函数体内 <code class="highlighter-rouge">this</code> 对象的值。</p>
+
+<p><code class="highlighter-rouge">apply()</code> 接收两个参数：一个是在其中运行函数的作用域，另一方是参数数组。其中第二个参数可以是 <code class="highlighter-rouge">Array</code> 的实例，也可以是 <code class="highlighter-rouge">arguments</code> 对象。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function sum(num1, num2){
+    return num1 + num2;
+}
+
+function callSum1(num1, num2){
+    return sum.apply(this, arguments);//传入 arguments 对象
+}
+
+function callSum2(num1, num2){
+    return sum.apply(this, [num1, num2]); //传入数组
+}
+
+alert(callSum1(10,10));   //20
+alert(callSum2(10,10));   //20
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">call()</code> 函数必须明确的传入每一个参数。</p>
+
+<p><code class="highlighter-rouge">apply()</code> 和 <code class="highlighter-rouge">call()</code> 真正强大是地方是能够扩充函数赖以运行的作用域。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>window.color = "red";
+var o = { color: "blue" };
+function sayColor(){
+    alert(this.color);
+}
+sayColor(); //red
+
+sayColor.call(this); //red
+sayColor.call(window); //red
+sayColor.call(o); //blue
+</code></pre>
+</div>
+
+<p>使用 <code class="highlighter-rouge">apply()</code> 和 <code class="highlighter-rouge">call()</code> 扩充作用域的好处是对象不需要与方法有任何的耦合关系。</p>
+
+<p>JavaScript 5 中 定义了 <code class="highlighter-rouge">bind()</code>，这个方法会创建一个函数的实例，其 this 值会被绑定到传给 <code class="highlighter-rouge">bind()</code> 函数的值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>window.color = "red";
+var o = { color: "blue" };
+
+function sayColor(){
+    alert(this.color);
+}
+
+var objectSayColor = sayColor.bind(o);
+objectSayColor();    //blue
+</code></pre>
+</div>
+
+<h4 id="基本包装类型">基本包装类型</h4>
+<p>为了方便操作基本类型值，JavaScript 提供了3个特殊的引用类型： <code class="highlighter-rouge">Boolean</code>、<code class="highlighter-rouge">Number</code> 和 <code class="highlighter-rouge">String</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var s1 = "some text";
+var s2 = s1.substring(2);
+
+
+
+</code></pre>
+</div>
+
+<p>上面的代码中 s1 包含一个字符串，属于基本类型值，第二行中就使用了 s1 的 substring() 方法，理论上来说，s1属于基本类型，基本类型不是对象，不应该有方法。这是因为，为了我们更直观的进行操作，后台自动帮助我们完成了处理。当第二行代码访问s1时，访问过程处于一种读取模式，也就是要从内存中读取这个字符串的值。而在读取模式中访问字符串时，后台会自动完成下列操作：</p>
+
+<ol>
+  <li>创建一个 String 类型的实例；</li>
+  <li>在实例上调用指定的方法；</li>
+  <li>销毁这个实例。</li>
+</ol>
+
+<p>具体的代码可以想象成下面的代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var s1 = new String("some text");
+var s2 = s1.substring(2);
+s1 = null;
+</code></pre>
+</div>
+
+<p>引用类型和基本包装类型的主要区别就是对象的生存周期。使用 new 操作符创建的引用类型的实例，在执行流离开当前作用域之前一直都保存在内存中的，而自动创建的基本包装类型的对象，则只存在于一行代码的瞬间，然后立即被销毁。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var s1 = "some text";
+s1.color = "red";
+alert(s1.color);   //undefined
+</code></pre>
+</div>
+<p><strong>String 方法 待续 编辑器已经卡的不行了</strong></p>
+
+<h2 id="小结">小结</h2>
+<p>对象在 <code class="highlighter-rouge">JavaScript</code> 中被称为引用类型的值，而且有一些内置的引用类型可以用来创建特定的对象。</p>
+
+<ul>
+  <li>引用类型已传统的面向对象程序设计中的类相似，但实现不同；</li>
+  <li><code class="highlighter-rouge">Object</code> 是一个基础类型，其他所用类型都从 <code class="highlighter-rouge">Object</code> 继承了基本的行为；</li>
+  <li><code class="highlighter-rouge">Array</code> 类型是一组值的有序列表，同时还提供了操作和转换这些值的功能；</li>
+  <li><code class="highlighter-rouge">Date</code> 类型提供了有关日期和时间的信息，包括当前日期和时间以及相关的计算功能；</li>
+  <li><code class="highlighter-rouge">RegExp</code> 类型是 <code class="highlighter-rouge">JavaScript</code> 支持正则表达式的一个借口，提供最基本的和一些高级的正则表达式功能。</li>
+</ul>
+
+<p>函数是 <code class="highlighter-rouge">function</code> 类型的实例，因此函数也是对象。所以函数也拥有方法。
+因为有了基本包装类型，所以 <code class="highlighter-rouge">JavaScript</code> 中的基本类型可以被当做对象来访问。三种基本 包装类型分别是：<code class="highlighter-rouge">Boolean</code> 、<code class="highlighter-rouge">Number</code> 和 <code class="highlighter-rouge">String</code>。以下是它们的共同特征：</p>
+
+<ul>
+  <li>每个包装类型都映射到同名的基本类型；</li>
+  <li>在读取模式下访问基本类型值时，就会创建对应的基本包装类型的一个对象，从而方便了数据操作；</li>
+  <li>操作基本类型值的语句一经执行完毕，就会立即销毁创建的包装对象。</li>
+</ul>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计(第3版)读书笔记02">
+                        Previous<br>
+                        <span>Javascrpt高级程序设计(第3版)读书笔记02</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="16">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="12">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="2">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="3">
+                                    JavaScript
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2017
+                    <br>
+                    Theme by <a href="https://yunissong.github.io/">三十一</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

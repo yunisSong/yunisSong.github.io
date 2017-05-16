@@ -378,12 +378,12 @@ t();
   <li>变量的执行环境有助于确定应该何时释放内存。</li>
 </ul>
 
-<p>JavaScript 是一门自动回收垃圾的语言，开发人员不用关心内存分配和回收的问题。</p>
+<p><code class="highlighter-rouge">JavaScript</code> 是一门自动回收垃圾的语言，开发人员不用关心内存分配和回收的问题。</p>
 
 <ul>
   <li>离开作用域的值将被自动标记为可以回收，因此 将在垃圾回收期间被删除。</li>
   <li>”标记清除“是目前主流的垃圾收集算法，这种算法的思想是给当前不使用的值加上标记，然后在回收其内存。</li>
-  <li>另一种垃圾收集算法是”引用计数“，这种算法的思想是跟踪记录所有值被引用的次数。 JavaScript 引擎目前都不再使用这种算法，但在IE 中访问非原生的 JavaScript 对象（如 DOM 元素）时，这种算法仍然可能导致问题。</li>
+  <li>另一种垃圾收集算法是”引用计数“，这种算法的思想是跟踪记录所有值被引用的次数。 <code class="highlighter-rouge">JavaScript</code> 引擎目前都不再使用这种算法，但在IE 中访问非原生的 <code class="highlighter-rouge">JavaScript</code> 对象（如 <code class="highlighter-rouge">DOM</code> 元素）时，这种算法仍然可能导致问题。</li>
   <li>但代码中出现循环引用时的，”引用计数”的算法就会导致问题。</li>
   <li>解除变量的引用不仅有助于消除循环引用的现象，而且对垃圾回收也有好处。为了确保有效的回收内存，应该及时的解除不在使用的全局变量、全局对象属性已经循环引用变量的引用。</li>
 </ul>
@@ -398,12 +398,19 @@ t();
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-01/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计(第3版)读书笔记01">
+                        <a href="/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计(第3版)读书笔记01">
                         Previous<br>
                         <span>Javascrpt高级程序设计(第3版)读书笔记01</span>
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计(第3版)读书笔记03">
+                        Next<br>
+                        <span>Javascrpt高级程序设计(第3版)读书笔记03</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -508,6 +515,8 @@ t();
                 				<a href="/tags/#JavaScript" title="JavaScript" rel="3">
                                     JavaScript
                                 </a>
+                            
+        				
                             
         				
         			</div>
