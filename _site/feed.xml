@@ -5,13 +5,701 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 16 May 2017 14:48:49 +0800</pubDate>
-    <lastBuildDate>Tue, 16 May 2017 14:48:49 +0800</lastBuildDate>
+    <pubDate>Wed, 17 May 2017 21:07:47 +0800</pubDate>
+    <lastBuildDate>Wed, 17 May 2017 21:07:47 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
-        <title>Javascrpt高级程序设计(第3版)读书笔记03</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计第3版读书笔记03&quot;&gt;Javascrpt高级程序设计(第3版)读书笔记03&lt;/h1&gt;
+        <title>Javascrpt高级程序设计读书笔记04</title>
+        <description>&lt;h1 id=&quot;面向对象的程序设计&quot;&gt;面向对象的程序设计&lt;/h1&gt;
+&lt;p&gt;面向对象（Object-Oriented,OO）的语言有一个标志，那就是它们都有类的概念，而通过类可以创建多个具有相同属性和方法的对象。 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中没有类的概念，因此它的对象也与基于类的语言中的对象有所不同。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中对对象的定义为：&lt;code class=&quot;highlighter-rouge&quot;&gt;无序属性是集合，其属性可以包含基本值、对象或者函数。&lt;/code&gt;严格的讲，就相当于说对象是一组没有特定顺序的值。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/myvin/p/4660138.html&quot;&gt;JavaScript“并非”一切皆对象&lt;/a&gt; 这篇文章写的挺好的。&lt;/p&gt;
+
+&lt;h2 id=&quot;理解对象&quot;&gt;理解对象&lt;/h2&gt;
+&lt;p&gt;创建自定义对象最简单的方法就是创建一个 Object 的实例，然后为它添加属性和方法。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = new Object();
+    person.name = &quot;Nicholas&quot;;
+    person.age = 29;
+    person.job = &quot;Software Engineer&quot;;
+    person.sayName = function(){
+        alert(this.name);
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;或者使用字面量创建：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = {
+    name: &quot;Nicholas&quot;,
+    age: 29,
+    job: &quot;Software Engineer&quot;,
+    sayName: function() {
+        alert(this.name);
+    } 
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;属性类型&quot;&gt;属性类型&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中有两种属性：数据属性和访问器属性。
+&lt;a href=&quot;http://www.cnblogs.com/oneplace/p/5492476.html&quot;&gt;JavaScript 属性类型（数据属性 访问器属性）&lt;/a&gt; 这篇文章写的很好。&lt;/p&gt;
+&lt;h4 id=&quot;数据属性&quot;&gt;数据属性&lt;/h4&gt;
+&lt;p&gt;数据属性包含一个数据值的位置，在这个位置可以读取和写入值。数据属性有4个描述行为的特性。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[[Configurable]] 表示是否可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; 删除属性从而重新定义属性，能否修改属性的特性，或者能否把属性修改为访问器属性。默认值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;[[Enumerable]]  是否可以通过枚举返回属性。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;[[Writable]] 表示是否能够修改这个属性的值。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;[[Value]] 包含这个属性的数据值。读取属性值的时间从这个位置读，写入属性值的时间，把新值保存子啊这个位置。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt; 。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;要修改属性默认特性。必须使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperty()&lt;/code&gt; 方法。这个方法接收三个参数：属性所在的对象、属性的名字和一个描述符对象、其中。描述符（descriptor）对象的属性必须是： configurable、enumerable、writable 和 value 。设置其中的一个或者多个值，可以修改对应的特性值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;//writable 是否可以修改属性
+var person = {};
+Object.defineProperty(person, &quot;name&quot;, {
+    writable: false,
+    value: &quot;Nicholas&quot;
+});
+
+alert(person.name); //&quot;Nicholas&quot;
+person.name = &quot;Greg&quot;; alert(person.name); //&quot;Nicholas&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;var person = {};
+Object.defineProperty(person, &quot;name&quot;, {
+    configurable: false,
+    value: &quot;Nicholas&quot;
+});
+alert(person.name); //&quot;Nicholas&quot; 
+delete person.name; 
+alert(person.name); //&quot;Nicholas&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;var person = {};
+Object.defineProperty(person, &quot;name&quot;, {
+    configurable: false,
+    value: &quot;Nicholas&quot;
+});
+//一旦对一个属相设置为configurable 为 false，就再也不能将它变为原来的可配置了。
+//抛出异常 
+Object.defineProperty(person, &quot;name&quot;, {
+    configurable: true,
+    value: &quot;Nicholas&quot;
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;访问器属性&quot;&gt;访问器属性&lt;/h4&gt;
+&lt;p&gt;访问器属性不包括数据值。在读取访问器属性时，会调用 getter 函数，在写入的时间，会调用 setter 函数。访问器属性有4个特性：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[[Configurable]]表示是否可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; 删除属性从而重新定义属性，能否修改属性的特性，或者能否把属性修改为数据属性。默认值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;[[Enumerable]] 是否可以通过枚举返回属性。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;[[Get]] 在读取属性时调用的函数。默认值是 undefined。&lt;/li&gt;
+  &lt;li&gt;[[Set]] 在写入属性时调用的函数。默认值是 undefined。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;访问器属性不能直接定义，必须使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperty()&lt;/code&gt; 来定义。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var book = {
+    _year: 2004,
+    edition: 1 
+};
+
+Object.defineProperty(book, &quot;year&quot;, {
+    get: function(){
+        return this._year;
+    },
+    set: function(newValue){
+        if (newValue &amp;gt; 2004) {
+            this._year = newValue;
+            this.edition += newValue - 2004;
+        } 
+    }
+});
+book.year = 2005; 
+alert(book.edition); //2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;定义多个属性&quot;&gt;定义多个属性&lt;/h3&gt;
+&lt;p&gt;由于对象定义多个属性的可能性很大，可以利用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperties()&lt;/code&gt; 方法一次定义多个属性。这个方法接收两个对象参数：第一个对象是要添加和修改其属性的对象，第二个对象的属性与第一个对象中要添加或者修改的属性一一对应。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = { 
+  _name: &quot;Scott&quot;, 
+  _age: 24, 
+  _tel: 86247 
+}; 
+Object.defineProperties(person,{ 
+  name:{ 
+    get: function(){ 
+      return this._name; 
+    } 
+  }, 
+  age:{ 
+    set: function(p){ 
+      this._age = p; 
+    } 
+  }, 
+  tel:{ 
+    get:function(){ 
+      return this._tel; 
+    }, 
+    set: function(p){ 
+      this._tel = p; 
+    } 
+  } 
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;读取属性的特性&quot;&gt;读取属性的特性&lt;/h3&gt;
+&lt;p&gt;可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.getOwnPropertyDescriptor()&lt;/code&gt; 方法获取给定属性的描述符。这个方法接收的是两个参数：属性所在的对象和要读取其描述符的属性名称。返回值是一个对象，如果是访问器属性，这个对象的属性有 &lt;code class=&quot;highlighter-rouge&quot;&gt;configurable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;get&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;set&lt;/code&gt;。如果是数据属性，这个对象的属性有 &lt;code class=&quot;highlighter-rouge&quot;&gt;configurable &lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;writable&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = { 
+  _name: &quot;Scott&quot;, 
+  _age: 24, 
+  _tel: 86247 
+}; 
+Object.defineProperties(person,{ 
+  name:{ 
+    get: function(){ 
+      return this._name; 
+    } 
+  }, 
+  age:{ 
+    set: function(p){ 
+      this._age = p; 
+    } 
+  }, 
+  tel:{ 
+    get:function(){ 
+      return this._tel; 
+    }, 
+    set: function(p){ 
+      this._tel = p; 
+    } 
+  } 
+}); 
+var descripter = Object.getOwnPropertyDescripter(person,&quot;tel&quot;); 
+console.log(descripter.value);  //undefined 
+console.log(descripter.enumerable);  //false 
+console.log(typeof descripter.get);  //&quot;function&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;上面的代码中获取了person对象的tel属性，由于其是一个访问器属性，所以其value为undefined，enumerable为false，而get为指向getter函数的一个指针。&lt;/p&gt;
+
+&lt;h2 id=&quot;创建对象&quot;&gt;创建对象&lt;/h2&gt;
+
+&lt;h3 id=&quot;工厂模式&quot;&gt;工厂模式&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function createPerson(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        alert(this.name);
+    };
+    return o; 
+}
+var person1 = createPerson(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = createPerson(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;函数 &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 能够接受参数构建一个包含必要信息的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person&lt;/code&gt; 对象。可以无数次调用这个函数，而每一次都会返回一个包含三个属性、一个方法的对象。
+工厂模式虽然解决了创建多个相识对象的问题，却没有解决对象识别的问题。因为全部都是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，不像 &lt;code class=&quot;highlighter-rouge&quot;&gt;Date&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt; 等，因此出现了构造函数模式。&lt;/p&gt;
+&lt;h3 id=&quot;构造函数模式&quot;&gt;构造函数模式&lt;/h3&gt;
+&lt;p&gt;JavaScript 中的构造函数可用来创建特定类型的对象。也可以创建自定义构造函数，从而定义自定义对象的属性和方法。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function(){
+            alert(this.name);
+        }; 
+}
+var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在这个例子中 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 函数取代了  &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 函数，与  &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 不同有：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;没有显示的创建对象；&lt;/li&gt;
+  &lt;li&gt;直接将属性和方法赋值给了 this 对象；&lt;/li&gt;
+  &lt;li&gt;没有 return 语句。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 是大写字母 &lt;code class=&quot;highlighter-rouge&quot;&gt;P&lt;/code&gt; 开头。这是惯例，构造函数始终以一个大写字母开头。&lt;/li&gt;
+  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 创建对象&lt;/li&gt;
+  &lt;li&gt;能够识别对象（这正是构造函数模式胜于工厂模式的地方）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以这种构造函数创建对象会经过 4 个步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;创建一个新对象；&lt;/li&gt;
+  &lt;li&gt;将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）；&lt;/li&gt;
+  &lt;li&gt;执行构造函数中的代码（为这个新对象添加属性）；&lt;/li&gt;
+  &lt;li&gt;返回新对象。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;前面例子中 person1 和 person2 分别保存着 Person 的一个不同的实例。这两个对象都有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 属性（构造函数），改属性指向了 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person&lt;/code&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;alert(person1.constructor == Person); //true
+alert(person2.constructor == Person); //true
+
+
+alert(person1 instanceof Object);  //true
+alert(person1 instanceof Person);  //true
+alert(person2 instanceof Object);  //true
+alert(person2 instanceof Person);  //true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;创建自定义的构造函数可以将它的实例标识为一种特定的类型，这正是构造函数模式比工厂模式好的地方。&lt;/p&gt;
+
+&lt;h4 id=&quot;将构造函数当做函数&quot;&gt;将构造函数当做函数&lt;/h4&gt;
+&lt;p&gt;构造函数与其他函数的唯一区别就是调用方式不同。
+任何函数，只要通过 new 操作符调用，就可以作为构造函数。
+前面例子中定义的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 函数就可以使用下方的任何一种方式调用：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//当做构造函数调用
+var person = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;); 
+person.sayName(); //&quot;Nicholas&quot;
+//当做普通函数调用  
+Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;); //添加到window
+window.sayName(); //&quot;Greg&quot;
+// 在另一个函数的作用域调用
+var o = new Object();
+Person.call(o, &quot;Kristen&quot;, 25, &quot;Nurse&quot;); 
+o.sayName(); //&quot;Kristen&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;构造函数的问题&quot;&gt;构造函数的问题&lt;/h4&gt;
+&lt;p&gt;构造函数的组要问题就是每个方法都要在每个实例上重新创建一遍。已这种方式创建函数，会导致不同的作用域链和标识符解析，但创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;Function&lt;/code&gt; 新实例的机制仍然相同。因此，不同实例上同名函数式不相等的。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alert(person1.sayName == person2.sayName);  //false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;然而创建两个完成同样任务的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Function&lt;/code&gt; 实例是没有必要的，况且有 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; 对象。根本不需要再执行代码钱就把函数绑定到特定对象上。因此，我们可以将函数移到对象外面：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = sayName;
+}
+function sayName(){
+    alert(this.name);
+}
+var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样一来 person1 与 person2 访问的都是同一个函数，可是问题又来了，在全局作用域中定义了一个实际只想让 Person 使用的函数，显示让全局作用域有些名副其实，更让人无法接受的是在全局作用域中定义了许多仅供特定对象使用的方法，浪费空间不说，显然失去了面向对象封装性了，因此可以通过原型来解决此问题。&lt;/p&gt;
+
+&lt;h3 id=&quot;原型模式&quot;&gt;原型模式&lt;/h3&gt;
+&lt;p&gt;我们创建的每一个函数都有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype(原型)&lt;/code&gt; 属性，这个属性是一个指针，指向一个对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。&lt;strong&gt;使用原型对象的好处就是可以让所有对象实例共享它所包含的属性及方法。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
+}
+Person.prototype.name = &quot;Nicholas&quot;;
+Person.prototype.age = 29;
+Person.prototype.job = &quot;Software Engineer&quot;;
+Person.prototype.sayName = function(){
+    alert(this.name);
+};
+var person1 = new Person();
+person1.sayName();   //&quot;Nicholas&quot;
+var person2 = new Person();
+person2.sayName(); //&quot;Nicholas&quot;
+alert(person1.sayName == person2.sayName);  //true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样创建出来的对象的这些属性和方法是所有实例共享的。&lt;/p&gt;
+
+&lt;p&gt;更简单的原型语法&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
+}
+Person.prototype = {
+    name : &quot;Nicholas&quot;,
+    age : 29,
+    job: &quot;Software Engineer&quot;,
+    sayName : function () {
+        alert(this.name);
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;理解原型对象&quot;&gt;理解原型对象&lt;/h4&gt;
+&lt;p&gt;只要创建了一个函数，就会根据特定规则为该函数创建一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; 属性，这个属性指向了函数的原型对象。在默认的情况下，所有的原型对象都自动获取一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor(构造函数)&lt;/code&gt; 属性，这个属性包含一个指向 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; 属性所在函数的指针。比较直观的关系看下图。
+&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型对象.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;当为实例对象添加一个属性时，这个属性就会屏蔽原型对象中保存的同名属性。添加这个属性后只会阻止我们访问原型中的那个属性，但是不会修改原型中的属性。不过可以通过 delete 操作符完全删除实例属性，然后就可以访问原型对象中的属性。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
+}
+Person.prototype.name = &quot;Nicholas&quot;;
+Person.prototype.age = 29;
+Person.prototype.job = &quot;Software Engineer&quot;;
+Person.prototype.sayName = function(){
+    alert(this.name);
+};
+var person1 = new Person();
+var person2 = new Person();
+person1.name = &quot;Greg&quot;;
+alert(person1.name);//&quot;Greg&quot; 来自实例
+alert(person2.name);//&quot;Nicholas&quot;  来自原型
+delete person1.name;
+alert(person1.name);//&quot;Nicholas&quot; 来自原型      
+        
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;hasOwnProperty()&lt;/code&gt; 函数来判断是访问的实例属性还是原型属性。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+function Person(){
+}
+Person.prototype.name = &quot;Nicholas&quot;;
+Person.prototype.age = 29;
+Person.prototype.job = &quot;Software Engineer&quot;;
+Person.prototype.sayName = function(){
+  alert(this.name);
+}; 
+  
+var person1 = new Person();
+var person2 = new Person();
+alert(person1.hasOwnProperty(&quot;name&quot;));  //false
+person1.name = &quot;Greg&quot;;
+alert(person1.name); //&quot;Greg&quot;
+alert(person1.hasOwnProperty(&quot;name&quot;)); //true
+alert(person2.name); //&quot;Nicholas&quot;
+alert(person2.hasOwnProperty(&quot;name&quot;)); //false
+delete person1.name;
+alert(person1.name); //&quot;Nicholas&quot;  
+alert(person1.hasOwnProperty(&quot;name&quot;)); //false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;原型模式也不是没有缺点，首先，它省略了构造函数传递初始化参数这一环节，结果所有实例在默认情况下都取得了相同的属性值，这样非常不方便，但这还是不是原型的最大问题，原型模式的最大问题在于共享的本性所导致的，由于共享，因此因此一个实例修改了引用，另一个也随之更改了引用。因此我们通常不单独使用原型，而是结合原型模式与构造函数模式。&lt;/p&gt;
+
+&lt;h3 id=&quot;组合使用构造函数模式和原型模式&quot;&gt;组合使用构造函数模式和原型模式&lt;/h3&gt;
+&lt;p&gt;创建自定义对象最常见的方法是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;构建函数模式&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;原型模式&lt;/code&gt;，构建函数用于定义实例属性，原型模式用于定义方法 和 共享的属性。这样每个实例都有一份自己的实例属性，但同时又共享着对方法的引用，最大程度节省了内存。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
+this.name = name; 3 this.age = age;
+this.job = job;
+this.friends = [&quot;Shelby&quot;, &quot;Court&quot;];
+ 2
+  }
+Person.prototype = {
+    constructor : Person,
+    sayName : function(){
+        alert(this.name);
+    }
+}
+var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+
+person1.friends.push(&quot;Van&quot;);
+alert(person1.friends);    //&quot;Shelby,Count,Van&quot;
+alert(person2.friends);    //&quot;Shelby,Count&quot;
+alert(person1.friends === person2.friends);//false
+alert(person1.sayName === person2.sayName);//true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;这种模式在 &lt;code class=&quot;highlighter-rouge&quot;&gt;ECMAScript&lt;/code&gt; 中是使用最广泛、认同度最高的一种创建自定义对象的方法。&lt;/p&gt;
+&lt;h3 id=&quot;动态原型模式&quot;&gt;动态原型模式&lt;/h3&gt;
+&lt;p&gt;动态原型模式与上面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;构建函数模式&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;原型模式&lt;/code&gt; 并没有什么区别，只是把所有的信息都封装在了构造函数中。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
+    //属性
+    this.name = name; 
+    this.age = age; 
+    this.job = job;
+    //方法
+    //判断是否已经初始化方法
+    if (typeof this.sayName != &quot;function&quot;){
+    
+        Person.prototype.sayName = function(){
+            alert(this.name);
+        }; 
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;使用动态原型时，不能使用对象的字面量重写原型，如果在已经创建了实例的情况下重写原型，那么就会切断现有实例与新原型之间的联系。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;寄生构造函数模式&quot;&gt;寄生构造函数模式&lt;/h3&gt;
+&lt;p&gt;先看段代码，看下区别。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//工厂模式
+function createPerson(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        alert(this.name);
+    };
+    return o; 
+}
+var person1 = createPerson(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = createPerson(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+
+
+//构造函数模式
+function Person(name, age, job){
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function(){
+            alert(this.name);
+        }; 
+}
+var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
+var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
+
+
+//寄生构造函数模式
+function SpecialArray(){
+    //创建数组
+    var values = new Array();
+    //添加值
+    values.push.apply(values, arguments);
+    //添加方法  
+    values.toPipedString = function(){
+        return this.join(&quot;|&quot;);
+    };
+    //返回数组
+    return values;
+}
+
+var colors = new SpecialArray(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;);
+alert(colors.toPipedString()); //&quot;red|blue|green&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;寄生构造函数模式中返回的对象与构造函数或者与构造函数的原型属性之间没有关系。不能依赖 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符来确定对象类型。&lt;strong&gt;尽量不要使用这种模式。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;稳妥构造函数模式&quot;&gt;稳妥构造函数模式&lt;/h3&gt;
+
+&lt;p&gt;这种模式最大的豪好处是除了调用提供的方法，没有别的方式访问其数据成员。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job) {
+    var o = new Object();
+ 
+    // private members
+    var nameUC = name.toUpperCase();
+
+    // public members
+    o.sayName = function() {
+        alert(name);
+    };
+    o.sayNameUC = function() {
+        alert(nameUC);
+    };
+
+    return o;
+}
+var person = Person(&quot;Nicholas&quot;, 32, &quot;software Engineer&quot;);
+
+person.sayName(); // &quot;Nicholas&quot;
+person.sayNameUC(); // &quot;NICHOLAS&quot;
+
+alert(person.name);  // undefined
+alert(person.nameUC);  // undefined
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;凡是想设为 private 的成员都不要挂到 Person 返回的对象 o 的属性上面，挂上了就是 public 的了。&lt;/p&gt;
+
+&lt;h2 id=&quot;继承&quot;&gt;继承&lt;/h2&gt;
+&lt;p&gt;许多 oo 语言都支持两种继承方式，接口继承（相对于OC 来说，就是协议，不知道理解的对不对） 和 实现继承。
+接口继承 只继承方法签名，实现继承则继承实际的方法。
+但是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中函数没有签名，没办法实现接口继承。只支持实现继承，而且实现继承是通过原型链实现的。&lt;/p&gt;
+&lt;h4 id=&quot;原型链&quot;&gt;原型链&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中描述了原型链的概念，并将原型链作为实现继承的主要方法。基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。
+构造函数、原型和失恋的关系：每个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例包含一个指向原型对象的内部指针。&lt;/p&gt;
+
+&lt;p&gt;如果我们让原型对象等于另一个类型的实例，此时的原型对象将包含一个指向另一个原型的指针，相应的，另一个原型中也包含着一个指向另一个构造函数的指针。假如另一个原型又是另一个类型的实例，那么上诉关系依然成立，如此层层递进，就构成了实例和原型的链条。这就是原型链的基本概念。（好绕啊。。。）&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;函数的原型对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 默认指向函数本身，原型对象除了有原型属性外，为了实现继承，还有一个原型链指针 &lt;code class=&quot;highlighter-rouge&quot;&gt;proto&lt;/code&gt;，该指针指向上一层的原型对象，而上一层的原型对象的结构依然类似，这样利用 &lt;code class=&quot;highlighter-rouge&quot;&gt;proto&lt;/code&gt; 一直指向 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的原型对象上，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的原型对象用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.proto = null&lt;/code&gt; 表示原型链的最顶端，如此变形成了 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的原型链继承，同时也解释了为什么所有的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 对象都具有 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的基本方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
+        this.property = true;
+}
+
+SuperType.prototype.getSuperValue = function(){
+    return this.property;
+};
+function SubType(){
+    this.subproperty = false;
+}
+
+SubType.prototype = new SuperType();
+SubType.prototype.getSubValue = function (){
+    return this.subproperty;
+};
+var instance = new SubType();
+alert(instance.getSuperValue()); //true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;上面的代码实例、构造函数和原型之间的关系如下图展示：
+&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型链.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下面这张图很清晰的展示了原型链：
+&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型继承.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型与构造函数关系.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;原型链的问题&quot;&gt;原型链的问题&lt;/h5&gt;
+&lt;p&gt;原型链虽然强大，可以用来实现继承，但是也存在一些问题。最主要的问题来自包含引用类型值的原型。
+引用类型值的原型属性会被所有的实例共享，在通过原型实现继承时，原型实际上会成为另一个类型的实例。于是，原先的实例属性就变成现在的原型属性了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
+        this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
+}
+function SubType(){
+}
+SubType.prototype = new SuperType();
+
+var instance1 = new SubType();
+instance1.colors.push(&quot;black&quot;);
+alert(instance1.colors); //&quot;red,blue,green,black&quot; 
+
+
+var instance2 = new SubType(); 
+alert(instance2.colors); //&quot;red,blue,green,black&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;借用构造函数&quot;&gt;借用构造函数&lt;/h4&gt;
+&lt;p&gt;为了解决原型中包含引用类型值所带来的问题，可以使用一种叫 &lt;code class=&quot;highlighter-rouge&quot;&gt;借用构造函数(constructor stealing)&lt;/code&gt; 的技术（有时间也叫伪造对象或者经典继承）。这种技术的基本思想相当简单，即在子类型构建函数的内部调用超类型构造函数。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
+    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
+ function SubType(){
+//    SuperType
+    SuperType.call(this);
+}
+var instance1 = new SubType();
+instance1.colors.push(&quot;black&quot;);
+alert(instance1.colors);    //&quot;red,blue,green,black&quot;
+var instance2 = new SubType();
+alert(instance2.colors);    //&quot;red,blue,green&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;代码中 &lt;code class=&quot;highlighter-rouge&quot;&gt;SuperType.call(this);&lt;/code&gt; 借调了超类型的构造函数，我们实际上是在新创建  &lt;code class=&quot;highlighter-rouge&quot;&gt;SubType&lt;/code&gt; 实例的环境下调用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;SuperType&lt;/code&gt; 的构造方法。&lt;/p&gt;
+
+&lt;p&gt;借用构造函数可以在子类型构造函数想超类型构造函数传递参数。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
+    this.name = name;
+}
+function SubType(){
+    //继承SuperType，同时还传递了参数 
+    SuperType.call(this, &quot;Nicholas&quot;);
+    //实例属性
+    this.age = 29;
+}
+var instance = new SubType();
+alert(instance.name);    //&quot;Nicholas&quot;;
+alert(instance.age);     //29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;如果仅仅使用借用构造函数，也无法避免构造函数模式存在的问题：方法都在构造函数定义，因此就没办法函数复用了。而且在超类原型中定义的方法，对于子类是不可见的，结果所有类型都只能使用构造函数模式，所有，很少单独 &lt;code class=&quot;highlighter-rouge&quot;&gt;使用借用构造函数&lt;/code&gt; 的技术。&lt;/p&gt;
+
+&lt;h4 id=&quot;组合继承&quot;&gt;组合继承&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;组合继承（combination inheritance ）&lt;/code&gt; 有时候也叫伪经典继承，指的是将原型链和借用构造函数的技术组合到一块，从而发挥两者之长的一种继承模式。背后的思想是，借助原型链来实现对原型属性和方法的继续，使用 借用构造函数 来实现对实例属性的继承。这样既通过原型上定义方法实现了函数复用，有能够保证每个实例有自己的属性。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
+    this.name = name;
+    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
+}
+ SuperType.prototype.sayName = function(){
+    alert(this.name);
+}
+
+function SubType(name, age){
+    //继承属性
+    SuperType.call(this, name);
+    this.age = age;
+}
+
+//继承方法
+SubType.prototype = new SuperType(); SubType.prototype.constructor = SubType; SubType.prototype.sayAge = function(){
+    alert(this.age);
+};
+
+var instance1 = new SubType(&quot;Nicholas&quot;, 29);
+instance1.colors.push(&quot;black&quot;);
+   alert(instance1.colors);
+instance1.sayName();
+instance1.sayAge();
+
+
+var instance2 = new SubType(&quot;Greg&quot;, 27);
+alert(instance2.colors);
+instance2.sayName();
+instance2.sayAge();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;组合是继承避免了原型链和借用构造函数的缺陷，融合了他们的优点，是 JavaScript 中最常见的继承模式。&lt;/p&gt;
+&lt;h4 id=&quot;原型式继承&quot;&gt;原型式继承&lt;/h4&gt;
+&lt;p&gt;443242324&lt;/p&gt;
+&lt;h4 id=&quot;寄生式继承&quot;&gt;寄生式继承&lt;/h4&gt;
+&lt;p&gt;435125&lt;/p&gt;
+&lt;h4 id=&quot;寄生组合式继承&quot;&gt;寄生组合式继承&lt;/h4&gt;
+&lt;p&gt;1234234&lt;/p&gt;
+
+&lt;h1 id=&quot;小结&quot;&gt;小结&lt;/h1&gt;
+&lt;p&gt;JavaScript 支持面向对象（OO）编程，但不使用类或者接口。对象可以在代码执行过程中创建和增强，隐藏具有动态性而非严格意义上的实体。没有类的情况下，可以采用下列模式创建对象。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;工厂模式  使用简单的函数创建对象，为对象添加属性和方法，然后返回对象。这个模式后来被构建函数模式取代。&lt;/li&gt;
+  &lt;li&gt;构造函数模式 可以创建自定义引用类型，可以像创建内置对象实例一样使用 new 操作符。缺点是，每个成员都无法复用，包括函数。&lt;/li&gt;
+  &lt;li&gt;原型模式 使用构造函数的 prototype 属性可以指定那些应该共享的属性和方法。组合使用构造函数模式和原型模式时，使用构造函数定义实例属性，使用原型模式定义共享的属性和方法。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 主要通过原型链实现继承。原型链的构建是通过将一个类型的实例赋值给另一个构造函数的原型实现的。这样子类型就能够访问超类型的属性和方法。这一点和基于类的继承很相似。再次亮出这张图：
+&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型继承.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;原型链的问题是对象实例共享的所有继承的属性和方法，因此不宜单独使用。
+&lt;strong&gt;借助原型链来实现对原型属性和方法的继续，使用 借用构造函数 来实现对实例属性的继承。这样既通过原型上定义方法实现了函数复用，有能够保证每个实例有自己的属性。&lt;/strong&gt;
+此外，还可以选择下面的继承方式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;原型式继承&lt;/li&gt;
+  &lt;li&gt;寄生式继承&lt;/li&gt;
+  &lt;li&gt;寄生组合式继承&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Tue, 16 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/</guid>
+        
+        <category>JavaScript</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Javascrpt高级程序设计读书笔记03</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记03&quot;&gt;Javascrpt高级程序设计读书笔记03&lt;/h1&gt;
 &lt;h2 id=&quot;引用类型&quot;&gt;引用类型&lt;/h2&gt;
 &lt;p&gt;引用类型是一种数据结构，用于将数据和功能组织在一起。通常也被称为类。引用类型的对象本身是放置在堆中的，对象引用是存在栈中的。&lt;/p&gt;
 &lt;h3 id=&quot;堆栈&quot;&gt;堆、栈&lt;/h3&gt;
@@ -761,8 +1449,8 @@ alert(s1.color);   //undefined
 
 </description>
         <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</guid>
+        <link>http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</guid>
         
         <category>Javascrpt</category>
         
@@ -770,8 +1458,8 @@ alert(s1.color);   //undefined
       </item>
     
       <item>
-        <title>Javascrpt高级程序设计(第3版)读书笔记02</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计第3版读书笔记02&quot;&gt;Javascrpt高级程序设计(第3版)读书笔记02&lt;/h1&gt;
+        <title>Javascrpt高级程序设计读书笔记02</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记02&quot;&gt;Javascrpt高级程序设计读书笔记02&lt;/h1&gt;
 
 &lt;h2 id=&quot;变量作用域和内存问题&quot;&gt;变量、作用域和内存问题&lt;/h2&gt;
 &lt;h3 id=&quot;基本类型和引用类型的值&quot;&gt;基本类型和引用类型的值&lt;/h3&gt;
@@ -828,6 +1516,8 @@ alert(pattern instanceof RegExp); //变量 pattern 是 RegExp 吗？
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;如果这个环境是函数（如 swapColors()），则将其活动对象（activation object)作为变量对象。活动对象在最开始时只包含一个变量，就是函数内部的arguments对象。作用域链中的下一个Variable Object来自该函数(swapColors())的包含环境（也就是changeColor())，而再下一个Variable object来自再下一个包含环境。这样，一直延续到全局执行环境，全局执行环境的Variable Object始终是作用域链中的最后一个对象&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://yanhaijing.com/javascript/2014/04/29/what-is-the-execution-context-in-javascript/&quot;&gt;了解JavaScript的执行上下文&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/ScopeChain.png&quot; alt=&quot;ScopeChain&quot; /&gt;&lt;/p&gt;
 
@@ -954,8 +1644,8 @@ t();
 
 </description>
         <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</guid>
+        <link>http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</guid>
         
         <category>JavaScript</category>
         
@@ -963,8 +1653,8 @@ t();
       </item>
     
       <item>
-        <title>Javascrpt高级程序设计(第3版)读书笔记01</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计第3版读书笔记01&quot;&gt;Javascrpt高级程序设计(第3版)读书笔记01&lt;/h1&gt;
+        <title>Javascrpt高级程序设计读书笔记01</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记01&quot;&gt;Javascrpt高级程序设计读书笔记01&lt;/h1&gt;
 
 &lt;h3 id=&quot;script-元素&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素&lt;/h3&gt;
 &lt;p&gt;向 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 页面加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的主要方法，就是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 。
@@ -1248,8 +1938,8 @@ var result = addSomeNumber(100);//300
 
 </description>
         <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(%E7%AC%AC3%E7%89%88)%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</guid>
+        <link>http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</guid>
         
         <category>JavaScript</category>
         
@@ -1445,7 +2135,7 @@ png.src=&quot;01.png&quot;;
 
 &lt;h3 id=&quot;图片&quot;&gt;图片&lt;/h3&gt;
 
-&lt;p&gt;①标签&amp;lt;img src=”图片链接”&amp;gt;&lt;/p&gt;
+&lt;p&gt;①标签 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img src=”图片链接”&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
@@ -2347,183 +3037,6 @@ png.src=&quot;01.png&quot;;
         <category>转载</category>
         
         <category>工具</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>JHChainableAnimations源码学习</title>
-        <description>&lt;h1 id=&quot;jhchainableanimations源码学习&quot;&gt;JHChainableAnimations源码学习&lt;/h1&gt;
-
-&lt;h3 id=&quot;jhchainableanimations是什么&quot;&gt;JHChainableAnimations是什么&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimations&lt;/code&gt; 是一个多系统动画封装的链式语法库。&lt;/p&gt;
-
-&lt;p&gt;原有的OC代码如果我们想写一个动画，需要这样写。&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;animateWithDuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
-                          &lt;span class=&quot;nv&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-         &lt;span class=&quot;nv&quot;&gt;usingSpringWithDamping&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;
-          &lt;span class=&quot;nv&quot;&gt;initialSpringVelocity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
-                        &lt;span class=&quot;nv&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;animations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                            &lt;span class=&quot;kt&quot;&gt;CGPoint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newPosition&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                            &lt;span class=&quot;n&quot;&gt;newPosition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                            &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newPosition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;completion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finished&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;animateWithDuration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;
-                              &lt;span class=&quot;nv&quot;&gt;delay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;
-                            &lt;span class=&quot;nv&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIViewAnimationOptionCurveEaseIn&lt;/span&gt;
-                         &lt;span class=&quot;nv&quot;&gt;animations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myView&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backgroundColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purpleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;completion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimations&lt;/code&gt; 可以这样写：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;animator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;initWithView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;animator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;moveX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;thenAfter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;makeBackground&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purpleColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;easeIn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;animate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;代码一下就显得特别清晰明了，&lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimations&lt;/code&gt; 采用了现在流行的链式语法，跟 &lt;code class=&quot;highlighter-rouge&quot;&gt;Masonry&lt;/code&gt; 一样的语法。&lt;/p&gt;
-&lt;h4 id=&quot;链式语法的特点是什么&quot;&gt;链式语法的特点是什么&lt;/h4&gt;
-&lt;p&gt;链式编程特点：方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）&lt;/p&gt;
-
-&lt;h3 id=&quot;jhchainableanimations代码具体分析&quot;&gt;JHChainableAnimations代码具体分析&lt;/h3&gt;
-
-&lt;p&gt;首先看一段代码&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;animator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;initWithView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;animator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;moveX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;animate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;首先是将 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.myView&lt;/code&gt; 与 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimator *animator&lt;/code&gt; 关联起来，然后通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimator *animator&lt;/code&gt; 进行动画设置。&lt;/p&gt;
-
-&lt;p&gt;第二行代码
-&lt;code class=&quot;highlighter-rouge&quot;&gt;animator.moveX(100).animate(2);&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;首先是 &lt;code class=&quot;highlighter-rouge&quot;&gt;animator&lt;/code&gt; 调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;moveX&lt;/code&gt; 方法生成动画样式，这个方法从字面上面看 就是 移动视图的X轴，然后调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;animate&lt;/code&gt; 执行动画，设置动画时间。具体看先 它是如何实现的。&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveX&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chainable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationCalculationAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kt&quot;&gt;JHKeyframeAnimation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;basicAnimationForKeyPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;position.x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationFromCalculationBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationCompletionAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kt&quot;&gt;CGPoint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
-        
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chainable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;再来回顾下链式语法的特点：&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;再来看上面这段代码：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;moveX&lt;/code&gt; 方法返回的是一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;block chainable&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;block&lt;/code&gt; 的参数是一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;float&lt;/code&gt;，&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;block chainable&lt;/code&gt; 的返回值是当前类 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHChainableAnimator&lt;/code&gt; 实例。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;完全符合链式语法的特点。&lt;/p&gt;
-&lt;h4 id=&quot;movex-具体实现&quot;&gt;moveX 具体实现&lt;/h4&gt;
-&lt;p&gt;然后再来看具体实现，&lt;code class=&quot;highlighter-rouge&quot;&gt;moveX&lt;/code&gt; 干了什么。&lt;/p&gt;
-
-&lt;p&gt;首先是返回了一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;block&lt;/code&gt;，然后这个 &lt;code class=&quot;highlighter-rouge&quot;&gt;block&lt;/code&gt; 返回了这个类本身的实例。&lt;/p&gt;
-
-&lt;h5 id=&quot;block-chainable-都做了什么&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;block chainable&lt;/code&gt; 都做了什么&lt;/h5&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;生成一个可执行的动画
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationCalculationAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;kt&quot;&gt;JHKeyframeAnimation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;basicAnimationForKeyPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;position.x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fromValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;toValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-         &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationFromCalculationBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;positionAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;生成有个动画执行完毕的回调，修改视图属性
-    &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;addAnimationCompletionAction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__weak&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableAnimator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weakSelf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;kt&quot;&gt;CGPoint&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-         &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;layer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;}];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;返回 当前类本身&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;animate-具体实现&quot;&gt;animate 具体实现&lt;/h4&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;animate&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;JHChainableAnimation&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chainable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;JHChainableAnimation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;animateWithCompletion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;completionBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chainable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;华丽的分割线
-—-&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;感觉自己的语言表示能力有问题，突然不知道该怎么往下说下去了。
-这个地方。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;重新描述下：&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;首先是像&lt;/p&gt;
-  &lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainablePoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveXY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveHeight&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;JHChainableFloat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;moveWidth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-  &lt;/div&gt;
-  &lt;p&gt;这类方法调用的时间，会生成一些类的动画对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHKeyframeAnimation&lt;/code&gt; 然后存储到 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHAnimationChainLink&lt;/code&gt; 的动画数组里面。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;最终 &lt;code class=&quot;highlighter-rouge&quot;&gt;animate&lt;/code&gt; 方法是循环调用 类数组里面存储的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHAnimationChainLink&lt;/code&gt; 对象，执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHAnimationChainLink&lt;/code&gt; 对象的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JHKeyframeAnimation&lt;/code&gt;动画数组。
-大致就是这样执行的，但是具体的实现有好多细节，动画的添加，动画执行的回调，取得当前执行的动画、如何暂停动画等。感觉自己目前的功力还很难描述清楚。就暂时先告一段落了。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Sat, 15 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/15/JHChainableAnimations%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/15/JHChainableAnimations%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</guid>
-        
-        <category>源码</category>
-        
-        <category>iOS</category>
-        
-        <category>链式编程</category>
         
         
       </item>
