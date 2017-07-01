@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>三十一的博客 | Yunis Blog</title>
+    <title>(美团)深入理解Objective-C：Category - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="canonical" href="http://localhost:4000/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,497 +153,244 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>三十一</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">潜心修行。。。</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                    </div>
+                    <h1>(美团)深入理解Objective-C：Category</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on June 5, 2017</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/">
-        <h2 class="post-title">
-            为什么使用weak修饰的变量会自动设置为nil
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            为什么使用weak修饰的变量会自动设置为nil
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-  Objective-C高级编程 iOS与OS X多线程和内存管理 读书笔记
+				<p>[TOC]</p>
+<h1 id="美团深入理解objective-ccategory">(美团)深入理解Objective-C：Category</h1>
 
+<blockquote>
+  <p>原文地址：<a href="http://tech.meituan.com/DiveIntoCategory.html">深入理解Objective-C：Category</a></p>
+</blockquote>
 
-为什么使用weak修饰的变量会自动设置为nil
-我们知道：
-
-
-  当使用__weak修饰符的变量的 引用对象 被废弃时，则将nil赋值给该变量。
-  使用附有 __weak 修饰符的变量，即是使用注册到 autoreleasepool 中的对象。
-
-
-系统是...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on June 26, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/">
-        <h2 class="post-title">
-            (美团)深入理解Objective-C：Category
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            [TOC]
-(美团)深入理解Objective-C：Category
-
-
-  原文地址：深入理解Objective-C：Category
-
-
-Category 的其他使用场景
-
-  可以把类的实现分开在几个不同的文件里面。这样做有几个显而易见的好处:
-    
-      可以减少单个文件的体积
-      可以把不同的功能组织到不同的 category 里
-      可以由多个开发者共同...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on June 5, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/23/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-        <h2 class="post-title">
-            算法学习
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            算法学习
-
-栈
-
-- (void)push:(id)element
-{
-    if (!items) {
-        items = [NSMutableArray new];
-    }
-
-    [items addObject:element];
-}
-- (id)pop
-{
-    id elenmet = items.lastObject;
-    NSLog(@"pop = ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 23, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记05
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记05
-
-函数表达式
-递归
-
-function factorial(num){
-    if (num &lt;= 1){
-         return 1;
-    } else { 6
-         return num * factorial(num-1);
-    }
-}
-
-
-
-var anotherFactorial = factorial...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 18, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记04
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            面向对象的程序设计
-面向对象（Object-Oriented,OO）的语言有一个标志，那就是它们都有类的概念，而通过类可以创建多个具有相同属性和方法的对象。 JavaScript 中没有类的概念，因此它的对象也与基于类的语言中的对象有所不同。
-
-JavaScript 中对对象的定义为：无序属性是集合，其属性可以包含基本值、对象或者函数。严格的讲，就相当于说对象是一组没有特定顺序的值。
-
-Ja...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 16, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记03
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记03
-引用类型
-引用类型是一种数据结构，用于将数据和功能组织在一起。通常也被称为类。引用类型的对象本身是放置在堆中的，对象引用是存在栈中的。
-堆、栈
-堆栈的区别
-堆（Heap）栈（Stack）
-
-1、内存分配方面：
-
-堆：一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收 。注意它与数据结构中的堆是两回事，分配方式是类似于链表。可能用到的关...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 12, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记02
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记02
-
-变量、作用域和内存问题
-基本类型和引用类型的值
-JavaScript 存在两种不同的数据类型的值：基本类型值 和 引用类型值。
-基本类型值 指的是简单的数据段，为 引用类型值 指那些可能由多个值构成的对象。
-引用类型的值是保存在内存中的对象，JavaScript 不允许直接访问内存中的位置，也就是不能直接操作对象的内存空间。操作对象时，实际是操作...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 11, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记01
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记01
-
-script 元素
-向 HTML 页面加入 JavaScript 的主要方法，就是使用 script 。
-包括6个属性：
-
-
-  async 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。
-  charset 可选。 表示通过 src 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 10, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/">
-        <h2 class="post-title">
-            JavaScript学习01
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            JavaScript学习01
-
-
-  开始观看这系列文章 
-  从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件
-
-
-script 标签
-HTML的脚本必须位于 &lt;script&gt; 和 &lt;/script&gt; 之中。
-
-&lt;script&gt;
-
-JS脚本
-
-&lt;/script&gt;
-
-
-
-标签
-成对出现的&lt;&gt;...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 10, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/">
-        <h2 class="post-title">
-            (转)Tips:取消UICollectionView的隐式动画
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            (转)Tips:取消UICollectionView的隐式动画
-
-  原文地址在串哥的博客 Tips:取消UICollectionView的隐式动画
-
-
-UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)
-
-下面几种方法都可以帮你去除这些...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 9, 2017
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    
-    <li class="next">
-        <a href="/page2">Older Posts &rarr;</a>
-    </li>
-    
+<h3 id="category-的其他使用场景">Category 的其他使用场景</h3>
+<ul>
+  <li>可以把类的实现分开在几个不同的文件里面。这样做有几个显而易见的好处:
+    <ol>
+      <li>可以减少单个文件的体积</li>
+      <li>可以把不同的功能组织到不同的 category 里</li>
+      <li>可以由多个开发者共同完成一个类</li>
+      <li>可以按需加载想要的 category 等等。</li>
+    </ol>
+  </li>
+  <li>声明私有方法</li>
+  <li>模拟多继承</li>
+  <li>把 framework 的私有方法公开</li>
 </ul>
 
+<h3 id="category-和-extension">Category 和 Extension</h3>
 
-    		</div>
+<h4 id="extension">Extension</h4>
+<blockquote>
+  <p>extension 看起来很像一个匿名的category，但是 extension 和有名字的 category 几乎完全是两个东西。  extension 在编译期决议，它就是类的一部分，在编译期和头文件里的 @interface 以及实现文件里的 @implement 一起形成一个完整的类，它伴随类的产生而产生，亦随之一起消亡。 extension 一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加 extension ，所以你无法为系统的类比如 NSString 添加 extension。</p>
+</blockquote>
+
+<h4 id="category">category</h4>
+<blockquote>
+  <p>但是category则完全不一样，它是在运行期决议的。
+就category和extension的区别来看，我们可以推导出一个明显的事实，extension可以添加实例变量，而category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。</p>
+</blockquote>
+
+<p>更直观的表示：</p>
+
+<p><img src="/img/in-post/Extension&amp;Category/Extension&amp;Category.png" alt="ScopeChain" /></p>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/05/23/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" data-toggle="tooltip" data-placement="top" title="算法学习">
+                        Previous<br>
+                        <span>算法学习</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/" data-toggle="tooltip" data-placement="top" title="为什么使用weak修饰的变量会自动设置为nil">
+                        Next<br>
+                        <span>为什么使用weak修饰的变量会自动设置为nil</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="17">
+                				<a href="/tags/#iOS" title="iOS" rel="17">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Swift" title="Swift" rel="12">
+                				<a href="/tags/#Swift" title="Swift" rel="12">
                                     Swift
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Shell" title="Shell" rel="2">
+                				<a href="/tags/#Shell" title="Shell" rel="2">
                                     Shell
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#转载" title="转载" rel="2">
+                				<a href="/tags/#转载" title="转载" rel="2">
                                     转载
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#GCD" title="GCD" rel="2">
+                				<a href="/tags/#GCD" title="GCD" rel="2">
                                     GCD
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#JavaScript" title="JavaScript" rel="5">
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/gg.jpeg" />
-                        
-                        
-                            <p>大龄码农的进修之路。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/iOSSurf">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/yunisSong">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
-                <h5>大神博客</h5>
+                <h5>FRIENDS</h5>
                 <ul class="list-inline">
                     
                         <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
@@ -662,10 +409,52 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
     <!-- Footer -->
@@ -822,6 +611,50 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

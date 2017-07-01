@@ -855,11 +855,72 @@ instance2.sayAge();
 
 <p>组合是继承避免了原型链和借用构造函数的缺陷，融合了他们的优点，是 JavaScript 中最常见的继承模式。</p>
 <h4 id="原型式继承">原型式继承</h4>
-<p>443242324</p>
+<p>原型式继承本身的实现是很简单的，但是其牵涉到的概念以及原理却不好说明白。原型的本质是就是一个对象.
+原型式继承更能节约内存，原型链读取成员的方式使得所有克隆出来的对象都共享每个属性与方法的唯一一份实例。只有在直接设置了某个克隆出来的对象的属性或者方法时，情况才会发生改变，但是原型式继承的这种优势在某些情况下因为其对继承而来的成员的读与写的不对等性，在有共享的引用型属性时，这种优势又会变为原型式继承的一种劣势.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function object(o){
+    function F(){}
+    F.prototype = o;
+    return new F();
+}
+var person = {
+        name: "Nicholas",
+        friends: ["Shelby", "Court", "Van"]
+    };
+    var anotherPerson = object(person);
+    anotherPerson.name = "Greg";
+    anotherPerson.friends.push("Rob");
+    var yetAnotherPerson = object(person);
+    yetAnotherPerson.name = "Linda";
+    yetAnotherPerson.friends.push("Barbie");
+    alert(person.friends);   //"Shelby,Court,Van,Rob,Barbie"w
+</code></pre>
+</div>
 <h4 id="寄生式继承">寄生式继承</h4>
-<p>435125</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function object(o){
+    function F(){}
+    F.prototype = o;
+    return new F();
+}
+function createAnother(original{ 
+    varclone=object(original); 
+    clone.sayHi = function(){
+        alert("hi");
+    };
+    return clone;
+ }
+ 
+ 
+var person = {
+    name: "Nicholas",
+    friends: ["Shelby", "Court", "Van"]
+};
+var anotherPerson = createAnother(person);
+anotherPerson.sayHi(); //"hi"
+</code></pre>
+</div>
 <h4 id="寄生组合式继承">寄生组合式继承</h4>
-<p>1234234</p>
+
+<p>还没搞懂。。先往下面看。。。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>function SuperType(name){
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+SuperType.prototype.sayName = function(){
+    alert(this.name);
+};
+function SubType(name, age){
+    SuperType.call(this, name);
+    this.age = age;
+}
+SubType.prototype = new SuperType();
+SubType.prototype.constructor = SubType;
+SubType.prototype.sayAge = function(){
+    alert(this.age);
+};
+</code></pre>
+</div>
 
 <h1 id="小结">小结</h1>
 <p>JavaScript 支持面向对象（OO）编程，但不使用类或者接口。对象可以在代码执行过程中创建和增强，隐藏具有动态性而非严格意义上的实体。没有类的情况下，可以采用下列模式创建对象。</p>
@@ -899,6 +960,13 @@ instance2.sayAge();
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计读书笔记05">
+                        Next<br>
+                        <span>Javascrpt高级程序设计读书笔记05</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -940,7 +1008,7 @@ instance2.sayAge();
                     <div class="tags">
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="16">
+                				<a href="/tags/#iOS" title="iOS" rel="17">
                                     iOS
                                 </a>
                             
@@ -1000,9 +1068,15 @@ instance2.sayAge();
                             
         				
                             
-                				<a href="/tags/#JavaScript" title="JavaScript" rel="4">
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
+                            
+        				
+                            
+        				
+                            
+        				
                             
         				
                             

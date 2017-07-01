@@ -5,9 +5,364 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 May 2017 21:07:47 +0800</pubDate>
-    <lastBuildDate>Wed, 17 May 2017 21:07:47 +0800</lastBuildDate>
+    <pubDate>Sat, 01 Jul 2017 16:48:11 +0800</pubDate>
+    <lastBuildDate>Sat, 01 Jul 2017 16:48:11 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>为什么使用weak修饰的变量会自动设置为nil</title>
+        <description>&lt;h1 id=&quot;为什么使用weak修饰的变量会自动设置为nil&quot;&gt;为什么使用weak修饰的变量会自动设置为nil&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Objective-C高级编程 iOS与OS X多线程和内存管理 读书笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;为什么使用weak修饰的变量会自动设置为nil-1&quot;&gt;为什么使用weak修饰的变量会自动设置为nil&lt;/h3&gt;
+&lt;p&gt;我们知道：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当使用&lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt;修饰符的变量的 引用对象 被废弃时，则将nil赋值给该变量。&lt;/li&gt;
+  &lt;li&gt;使用附有 __weak 修饰符的变量，即是使用注册到 autoreleasepool 中的对象。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;系统是如何实现的&quot;&gt;系统是如何实现的？&lt;/h3&gt;
+
+&lt;p&gt;先看下面的代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;__weak&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;obj1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;obj;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;经过编译器会装换为下面的代码;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    id obj1;
+    objc_initWeak(&amp;amp;obj1,obj);
+    objc_destroyWeak(&amp;amp;obj1);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_initWeak&lt;/code&gt; 函数初始化附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量，在变量作用域结束后通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_destroyWeak&lt;/code&gt; 函数释放该变量。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_initWeak&lt;/code&gt; 实现：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    obj1 = 0;
+    objc_storeWeak(&amp;amp;obj1,obj);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_destroyWeak&lt;/code&gt; 实现:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    objc_storeWeak(&amp;amp;obj1,0);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;所以以上的代码与下面的源代码相同：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    id obj1;
+    obj1 = 0;
+    objc_storeWeak(&amp;amp;obj1,obj);
+    objc_storeWeak(&amp;amp;obj1,0);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_storeWeak&lt;/code&gt; 函数把第二个参数的赋值对象的地址作为键值，将第一个参数的附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量的地址注册到 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;*{obj:&amp;amp;obj1} 等同 {“key”:”Value”}*&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表 是作为一个散列表实现的。
+当 变量 废弃时，使用该对象的地址作为键进行查找，就能快速的获取对应的 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量的地址。另外，由于一个对象可以同时赋值给多个 附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量中，所以对于一个键，可注册多个变量的地址。&lt;/p&gt;
+
+&lt;p&gt;释放对象时，废弃谁都不持有的对象的同时，程序的动作是怎么样的呢？&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;objc_release&lt;/li&gt;
+  &lt;li&gt;因为引用计数为0所以执行 dealloc&lt;/li&gt;
+  &lt;li&gt;_onjc_rootDealloc&lt;/li&gt;
+  &lt;li&gt;objc_dispose&lt;/li&gt;
+  &lt;li&gt;objc_destrucInstance&lt;/li&gt;
+  &lt;li&gt;objc_clear_deallocating&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;对象废弃时 最后调用的 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt; 函数动作如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;从 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中获取废弃对象的地址为键值的记录&lt;/li&gt;
+  &lt;li&gt;将包含在记录中的所有附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符变量的地址，赋值为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;从 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中删除该记录&lt;/li&gt;
+  &lt;li&gt;从引用计数表中删除废弃对象的地址为键值的记录。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;所以如果附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量 所引用的对象废弃后，将 nil 赋值给改变量的步骤是在这里实现的。&lt;/p&gt;
+
+&lt;p&gt;由此可知，如果大量的使用附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量，会消耗对应的 &lt;code class=&quot;highlighter-rouge&quot;&gt;CPU&lt;/code&gt; 资源。良策是只在需要避免循环引用时使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符。&lt;/p&gt;
+
+&lt;h3 id=&quot;最后总结&quot;&gt;最后总结&lt;/h3&gt;
+
+&lt;p&gt;简单来说就是：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中，&lt;/li&gt;
+  &lt;li&gt;当对象 B 被释放时，会先调用 release 然后引用计数为0，&lt;/li&gt;
+  &lt;li&gt;然后调用 dealloc ，&lt;/li&gt;
+  &lt;li&gt;最后会调用一个名为&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt;的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除，&lt;/li&gt;
+  &lt;li&gt;最后在引用计数表中将以 B 的地址为键值的记录删除。&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Mon, 26 Jun 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</guid>
+        
+        <category>weak</category>
+        
+        <category>读书笔记</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>(美团)深入理解Objective-C：Category</title>
+        <description>&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;美团深入理解objective-ccategory&quot;&gt;(美团)深入理解Objective-C：Category&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;原文地址：&lt;a href=&quot;http://tech.meituan.com/DiveIntoCategory.html&quot;&gt;深入理解Objective-C：Category&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;category-的其他使用场景&quot;&gt;Category 的其他使用场景&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;可以把类的实现分开在几个不同的文件里面。这样做有几个显而易见的好处:
+    &lt;ol&gt;
+      &lt;li&gt;可以减少单个文件的体积&lt;/li&gt;
+      &lt;li&gt;可以把不同的功能组织到不同的 category 里&lt;/li&gt;
+      &lt;li&gt;可以由多个开发者共同完成一个类&lt;/li&gt;
+      &lt;li&gt;可以按需加载想要的 category 等等。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;声明私有方法&lt;/li&gt;
+  &lt;li&gt;模拟多继承&lt;/li&gt;
+  &lt;li&gt;把 framework 的私有方法公开&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;category-和-extension&quot;&gt;Category 和 Extension&lt;/h3&gt;
+
+&lt;h4 id=&quot;extension&quot;&gt;Extension&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;extension 看起来很像一个匿名的category，但是 extension 和有名字的 category 几乎完全是两个东西。  extension 在编译期决议，它就是类的一部分，在编译期和头文件里的 @interface 以及实现文件里的 @implement 一起形成一个完整的类，它伴随类的产生而产生，亦随之一起消亡。 extension 一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加 extension ，所以你无法为系统的类比如 NSString 添加 extension。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;category&quot;&gt;category&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;但是category则完全不一样，它是在运行期决议的。
+就category和extension的区别来看，我们可以推导出一个明显的事实，extension可以添加实例变量，而category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;更直观的表示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Extension&amp;amp;Category/Extension&amp;amp;Category.png&quot; alt=&quot;ScopeChain&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 05 Jun 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>算法学习</title>
+        <description>&lt;h1 id=&quot;算法学习&quot;&gt;算法学习&lt;/h1&gt;
+
+&lt;h1 id=&quot;栈&quot;&gt;栈&lt;/h1&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;element&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSMutableArray&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elenmet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;pop = %@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elenmet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;removeLastObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elenmet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;peek&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elenmet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lastObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elenmet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isEmpty&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;  &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;removeAllObjects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSInteger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h1 id=&quot;队列&quot;&gt;队列&lt;/h1&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)enqueue:(id)element
+{
+    if (!items) {
+        items = [NSMutableArray new];
+    }
+    
+    [items addObject:element];
+}
+- (id)dequeue
+{
+    id elenmet = items.firstObject;
+    NSLog(@&quot;pop = %@&quot;,elenmet);
+    [items removeFirstObject];
+    return elenmet;
+}
+- (id)front
+{
+    id elenmet = items.firstObject;
+    return elenmet;
+}
+- (BOOL)isEmpty
+{
+    if (items.count &amp;gt; 0) {
+        return  NO;
+    }
+    return YES;
+}
+- (void)clear
+{
+    [items removeAllObjects];
+}
+- (NSInteger)size
+{
+    return items.count;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;优先队列&quot;&gt;优先队列&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;QueueElenmet&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;NSObject&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSInteger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enqueue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QueueElenmet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NSMutableArray&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;added&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QueueElenmet&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insertObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;atIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;added&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;added&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;循环队列&quot;&gt;循环队列&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    Queue *queue = [Queue new];
+    //加入队列的项是出队列的项
+    [queue enqueue:[queue dequeue]];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 23 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/23/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/23/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
+        
+        <category>计算机基础</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Javascrpt高级程序设计读书笔记05</title>
+        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记05&quot;&gt;Javascrpt高级程序设计读书笔记05&lt;/h1&gt;
+
+&lt;h2 id=&quot;函数表达式&quot;&gt;函数表达式&lt;/h2&gt;
+&lt;h3 id=&quot;递归&quot;&gt;递归&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function factorial(num){
+    if (num &amp;lt;= 1){
+         return 1;
+    } else { 6
+         return num * factorial(num-1);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var anotherFactorial = factorial;
+factorial = null;
+alert(anotherFactorial(4)); //出错
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;arguments.callee&lt;/code&gt; 指向正在执行的函数的指针。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function factorial(num){
+    if (num &amp;lt;= 1){
+        return 1;
+    } else {
+        return num * arguments.callee(num-1);
+    } 
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var factorial = (function f(num){
+        if (num &amp;lt;= 1){
+            return 1;
+        } else {
+            return num * f(num-1);
+    } 
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;闭包&quot;&gt;闭包&lt;/h3&gt;
+
+&lt;p&gt;闭包：
+匿名函数：&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 18 May 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/</guid>
+        
+        <category>JavaScript</category>
+        
+        
+      </item>
     
       <item>
         <title>Javascrpt高级程序设计读书笔记04</title>
@@ -659,11 +1014,72 @@ instance2.sayAge();
 
 &lt;p&gt;组合是继承避免了原型链和借用构造函数的缺陷，融合了他们的优点，是 JavaScript 中最常见的继承模式。&lt;/p&gt;
 &lt;h4 id=&quot;原型式继承&quot;&gt;原型式继承&lt;/h4&gt;
-&lt;p&gt;443242324&lt;/p&gt;
+&lt;p&gt;原型式继承本身的实现是很简单的，但是其牵涉到的概念以及原理却不好说明白。原型的本质是就是一个对象.
+原型式继承更能节约内存，原型链读取成员的方式使得所有克隆出来的对象都共享每个属性与方法的唯一一份实例。只有在直接设置了某个克隆出来的对象的属性或者方法时，情况才会发生改变，但是原型式继承的这种优势在某些情况下因为其对继承而来的成员的读与写的不对等性，在有共享的引用型属性时，这种优势又会变为原型式继承的一种劣势.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function object(o){
+    function F(){}
+    F.prototype = o;
+    return new F();
+}
+var person = {
+        name: &quot;Nicholas&quot;,
+        friends: [&quot;Shelby&quot;, &quot;Court&quot;, &quot;Van&quot;]
+    };
+    var anotherPerson = object(person);
+    anotherPerson.name = &quot;Greg&quot;;
+    anotherPerson.friends.push(&quot;Rob&quot;);
+    var yetAnotherPerson = object(person);
+    yetAnotherPerson.name = &quot;Linda&quot;;
+    yetAnotherPerson.friends.push(&quot;Barbie&quot;);
+    alert(person.friends);   //&quot;Shelby,Court,Van,Rob,Barbie&quot;w
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h4 id=&quot;寄生式继承&quot;&gt;寄生式继承&lt;/h4&gt;
-&lt;p&gt;435125&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function object(o){
+    function F(){}
+    F.prototype = o;
+    return new F();
+}
+function createAnother(original{ 
+    varclone=object(original); 
+    clone.sayHi = function(){
+        alert(&quot;hi&quot;);
+    };
+    return clone;
+ }
+ 
+ 
+var person = {
+    name: &quot;Nicholas&quot;,
+    friends: [&quot;Shelby&quot;, &quot;Court&quot;, &quot;Van&quot;]
+};
+var anotherPerson = createAnother(person);
+anotherPerson.sayHi(); //&quot;hi&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h4 id=&quot;寄生组合式继承&quot;&gt;寄生组合式继承&lt;/h4&gt;
-&lt;p&gt;1234234&lt;/p&gt;
+
+&lt;p&gt;还没搞懂。。先往下面看。。。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
+    this.name = name;
+    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
+}
+SuperType.prototype.sayName = function(){
+    alert(this.name);
+};
+function SubType(name, age){
+    SuperType.call(this, name);
+    this.age = age;
+}
+SubType.prototype = new SuperType();
+SubType.prototype.constructor = SubType;
+SubType.prototype.sayAge = function(){
+    alert(this.age);
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h1 id=&quot;小结&quot;&gt;小结&lt;/h1&gt;
 &lt;p&gt;JavaScript 支持面向对象（OO）编程，但不使用类或者接口。对象可以在代码执行过程中创建和增强，隐藏具有动态性而非严格意义上的实体。没有类的情况下，可以采用下列模式创建对象。&lt;/p&gt;
@@ -2343,700 +2759,6 @@ png.src=&quot;01.png&quot;;
         <category>动画</category>
         
         <category>Tips</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>关于 App Store 审核的一些事</title>
-        <description>&lt;h1 id=&quot;关于-app-store-审核的一些事&quot;&gt;关于 App Store 审核的一些事&lt;/h1&gt;
-
-&lt;h4 id=&quot;事情经过&quot;&gt;事情经过&lt;/h4&gt;
-&lt;p&gt;因为一个功能应不应该使用内购，跟苹果爸爸来回周旋了一个月，其间又是邮件又是电话，直到最后申诉，苹果爸爸才正视我的述求，最终通过了审核。
-当我几次 态度明确的 通过邮件、视频回复审核人员，我们基于付费的功能是与 app 的使用没有关系的，对方打来电话，告诉我：您这个 app 我们也是几次商讨后才认为是需要使用内购的，巴拉巴拉一堆话。我就说根据你们的审核条例：&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;3.1.5 App 之外的实物商品和服务：如果 app 允许用户购买将在 app 之外使用的商品或服务，则必须使用 IAP 以外的购买方式来收取相应款项，如 Apple Pay 或传统的信用卡入口。App 可支持获批虚拟货币的流通（如比特币、狗币），前提条件是，在该 app 能够正常使用的地区，前述做法必须遵守各州法律和联邦法律。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;我们这个app是不需要通过内购的。&lt;/p&gt;
-
-&lt;p&gt;审核人员：如果您觉得我们的审核有问题的话，您向审查委员会提起申诉好了，但是我需要告诉您，审查委员会也是我们的人，而且我们之前已经请求过审查委员会的意见，所以如果您提起申诉，结果还是一样的。&lt;/p&gt;
-
-&lt;p&gt;我：难道你们的审核条款是摆设吗（大概是这样的话，有点记不清楚了。）&lt;/p&gt;
-
-&lt;p&gt;审核人员：只要你通过 Apple 这个平台进行推广你的付费服务，就需要使用内购。&lt;/p&gt;
-
-&lt;p&gt;日了狗了！！&lt;/p&gt;
-
-&lt;p&gt;抱着一线生机的提起了申诉，今天早上一来，申诉通过了，并且审核也已经通过了。&lt;/p&gt;
-&lt;h4 id=&quot;收获&quot;&gt;收获&lt;/h4&gt;
-&lt;p&gt;通过这件事，知道了几点：&lt;/p&gt;
-&lt;h5 id=&quot;1苹果审核人员的标准不一致&quot;&gt;1，苹果审核人员的标准不一致。&lt;/h5&gt;
-
-&lt;p&gt;我们的app 是一个上线时间很长的app，之前每次更新基本上第二天就可以审核上线了。但这次扯淡就扯了一个月。猜测是不同的审核人员的审核标准不一致。&lt;/p&gt;
-&lt;h5 id=&quot;2审核人员会言语上误导你&quot;&gt;2，审核人员会言语上误导你。&lt;/h5&gt;
-
-&lt;p&gt;审核人员告诉我是经过了审查委员会的意见进行的处理，但是当我提起申诉，app 就通过了审核。要么是审核人员说谎了，要么就是审查委员会之前的标准也是不一致的。&lt;/p&gt;
-&lt;h5 id=&quot;3只要你确认你是-app-符合审核规则一定要坚持&quot;&gt;3，只要你确认你是 app 符合审核规则，一定要坚持&lt;/h5&gt;
-
-&lt;p&gt;在审核人员打来电话后，通过她的话语，感觉申诉通过的几率也不是很大，我们这边差点要改一系列的逻辑实现，最后领导拍板，我们的app 符合他们的审核条例，为什么审核不给过，去申诉，先看看申诉结果以后再讨论。&lt;/p&gt;
-
-&lt;h4 id=&quot;最后&quot;&gt;最后&lt;/h4&gt;
-&lt;p&gt;也许只是因为最近 微信 的打赏功能闹得沸沸扬扬，苹果爸爸审核的严格了。。&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 08 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</guid>
-        
-        <category>App Store</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>让你眼前一亮的代码</title>
-        <description>&lt;h1 id=&quot;让你眼前一亮的代码&quot;&gt;让你眼前一亮的代码&lt;/h1&gt;
-
-&lt;p&gt;本文记录一下，我见到的让我觉得眼前一亮的代码，闭门造车了好久，一直在吃老本，没有提升，突然见到这样的代码，真的觉得受益匪浅，就自己重写并记录下，水平有限，请看到的列位大神不要见笑。&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;所有的代码都已经上传 ，地址为：&lt;a href=&quot;https://github.com/yunisSong/MagicCode&quot;&gt;MagicCode&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;uitableview&quot;&gt;UITableView&lt;/h3&gt;
-&lt;h4 id=&quot;uitableview-代理封装&quot;&gt;UITableView 代理封装&lt;/h4&gt;
-&lt;p&gt;传统的 &lt;code class=&quot;highlighter-rouge&quot;&gt;UITableView&lt;/code&gt; 使用，会有一大堆代理方法，看起来比较乱，封装后形式如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    UITableView *table = ({
-        UITableView *baseTableView    = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        baseTableView.estimatedRowHeight = 100;
-        baseTableView.rowHeight = UITableViewAutomaticDimension;
-        [baseTableView registerClass:[DemoTableViewCell class] forCellReuseIdentifier:PhotoCellIdentifier];
-        baseTableView;
-    });
-    [table addHelper:^(SYTableViewHelper *help)
-     {
-         help.addItem(source)
-         .configureCell(^(DemoTableViewCell *cell, NSString *photo)
-                        {
-                            cell.textLabel.text = photo;
-                        })
-         .addSelectCell(^(NSIndexPath *index)
-                        {
-                            NSLog(@&quot;indexRow = %ld&quot;,(long)index.row);
-                        })
-         .addCellIdentifier(PhotoCellIdentifier);
-         
-     }];
-    [self.view addSubview:table];
-    
-    [table mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;具体的就是使用一个帮助类，把 &lt;code class=&quot;highlighter-rouge&quot;&gt;UITableView&lt;/code&gt; 的代理都丢到帮助类里面处理，因为最近痴迷于链式语法，就使用链式实现了一遍,一般简单的需求都可以用下，如果需要使用其他的代理方法，就自己再添加了。
-&lt;img src=&quot;https://raw.githubusercontent.com/yunisSong/MagicCode/master/Pic/tableviewDemo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;uitableview-一句话空数据占位视图&quot;&gt;UITableView 一句话空数据占位视图&lt;/h4&gt;
-&lt;p&gt;开发中，如果请求返回数据为空，需要有一视图提示用户，数据为空。这个是之前看陈一龙的微博看到的，自己就又实现了下。具体代码：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (self.emptyViewTitle)
-    {
-        [tableView tableViewDisplayEmptyViewWithTitle:self.emptyViewTitle
-                               ifNecessaryForRowCount:self.items.count];
-    }
-    return self.items.count;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我这边就显示了一个提示的文字，简单的实现了，如果需要显示美观的视图，自己修改下就可以用了，思路都是一样的。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/yunisSong/MagicCode/master/Pic/tableviewEmptyDemo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;uiimageview&quot;&gt;UIImageView&lt;/h3&gt;
-&lt;h4 id=&quot;0行代码完成头像设置功能&quot;&gt;0行代码完成头像设置功能&lt;/h4&gt;
-&lt;p&gt;最初是在 &lt;a href=&quot;https://github.com/FengDeng/DFHeadImageView&quot;&gt;DFHeadImageView&lt;/a&gt; ,通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;UIImageView&lt;/code&gt; 封装，使用 &lt;a href=&quot;https://github.com/FengDeng/DFHeadImageView&quot;&gt;DFHeadImageView&lt;/a&gt; 可以直接完成设置头像的功能，不需要再额外写获取图片的方法。最好自己试着仿写了一遍。&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 05 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/05/%E8%AE%A9%E4%BD%A0%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E4%BB%A3%E7%A0%81/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/05/%E8%AE%A9%E4%BD%A0%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E4%BB%A3%E7%A0%81/</guid>
-        
-        <category>奇巧淫技</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>链式语法学习</title>
-        <description>&lt;h1 id=&quot;链式语法学习&quot;&gt;链式语法学习&lt;/h1&gt;
-
-&lt;h4 id=&quot;为什么要写一个链式语法的库&quot;&gt;为什么要写一个链式语法的库&lt;/h4&gt;
-&lt;p&gt;最近看了 &lt;a href=&quot;https://github.com/jhurray/JHChainableAnimations&quot;&gt;JHChainableAnimations&lt;/a&gt; 和 &lt;a href=&quot;https://github.com/SnapKit/Masonry&quot;&gt;Masonry&lt;/a&gt; 觉得链式语法写起来用的好爽，就萌生了使用 链式 编写最近使用的一个库，然后又看到了 &lt;a href=&quot;http://www.jianshu.com/u/0cf7d455eb9e&quot;&gt;sindri的小巢&lt;/a&gt; 的这篇文章 &lt;a href=&quot;http://www.jianshu.com/p/031818e48550&quot;&gt;iOS开发-链式实现数据源&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;在文章的最后，作者展示了这样的一段代码：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Component&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;user/getUserInfo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSDictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;/// request success&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;failed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NSError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;/// request failed&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;好了，就写一个网路的链式调用库，当做一次链式语法的实践。&lt;/p&gt;
-
-&lt;h4 id=&quot;具体如何实现&quot;&gt;具体如何实现&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/SYrequest.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;提供调用的方法：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (apiAddress )requestURLString;
-+ (apiAddress)Get;
-+ (apiAddress)Post;
-- (apiAddress )requestURLString;
-- (apiAddress)Get;
-- (apiAddress)Post;
-
-- (head)addHeadersy;
-- (params)addParameters;
-- (body)addBody;
-- (httpMethod)httpMethod;
-- (parameterEncoding)addParameterEncoding;
-
-- (startRequest)start;
-- (cancelRequest)cancel;
-- (suspendRequest)suspend;
-- (resumeRequest)resume;
-
-
-- (response)response;
-
-
-- (void)clearCompletionBlock;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;使用示例：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    SYRequest *requset = [[SYRequest alloc] init];
-    requset.requestURLString(@&quot;https://www.metaweather.com/api/location/search/&quot;)
-            .httpMethod(SYHTTPMethod_GET)
-            .addParameters(@{@&quot;query&quot;:@&quot;sa&quot;})
-            .start(^(BOOL sucess,id responseData,NSError *error){
-                NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-                NSLog(@&quot;jsonDic = %@&quot;,jsonDic);
-            });
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;或者：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    SYRequest.requestURLString(@&quot;https://www.metaweather.com/api/location/search/&quot;)
-    .httpMethod(SYHTTPMethod_GET)
-    .addParameters(@{@&quot;query&quot;:@&quot;sa&quot;})
-    .start(^(BOOL sucess,id responseData,NSError *error){
-        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-        NSLog(@&quot;jsonDic = %@&quot;,jsonDic);
-    });
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;具体的就没什么说的，实现起来就是这样： &lt;code class=&quot;highlighter-rouge&quot;&gt;方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）&lt;/code&gt;,只要按照这个条件写，就可以写出一个自己的链式库。&lt;/p&gt;
-
-&lt;p&gt;具体代码地址 &lt;a href=&quot;https://github.com/yunisSong/SYRequest&quot;&gt;SYRequest&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 25 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/25/%E9%93%BE%E5%BC%8F%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/25/%E9%93%BE%E5%BC%8F%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
-        
-        <category>链式</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>（转）制作一个苦力</title>
-        <description>&lt;h1 id=&quot;转制作一个苦力&quot;&gt;（转）制作一个苦力&lt;/h1&gt;
-
-&lt;p&gt;创造一个工具，为自己，也为他人。&lt;/p&gt;
-
-&lt;p&gt;作者：&lt;a href=&quot;https://twitter.com/nixzhu&quot;&gt;@nixzhu&lt;/a&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;现今，几乎所有的 API 都返回 JSON，但 JSON 是一种文本数据，为了使访问更加安全和自然，传递更加方便，我们通常会将它转换为客户端模型，而不仅仅将其当作一个字典来使用。&lt;/p&gt;
-
-&lt;p&gt;通常，我们会有服务器端所提供的 API 的文档，里面会描述每个 API 可能返回的数据。据此，作为客户端开发者，根据这些信息，我们就能设计出适合客户端使用的模型，或者接口、协议等。&lt;/p&gt;
-
-&lt;p&gt;可是，如果 API 很多，那可能模型也会很多。假如我们用结构体来做模型，光是每个模型的属性（以及从字典到模型的转换代码）都够我们写上一段时间，而且这个过程并不有趣。&lt;/p&gt;
-
-&lt;p&gt;有一些框架可以帮助我们做“从字典到模型的转换”这一步，但我们仍然要先定义好结构体（或者类）。&lt;/p&gt;
-
-&lt;p&gt;如果一件事情对人类而言枯燥无趣，通常计算机就会很喜欢。如果我们能让计算机帮我们从 JSON 直接生成模型，然后我们再来对模型做一些修改和调整，那我们应该就像一个人了。&lt;/p&gt;
-
-&lt;p&gt;开发者当然是人，而且是刚好能够用计算机制造工具的人。&lt;/p&gt;
-
-&lt;p&gt;JSON 里有些什么信息呢？足够帮助我们生成模型吗？下面来看一个简单的例子。假如有如下 JSON：&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;NIX&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;skills&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Swift on iOS&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;C on Linux&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;motto&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Love you love.&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;而我们期望得到如下模型：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;skills&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;motto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;通过观察可知，JSON 就像一个字典，有 key 和 value，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; 为 key，其值 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;NIX&quot;&lt;/code&gt; 是一个字符串。对应到模型里即属性 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;，类型为 &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。其它依次类推即可。其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;skills&lt;/code&gt; 比较特殊，是一个数组，而且其元素是字符串，所以对应到模型属性 &lt;code class=&quot;highlighter-rouge&quot;&gt;skills&lt;/code&gt; 的类型为 &lt;code class=&quot;highlighter-rouge&quot;&gt;[String]&lt;/code&gt;。这个 JSON 比较简单，在更复杂的 JSON 里，有可能 key 对应的 value 也是一个字典，数组里也很可能不是基本类型，也是一个个字典。还有 key 可能没有 value，而对应 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;除了模型结构体的名字 &lt;code class=&quot;highlighter-rouge&quot;&gt;User&lt;/code&gt; 外，其它信息都应该能从 JSON 中推断出来。也就是说，我们要写一个解析器，它能将 JSON 里的信息提取出来，用于生成我们需要的结构体。&lt;/p&gt;
-
-&lt;p&gt;那解析器怎么写？不要慌，我们先看看 JSON 的定义：&lt;a href=&quot;http://www.json.org/json-zh.html&quot;&gt;http://www.json.org/json-zh.html&lt;/a&gt;，这份说明很短，应该不难看懂。&lt;/p&gt;
-
-&lt;p&gt;我再节录一点如下：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;JSON建构于两种结构：&lt;/p&gt;
-  &lt;ul&gt;
-    &lt;li&gt;“名称/值”对的集合（A collection of name/value pairs）。不同的语言中，它被理解为对象（object），纪录（record），结构（struct），字典（dictionary），哈希表（hash table），有键列表（keyed list），或者关联数组 （associative array）。&lt;/li&gt;
-    &lt;li&gt;值的有序列表（An ordered list of values）。在大部分语言中，它被理解为数组（array）。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;其中：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;对象是一个无序的“‘名称/值’对”集合。一个对象以“{”（左括号）开始，“}”（右括号）结束。每个“名称”后跟一个“:”（冒号）；“‘名称/值’ 对”之间使用“,”（逗号）分隔。
-数组是值（value）的有序集合。一个数组以“[”（左中括号）开始，“]”（右中括号）结束。值之间使用“,”（逗号）分隔。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;后面还定义了&lt;code class=&quot;highlighter-rouge&quot;&gt;值（value）&lt;/code&gt;的具体类型，如字符串、数组、布尔值、空等。而且要注意，value 还可以是对象或数组，也就是说，JSON 是一种可递归的数据结构，因此它可以表征很复杂的数据。&lt;/p&gt;
-
-&lt;p&gt;总结一下，JSON 里包含的基本单位有这么几种：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;对象开始符 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;对象结束符 &lt;code class=&quot;highlighter-rouge&quot;&gt;}&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;数组开始符 &lt;code class=&quot;highlighter-rouge&quot;&gt;[&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;数组结束符 &lt;code class=&quot;highlighter-rouge&quot;&gt;]&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;键值分隔符 &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;键值对分隔符 &lt;code class=&quot;highlighter-rouge&quot;&gt;,&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;布尔值，真 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;布尔值，假 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;42&lt;/code&gt; 或 &lt;code class=&quot;highlighter-rouge&quot;&gt;-0.99&lt;/code&gt; …&lt;/li&gt;
-  &lt;li&gt;字符串 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;name&quot;&lt;/code&gt; 或&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;NIX&quot;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;空 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;不要觉得复杂，因为并没有多少种。注意其中的“字符串”既可以用来表示 key，也可以作为 value 的一种。&lt;/p&gt;
-
-&lt;p&gt;很明显，有的基本单位就是一个字符而已，但有的不是，比如布尔值、数字、字符串等。这是一种重要的洞见，这说明我们不该将 JSON 当做一个字符串来看待，而应该将其当做一种“基本单位串”。&lt;/p&gt;
-
-&lt;p&gt;这里的“基本单位”，在计算机科学里，被称为“Token”，也就是说，JSON 是由一个个 Token 串联起来的。当我们能用 Token 串来看待 JSON 时，我们思考解析的过程会更清晰，不用再纠结于字符。&lt;/p&gt;
-
-&lt;p&gt;再看一个更简单的 JSON:&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;NIX&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;在计算机“看来”是这样：&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\n\t&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;NIX&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\n\t&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;，一个字符串，包含换行符&lt;code class=&quot;highlighter-rouge&quot;&gt;\n&lt;/code&gt;、制表符&lt;code class=&quot;highlighter-rouge&quot;&gt;\t&lt;/code&gt;和空格&lt;code class=&quot;highlighter-rouge&quot;&gt; &lt;/code&gt;（注意这里为了表示方便，并未转义&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;&lt;/code&gt;）。
-如果我们去除这些空白符，就有：&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;NIX&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;，看起来好多了。&lt;/p&gt;
-
-&lt;p&gt;以我们对 JSON 的理解，我们再对其作分割，就有：&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;name&quot;&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;NIX&quot;&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;,&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;age&quot;&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;18&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;}&lt;/code&gt;，共9个独立的部分。
-很明显我们的大脑知道如何“正确”分割，这里的正确指的是符合 JSON 的定义。比如，当我们看到&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/code&gt;时就知道这个 JSON 是一个字典，看到&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;name&quot;&lt;/code&gt;及其后的&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;时，我们就知道 name 是一个 key，再后面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;NIX&quot;&lt;/code&gt; 就是 value 了。看到&lt;code class=&quot;highlighter-rouge&quot;&gt;,&lt;/code&gt;时就知道这个键值对结束（也预示下一个键值对要开始）。当我们看到&lt;code class=&quot;highlighter-rouge&quot;&gt;18&lt;/code&gt;时，我们除了知道它时一个 value 外，还知道它是一个数字，而不是字符串，因为字符串都有双引号包围。&lt;/p&gt;
-
-&lt;p&gt;这些独立的部分不应该再被分割，不然其意义就不明确了，这种不能被分割的部分就是 Token。&lt;/p&gt;
-
-&lt;p&gt;Swift 的 enum 特别适合用来表示不同的 Token，于是有：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BeginObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// {&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;EndObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// }&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BeginArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// [&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;EndArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// ]&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Colon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            &lt;span class=&quot;c1&quot;&gt;// :&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Comma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            &lt;span class=&quot;c1&quot;&gt;// ,&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;               &lt;span class=&quot;c1&quot;&gt;// true or false&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NumberType&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NumberType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;             &lt;span class=&quot;c1&quot;&gt;// 42, -0.99&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;           &lt;span class=&quot;c1&quot;&gt;// &quot;name&quot;, &quot;NIX&quot;, ...&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Null&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;作为一种合理的简化，Number 只考虑整型和简单的浮点型。&lt;/p&gt;
-
-&lt;p&gt;那么上面的9个独立部分就可以表示为：&lt;code class=&quot;highlighter-rouge&quot;&gt;.BeginObject(&quot;{&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.String(&quot;name&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.Colon(&quot;:&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.String(&quot;NIX&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.Comma(&quot;,&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.String(&quot;age&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.Colon(&quot;:&quot;)&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.Number(.Int(18))&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;.EndObject(&quot;}&quot;)&lt;/code&gt;，也就是一个 Token 串了。&lt;/p&gt;
-
-&lt;p&gt;那么，我们的第一步就将 JSON 字符串转换为 Token 串，为后面的解析（所谓解析，是将 Token 串转化为一个中间数据结构，这个结构里有我们最后所要生成的模型所需要的所有信息）做准备。&lt;/p&gt;
-
-&lt;p&gt;通常，在各种介绍“编译原理”的书籍中，会把这个步骤成为“词法分析”。又通常，会进一步介绍“正则表达式”和“状态机”，以便用它们写出做词法分析的工具。&lt;/p&gt;
-
-&lt;p&gt;不过我们还不需要去学它们。对于 JSON 这种比较简单的数据表示，我们可以利用 NSScanner 来帮我们生成 Token 串。NSScanner 的文档&lt;a href=&quot;https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSScanner_Class/&quot;&gt;在此&lt;/a&gt;，简单来说，它是一个根据一些预定义的模式，从一个字符串中寻找匹配模式的字符串，并在匹配后移动其内部的指针，以便继续扫描，直至结束。在任意一个模式匹配后，我们就可以利用匹配到的信息来生成 Token。&lt;/p&gt;
-
-&lt;p&gt;其用法如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;scanner&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NSScanner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;{&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\t\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;NIX&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\t\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;: 18&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanBeginObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scanString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;intoString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BeginObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;其中&lt;code class=&quot;highlighter-rouge&quot;&gt;scanBeginObject&lt;/code&gt;利用&lt;code class=&quot;highlighter-rouge&quot;&gt;scanner&lt;/code&gt;扫描&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/code&gt;，若能找到，就返回一个 BeginObject Token。类似这样，我们能写出
-    &lt;code class=&quot;highlighter-rouge&quot;&gt;scanEndObject&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanBeginArray&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanEndArray&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanColon&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanComma&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanBool&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanNumber&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;scanString&lt;/code&gt;以及&lt;code class=&quot;highlighter-rouge&quot;&gt;scanNull&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;然后，我们可以利用一个 while 循环，把 JSON 字符串转换为 Token 串：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generateTokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tokens&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]()&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;atEnd&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;previousScanLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scanLocation&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanBeginObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanEndObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanBeginArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanEndArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanColon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanComma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanBool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;scanNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;currentScanLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scanner&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scanLocation&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentScanLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;previousScanLocation&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Not found valid token&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;上面的函数依然只是看着比较长而已，实质非常简单。注意我们在一次循环里尽可能寻找合法的 Token，若最后 &lt;code class=&quot;highlighter-rouge&quot;&gt;currentScanLocation&lt;/code&gt; 没有大于 &lt;code class=&quot;highlighter-rouge&quot;&gt;previousScanLocation&lt;/code&gt;，那说明当前扫描没有找到合法的 Token，也就是说 JSON 字符串有语法问题。&lt;/p&gt;
-
-&lt;p&gt;经过上面的步骤，我们应该已得到了一个 Token 数组，接下来就是解析了。不过我们首先要明确解析的目的，我们要生成一个中间结构来表示 JSON 的结构，根据前面提及的 JSON 定义，我们也不难写出如下 enum：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;enum&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;NumberType&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;NumberType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Null&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;indirect&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;indirect&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Swift&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我们将一个 JSON 看作一个 Value，而 Value 本身可以是布尔值、数字、字符串、null 或者递归结构（String: Value 字典，或者 Value 数组），这其实是一种&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95&quot;&gt;上下文无关文法&lt;/a&gt;的表示。我不打算在这里解释上下文无关文法的定义，但简单来说，当我们说一个 Value 是什么的时候，我们知道它可能表示一个布尔值、数字、……、或者与 Value 有关的结构（字典或数组），Value 本身可以作为构建 Value 的基石。&lt;/p&gt;
-
-&lt;p&gt;有了 Value 的定义，那我们的解析函数可如下定义：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tokens&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generateTokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isEmpty&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No tokens&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;哈哈，真实的&lt;code class=&quot;highlighter-rouge&quot;&gt;parse()&lt;/code&gt;当然不会这么短，不过我们知道它应该返回一个 Value（或 nil，表示解析失败）。&lt;/p&gt;
-
-&lt;p&gt;有了 tokens，我们再定义一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;var next = 0&lt;/code&gt;，表示我们当前“查看”到哪一个 Token 了，然后我们在&lt;code class=&quot;highlighter-rouge&quot;&gt;parse()&lt;/code&gt;内部定义一个&lt;code class=&quot;highlighter-rouge&quot;&gt;parseValue()&lt;/code&gt;，并在最后调用它，如下：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tokens&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generateTokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isEmpty&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No tokens&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No token for parseValue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BeginArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;arrayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nameIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nameIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nameToken&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nameIndex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nameToken&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;n&quot;&gt;arrayName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;capitalizedString&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arrayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;BeginObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseBool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;首先，Don’t Panic! 其实上面的&lt;code class=&quot;highlighter-rouge&quot;&gt;parseValue()&lt;/code&gt;也并不复杂，不过是 case 较多（这由 Token 的种类决定）而已。它先用 next 取到当前的 Token，之后就 switch token 来具体处理。例如对于最复杂的&lt;code class=&quot;highlighter-rouge&quot;&gt;.BeginArray&lt;/code&gt;，它利用 next 回退了两个 Token，以拿到这个数组的名字（在这里，我们其实做了一种假设，即 JSON 的“基底”是一个字典，而数组只会出现在字典内部，因此数组一定有一个名字，这个名字对于我们后面的代码生成来说是必要的，而且这种假设也很合理，因为我们通常都会用一个 JSON 字典来表示一个模型），之后增加 next 跳过这个表示中括号的 Token，再调用了&lt;code class=&quot;highlighter-rouge&quot;&gt;parseArray&lt;/code&gt;（我们先不管它是怎么实现的，实际上，在编写解析器的过程中，这种“大局观”很重要，有时候必须从全局看问题）。对于&lt;code class=&quot;highlighter-rouge&quot;&gt;.BeginObject&lt;/code&gt;，它增加 next 以跳过这个表示大括号的 Token，然后调用&lt;code class=&quot;highlighter-rouge&quot;&gt;parseObject&lt;/code&gt;，其它类似（注意我们并没有 switch 所有的 case，这也是基于对 JSON 的理解）。&lt;/p&gt;
-
-&lt;p&gt;很明显，我们还会在上面的注释处继续添加函数，其中最复杂的就是&lt;code class=&quot;highlighter-rouge&quot;&gt;parseArray&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;parseObject&lt;/code&gt;，我再稍微描述一下它们：&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No token for parseArray&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]()&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;EndArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;EndArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseComma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Expect comma&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-                    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nextToken&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextToken&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNotEndArray&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Invalid JSON, comma at end of array&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我们先准备了一个&lt;code class=&quot;highlighter-rouge&quot;&gt;var array = [Value]()&lt;/code&gt;用来装解析出的 values，然后判断 next 表示的 Token，如果是&lt;code class=&quot;highlighter-rouge&quot;&gt;.EndArray&lt;/code&gt;（右中括号），表示这是一个空的数组，因此立即返回，不然呢，就进入一个 while 循环。在 while 循环中，我们实际上身处第一个 Value，请回忆 Value 里 Array 的定义，Array 就是 Value 的数组（一种递归定义），因此，我们直接调用&lt;code class=&quot;highlighter-rouge&quot;&gt;parseValue&lt;/code&gt;即可，如果 JSON 没有语法问题，那么我们就能得到表示数组中第一个元素的 value，我们把这个 value 添加到 array 里。然后，我们取下一个 Token，经过前面&lt;code class=&quot;highlighter-rouge&quot;&gt;parseValue&lt;/code&gt;的解析，这一个 token 有这几种可能：右中括号（表示数组结束）、逗号（表示数组里还有更多元素），终究，我们的循环可以处理这些情况，并在合适的时候用 return 跳出循环。&lt;/p&gt;
-
-&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No token for parseObject&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;dictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]()&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;EndObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseColon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Expect key : value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;EndObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;Dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parseComma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Expect comma&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-                    &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nextToken&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tokens&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coolie_safe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nextToken&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNotEndObject&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Invalid JSON, comma at end of object&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;nil&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;看完上面对&lt;code class=&quot;highlighter-rouge&quot;&gt;parseArray&lt;/code&gt;的分析，我想，&lt;code class=&quot;highlighter-rouge&quot;&gt;parseObject&lt;/code&gt;看起来也不会太难。只不过这次我们先定义一个&lt;code class=&quot;highlighter-rouge&quot;&gt;var dictionary = [String: Value]()&lt;/code&gt;来装结果，然后判断下一个 Token 是否表示对象结束（也即是右大括号），不然又进入 while 循环来继续解析，只需注意&lt;code class=&quot;highlighter-rouge&quot;&gt;guard let key = parseString(), _ = parseColon(), value = parseValue()&lt;/code&gt;，我们在其中取到了 key 和 value（中间的逗号被跳过了），确保 key 是一个 String，然后就可以将 value 装入我们早就准备好的 dictionary 里了。然后当然是继续判断，下一个 Token 要么是对象结束，要么是一个逗号。同样，不符合我们预期的 Token 当然表示 JSON 不合法。&lt;/p&gt;
-
-&lt;p&gt;其它诸如&lt;code class=&quot;highlighter-rouge&quot;&gt;parseColon&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;parseComma&lt;/code&gt;等都比较简单，我就不贴代码分析了，感兴趣的读者可直接去&lt;a href=&quot;https://github.com/nixzhu/Coolie&quot;&gt;阅读代码&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;不出意外，我们得到了一个 Value，然后我们只需要根据我们对模型的需求写出一个生成函数，利用它生成模型和模型的构造方法，我们就得到一个苦力了。
-目前我写了两个生成函数：&lt;code class=&quot;highlighter-rouge&quot;&gt;generateStruct&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;generateClass&lt;/code&gt;，分别用于生成 Swift struct 或 class（比较琐碎，也不贴代码分析了）。而且因为 Value 是递归的，因此我们生成的模型也是递归的。如果你所用的编程语言不支持递归定义，那可能要稍微麻烦一点。另外，为了方便开发者使用，我还写了一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Arguments&lt;/code&gt;模块，用于解析命令行参数，感兴趣的读者可直接到 &lt;a href=&quot;https://github.com/nixzhu/Coolie&quot;&gt;Coolie 的 GitHub Repo&lt;/a&gt; 处研究。&lt;/p&gt;
-
-&lt;p&gt;我想读者大概能够看出，其实 Coolie 是一个迷你的编译器，它有词法分析、语法分析、中间表示、代码生成，因此它能将一个 JSON 文件“编译”为一个 Swift 文件，而且因为其内部有一个中间表示（可看成 AST），所以根据不同的用途，它也可以生成其它语言的模型代码。&lt;/p&gt;
-
-&lt;p&gt;苦力是我在写 &lt;a href=&quot;https://github.com/CatchChat/Yep&quot;&gt;Yep&lt;/a&gt; 的过程中被写模型代码的繁琐逼出来的（我也看了不少编译原理相关的资料），可惜做得太晚，自己倒没怎么用上，不过我希望其他开发者不用再这样受苦。&lt;/p&gt;
-
-&lt;p&gt;===============&lt;/p&gt;
-
-&lt;p&gt;欢迎转载，但请一定注明出处！ &lt;a href=&quot;https://github.com/nixzhu/dev-blog&quot;&gt;https://github.com/nixzhu/dev-blog&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;欢迎转发此条&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Tweet &lt;a href=&quot;https://twitter.com/nixzhu/status/747964885770735617&quot;&gt;https://twitter.com/nixzhu/status/747964885770735617&lt;/a&gt; 或&lt;/li&gt;
-  &lt;li&gt;微博 &lt;a href=&quot;http://weibo.com/2076580237/DCrSs4TbC&quot;&gt;http://weibo.com/2076580237/DCrSs4TbC&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;以分享此文或参与讨论！&lt;/p&gt;
-
-&lt;p&gt;如果你认为这篇文章对你有所帮助，可用支付宝扫描下方二维码，以捐助慰劳作者的辛苦：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://github.com/nixzhu/dev-blog/raw/master/images/nixzhu_alipay.png&quot; alt=&quot;nixzhu的支付宝二维码&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 18 Apr 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/04/18/%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%8B%A6%E5%8A%9B/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/04/18/%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%8B%A6%E5%8A%9B/</guid>
-        
-        <category>转载</category>
-        
-        <category>工具</category>
         
         
       </item>
