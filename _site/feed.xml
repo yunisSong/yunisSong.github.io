@@ -5,9 +5,41 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 01 Jul 2017 16:48:11 +0800</pubDate>
-    <lastBuildDate>Sat, 01 Jul 2017 16:48:11 +0800</lastBuildDate>
+    <pubDate>Thu, 06 Jul 2017 12:21:07 +0800</pubDate>
+    <lastBuildDate>Thu, 06 Jul 2017 12:21:07 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>Xcode断点无效的处理方式</title>
+        <description>&lt;h1 id=&quot;xcode断点无效的处理方式&quot;&gt;Xcode断点无效的处理方式&lt;/h1&gt;
+
+&lt;p&gt;原文链接&lt;a href=&quot;http://blog.csdn.net/skylin19840101/article/details/72185975&quot;&gt;xcode断点无效无法调试的一个问题&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;在某一次”svn update”后，突然发现Xcode无法断点调试了，这是什么鬼？&lt;/p&gt;
+
+&lt;p&gt;根据大家的经验，试了各种方式&lt;/p&gt;
+
+&lt;p&gt;1、Product-&amp;gt;Debug workflow取消选中show Disassembly when debug&lt;/p&gt;
+
+&lt;p&gt;2、修改Generate Debug Symbols 为YES
+3、Edit Scheme -&amp;gt; Run -&amp;gt; Debug executable 勾选&lt;/p&gt;
+
+&lt;p&gt;按照上面的方法检查一遍，一切都是OK的，没啥问题，但就是无法调试.&lt;/p&gt;
+
+&lt;p&gt;后来经过和修改Xcode工程的同事确认，原来是他们修改了一个配置参数，将”&lt;code class=&quot;highlighter-rouge&quot;&gt;Deployment Postprocessing&lt;/code&gt;“设为YES&lt;/p&gt;
+
+&lt;p&gt;这样做的目的是减少调试信息，减少IPA体积，同时保护IPA。
+所以，可以在debug下设为NO，release下设为YES&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 06 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
+        
+        <category>Xcode</category>
+        
+        
+      </item>
     
       <item>
         <title>为什么使用weak修饰的变量会自动设置为nil</title>
@@ -101,10 +133,10 @@
 
 &lt;p&gt;简单来说就是：&lt;/p&gt;
 &lt;ol&gt;
-  &lt;li&gt;使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中，&lt;/li&gt;
-  &lt;li&gt;当对象 B 被释放时，会先调用 release 然后引用计数为0，&lt;/li&gt;
-  &lt;li&gt;然后调用 dealloc ，&lt;/li&gt;
-  &lt;li&gt;最后会调用一个名为&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt;的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除，&lt;/li&gt;
+  &lt;li&gt;使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中；&lt;/li&gt;
+  &lt;li&gt;当对象 B 被释放时，会先调用 release 然后引用计数为0；&lt;/li&gt;
+  &lt;li&gt;然后调用 dealloc ；&lt;/li&gt;
+  &lt;li&gt;接着会调用一个名为&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt;的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除；&lt;/li&gt;
   &lt;li&gt;最后在引用计数表中将以 B 的地址为键值的记录删除。&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -2679,86 +2711,6 @@ png.src=&quot;01.png&quot;;
         <guid isPermaLink="true">http://localhost:4000/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/</guid>
         
         <category>JavaScript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>(转)Tips:取消UICollectionView的隐式动画</title>
-        <description>&lt;h1 id=&quot;转tips取消uicollectionview的隐式动画&quot;&gt;(转)Tips:取消UICollectionView的隐式动画&lt;/h1&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;原文地址在串哥的博客 &lt;a href=&quot;http://adad184.com/2015/11/10/disable-uicollectionview-implicit-animation/&quot;&gt;Tips:取消UICollectionView的隐式动画&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;UICollectionView在 &lt;code class=&quot;highlighter-rouge&quot;&gt;reloadItems&lt;/code&gt; 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)&lt;/p&gt;
-
-&lt;p&gt;下面几种方法都可以帮你去除这些动画&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//方法一
-[UIView performWithoutAnimation:^{
-
-    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-}];
-
-//方法二
-[UIView animateWithDuration:0 animations:^{
-    [collectionView performBatchUpdates:^{
-        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-    } completion:nil];
-}];
-    
-//方法三
-[UIView setAnimationsEnabled:NO];
-[self.trackPanel performBatchUpdates:^{
-    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-} completion:^(BOOL finished) {
-    [UIView setAnimationsEnabled:YES];
-}];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果你的APP只支持iOS7+ 推荐使用第一种方式 &lt;code class=&quot;highlighter-rouge&quot;&gt;performWithoutAnimation&lt;/code&gt; (感谢@sunnyxx的tip) 简单方便&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;but&lt;/p&gt;
-
-&lt;p&gt;问题还没有结束 上面介绍的方法只能解决UIView的Animation 如果你的cell中还包含有CALayer的动画 比如这样&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.frameLayer.frame = self.frameView.bounds;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;上述情况多用于自定义控件使用了layer.mask的情况 如果有这种情况 上面提到的方法是无法取消CALayer的动画的 但是解决办法也很简单&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    
-    self.frameLayer.frame = self.frameView.bounds;
-    
-    [CATransaction commit];
-    
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;done!&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 09 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/</guid>
-        
-        <category>动画</category>
-        
-        <category>Tips</category>
         
         
       </item>

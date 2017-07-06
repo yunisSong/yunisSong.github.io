@@ -184,6 +184,33 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/">
+        <h2 class="post-title">
+            (转)Tips:取消UICollectionView的隐式动画
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            (转)Tips:取消UICollectionView的隐式动画
+
+  原文地址在串哥的博客 Tips:取消UICollectionView的隐式动画
+
+
+UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)
+
+下面几种方法都可以帮你去除这些...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 9, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">
         <h2 class="post-title">
             关于 App Store 审核的一些事
@@ -438,35 +465,6 @@ iOS 经过八年多的发展，已经涌现出诸多优秀的第三方库，但�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/04/10/%E8%84%9A%E6%9C%AC/">
-        <h2 class="post-title">
-            使用脚本做一些重复的事情
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            使用脚本做一些重复的事情
-使用的这个模板建立了这个博客以后，发现每篇文章前面都需要加入默认的文件头，每次都需要从其他的文件复制过来，就想着能不能使用脚本来完成。于是就边搜索边捣鼓出来了这样一个脚本，请勿见笑。
-
-#!bin/sh
-
-#进入当前目录
-basepath=$(cd `dirname $0`; pwd)
-
-#读取当前时间
-DATE=$(date +%Y-%m-%d)" "$(date...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on April 10, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -564,6 +562,8 @@ DATE=$(date +%Y-%m-%d)" "$(date...
                                 <a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
+                            
+                        
                             
                         
                             

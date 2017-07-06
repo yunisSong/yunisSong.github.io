@@ -299,10 +299,10 @@
 
 <p>简单来说就是：</p>
 <ol>
-  <li>使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中，</li>
-  <li>当对象 B 被释放时，会先调用 release 然后引用计数为0，</li>
-  <li>然后调用 dealloc ，</li>
-  <li>最后会调用一个名为<code class="highlighter-rouge">objc_clear_deallocating</code>的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除，</li>
+  <li>使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中；</li>
+  <li>当对象 B 被释放时，会先调用 release 然后引用计数为0；</li>
+  <li>然后调用 dealloc ；</li>
+  <li>接着会调用一个名为<code class="highlighter-rouge">objc_clear_deallocating</code>的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除；</li>
   <li>最后在引用计数表中将以 B 的地址为键值的记录删除。</li>
 </ol>
 
@@ -322,6 +322,13 @@
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="Xcode断点无效的处理方式">
+                        Next<br>
+                        <span>Xcode断点无效的处理方式</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -426,6 +433,8 @@
                 				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
+                            
+        				
                             
         				
                             
