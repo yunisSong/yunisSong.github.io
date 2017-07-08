@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（5）Structures - 三十一的博客 | Yunis Blog</title>
+    <title>输入框切换键盘卡顿的解决办法 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift05-Structures/">
+    <link rel="canonical" href="http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -183,15 +183,13 @@
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
                     </div>
-                    <h1>swift 学习（5）Structures</h1>
+                    <h1>输入框切换键盘卡顿的解决办法</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on July 8, 2017</span>
                 </div>
             </div>
         </div>
@@ -209,98 +207,108 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（5）Structures</p>
+				<h1 id="输入框切换键盘卡顿的解决办法">输入框切换键盘卡顿的解决办法</h1>
 
-<blockquote>
-  <p>Structures, or structs, are one of the named types in Swift that allow you to encapsulate related properties and behaviors. You can declare a new type, give it a name and then use it in your code.</p>
-</blockquote>
+<p>今天开发碰到一个问题：
+有两个输入框，一个输入手机号码、一个输入验证码。
+客户要求：手机号输入框输入满11位时，切换到验证码输入框。</p>
 
-<p><strong>如何声明</strong></p>
-<div class="highlighter-rouge"><pre class="highlight"><code>struct Location {
-  let x: Int
-  let y: Int 
-}
+<p>很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    //监听位数
+    if (field.text.length &gt;= 11) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //输入框取消响应
+            [field resignFirstResponder];
+            //验证码输入框 响应键盘
+            [self.codeField becomeFirstResponder];
+
+        });
+     }
 </code></pre>
 </div>
 
-<p><strong>实例化</strong></p>
+<p>很愉快的提交了代码，但是测试的小伙伴告诉我，键盘切换的时间有卡顿。？？？？一脸懵逼！！</p>
 
-<p><em>Swift会根据struct中定义的属性自动创建一个初始化器</em></p>
+<p>这也会卡？</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  let storeLocation = Location(x: 2, y: 4)
+<p>然后想到了是不是因为动画引起的问题？
+更改如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  //监听位数
+    if (field.text.length &gt;= 11) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView performWithoutAnimation:^{
+                //输入框取消响应
+                [field resignFirstResponder];
+                //验证码输入框 响应键盘
+                [self.codeField becomeFirstResponder];
+            }];
+        });
+     }
 </code></pre>
 </div>
 
-<p><strong>读取</strong></p>
+<p>还是不行，是在没有办法了，最后搜索到这样一个答案：
+<a href="https://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8?answertab=votes#tab-top">stackoverflow</a></p>
 
-<p>使用点语法读取属性值</p>
+<blockquote>
+  <p>A responder object only becomes the first responder if the current responder can resign first-responder status (canResignFirstResponder) and the new responder can become first responder.
+You may call this method to make a responder object such as a view the first responder. However, you should only call it on that view if it is part of a view hierarchy. If the view’s window property holds a UIWindow object, it has been installed in a view hierarchy; if it returns nil, the view is detached from any hierarchy.</p>
+</blockquote>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>storeLocation.X
+<div class="highlighter-rouge"><pre class="highlight"><code>[txtAddNew performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
 </code></pre>
 </div>
 
-<p><strong>可以包含方法</strong></p>
+<p>心想这样总可以了吧。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>struct DeliveryArea {
-    var range: Double
-    let center: Location
-    func contains(_ location: Location) -&gt; Bool {
-        let distanceFromCenter =
-            distance(from: (center.x, center.y),
-                     to: (location.x, location.y))
-        return distanceFromCenter &lt; range
-    }
-}
+<div class="highlighter-rouge"><pre class="highlight"><code>    [field resignFirstResponder];
+    [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
 
-
-
-let area = DeliveryArea(range: 4.5,
-                        center: Location(x: 5, y: 5))
-let customerLocation = Location(x: 2, y: 2)
-//判断customerLocation 是否在服务范围内
-area.contains(customerLocation)
 </code></pre>
 </div>
 
-<p><strong>Structures as values</strong></p>
+<p>。。。
+还是不行。。</p>
 
-<blockquote>
-  <p>The term value has an important meaning when it comes to structs in Swift, and that’s because structs create what are known as value types.
-<em><strong>A value type is a type whose instances are copied on assignment.</strong></em></p>
-</blockquote>
+<p>最后把    <code class="highlighter-rouge">[field resignFirstResponder];</code> 这样代码注释掉才可以。</p>
 
-<p>（谷歌翻译。。）
-当涉及到Swift中的结构体时，术语值具有重要的意义，这是因为结构体创建了所谓的value类型。</p>
+<p>最终版本：</p>
 
-<p>value 类型是其实例在分配时复制的类型。</p>
-
-<blockquote>
-  <p>This copy-on-assignment behavior means that when a is assigned to b, the value of a is copied into b. That’s why it’s important read = as “assign”, not “is equal
-to” (which is what == is for).</p>
-</blockquote>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var area1 = DeliveryArea(range: 2.5, center: Location(x: 2, y: 4))
-var area2 = area1
-print(area1.range) // 2.5
-print(area2.range) // 2.5
-area1.range = 4
-print(area1.range) // 4.0
-print(area2.range) // 2.5
+<div class="highlighter-rouge"><pre class="highlight"><code>    //监听位数
+    if (field.text.length &gt;= 11) {
+        //切换键盘响应
+        //解决切换键盘卡顿
+        [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+     }
 </code></pre>
 </div>
 
-<p><strong>Structs everywhere</strong></p>
+<p>猜测应该是键盘所在的 <code class="highlighter-rouge">window</code> 切换导致的这个问题。</p>
 
-<blockquote>
-  <p>That’s right! The Int type is also a struct. In fact, many of the standard Swift types are structs: Double, String, Bool, Array and Dictionary are all defined as structs. As you will learn in future chapters, the value semantics of structs provide many other advantages over their reference type counterparts that make them ideal for representing core Swift types.</p>
-</blockquote>
+<p>如果先取消第一个输入框的响应，再让第二个输入框响应， 这样的话会先把当前键盘所在的 <code class="highlighter-rouge">window</code> 销毁，然后创建新的 <code class="highlighter-rouge">window</code>，就会导致卡顿。</p>
 
-<p>到处都是Structs。Int ，Double，String，Bool，Array，Dictionary等许多swift的标准数据类型都是。</p>
+<p>如果不先取消第一个键盘的响应，就不会销毁 window 也不会创建新的 window ，就不会卡顿。有时间了写个 demo 验证下。</p>
 
-<p>Structs 是 value 类型，生成是值是copy的。(原谅英语渣)</p>
-<blockquote>
-  <p>• Structs are value types, which means their values are copied on assignment.</p>
-</blockquote>
+<p>好尴尬，在模拟器上测试。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 
+
+
+
+
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 
+</code></pre>
+</div>
+
+<p>窗口都没有变化。。。这让老夫如何是好！</p>
 
 
 
@@ -312,19 +320,12 @@ print(area2.range) // 2.5
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift04/" data-toggle="tooltip" data-placement="top" title="swift 学习（4）Closure">
+                        <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="Xcode断点无效的处理方式">
                         Previous<br>
-                        <span>swift 学习（4）Closure</span>
+                        <span>Xcode断点无效的处理方式</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/03/01/swift06-Properties/" data-toggle="tooltip" data-placement="top" title="swift 学习（6）Properties">
-                        Next<br>
-                        <span>swift 学习（6）Properties</span>
-                        </a>
-                    </li>
                     
                 </ul>
 

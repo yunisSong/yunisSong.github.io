@@ -5,9 +5,124 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 06 Jul 2017 12:21:07 +0800</pubDate>
-    <lastBuildDate>Thu, 06 Jul 2017 12:21:07 +0800</lastBuildDate>
+    <pubDate>Sat, 08 Jul 2017 17:47:56 +0800</pubDate>
+    <lastBuildDate>Sat, 08 Jul 2017 17:47:56 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>输入框切换键盘卡顿的解决办法</title>
+        <description>&lt;h1 id=&quot;输入框切换键盘卡顿的解决办法&quot;&gt;输入框切换键盘卡顿的解决办法&lt;/h1&gt;
+
+&lt;p&gt;今天开发碰到一个问题：
+有两个输入框，一个输入手机号码、一个输入验证码。
+客户要求：手机号输入框输入满11位时，切换到验证码输入框。&lt;/p&gt;
+
+&lt;p&gt;很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //监听位数
+    if (field.text.length &amp;gt;= 11) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //输入框取消响应
+            [field resignFirstResponder];
+            //验证码输入框 响应键盘
+            [self.codeField becomeFirstResponder];
+
+        });
+     }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;很愉快的提交了代码，但是测试的小伙伴告诉我，键盘切换的时间有卡顿。？？？？一脸懵逼！！&lt;/p&gt;
+
+&lt;p&gt;这也会卡？&lt;/p&gt;
+
+&lt;p&gt;然后想到了是不是因为动画引起的问题？
+更改如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  //监听位数
+    if (field.text.length &amp;gt;= 11) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView performWithoutAnimation:^{
+                //输入框取消响应
+                [field resignFirstResponder];
+                //验证码输入框 响应键盘
+                [self.codeField becomeFirstResponder];
+            }];
+        });
+     }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;还是不行，是在没有办法了，最后搜索到这样一个答案：
+&lt;a href=&quot;https://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8?answertab=votes#tab-top&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A responder object only becomes the first responder if the current responder can resign first-responder status (canResignFirstResponder) and the new responder can become first responder.
+You may call this method to make a responder object such as a view the first responder. However, you should only call it on that view if it is part of a view hierarchy. If the view’s window property holds a UIWindow object, it has been installed in a view hierarchy; if it returns nil, the view is detached from any hierarchy.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[txtAddNew performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;心想这样总可以了吧。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    [field resignFirstResponder];
+    [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;。。。
+还是不行。。&lt;/p&gt;
+
+&lt;p&gt;最后把    &lt;code class=&quot;highlighter-rouge&quot;&gt;[field resignFirstResponder];&lt;/code&gt; 这样代码注释掉才可以。&lt;/p&gt;
+
+&lt;p&gt;最终版本：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //监听位数
+    if (field.text.length &amp;gt;= 11) {
+        //切换键盘响应
+        //解决切换键盘卡顿
+        [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
+     }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;猜测应该是键盘所在的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt; 切换导致的这个问题。&lt;/p&gt;
+
+&lt;p&gt;如果先取消第一个输入框的响应，再让第二个输入框响应， 这样的话会先把当前键盘所在的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt; 销毁，然后创建新的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt;，就会导致卡顿。&lt;/p&gt;
+
+&lt;p&gt;如果不先取消第一个键盘的响应，就不会销毁 window 也不会创建新的 window ，就不会卡顿。有时间了写个 demo 验证下。&lt;/p&gt;
+
+&lt;p&gt;好尴尬，在模拟器上测试。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 
+
+
+
+
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;窗口都没有变化。。。这让老夫如何是好！&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 08 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
     
       <item>
         <title>Xcode断点无效的处理方式</title>
@@ -2388,327 +2503,6 @@ var result = addSomeNumber(100);//300
         <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</guid>
-        
-        <category>JavaScript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>JavaScript学习01</title>
-        <description>&lt;h1 id=&quot;javascript学习01&quot;&gt;JavaScript学习01&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;开始观看这系列文章 
-  &lt;a href=&quot;https://yq.aliyun.com/articles/30980&quot;&gt;从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;script-标签&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签&lt;/h3&gt;
-&lt;p&gt;HTML的脚本必须位于 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 之中。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;script&amp;gt;
-
-JS脚本
-
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;标签&quot;&gt;标签&lt;/h3&gt;
-&lt;p&gt;成对出现的&amp;lt;&amp;gt;（共2组）就是标签。
-如 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p&amp;gt;文本&amp;lt;/p&amp;gt;&lt;/code&gt; 就是一组标签。&lt;/p&gt;
-
-&lt;p&gt;标签可以加id，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p id=&quot;abc&quot;&amp;gt;文本&amp;lt;/p&amp;gt;&lt;/code&gt; ，id用于之后寻找其使用。&lt;/p&gt;
-
-&lt;p&gt;寻找id使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;getElementById(&quot;abc&quot;)&lt;/code&gt; 这样的办法。&lt;/p&gt;
-
-&lt;p&gt;然后在这样的命令后面加对应的东西，如innerHTML（文本替换），value（得到值）。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p id=&quot;abc&quot;&amp;gt;abc&amp;lt;/p&amp;gt;
-
-&amp;lt;button type=&quot;button&quot; onclick=&quot;run()&quot;&amp;gt;点击&amp;lt;/button&amp;gt;
-
-&amp;lt;script&amp;gt;
-
-function run()
-{
-document.getElementById(&quot;abc&quot;).innerHTML=&quot;ppp&quot;;
-
-}
-
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;像这样的代码，在执行时，用ppp文本替换abc文本。&lt;/p&gt;
-
-&lt;p&gt;第一行是输出文字abc，然后给他一个id（用来找她）。&lt;/p&gt;
-
-&lt;p&gt;第二行是输出一个按钮（button），按钮上面的文字是点击。&lt;/p&gt;
-
-&lt;p&gt;第三行到最后 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 是js脚本。这个脚本里面包含了一个函数（function）；&lt;/p&gt;
-
-&lt;p&gt;函数的效果是，在标签id为abc的地方（通过getElementById获得），用文本ppp替换之。&lt;/p&gt;
-
-&lt;h3 id=&quot;输出时间&quot;&gt;输出时间&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p id=&quot;time&quot;&amp;gt;&amp;lt;/p&amp;gt;
-
-&amp;lt;script&amp;gt;
-
-var nowtime=new Date(); //获得时间
-
-localtime=nowtime.toString(); //将时间转为字符串
-
-document.getElementById(&quot;time&quot;).innerHTML=localtime; //在id为time的地方输出时间，注意，time需要在这行之前才可以
-
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;关于时间的其他函数&quot;&gt;关于时间的其他函数：&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hour=nowtime.getHours(); //将小时赋给hour
-
-min=nowtime.getMinutes(); //分钟
-
-second=nowtime.getSeconds(); //秒
-
-day=nowtime.getDate(); //天
-
-mon=nowtime.getMonth(); //月
-
-year=nowtime.getFullYear(); //年
-
-datashow=year+&quot;年&quot;+mon+&quot;月&quot;+day+&quot;日&quot;+hour+&quot;时&quot;+min+&quot;分&quot;+second+&quot;秒&quot;;
-
-document.getElementById(&quot;time&quot;).innerHTML=datashow; //在id为time的地方输出时间，注意，time需要在这行之前才可以
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;导入一个js文件&quot;&gt;导入一个js文件&lt;/h3&gt;
-
-&lt;p&gt;使用&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script src=&quot;time.js&quot;&amp;gt;&lt;/code&gt; //读取time.js这个JavaScript文件内容&lt;/p&gt;
-
-&lt;p&gt;&amp;lt;/script&amp;gt;&lt;/p&gt;
-
-&lt;p&gt;然后可以将之前的关于time的js命令，放入time.js文件内（无需加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt;标签）即可。&lt;/p&gt;
-
-&lt;h3 id=&quot;事件处理程序&quot;&gt;事件处理程序&lt;/h3&gt;
-
-&lt;p&gt;在发生某种事件时，怎么处理。&lt;/p&gt;
-
-&lt;p&gt;先上代码：&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;01.png&quot; onmouseover=&quot;src='02.png'&quot; onmouseout=&quot;src='01.png'&quot;&amp;gt; &amp;lt;!-- 这行的意思是，插入一个图片，初始是01.png，鼠标移动上去后，是02.png，移动走又变回01.png了--&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;位置是在第一个标签之中，类型有（似乎对大小写并不敏感，即onMouseOver和onmouseover是一样的）&lt;/p&gt;
-
-&lt;p&gt;①按下时：onclick=”执行的语句”;&lt;/p&gt;
-
-&lt;p&gt;②鼠标移动到上面时：onMouseOver=”执行的语句”;&lt;/p&gt;
-
-&lt;p&gt;③鼠标离开：onMouseOut=”执行的语句”;&lt;/p&gt;
-
-&lt;p&gt;④点击后生效：onClick=”执行的语句”;（仅限鼠标左键）&lt;/p&gt;
-
-&lt;p&gt;⑤鼠标按下后生效：onMouseDown=”执行的语句”;（左右键都有用）&lt;/p&gt;
-
-&lt;p&gt;⑥增加条件判断（初始1#图片，第一次点击更换为2#图片，再次点击更换为1#图片，然后交替）&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot;onclick=&quot;png01()&quot;&amp;gt;
-
-&amp;lt;script&amp;gt;
-
-i=0;//需要在外面声明才行
-
-function png01()
-
-{
-
-if(i==0){i=1;document.getElementById(&quot;01png&quot;).src=&quot;02.png&quot;;}//判断更改图片
-
-else{i=0;document.getElementById(&quot;01png&quot;).src=&quot;01.png&quot;;}//判断更改图片
-
-}
-
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;⑦鼠标在上面是一个鼠标，鼠标离开又是另外一个图片&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot; onmouseover=&quot;src='02.png'&quot; onmouseout=&quot;src='01.png'&quot;&amp;gt;
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;⑧判断路径中，文件名是否有某个关键词；&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function mouseover()
-
-{
-
-png=document.getElementById(&quot;01png&quot;);
-
-if(png.src.match(&quot;01.png&quot;)) //如果路径中有关键词01，
-
-{
-
-png.src=&quot;02.png&quot;;
-
-}
-
-else
-
-{
-
-png.src=&quot;01.png&quot;;
-
-}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;注释&quot;&gt;注释&lt;/h3&gt;
-&lt;p&gt;html注释的语法是：&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &amp;lt;!--这里面写注释--&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;js注释的语法：&lt;/p&gt;
-
-&lt;p&gt;js标签之内（即 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;script&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/script&amp;gt;&lt;/code&gt; 之间的部分），可以像c++那样用双斜线。&lt;/p&gt;
-
-&lt;h3 id=&quot;图片&quot;&gt;图片&lt;/h3&gt;
-
-&lt;p&gt;①标签 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img src=”图片链接”&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;②限制高度和宽度（会导致图片变形）：width=””和height=””;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot; width=&quot;100&quot; heigth=&quot;100&quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;③在文字之中插入图片：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p&amp;gt;右边是一个美女图片&amp;lt;img id=&quot;01png&quot; src=&quot;http://s1.sinaimg.cn/middle/60de1da3n796eef141460&amp;amp;690&quot;  width=&quot;200&quot; height=&quot;200&quot; onmouseover=&quot;mouseover()&quot; onmouseout=&quot;mouseover()&quot;&amp;gt; 左边是美女图片&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;超链接&quot;&gt;超链接&lt;/h3&gt;
-
-&lt;p&gt;在使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a href=”链接地址”&amp;gt;&amp;lt;/a&amp;gt;&lt;/code&gt; 即可，将触发链接的内容加入到 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 中间如：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;a href=&quot;http://baidu.com&quot; target=&quot;_blank&quot;&amp;gt; &amp;lt;!--加入target=&quot;_blank&quot;表示是新窗口，不加则是在之前的窗口--&amp;gt;
-
-    &amp;lt;img id=&quot;01png&quot; src=&quot;01.png&quot;  width=&quot;100&quot; height=&quot;100&quot; onmouseover=&quot;mouseover()&quot; onmouseout=&quot;mouseover()&quot;&amp;gt;
-
-&amp;lt;/a&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;①如果是链接到本地（或者网站某个地址），则使用相对路径；&lt;/p&gt;
-
-&lt;p&gt;②链接到同一个页面的不同位置，参考链接：http://www.w3school.com.cn/tiy/t.asp?f=html_link_locations&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#C4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;查看 Chapter 4。&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;C4&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chapter 4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 5&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 6&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 7&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 8&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 9&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 10&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 11&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 12&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 13&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 14&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 15&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 16&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;h2&amp;gt;&lt;/span&gt;Chapter 17&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h2&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This chapter explains ba bla bla&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;③如果图片不能存在的话，用文本替代：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;不存在的图片.png&quot; alt=&quot;这里是不存在的图片&quot;&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;使用div来布局&quot;&gt;使用div来布局&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt; 布局的好处是，提前把网站页面划分为若干个区域，然后设置好每个区域的大小。&lt;/p&gt;
-
-&lt;p&gt;如图片，先将页面分为3个区域。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://img.blog.csdn.net/20160331173243153&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;然后在每个区域中再细分。
-①一般在div中使用class属性：&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=”某个样式”&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;然后这个div则使用class的这个样式了。&lt;/p&gt;
-
-&lt;p&gt;②一个div实际上是一行（也就是说不同div之间是换行），但貌似可以通过class来让其位于不同的位置。&lt;/p&gt;
-
-&lt;p&gt;更深的话，是跟DOM有关的。&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/</guid>
         
         <category>JavaScript</category>
         
