@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>三十一的博客 | Yunis Blog</title>
+    <title>基与CocosPods和SVN的一次组件化实践 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/page4/">
+    <link rel="canonical" href="http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,407 +153,258 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>三十一</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">潜心修行。。。</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>基与CocosPods和SVN的一次组件化实践</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on July 12, 2017</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/2017/03/01/swift09-Enumerations/">
-        <h2 class="post-title">
-            swift 学习（9）Enumerations
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（9）Enumerations
-[toc]
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-  An enumeration is a list of related values that define a common type and let you work with values in a type-safe way.
-枚举是定义一个公共类型的相关值的列表，可让您以类型安全的方式使用值。
+				<h1 id="基与cocospods和svn的一次组件化实践">基与CocosPods和SVN的一次组件化实践</h1>
+
+<blockquote>
+  <p>入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。</p>
+</blockquote>
+
+<p>记录下步骤：</p>
+
+<h3 id="1安装-cocoapods-repo-svn-插件">1,安装 <code class="highlighter-rouge">cocoapods-repo-svn</code> 插件</h3>
+<p>没什么好多的，就是一行命令。
+<code class="highlighter-rouge">gem install cocoapods-repo-svn</code></p>
+
+<h3 id="2提取共有代码创建-podspec-文件">2，提取共有代码，创建 <code class="highlighter-rouge">podspec</code> 文件</h3>
+<p>提取两个工程中的共有代码，然后进入目录，创建<code class="highlighter-rouge">podspec</code> 文件
+<code class="highlighter-rouge">pod spec create CommonWebTools</code>
+<code class="highlighter-rouge">CommonWebTools</code> 是你提取的私有库的名称。</p>
+
+<h3 id="3编辑podspec文件内容">3，编辑<code class="highlighter-rouge">podspec</code>文件内容</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+Pod::Spec.new do |s|
+
+    s.name         = "CommonWebTools"
+
+    s.version      = "0.0.1"
+
+    s.summary      = "提取公用代码."
+
+    s.description  = "Good"
+
+    s.homepage     = "http://www.baidu.com"
+
+    s.license      = "MIT"
+
+    s.author             = { "iThinkerYZ" =&gt; "690423479@qq.com" }
+
+  s.source       = { :svn =&gt; "http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
+
+ s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}"
 
 
-声明枚举
+  end
 
-en...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
+</code></pre>
 </div>
-<hr>
+<p>多个s.source_files文件使用 ， 分割</p>
 
-<div class="post-preview">
-    <a href="/2017/03/01/swift08-Class/">
-        <h2 class="post-title">
-            swift 学习（8）Class
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（8）Class
+<h3 id="4使用">4，使用：</h3>
 
-Reference types
-Struts 是值类型  class 是引用类型
-类不会提供自动自动初始化方法，需要自己实现。
-类里面的存储类型必须在初始化方法结束之前完成赋值。
-
-  In Swift, a structure is an immutable value. A class, on the other hand, is a mutable...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>target 'TestComponentDemo' do
+pod 'CommonWebTools', :svn =&gt; "http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+end
+</code></pre>
 </div>
-<hr>
+<h3 id="5如何更新代码">5，如何更新代码</h3>
 
-<div class="post-preview">
-    <a href="/2017/03/01/swift07-Methods/">
-        <h2 class="post-title">
-            swift 学习（7）Methods
-        </h2>
+<p>提交代码后，
+使用 <code class="highlighter-rouge">pod update --verbose --no-repo-update</code>
+即可生效。</p>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" data-toggle="tooltip" data-placement="top" title="输入框切换键盘卡顿的解决办法">
+                        Previous<br>
+                        <span>输入框切换键盘卡顿的解决办法</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
         
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
-        <div class="post-content-preview">
-            #swift 学习（7）Methods
 
-  Methods, as you’ve already seen, are merely functions that reside inside a structure.
-
-
-Comparing methods to computed properties
-使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
-
-
-mutating method...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift06-Properties/">
-        <h2 class="post-title">
-            swift 学习（6）Properties
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（6）Properties
-
-
-  [x] 实在无法用自己的语言表示出来，以后就当是读书摘录吧。
-
-
-
-  • Properties are variables and constants that are part of a named type.
-• Stored properties allocate memory to store a value.
-• Comput...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift05-Structures/">
-        <h2 class="post-title">
-            swift 学习（5）Structures
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（5）Structures
-
-
-  Structures, or structs, are one of the named types in Swift that allow you to encapsulate related properties and behaviors. You can declare a new type, give it a name and...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift04/">
-        <h2 class="post-title">
-            swift 学习（4）Closure
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（4）
-
-1，闭包 （Closure）
-
-
-  Closures are so named because they have the ability to “close over” the variables and constants within the closure’s own scope. This simply means that a closure can...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift03/">
-        <h2 class="post-title">
-            swift 学习（3）基础
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            swift 学习（3）
-
-1，Optionals
-
-
-  Swift introduces a whole new type, optional, that handles the possibility a value could be nil. If you’re handling a non-optional type, then you’re guaranteed to have a...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift02/">
-        <h2 class="post-title">
-            swift 3 学习 （2）基础
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            swift 3 学习 （2）
-1，当多个不同类型的数据进行操作时，需要转化为形同的数据类型。
-
-let num1 = 1
-let num2 = 2.3
-var count  = num1 + num2
-
-error :
-Binary operator '+' cannot be applied to operands of type 'Int' and 'Double'
-
-//正确做法
-va...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page3">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
-
-
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="18">
+                				<a href="/tags/#iOS" title="iOS" rel="18">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Swift" title="Swift" rel="12">
+                				<a href="/tags/#Swift" title="Swift" rel="12">
                                     Swift
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Shell" title="Shell" rel="2">
+                				<a href="/tags/#Shell" title="Shell" rel="2">
                                     Shell
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#转载" title="转载" rel="2">
+                				<a href="/tags/#转载" title="转载" rel="2">
                                     转载
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#GCD" title="GCD" rel="2">
+                				<a href="/tags/#GCD" title="GCD" rel="2">
                                     GCD
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#JavaScript" title="JavaScript" rel="5">
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/gg.jpeg" />
-                        
-                        
-                            <p>大龄码农的进修之路。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/iOSSurf">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/yunisSong">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
-                <h5>大神博客</h5>
+                <h5>FRIENDS</h5>
                 <ul class="list-inline">
                     
                         <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
@@ -572,10 +423,52 @@ va...
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
     <!-- Footer -->
@@ -732,6 +625,50 @@ va...
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

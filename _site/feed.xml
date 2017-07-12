@@ -5,9 +5,79 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 08 Jul 2017 17:47:56 +0800</pubDate>
-    <lastBuildDate>Sat, 08 Jul 2017 17:47:56 +0800</lastBuildDate>
+    <pubDate>Wed, 12 Jul 2017 21:38:35 +0800</pubDate>
+    <lastBuildDate>Wed, 12 Jul 2017 21:38:35 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>基与CocosPods和SVN的一次组件化实践</title>
+        <description>&lt;h1 id=&quot;基与cocospods和svn的一次组件化实践&quot;&gt;基与CocosPods和SVN的一次组件化实践&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;记录下步骤：&lt;/p&gt;
+
+&lt;h3 id=&quot;1安装-cocoapods-repo-svn-插件&quot;&gt;1,安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;cocoapods-repo-svn&lt;/code&gt; 插件&lt;/h3&gt;
+&lt;p&gt;没什么好多的，就是一行命令。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install cocoapods-repo-svn&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2提取共有代码创建-podspec-文件&quot;&gt;2，提取共有代码，创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件&lt;/h3&gt;
+&lt;p&gt;提取两个工程中的共有代码，然后进入目录，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pod spec create CommonWebTools&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;CommonWebTools&lt;/code&gt; 是你提取的私有库的名称。&lt;/p&gt;
+
+&lt;h3 id=&quot;3编辑podspec文件内容&quot;&gt;3，编辑&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt;文件内容&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+Pod::Spec.new do |s|
+
+    s.name         = &quot;CommonWebTools&quot;
+
+    s.version      = &quot;0.0.1&quot;
+
+    s.summary      = &quot;提取公用代码.&quot;
+
+    s.description  = &quot;Good&quot;
+
+    s.homepage     = &quot;http://www.baidu.com&quot;
+
+    s.license      = &quot;MIT&quot;
+
+    s.author             = { &quot;iThinkerYZ&quot; =&amp;gt; &quot;690423479@qq.com&quot; }
+
+  s.source       = { :svn =&amp;gt; &quot;http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot; }
+
+ s.source_files = &quot;CommonWebTools&quot;, &quot;CommonWebTools/*.{h,m}&quot;
+
+
+  end
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;多个s.source_files文件使用 ， 分割&lt;/p&gt;
+
+&lt;h3 id=&quot;4使用&quot;&gt;4，使用：&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;target 'TestComponentDemo' do
+pod 'CommonWebTools', :svn =&amp;gt; &quot;http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot;
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;5如何更新代码&quot;&gt;5，如何更新代码&lt;/h3&gt;
+
+&lt;p&gt;提交代码后，
+使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;pod update --verbose --no-repo-update&lt;/code&gt;
+即可生效。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 12 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
+        
+        
+      </item>
     
       <item>
         <title>输入框切换键盘卡顿的解决办法</title>
@@ -2209,300 +2279,6 @@ t();
         <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</guid>
-        
-        <category>JavaScript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Javascrpt高级程序设计读书笔记01</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记01&quot;&gt;Javascrpt高级程序设计读书笔记01&lt;/h1&gt;
-
-&lt;h3 id=&quot;script-元素&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素&lt;/h3&gt;
-&lt;p&gt;向 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 页面加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的主要方法，就是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 。
-包括6个属性：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;async&lt;/code&gt; 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;charset&lt;/code&gt; 可选。 表示通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个属性很少有人用。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;defer&lt;/code&gt; 可选。表示脚本可以延迟到文档完全被解析和显示之后再执行。只对外部脚本有效。IE7 级更早的版本对嵌入脚本也支持这个属性。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;language&lt;/code&gt; 已废弃。用来表示编写代码使用的脚本语言。（如JavaScript、VBScript）。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 可选。表示包含要执行代码的外部文件。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; 可选。可以看成是 language 的替代属性。 表示编写代码使用脚本语言的类型（也称为MIME类型）。虽然 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/javascript&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/ecmascript&lt;/code&gt; 都已经不被推荐使用,但人们一直以来使用个还是 &lt;code class=&quot;highlighter-rouge&quot;&gt;text/javascript&lt;/code&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 的方式有两种在：直接在页面中嵌入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码和包含外部 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件。&lt;/p&gt;
-
-&lt;p&gt;包含在 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 内部的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的代码会被从上到下依次解释。浏览器会先解析完不使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;defer&lt;/code&gt; 的属性的 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素中的代码，然后再解析后面的内容，所以一般应该把 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素放在页面最后，即主要内容后面，&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;标签前面。
-带有 &lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; 属性的 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签会忽略 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 标签之间包含的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码。&lt;/p&gt;
-
-&lt;h4 id=&quot;应当尽量使用外部文件&quot;&gt;应当尽量使用外部文件&lt;/h4&gt;
-&lt;p&gt;虽然直接在 &lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 元素 中直接嵌入 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码没什么问题，但是一般认为最好的做法还是尽可能的使用外部文件来包含 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 代码，好处包括：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;可维护性 避免 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 页面过于臃肿，同时把 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件放在一个文件夹下面，利于维护。&lt;/li&gt;
-  &lt;li&gt;可缓存 浏览器能够根据具体的设置 缓存链接的所有外部 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 文件。也就是如果两个页面使用同一个文件，就无需再次下载。加快了页面的加载速度。&lt;/li&gt;
-  &lt;li&gt;适应未来 通过外部文件来包含 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 无需使用 XHTML 或注释hack。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;noscript-元素&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;noscript&lt;/code&gt; 元素&lt;/h3&gt;
-&lt;p&gt;兼容早期不支持 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的浏览器，这个元素可以包含能够出现在 &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; 的任何 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 元素 （&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; 除外），包含在 &lt;code class=&quot;highlighter-rouge&quot;&gt;noscript&lt;/code&gt; 元素的内容会在下面两张情况显示：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;浏览器不支持脚本；&lt;/li&gt;
-  &lt;li&gt;浏览器支持脚本，但是脚本被禁止。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;基本概念&quot;&gt;基本概念&lt;/h3&gt;
-&lt;h4 id=&quot;语法&quot;&gt;语法&lt;/h4&gt;
-&lt;h5 id=&quot;区分大小写&quot;&gt;区分大小写&lt;/h5&gt;
-&lt;p&gt;变量、函数名、操作符、语言中的一切，都区分大小写。&lt;/p&gt;
-&lt;h5 id=&quot;标识符&quot;&gt;标识符&lt;/h5&gt;
-&lt;p&gt;标识符指的是变量、函数、属性的名字，或者函数的参数。有以下规则：&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;第一个字符必须是一个字母、下划线（_）或者一个美元符号（$）；&lt;/li&gt;
-  &lt;li&gt;其他字符可以是字母、下划线、美元符号或者数字；&lt;/li&gt;
-  &lt;li&gt;惯例是采用驼峰命名法。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&quot;注释&quot;&gt;注释&lt;/h5&gt;
-&lt;p&gt;// 单行注释
-/* */ 多行注释&lt;/p&gt;
-
-&lt;h5 id=&quot;严格模式&quot;&gt;严格模式&lt;/h5&gt;
-&lt;p&gt;目前来说就是对一些不确定的行为进行处理、对某些不安全的操作抛出错误。 还不是很理解。启用的话 需要在函数体前面加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;use strict&quot;&lt;/code&gt;.&lt;/p&gt;
-&lt;h5 id=&quot;语句&quot;&gt;语句&lt;/h5&gt;
-&lt;p&gt;语句已一个分号结尾，如果没有分号，由编译器决定什么时间结尾。&lt;/p&gt;
-
-&lt;h5 id=&quot;变量&quot;&gt;变量&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的变量是松散类型，就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是一个用于保存值的占位符。未初始化的变量，会保存一个特殊值 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;。变量在初始化后，可以改变变量的类型，虽然并不推荐，但是这样做是可以的。&lt;/p&gt;
-
-&lt;h4 id=&quot;数据类型&quot;&gt;数据类型&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中包括5种简单的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 本质是有一组无序的键值对组成的。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。&lt;/p&gt;
-
-&lt;h5 id=&quot;typeof-操作符&quot;&gt;typeof 操作符&lt;/h5&gt;
-&lt;p&gt;typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
-它返回值是一个字符串，该字符串说明运算数的类型。&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;对于数字类型的操作数而言， typeof 返回的值是 number。&lt;/li&gt;
-  &lt;li&gt;对于字符串类型， typeof 返回的值是 string。&lt;/li&gt;
-  &lt;li&gt;对于布尔类型， typeof 返回的值是 boolean 。&lt;/li&gt;
-  &lt;li&gt;对于对象、数组、null 返回的值是 object 。&lt;/li&gt;
-  &lt;li&gt;对于函数类型，返回的值是 function。&lt;/li&gt;
-  &lt;li&gt;如果运算数是没有定义的（比如说不存在的变量、函数或者undefined），将返回undefined。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h5 id=&quot;undefined-类型&quot;&gt;Undefined 类型&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt; 类型只有一个值，即特殊的 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;， 一个没有被赋值的变量会有个默认值 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h5 id=&quot;null-类型&quot;&gt;Null 类型&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt; 是第二个只有一个值的数据类型，这个特殊的值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt;。从逻辑角度来看， &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt; 值表示一个空对象的指针，而这也正是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 操作符检查 &lt;code class=&quot;highlighter-rouge&quot;&gt;null&lt;/code&gt; 值时会返回 &lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 的原因。
-如果一个变量准备保存对象，那么最好将该变量初始化为 null 而不是其他值。这样一来只需要检查 null 值就可以判断变量是否已经保存了一个对象的引用。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (car != null){
-    //   car         
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;undefined 值是派生自 null。因此比较 null 和 undefined 是返回值是 true。&lt;/p&gt;
-&lt;h5 id=&quot;boolean-类型&quot;&gt;Boolean 类型&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt; 类型 只有两个字面值： &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h5 id=&quot;number-类型&quot;&gt;Number 类型&lt;/h5&gt;
-&lt;h6 id=&quot;浮点数值&quot;&gt;浮点数值&lt;/h6&gt;
-&lt;p&gt;浮点数值，就是数值中必须包含一个小数点，且小数点后面必须至少有以为数字。如果浮点数本身表示是一个整数（如1.0或者1.），会被转换为整数（1）。
-对于那些极大或者极小的数，可以使用科学计数法表示：&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;3.125e7 表示31250000  计算方法为：3.125 * 10^7&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h6 id=&quot;数值范围&quot;&gt;数值范围&lt;/h6&gt;
-&lt;p&gt;Number.MIN_VALUE 表示最小数，一般为 5e-324，Number.MAX_VALUE 表示最大数,一般为1.7976931348623157e+308。如果超出这个范围，会被转换为 &lt;code class=&quot;highlighter-rouge&quot;&gt;Infinity&lt;/code&gt;，将无法再参与计算。判断一个数值是个超出范围，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;isFinite()&lt;/code&gt; 函数。&lt;/p&gt;
-
-&lt;h6 id=&quot;nan&quot;&gt;NaN&lt;/h6&gt;
-
-&lt;p&gt;NaN,非数值的一个特殊的数值。这个数值用来表示本来要返回数值的操作数未返回数值的情况（这样做的好处是不会抛出错误）。
-NaN 本身有两个特点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;任何涉及 NaN 的操作，都会返回 NaN，&lt;/li&gt;
-  &lt;li&gt;NaN 与任何值都不等，包括 NaN本身。判断是否是 NaN 需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;isNaN()&lt;/code&gt; 函数。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h6 id=&quot;数值转换&quot;&gt;数值转换&lt;/h6&gt;
-
-&lt;p&gt;有3个函数可以把非数值转换为数值：&lt;code class=&quot;highlighter-rouge&quot;&gt;Number() parseInt()  parseFloat()&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Number()&lt;/code&gt; 转换有如下规则：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;如果是 Boolean 值，true 和 false 分别转换为 1 和 0；&lt;/li&gt;
-  &lt;li&gt;如果是数字值，只是简单的传入传出；&lt;/li&gt;
-  &lt;li&gt;如果是 null，返回 0；&lt;/li&gt;
-  &lt;li&gt;如果是 undefined ，返回 NaN；&lt;/li&gt;
-  &lt;li&gt;如果是字符串，有以下规则：
-    &lt;ol&gt;
-      &lt;li&gt;如果字符串只包含数字，转换为十进制的数值。（”1” -&amp;gt; 1,”011”-&amp;gt; 11）&lt;/li&gt;
-      &lt;li&gt;如果字符串中包含有效的浮点格式，转换为对应的浮点数值。&lt;/li&gt;
-      &lt;li&gt;如果对象包含有效的十六进制格式，转换为相同大小的十进制整数值。(“1.1” -&amp;gt; 1.1)&lt;/li&gt;
-      &lt;li&gt;如果字符串是空的（不包含任何字符），转为 0；(“”-&amp;gt;0)&lt;/li&gt;
-      &lt;li&gt;如果字符串中包含上述格式之外的字符，转换为 NaN。&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;如果是对象，调用对象的 valueOf()，然后依据前面的规则转换返回值。如果转换的结果是NaN，调用对象的 toString()方法，然后在依次调用前面的规则转换返回的字符串值。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;parseInt()&lt;/code&gt; 函数：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;忽略字符串前面的空格，直到找到第一非空格的字符。&lt;/li&gt;
-  &lt;li&gt;如果第一个字符不是数字或者负号，返回NaN；&lt;/li&gt;
-  &lt;li&gt;空字符串返回NaN&lt;/li&gt;
-  &lt;li&gt;如果第一个字符就是数字，继续解析下面的字符，直到完全解析完或者遇到了非数字字符。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;例子：&lt;/p&gt;
-
-&lt;p&gt;``` parseInt(“1234blue”); //1234
-parseInt(“”); //NaN
-parseInt(“0xA”); //10 (16进制)
-parseInt(22.5); //22
-parseInt(“070”) //56(8进制)
-parseInt(“70”); //70
-parseInt(“0xf”); //15(16进制)&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
-`parseFloat()` 函数：
-
-
-```parseFloat(&quot;1234blue&quot;); //1234
-parseFloat(&quot;0xA&quot;); //0
-parseFloat(&quot;22.5&quot;); //22.5
-parseFloat(&quot;22.34.5&quot;); //22.34
-parseFloat(&quot;0908.5&quot;); 908.5
-parseFloat(&quot;3.125e7&quot;); //31250000
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;string-类型&quot;&gt;String 类型&lt;/h5&gt;
-
-&lt;p&gt;可以使用单引号和双引号来表示字符串，”hello” 和 ‘hello’都是正确的，但是不能使用一个单引号和一个双引号。&lt;/p&gt;
-
-&lt;h6 id=&quot;字符字面量&quot;&gt;字符字面量&lt;/h6&gt;
-&lt;p&gt;String 数据类型包含一些特殊的字符字面量，也就转义序列，用于表示非打印字符，或者具有其他用途的字符。&lt;/p&gt;
-
-&lt;p&gt;```\n 换行
-\t 制表
-\b 空格
-\r 回车
-\f 换页 
-\ 斜杠
-' 单引号
-&quot; 双引号
-\xnn 16进制 n 为 （0 -F）例： \x41 表示为 A
-\unnn 以16进制代码 nnnn 表示的 Unicode 字符，其中n 为 0 - F ，例如\u03a3 表示希腊字符Σ。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;###### 字符串的特点
-字符串的值类型，是不可变的。要改变某个变量保存的值，必须先销毁原来的字符串，然后创建新的字符串填充给变量。
-###### 转换为字符串
-要把一个值转换为字符串有两种方法：
-
-* 第一种是几乎每个值都有的 `toString()` 方法。
-* 在不知道要转换的值是不是 `null` 或 `undefined` 的情况下，还可以使用 `String()` ，这个函数可以将任何类型转换为字符串。`String()` 函数遵循以下规则：
-    1. 如果值有 `toString()` 方法，使用 `toString()` 方法并返回响应结果；
-    2. 如果值是 `null` ，则返回 &quot;null&quot;;
-    3. 如果值是 `undefined` ，则返回 &quot;undefined&quot;
-
-
-
-例子：
-
-```JavaScript
-var age = 11;
-var ageAsString = age.toString(); //    &quot;11&quot; var found = true;
-var foundAsString = found.toString(); //    &quot;true&quot;
-
-
-var num = 10;
-alert(num.toString());// &quot;10&quot;
-alert(num.toString(2));// &quot;1010&quot;
-alert(num.toString(8));// &quot;12&quot;
-alert(num.toString(10));// &quot;10&quot;
-alert(num.toString(16));// &quot;a&quot;
-
-
-var value1 = 10;
-var value2 = true;
-var value3 = null;
-var value4;
-alert(String(value1));// &quot;10&quot;
-alert(String(value2));// &quot;true&quot;
-alert(String(value3));// &quot;null&quot;
-alert(String(value4));// &quot;undefined&quot;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;object-类型&quot;&gt;Object 类型&lt;/h5&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ECMAScript&lt;/code&gt; 中对象其实就是一组数据和功能的集合。对象可以通过执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 操作符后跟要创建的对象类型名称来创建。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 的每一个实例都有如下方法。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 保存着用于创建当前对象的函数&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hasOwnProperty(propertyName)&lt;/code&gt; 用于检测 &lt;code class=&quot;highlighter-rouge&quot;&gt;propertyName&lt;/code&gt; 是否在当前实例的属性中。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;isPrototypeOf(object)&lt;/code&gt; 用于检测传入的对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;object&lt;/code&gt; 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;propertyIsEnumerable(propertyName)&lt;/code&gt; 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toLocaleString()&lt;/code&gt; 返回对象的字符串表示，该字符串与执行环境的地区对应。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toString()&lt;/code&gt; 返回对象的字符串表示&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;valueOf()&lt;/code&gt; 返回对象的字符串、数值、布尔值表示 。通常与 &lt;code class=&quot;highlighter-rouge&quot;&gt;toString()&lt;/code&gt; 方法的返回值一致。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;函数&quot;&gt;函数&lt;/h4&gt;
-&lt;h5 id=&quot;理解参数&quot;&gt;理解参数&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中函数的参数与其他大多数语言不同，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 函数不介意传递的参数有多少个，也不在乎传递过来的是什么类型。出现这样的原因是，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中参数在内部通过数组来表示的。函数接收到的始终是一个数组，而不关心数组的个数、以及数组里面的数据类型。在函数体内部，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 对象来访问参数数组。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function howManyArgs() {
-    alert(arguments.length);
-}
-howManyArgs(&quot;string&quot;, 45);  //2
-howManyArgs();              //0
-howManyArgs(12);            //1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h5 id=&quot;没有重载&quot;&gt;没有重载&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 没有传统意义的那样实现重载。
-如果在 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 定义两个名字完全相同的函数，则改名字只属于后定义的函数。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addSomeNumber(num){
-    return num + 100;
-}
-function addSomeNumber(num) {
-    return num + 200;
-}
-var result = addSomeNumber(100);//300
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;小结&quot;&gt;小结&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中基本的数据类型包括 &lt;code class=&quot;highlighter-rouge&quot;&gt;Undefined&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Null&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中没有区分 整数和浮点数，Number 用于表示所有数值。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的复杂数据类型 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 类型，是这门语言中所有对象的基础类型。&lt;/li&gt;
-  &lt;li&gt;严格模式为这门语言容易出错的地方加了限制。&lt;/li&gt;
-  &lt;li&gt;无需指定函数的返回值，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的函数可以在任何时间返回任何值。实际上未指定返回值的函数返回的是一个特殊的 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt; 值。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 也没有函数签名的概念，因为其函数参数是一个包含零个过多个值的数组形式传递的。&lt;/li&gt;
-  &lt;li&gt;可以向 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的函数传递任意数量的参数，可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 对象来访问参数。&lt;/li&gt;
-  &lt;li&gt;由于不存在函数签名的特性，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 函数不能重载。&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Wed, 10 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/</guid>
         
         <category>JavaScript</category>
         
