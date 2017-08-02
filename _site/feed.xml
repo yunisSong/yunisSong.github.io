@@ -5,8 +5,8 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 02 Aug 2017 10:21:34 +0800</pubDate>
-    <lastBuildDate>Wed, 02 Aug 2017 10:21:34 +0800</lastBuildDate>
+    <pubDate>Wed, 02 Aug 2017 15:40:40 +0800</pubDate>
+    <lastBuildDate>Wed, 02 Aug 2017 15:40:40 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
@@ -49,7 +49,15 @@
 
 &lt;p&gt;&lt;img src=&quot;/img/in-post/iOS_CoreBluetooth.png&quot; alt=&quot;思维导图&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;tttt&lt;/p&gt;
+&lt;p&gt;大神写的文章，写的很详细，最后提供了一个蓝牙库，封装的很简便。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/07/17/ios-BLE-1.html&quot;&gt;iOS蓝牙开发（一）蓝牙相关基础知识&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/08/14/ios-BLE-2.html&quot;&gt;ios蓝牙开发（二）ios连接外设的代码实现&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/09/07/ios-BLE-3.html&quot;&gt;ios蓝牙开发（三）app作为外设被连接的实现&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/09/11/ios-BLE-4.html&quot;&gt;ios蓝牙开发（四）BabyBluetooth蓝牙库介绍&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 01 Aug 2017 00:00:00 +0800</pubDate>
