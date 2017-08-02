@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（4）Closure - 三十一的博客 | Yunis Blog</title>
+    <title>三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift04/">
+    <link rel="canonical" href="http://localhost:4000/page5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,354 +153,222 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
-
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
-    }
-
-    
-    header.intro-header .header-mask{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: rgba(0,0,0, 0.3);
-    }
-    
-</style>
-<header class="intro-header" >
-    <div class="header-mask"></div>
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
-                    </div>
-                    <h1>swift 学习（4）Closure</h1>
-                    
-                    
-                    <h2 class="subheading">在不断填坑中前进。。</h2>
-                    
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>三十一</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">潜心修行。。。</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-    <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-				<p>#swift 学习（4）</p>
-
-<h6 id="1闭包-closure">1，闭包 （Closure）</h6>
-
-<blockquote>
-  <p>Closures are so named because they have the ability to “close over” the variables and constants within the closure’s own scope. This simply means that a closure can access, store and manipulate the value of any variable or constant from the surrounding context. Variables and constants within the body of a closure are said to have been captured by the closure.</p>
-</blockquote>
-
-<p>闭包可以理解为是一个没有方法名的方法。形状类似于：</p>
-
-<blockquote>
-  <p>(parameterList) -&gt; returnType</p>
-</blockquote>
-
-<blockquote>
-  <p>(参数列表) -&gt; 返回值类型</p>
-</blockquote>
-
-<p><strong>如何创建</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var multiplyClosure: (Int, Int) -&gt; Int
-
-multiplyClosure = { (a: Int, b: Int) -&gt; Int in
-    return a * b
-}
-
-multiplyClosure = { (a, b) in
-    a*b
-}
-
-multiplyClosure = {
-    $0 * $1
-}
-let result = multiplyClosure(3, 2)
-print(result)
-
-</code></pre>
-</div>
-
-<p><strong>尾随闭包</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>func operateOnNumbers(_ a: Int, _ b: Int,
-                      operation: (Int, Int) -&gt; Int) -&gt; Int {
-    let result = operation(a, b)
-    print(result)
-    return result
-}
-//正常调用
-operateOnNumbers(2, 21, operation: {
-    (a:Int,b:Int) -&gt;Int in a * b
-})
-//正常调用
-operateOnNumbers(2, 21, operation: multiplyClosure)
-
-//尾随闭包 带参数实现
-operateOnNumbers(2, 21){ (a:Int,b:Int) -&gt; Int in
-    a * b
-}
-//尾随闭包
-operateOnNumbers(2, 21){
-    $0 * $1
-}
-</code></pre>
-</div>
-
-<p><strong>使用闭包进行自定义排序</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-let names = ["ZZZZZZ", "BB", "A", "CCCcccccccC", "EEEEE"]
-//基本用法
-names.sorted()
-
-//自定义排序算法
-names.sorted {
-    $0.characters.count &gt; $1.characters.count
-}
-</code></pre>
-</div>
-
-<p>sorted 函数</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code> public func sorted(by areInIncreasingOrder: (Element, Element) -&gt; Bool) -&gt; [Element]
-</code></pre>
-</div>
-
-<p><strong>其中(Element, Element) -&gt; Bool 闭包</strong></p>
-
-<p>swift中大量的使用了这种闭包的语法，可以使开发人员方便的自定义方法。</p>
-
-<p><strong>使用闭包进行迭代</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var prices = [1.5, 10, 4.99, 2.30, 8.19]
-
-let largePrices = prices.filter { (a) -&gt; Bool in
-    a &gt; 5
-}
-let largePrices01 = prices.filter {
-    return $0 &gt; 5
-}
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>public func filter(_ isIncluded: (Element) throws -&gt; Bool) rethrows -&gt; [Element]
-
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>let listArray = ["你好,","我是","你的","益达"];
-let nomal0 = listArray.reduce("", {(a : String,b : String) -&gt; String in return a + b})
-print("nomal0 = \(nomal0)")
-
-let nomal1 = listArray.reduce("", {(a : String,b : String) -&gt; String in a + b})
-print("nomal1 = \(nomal1)")
-
-let nomal2 = listArray.reduce("", {(a,b) in a + b})
-print("nomal2 = \(nomal2)")
-
-let nomal3 = listArray.reduce("") {
-    (a,b) in a + b
-}
-print("nomal3 = \(nomal3)")
-let nomal4 = listArray.reduce("") {
-    $0 + $1
-}
-print("nomal4 = \(nomal4)")
-</code></pre>
-</div>
-
-<p><em>上述方法结果一样。</em></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>let namesAndAges = ["Yunis":28,"Yunlia":18,"Tom":13,"Jack":8,"King":15]
-let lessThan18 = namesAndAges.filter {
-    return $0.value &lt; 18
-}
-print(lessThan18)//[("Jack", 8), ("Tom", 13), ("King", 15)]
-
-let namesList = lessThan18.map {
-    return $0.key
-}
-print(namesList)//["Jack", "Tom", "King"]
-</code></pre>
-</div>
-
-
-
-                <hr style="visibility: hidden;">
-
-                
-
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2017/03/01/swift03/" data-toggle="tooltip" data-placement="top" title="swift 学习（3）基础">
-                        Previous<br>
-                        <span>swift 学习（3）基础</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2017/03/01/swift05-Structures/" data-toggle="tooltip" data-placement="top" title="swift 学习（5）Structures">
-                        Next<br>
-                        <span>swift 学习（5）Structures</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-
-
-                
-
-                
-
-            </div>  
-
-    <!-- Side Catalog Container -->
-        
-            <div class="
-                col-lg-2 col-lg-offset-0
-                visible-lg-block
-                sidebar-container
-                catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">CATALOG</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
-            </div>
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
         
 
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2017/03/01/swift02/">
+        <h2 class="post-title">
+            swift 3 学习 （2）基础
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            swift 3 学习 （2）
+1，当多个不同类型的数据进行操作时，需要转化为形同的数据类型。
+
+let num1 = 1
+let num2 = 2.3
+var count  = num1 + num2
+
+error :
+Binary operator '+' cannot be applied to operands of type 'Int' and 'Double'
+
+//正确做法
+va...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on March 1, 2017
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/page4">&larr; Newer Posts</a>
+    </li>
+    
+    
+</ul>
+
+
+    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-        				
+                        
                             
-                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                <a href="/tags/#iOS" title="iOS" rel="18">
                                     iOS
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Swift" title="Swift" rel="12">
+                                <a href="/tags/#Swift" title="Swift" rel="12">
                                     Swift
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Shell" title="Shell" rel="2">
+                                <a href="/tags/#Shell" title="Shell" rel="2">
                                     Shell
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#转载" title="转载" rel="2">
+                                <a href="/tags/#转载" title="转载" rel="2">
                                     转载
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                <a href="/tags/#GCD" title="GCD" rel="2">
                                     GCD
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
+                                <a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
-        			</div>
+                        
+                    </div>
                 </section>
                 
 
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/gg.jpeg" />
+                        
+                        
+                            <p>大龄码农的进修之路。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="http://weibo.com/iOSSurf">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/yunisSong">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
-                <h5>FRIENDS</h5>
+                <h5>大神博客</h5>
                 <ul class="list-inline">
                     
                         <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
@@ -519,52 +387,10 @@ print(namesList)//["Jack", "Tom", "King"]
                     
                 </ul>
                 
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'always',
-          placement: 'right',
-          icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
+    		</div>
+        
+	</div>
+</div>
 
 
     <!-- Footer -->
@@ -721,50 +547,6 @@ print(namesList)//["Jack", "Tom", "King"]
 
 
 <!-- Side Catalog -->
-
-<script type="text/javascript">
-    function generateCatalog (selector) {
-        var P = $('div.post-container'),a,n,t,l,i,c;
-        a = P.find('h1,h2,h3,h4,h5,h6');
-        a.each(function () {
-            n = $(this).prop('tagName').toLowerCase();
-            i = "#"+$(this).prop('id');
-            t = $(this).text();
-            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
-            l = $('<li class="'+n+'_nav"></li>').append(c);
-            $(selector).append(l);
-        });
-        return true;    
-    }
-
-    generateCatalog(".catalog-body");
-
-    // toggle side catalog
-    $(".catalog-toggle").click((function(e){
-        e.preventDefault();
-        $('.side-catalog').toggleClass("fold")
-    }))
-
-    /*
-     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
-     * Fork by Hux to support padding
-     */
-    async("/js/jquery.nav.js", function () {
-        $('.catalog-body').onePageNav({
-            currentClass: "active",
-            changeHash: !1,
-            easing: "swing",
-            filter: "",
-            scrollSpeed: 700,
-            scrollOffset: 0,
-            scrollThreshold: .2,
-            begin: null,
-            end: null,
-            scrollChange: null,
-            padding: 80
-        });
-    });
-</script>
 
 
 

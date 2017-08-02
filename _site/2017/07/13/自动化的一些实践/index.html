@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（4）Closure - 三十一的博客 | Yunis Blog</title>
+    <title>自动化的一些实践 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift04/">
+    <link rel="canonical" href="http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,17 +181,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
                     </div>
-                    <h1>swift 学习（4）Closure</h1>
+                    <h1>自动化的一些实践</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on July 13, 2017</span>
                 </div>
             </div>
         </div>
@@ -209,146 +205,86 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（4）</p>
+				<h1 id="自动化的一些实践">自动化的一些实践</h1>
 
-<h6 id="1闭包-closure">1，闭包 （Closure）</h6>
-
-<blockquote>
-  <p>Closures are so named because they have the ability to “close over” the variables and constants within the closure’s own scope. This simply means that a closure can access, store and manipulate the value of any variable or constant from the surrounding context. Variables and constants within the body of a closure are said to have been captured by the closure.</p>
-</blockquote>
-
-<p>闭包可以理解为是一个没有方法名的方法。形状类似于：</p>
-
-<blockquote>
-  <p>(parameterList) -&gt; returnType</p>
-</blockquote>
-
-<blockquote>
-  <p>(参数列表) -&gt; 返回值类型</p>
-</blockquote>
-
-<p><strong>如何创建</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var multiplyClosure: (Int, Int) -&gt; Int
-
-multiplyClosure = { (a: Int, b: Int) -&gt; Int in
-    return a * b
-}
-
-multiplyClosure = { (a, b) in
-    a*b
-}
-
-multiplyClosure = {
-    $0 * $1
-}
-let result = multiplyClosure(3, 2)
-print(result)
-
-</code></pre>
-</div>
-
-<p><strong>尾随闭包</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>func operateOnNumbers(_ a: Int, _ b: Int,
-                      operation: (Int, Int) -&gt; Int) -&gt; Int {
-    let result = operation(a, b)
-    print(result)
-    return result
-}
-//正常调用
-operateOnNumbers(2, 21, operation: {
-    (a:Int,b:Int) -&gt;Int in a * b
-})
-//正常调用
-operateOnNumbers(2, 21, operation: multiplyClosure)
-
-//尾随闭包 带参数实现
-operateOnNumbers(2, 21){ (a:Int,b:Int) -&gt; Int in
-    a * b
-}
-//尾随闭包
-operateOnNumbers(2, 21){
-    $0 * $1
-}
-</code></pre>
-</div>
-
-<p><strong>使用闭包进行自定义排序</strong></p>
+<p>今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>
-let names = ["ZZZZZZ", "BB", "A", "CCCcccccccC", "EEEEE"]
-//基本用法
-names.sorted()
+# -*- coding: utf-8 -*-
+import os
+import sys
+import time
+# 项目根目录
+project_path = ""
+#证书名称
+cerName = ""
+#工程名称
+projectName = ""+".xcodeproj"
+#scheme
+scheme = ""
+#发布到蒲公英的说明文档
+updateDescription = ""
 
-//自定义排序算法
-names.sorted {
-    $0.characters.count &gt; $1.characters.count
-}
-</code></pre>
-</div>
 
-<p>sorted 函数</p>
+#蒲公英Key
+PGY_key=""
+#蒲公英APIKey
+PGY_APIkey=""
 
-<div class="highlighter-rouge"><pre class="highlight"><code> public func sorted(by areInIncreasingOrder: (Element, Element) -&gt; Bool) -&gt; [Element]
-</code></pre>
-</div>
+time = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
+ipa_filename = time + ".ipa"
 
-<p><strong>其中(Element, Element) -&gt; Bool 闭包</strong></p>
+#activePath
+activePath = ""+time+".xcarchive"
+# 打包后ipa存储目录
+targerIPA_parth = ""
 
-<p>swift中大量的使用了这种闭包的语法，可以使开发人员方便的自定义方法。</p>
+ipaName = "YNGJ_HomeTest_V2.1_"
 
-<p><strong>使用闭包进行迭代</strong></p>
+# 清理项目 创建build目录
+def clean_project_mkdir_build():
+    print("******clean******")
 
-<div class="highlighter-rouge"><pre class="highlight"><code>var prices = [1.5, 10, 4.99, 2.30, 8.19]
+    os.system('cd %s;xcodebuild clean -project "%s" -scheme %s -configuration release' % (project_path,projectName,scheme)) # clean 项目
 
-let largePrices = prices.filter { (a) -&gt; Bool in
-    a &gt; 5
-}
-let largePrices01 = prices.filter {
-    return $0 &gt; 5
-}
-</code></pre>
-</div>
+def build_project():
+    print("build release start")
+    os.system ('xcodebuild -list')
+    os.system ('cd %s;xcodebuild archive -project "%s" -scheme %s -configuration release -sdk iphoneos10.2  IPHONEOS_DEPLOYMENT_TARGET=8.0 -archivePath %s;' % (project_path,projectName,scheme,activePath))
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public func filter(_ isIncluded: (Element) throws -&gt; Bool) rethrows -&gt; [Element]
+# 打包ipa 并且保存在桌面
+def build_ipa():
+    global ipa_filename
+    ipa_filename = ipaName + ipa_filename
+    os.system ('xcodebuild -exportArchive -archivePath %s -exportPath %s/%s -exportFormat IPA -exportProvisioningProfile %s'%(activePath,targerIPA_parth,ipa_filename,cerName))
 
-</code></pre>
-</div>
+def ipaUpdate():
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let listArray = ["你好,","我是","你的","益达"];
-let nomal0 = listArray.reduce("", {(a : String,b : String) -&gt; String in return a + b})
-print("nomal0 = \(nomal0)")
+    os.system ('curl -F \"updateDescription=%s\" -F \"file=@%s/%s\" -F \"uKey=%s\" -F \"_api_key=%s\" https://qiniu-storage.pgyer.com/apiv1/app/upload'%(updateDescription,targerIPA_parth,ipa_filename,PGY_key,PGY_APIkey))
 
-let nomal1 = listArray.reduce("", {(a : String,b : String) -&gt; String in a + b})
-print("nomal1 = \(nomal1)")
+def main():
+    # 清理并创建build目录
+    clean_project_mkdir_build()
+    # 编译coocaPods项目文件并 执行编译目录
+    build_project()
+    # 打包ipa 并制定到桌面
+    build_ipa()
+    
+    ipaUpdate()
 
-let nomal2 = listArray.reduce("", {(a,b) in a + b})
-print("nomal2 = \(nomal2)")
+# 执行
+main()
 
-let nomal3 = listArray.reduce("") {
-    (a,b) in a + b
-}
-print("nomal3 = \(nomal3)")
-let nomal4 = listArray.reduce("") {
-    $0 + $1
-}
-print("nomal4 = \(nomal4)")
-</code></pre>
-</div>
 
-<p><em>上述方法结果一样。</em></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let namesAndAges = ["Yunis":28,"Yunlia":18,"Tom":13,"Jack":8,"King":15]
-let lessThan18 = namesAndAges.filter {
-    return $0.value &lt; 18
-}
-print(lessThan18)//[("Jack", 8), ("Tom", 13), ("King", 15)]
 
-let namesList = lessThan18.map {
-    return $0.key
-}
-print(namesList)//["Jack", "Tom", "King"]
+
+
+
+
+
+
+
 </code></pre>
 </div>
 
@@ -362,17 +298,17 @@ print(namesList)//["Jack", "Tom", "King"]
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift03/" data-toggle="tooltip" data-placement="top" title="swift 学习（3）基础">
+                        <a href="/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/" data-toggle="tooltip" data-placement="top" title="基与CocosPods和SVN的一次组件化实践">
                         Previous<br>
-                        <span>swift 学习（3）基础</span>
+                        <span>基与CocosPods和SVN的一次组件化实践</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/03/01/swift05-Structures/" data-toggle="tooltip" data-placement="top" title="swift 学习（5）Structures">
+                        <a href="/2017/07/27/Head-First-HTML%E4%B8%8ECSS/" data-toggle="tooltip" data-placement="top" title="Head First HTML与CSS">
                         Next<br>
-                        <span>swift 学习（5）Structures</span>
+                        <span>Head First HTML与CSS</span>
                         </a>
                     </li>
                     

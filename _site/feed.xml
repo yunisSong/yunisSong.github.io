@@ -5,13 +5,298 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 12 Jul 2017 21:38:35 +0800</pubDate>
-    <lastBuildDate>Wed, 12 Jul 2017 21:38:35 +0800</lastBuildDate>
+    <pubDate>Wed, 02 Aug 2017 10:21:34 +0800</pubDate>
+    <lastBuildDate>Wed, 02 Aug 2017 10:21:34 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
+        <title>iOS蓝牙框架的简单实用</title>
+        <description>&lt;h1 id=&quot;ios蓝牙框架的简单实用&quot;&gt;iOS蓝牙框架的简单实用&lt;/h1&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CoreBluetooth&lt;/code&gt; 分为两种模式：&lt;/p&gt;
+
+&lt;p&gt;1，&lt;code class=&quot;highlighter-rouge&quot;&gt;peripheral&lt;/code&gt; 外设&lt;/p&gt;
+
+&lt;p&gt;2，&lt;code class=&quot;highlighter-rouge&quot;&gt;central&lt;/code&gt; 中心&lt;/p&gt;
+
+&lt;h3 id=&quot;蓝牙中心模式流程&quot;&gt;蓝牙中心模式流程&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;建立中心角色&lt;/li&gt;
+  &lt;li&gt;扫描外设（discover）&lt;/li&gt;
+  &lt;li&gt;连接外设(connect)&lt;/li&gt;
+  &lt;li&gt;扫描外设中的服务和特征(discover)
+    &lt;ul&gt;
+      &lt;li&gt;4.1 获取外设的services&lt;/li&gt;
+      &lt;li&gt;4.2 获取外设的Characteristics,获取Characteristics的值，获取Characteristics的Descriptor和Descriptor的值&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;与外设做数据交互(explore and interact)&lt;/li&gt;
+  &lt;li&gt;订阅Characteristic的通知&lt;/li&gt;
+  &lt;li&gt;断开连接(disconnect)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;蓝牙外设模式流程&quot;&gt;蓝牙外设模式流程&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;启动一个Peripheral管理对象&lt;/li&gt;
+  &lt;li&gt;本地Peripheral设置服务,特性,描述，权限等等&lt;/li&gt;
+  &lt;li&gt;Peripheral发送广告&lt;/li&gt;
+  &lt;li&gt;设置处理订阅、取消订阅、读characteristic、写characteristic的委托方法&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;示意图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/iOS_CoreBluetooth.png&quot; alt=&quot;思维导图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;tttt&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 01 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/</guid>
+        
+        <category>蓝牙</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Head First HTML与CSS</title>
+        <description>&lt;h1 id=&quot;head-first-html与css&quot;&gt;Head First HTML与CSS&lt;/h1&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;构建网页的文件名称不要有空格
+&amp;lt;a href=&quot;test.html&quot;&amp;gt;点击跳转到同级目录下test.html 文件&amp;lt;/a&amp;gt;
+&amp;lt;a href=&quot;../test.html&quot;&amp;gt;点击跳转到上级目录下test.html 文件&amp;lt;/a&amp;gt;
+&amp;lt;a href=&quot;Yunis/test.html&quot;&amp;gt;点击跳转到Yunis目录下test.html 文件&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;列表&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ul&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+
+
+&amp;lt;ol&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;li&amp;gt;....&amp;lt;/li&amp;gt;
+&amp;lt;/ol&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;跳转到页面指定位置&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;index.html :
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Head First Lounge Directions&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;jump&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Directions&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+
+
+
+
+当使用
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;index.html#jump&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;跳转&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+
+会跳转到 index.html 页面 ID 为jump 的位置。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;相对路径、绝对路径&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;a href=&quot;http&quot;//www.Yunis.com/demo/test/play.html&quot;&amp;gt;网页&amp;lt;/a&amp;gt;
+
+&amp;lt;a href=&quot;demo/test/play.html&quot;&amp;gt;网页&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img&amp;gt;&lt;/code&gt; 元素&lt;/p&gt;
+
+&lt;p&gt;alt&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;当 图片不可显示时，显示 alt 内容
+    &amp;lt;img src=&quot;images/00drinks.gif&quot; alt=&quot;这是一个备选的显示&quot;&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;CSS&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;一个元素可以有多个规则。
+    &amp;lt;style type=&quot;text/css&quot;&amp;gt;
+        p {
+            color: maroon;
+        }
+    
+        h1,h2 {
+            font-family :sans-serif;
+            color :gray;
+        }
+    
+        h1 {
+            border-bottom:1px solid black;
+        }
+    
+    &amp;lt;/style&amp;gt;
+    
+    
+    
+    也可以这样引入 CSS 样式
+ &amp;lt;link type = &quot;text/css&quot; rel = &quot;stylesheet&quot; href = &quot;lounge.css&quot;&amp;gt;
+
+
+rel 属性指定了 HTML 文件和所链接的文件之间的关系。
+
+&amp;lt;link&amp;gt; 是一个 void 元素。
+
+
+
+可以为一个元素增加 class 属性，然后单独为这个属性的值设置样式。
+
+&amp;lt;p class=&quot;greentea&quot;&amp;gt;
+      &amp;lt;img src=&quot;../images/green.jpg&quot;&amp;gt;
+      Chock full of vitamins and minerals, this elixir
+      combines the healthful benefits of green tea with
+      a twist of chamomile blossoms and ginger root.
+    &amp;lt;/p&amp;gt;
+p.greentea {
+    color:green;
+}
+
+这样的话只要 class 是 greentea 这个值的话，都会设置为这个样式。
+.greentea {
+    color:green;
+}
+
+class 可以有多个值 使用空格分割。
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;逻辑区，包围标签，相当于 一个块的概念，把里面的元素当做一个整体处理。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;span&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;创建内联字符和元素的逻辑分组。功能等同 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 27 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>自动化的一些实践</title>
+        <description>&lt;h1 id=&quot;自动化的一些实践&quot;&gt;自动化的一些实践&lt;/h1&gt;
+
+&lt;p&gt;今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+# -*- coding: utf-8 -*-
+import os
+import sys
+import time
+# 项目根目录
+project_path = &quot;&quot;
+#证书名称
+cerName = &quot;&quot;
+#工程名称
+projectName = &quot;&quot;+&quot;.xcodeproj&quot;
+#scheme
+scheme = &quot;&quot;
+#发布到蒲公英的说明文档
+updateDescription = &quot;&quot;
+
+
+#蒲公英Key
+PGY_key=&quot;&quot;
+#蒲公英APIKey
+PGY_APIkey=&quot;&quot;
+
+time = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
+ipa_filename = time + &quot;.ipa&quot;
+
+#activePath
+activePath = &quot;&quot;+time+&quot;.xcarchive&quot;
+# 打包后ipa存储目录
+targerIPA_parth = &quot;&quot;
+
+ipaName = &quot;YNGJ_HomeTest_V2.1_&quot;
+
+# 清理项目 创建build目录
+def clean_project_mkdir_build():
+    print(&quot;******clean******&quot;)
+
+    os.system('cd %s;xcodebuild clean -project &quot;%s&quot; -scheme %s -configuration release' % (project_path,projectName,scheme)) # clean 项目
+
+def build_project():
+    print(&quot;build release start&quot;)
+    os.system ('xcodebuild -list')
+    os.system ('cd %s;xcodebuild archive -project &quot;%s&quot; -scheme %s -configuration release -sdk iphoneos10.2  IPHONEOS_DEPLOYMENT_TARGET=8.0 -archivePath %s;' % (project_path,projectName,scheme,activePath))
+
+# 打包ipa 并且保存在桌面
+def build_ipa():
+    global ipa_filename
+    ipa_filename = ipaName + ipa_filename
+    os.system ('xcodebuild -exportArchive -archivePath %s -exportPath %s/%s -exportFormat IPA -exportProvisioningProfile %s'%(activePath,targerIPA_parth,ipa_filename,cerName))
+
+def ipaUpdate():
+
+    os.system ('curl -F \&quot;updateDescription=%s\&quot; -F \&quot;file=@%s/%s\&quot; -F \&quot;uKey=%s\&quot; -F \&quot;_api_key=%s\&quot; https://qiniu-storage.pgyer.com/apiv1/app/upload'%(updateDescription,targerIPA_parth,ipa_filename,PGY_key,PGY_APIkey))
+
+def main():
+    # 清理并创建build目录
+    clean_project_mkdir_build()
+    # 编译coocaPods项目文件并 执行编译目录
+    build_project()
+    # 打包ipa 并制定到桌面
+    build_ipa()
+    
+    ipaUpdate()
+
+# 执行
+main()
+
+
+
+
+
+
+
+
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 13 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/</guid>
+        
+        
+      </item>
+    
+      <item>
         <title>基与CocosPods和SVN的一次组件化实践</title>
-        <description>&lt;h1 id=&quot;基与cocospods和svn的一次组件化实践&quot;&gt;基与CocosPods和SVN的一次组件化实践&lt;/h1&gt;
+        <description>&lt;p&gt;TODO:如何添加到 SVN
+ 文件描述 与 文件层级的关系。&lt;/p&gt;
+&lt;h1 id=&quot;基与cocospods和svn的一次组件化实践&quot;&gt;基与CocosPods和SVN的一次组件化实践&lt;/h1&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。&lt;/p&gt;
@@ -20,13 +305,15 @@
 &lt;p&gt;记录下步骤：&lt;/p&gt;
 
 &lt;h3 id=&quot;1安装-cocoapods-repo-svn-插件&quot;&gt;1,安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;cocoapods-repo-svn&lt;/code&gt; 插件&lt;/h3&gt;
-&lt;p&gt;没什么好多的，就是一行命令。
+&lt;p&gt;没什么好说的，就是一行命令。
 &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install cocoapods-repo-svn&lt;/code&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2提取共有代码创建-podspec-文件&quot;&gt;2，提取共有代码，创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件&lt;/h3&gt;
-&lt;p&gt;提取两个工程中的共有代码，然后进入目录，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件
-&lt;code class=&quot;highlighter-rouge&quot;&gt;pod spec create CommonWebTools&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;CommonWebTools&lt;/code&gt; 是你提取的私有库的名称。&lt;/p&gt;
+&lt;p&gt;提取两个工程中的共有代码，然后进入目录，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pod spec create CommonWebTools&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CommonWebTools&lt;/code&gt; 是你提取的私有库的名称。&lt;/p&gt;
 
 &lt;h3 id=&quot;3编辑podspec文件内容&quot;&gt;3，编辑&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt;文件内容&lt;/h3&gt;
 
@@ -45,9 +332,9 @@ Pod::Spec.new do |s|
 
     s.license      = &quot;MIT&quot;
 
-    s.author             = { &quot;iThinkerYZ&quot; =&amp;gt; &quot;690423479@qq.com&quot; }
+    s.author             = { &quot;iThinkerYZ&quot; =&amp;gt; &quot;xxxxxxxx@qq.com&quot; }
 
-  s.source       = { :svn =&amp;gt; &quot;http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot; }
+  s.source       = { :svn =&amp;gt; &quot;http://xxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot; }
 
  s.source_files = &quot;CommonWebTools&quot;, &quot;CommonWebTools/*.{h,m}&quot;
 
@@ -61,7 +348,7 @@ Pod::Spec.new do |s|
 &lt;h3 id=&quot;4使用&quot;&gt;4，使用：&lt;/h3&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;target 'TestComponentDemo' do
-pod 'CommonWebTools', :svn =&amp;gt; &quot;http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot;
+pod 'CommonWebTools', :svn =&amp;gt; &quot;http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot;
 end
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -575,1710 +862,6 @@ alert(anotherFactorial(4)); //出错
         <pubDate>Thu, 18 May 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/</guid>
-        
-        <category>JavaScript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Javascrpt高级程序设计读书笔记04</title>
-        <description>&lt;h1 id=&quot;面向对象的程序设计&quot;&gt;面向对象的程序设计&lt;/h1&gt;
-&lt;p&gt;面向对象（Object-Oriented,OO）的语言有一个标志，那就是它们都有类的概念，而通过类可以创建多个具有相同属性和方法的对象。 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中没有类的概念，因此它的对象也与基于类的语言中的对象有所不同。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中对对象的定义为：&lt;code class=&quot;highlighter-rouge&quot;&gt;无序属性是集合，其属性可以包含基本值、对象或者函数。&lt;/code&gt;严格的讲，就相当于说对象是一组没有特定顺序的值。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/myvin/p/4660138.html&quot;&gt;JavaScript“并非”一切皆对象&lt;/a&gt; 这篇文章写的挺好的。&lt;/p&gt;
-
-&lt;h2 id=&quot;理解对象&quot;&gt;理解对象&lt;/h2&gt;
-&lt;p&gt;创建自定义对象最简单的方法就是创建一个 Object 的实例，然后为它添加属性和方法。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = new Object();
-    person.name = &quot;Nicholas&quot;;
-    person.age = 29;
-    person.job = &quot;Software Engineer&quot;;
-    person.sayName = function(){
-        alert(this.name);
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;或者使用字面量创建：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = {
-    name: &quot;Nicholas&quot;,
-    age: 29,
-    job: &quot;Software Engineer&quot;,
-    sayName: function() {
-        alert(this.name);
-    } 
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;属性类型&quot;&gt;属性类型&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中有两种属性：数据属性和访问器属性。
-&lt;a href=&quot;http://www.cnblogs.com/oneplace/p/5492476.html&quot;&gt;JavaScript 属性类型（数据属性 访问器属性）&lt;/a&gt; 这篇文章写的很好。&lt;/p&gt;
-&lt;h4 id=&quot;数据属性&quot;&gt;数据属性&lt;/h4&gt;
-&lt;p&gt;数据属性包含一个数据值的位置，在这个位置可以读取和写入值。数据属性有4个描述行为的特性。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[[Configurable]] 表示是否可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; 删除属性从而重新定义属性，能否修改属性的特性，或者能否把属性修改为访问器属性。默认值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;[[Enumerable]]  是否可以通过枚举返回属性。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;[[Writable]] 表示是否能够修改这个属性的值。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;[[Value]] 包含这个属性的数据值。读取属性值的时间从这个位置读，写入属性值的时间，把新值保存子啊这个位置。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;undefined&lt;/code&gt; 。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;要修改属性默认特性。必须使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperty()&lt;/code&gt; 方法。这个方法接收三个参数：属性所在的对象、属性的名字和一个描述符对象、其中。描述符（descriptor）对象的属性必须是： configurable、enumerable、writable 和 value 。设置其中的一个或者多个值，可以修改对应的特性值。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;//writable 是否可以修改属性
-var person = {};
-Object.defineProperty(person, &quot;name&quot;, {
-    writable: false,
-    value: &quot;Nicholas&quot;
-});
-
-alert(person.name); //&quot;Nicholas&quot;
-person.name = &quot;Greg&quot;; alert(person.name); //&quot;Nicholas&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;var person = {};
-Object.defineProperty(person, &quot;name&quot;, {
-    configurable: false,
-    value: &quot;Nicholas&quot;
-});
-alert(person.name); //&quot;Nicholas&quot; 
-delete person.name; 
-alert(person.name); //&quot;Nicholas&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;var person = {};
-Object.defineProperty(person, &quot;name&quot;, {
-    configurable: false,
-    value: &quot;Nicholas&quot;
-});
-//一旦对一个属相设置为configurable 为 false，就再也不能将它变为原来的可配置了。
-//抛出异常 
-Object.defineProperty(person, &quot;name&quot;, {
-    configurable: true,
-    value: &quot;Nicholas&quot;
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&quot;访问器属性&quot;&gt;访问器属性&lt;/h4&gt;
-&lt;p&gt;访问器属性不包括数据值。在读取访问器属性时，会调用 getter 函数，在写入的时间，会调用 setter 函数。访问器属性有4个特性：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;[[Configurable]]表示是否可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; 删除属性从而重新定义属性，能否修改属性的特性，或者能否把属性修改为数据属性。默认值是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;[[Enumerable]] 是否可以通过枚举返回属性。默认是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;[[Get]] 在读取属性时调用的函数。默认值是 undefined。&lt;/li&gt;
-  &lt;li&gt;[[Set]] 在写入属性时调用的函数。默认值是 undefined。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;访问器属性不能直接定义，必须使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperty()&lt;/code&gt; 来定义。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var book = {
-    _year: 2004,
-    edition: 1 
-};
-
-Object.defineProperty(book, &quot;year&quot;, {
-    get: function(){
-        return this._year;
-    },
-    set: function(newValue){
-        if (newValue &amp;gt; 2004) {
-            this._year = newValue;
-            this.edition += newValue - 2004;
-        } 
-    }
-});
-book.year = 2005; 
-alert(book.edition); //2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;定义多个属性&quot;&gt;定义多个属性&lt;/h3&gt;
-&lt;p&gt;由于对象定义多个属性的可能性很大，可以利用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.defineProperties()&lt;/code&gt; 方法一次定义多个属性。这个方法接收两个对象参数：第一个对象是要添加和修改其属性的对象，第二个对象的属性与第一个对象中要添加或者修改的属性一一对应。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = { 
-  _name: &quot;Scott&quot;, 
-  _age: 24, 
-  _tel: 86247 
-}; 
-Object.defineProperties(person,{ 
-  name:{ 
-    get: function(){ 
-      return this._name; 
-    } 
-  }, 
-  age:{ 
-    set: function(p){ 
-      this._age = p; 
-    } 
-  }, 
-  tel:{ 
-    get:function(){ 
-      return this._tel; 
-    }, 
-    set: function(p){ 
-      this._tel = p; 
-    } 
-  } 
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;读取属性的特性&quot;&gt;读取属性的特性&lt;/h3&gt;
-&lt;p&gt;可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.getOwnPropertyDescriptor()&lt;/code&gt; 方法获取给定属性的描述符。这个方法接收的是两个参数：属性所在的对象和要读取其描述符的属性名称。返回值是一个对象，如果是访问器属性，这个对象的属性有 &lt;code class=&quot;highlighter-rouge&quot;&gt;configurable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;get&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;set&lt;/code&gt;。如果是数据属性，这个对象的属性有 &lt;code class=&quot;highlighter-rouge&quot;&gt;configurable &lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;enumerable&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;writable&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = { 
-  _name: &quot;Scott&quot;, 
-  _age: 24, 
-  _tel: 86247 
-}; 
-Object.defineProperties(person,{ 
-  name:{ 
-    get: function(){ 
-      return this._name; 
-    } 
-  }, 
-  age:{ 
-    set: function(p){ 
-      this._age = p; 
-    } 
-  }, 
-  tel:{ 
-    get:function(){ 
-      return this._tel; 
-    }, 
-    set: function(p){ 
-      this._tel = p; 
-    } 
-  } 
-}); 
-var descripter = Object.getOwnPropertyDescripter(person,&quot;tel&quot;); 
-console.log(descripter.value);  //undefined 
-console.log(descripter.enumerable);  //false 
-console.log(typeof descripter.get);  //&quot;function&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;上面的代码中获取了person对象的tel属性，由于其是一个访问器属性，所以其value为undefined，enumerable为false，而get为指向getter函数的一个指针。&lt;/p&gt;
-
-&lt;h2 id=&quot;创建对象&quot;&gt;创建对象&lt;/h2&gt;
-
-&lt;h3 id=&quot;工厂模式&quot;&gt;工厂模式&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function createPerson(name, age, job){
-    var o = new Object();
-    o.name = name;
-    o.age = age;
-    o.job = job;
-    o.sayName = function(){
-        alert(this.name);
-    };
-    return o; 
-}
-var person1 = createPerson(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = createPerson(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;函数 &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 能够接受参数构建一个包含必要信息的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person&lt;/code&gt; 对象。可以无数次调用这个函数，而每一次都会返回一个包含三个属性、一个方法的对象。
-工厂模式虽然解决了创建多个相识对象的问题，却没有解决对象识别的问题。因为全部都是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;，不像 &lt;code class=&quot;highlighter-rouge&quot;&gt;Date&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt; 等，因此出现了构造函数模式。&lt;/p&gt;
-&lt;h3 id=&quot;构造函数模式&quot;&gt;构造函数模式&lt;/h3&gt;
-&lt;p&gt;JavaScript 中的构造函数可用来创建特定类型的对象。也可以创建自定义构造函数，从而定义自定义对象的属性和方法。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
-        this.name = name;
-        this.age = age;
-        this.job = job;
-        this.sayName = function(){
-            alert(this.name);
-        }; 
-}
-var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;在这个例子中 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 函数取代了  &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 函数，与  &lt;code class=&quot;highlighter-rouge&quot;&gt;createPerson()&lt;/code&gt; 不同有：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;没有显示的创建对象；&lt;/li&gt;
-  &lt;li&gt;直接将属性和方法赋值给了 this 对象；&lt;/li&gt;
-  &lt;li&gt;没有 return 语句。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 是大写字母 &lt;code class=&quot;highlighter-rouge&quot;&gt;P&lt;/code&gt; 开头。这是惯例，构造函数始终以一个大写字母开头。&lt;/li&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 创建对象&lt;/li&gt;
-  &lt;li&gt;能够识别对象（这正是构造函数模式胜于工厂模式的地方）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;以这种构造函数创建对象会经过 4 个步骤：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;创建一个新对象；&lt;/li&gt;
-  &lt;li&gt;将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）；&lt;/li&gt;
-  &lt;li&gt;执行构造函数中的代码（为这个新对象添加属性）；&lt;/li&gt;
-  &lt;li&gt;返回新对象。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;前面例子中 person1 和 person2 分别保存着 Person 的一个不同的实例。这两个对象都有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 属性（构造函数），改属性指向了 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person&lt;/code&gt;。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;alert(person1.constructor == Person); //true
-alert(person2.constructor == Person); //true
-
-
-alert(person1 instanceof Object);  //true
-alert(person1 instanceof Person);  //true
-alert(person2 instanceof Object);  //true
-alert(person2 instanceof Person);  //true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;创建自定义的构造函数可以将它的实例标识为一种特定的类型，这正是构造函数模式比工厂模式好的地方。&lt;/p&gt;
-
-&lt;h4 id=&quot;将构造函数当做函数&quot;&gt;将构造函数当做函数&lt;/h4&gt;
-&lt;p&gt;构造函数与其他函数的唯一区别就是调用方式不同。
-任何函数，只要通过 new 操作符调用，就可以作为构造函数。
-前面例子中定义的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Person()&lt;/code&gt; 函数就可以使用下方的任何一种方式调用：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//当做构造函数调用
-var person = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;); 
-person.sayName(); //&quot;Nicholas&quot;
-//当做普通函数调用  
-Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;); //添加到window
-window.sayName(); //&quot;Greg&quot;
-// 在另一个函数的作用域调用
-var o = new Object();
-Person.call(o, &quot;Kristen&quot;, 25, &quot;Nurse&quot;); 
-o.sayName(); //&quot;Kristen&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;构造函数的问题&quot;&gt;构造函数的问题&lt;/h4&gt;
-&lt;p&gt;构造函数的组要问题就是每个方法都要在每个实例上重新创建一遍。已这种方式创建函数，会导致不同的作用域链和标识符解析，但创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;Function&lt;/code&gt; 新实例的机制仍然相同。因此，不同实例上同名函数式不相等的。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alert(person1.sayName == person2.sayName);  //false
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;然而创建两个完成同样任务的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Function&lt;/code&gt; 实例是没有必要的，况且有 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; 对象。根本不需要再执行代码钱就把函数绑定到特定对象上。因此，我们可以将函数移到对象外面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
-    this.name = name;
-    this.age = age;
-    this.job = job;
-    this.sayName = sayName;
-}
-function sayName(){
-    alert(this.name);
-}
-var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这样一来 person1 与 person2 访问的都是同一个函数，可是问题又来了，在全局作用域中定义了一个实际只想让 Person 使用的函数，显示让全局作用域有些名副其实，更让人无法接受的是在全局作用域中定义了许多仅供特定对象使用的方法，浪费空间不说，显然失去了面向对象封装性了，因此可以通过原型来解决此问题。&lt;/p&gt;
-
-&lt;h3 id=&quot;原型模式&quot;&gt;原型模式&lt;/h3&gt;
-&lt;p&gt;我们创建的每一个函数都有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype(原型)&lt;/code&gt; 属性，这个属性是一个指针，指向一个对象，这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。&lt;strong&gt;使用原型对象的好处就是可以让所有对象实例共享它所包含的属性及方法。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
-}
-Person.prototype.name = &quot;Nicholas&quot;;
-Person.prototype.age = 29;
-Person.prototype.job = &quot;Software Engineer&quot;;
-Person.prototype.sayName = function(){
-    alert(this.name);
-};
-var person1 = new Person();
-person1.sayName();   //&quot;Nicholas&quot;
-var person2 = new Person();
-person2.sayName(); //&quot;Nicholas&quot;
-alert(person1.sayName == person2.sayName);  //true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这样创建出来的对象的这些属性和方法是所有实例共享的。&lt;/p&gt;
-
-&lt;p&gt;更简单的原型语法&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
-}
-Person.prototype = {
-    name : &quot;Nicholas&quot;,
-    age : 29,
-    job: &quot;Software Engineer&quot;,
-    sayName : function () {
-        alert(this.name);
-    }
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;理解原型对象&quot;&gt;理解原型对象&lt;/h4&gt;
-&lt;p&gt;只要创建了一个函数，就会根据特定规则为该函数创建一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; 属性，这个属性指向了函数的原型对象。在默认的情况下，所有的原型对象都自动获取一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor(构造函数)&lt;/code&gt; 属性，这个属性包含一个指向 &lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; 属性所在函数的指针。比较直观的关系看下图。
-&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型对象.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当为实例对象添加一个属性时，这个属性就会屏蔽原型对象中保存的同名属性。添加这个属性后只会阻止我们访问原型中的那个属性，但是不会修改原型中的属性。不过可以通过 delete 操作符完全删除实例属性，然后就可以访问原型对象中的属性。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(){
-}
-Person.prototype.name = &quot;Nicholas&quot;;
-Person.prototype.age = 29;
-Person.prototype.job = &quot;Software Engineer&quot;;
-Person.prototype.sayName = function(){
-    alert(this.name);
-};
-var person1 = new Person();
-var person2 = new Person();
-person1.name = &quot;Greg&quot;;
-alert(person1.name);//&quot;Greg&quot; 来自实例
-alert(person2.name);//&quot;Nicholas&quot;  来自原型
-delete person1.name;
-alert(person1.name);//&quot;Nicholas&quot; 来自原型      
-        
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;hasOwnProperty()&lt;/code&gt; 函数来判断是访问的实例属性还是原型属性。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-function Person(){
-}
-Person.prototype.name = &quot;Nicholas&quot;;
-Person.prototype.age = 29;
-Person.prototype.job = &quot;Software Engineer&quot;;
-Person.prototype.sayName = function(){
-  alert(this.name);
-}; 
-  
-var person1 = new Person();
-var person2 = new Person();
-alert(person1.hasOwnProperty(&quot;name&quot;));  //false
-person1.name = &quot;Greg&quot;;
-alert(person1.name); //&quot;Greg&quot;
-alert(person1.hasOwnProperty(&quot;name&quot;)); //true
-alert(person2.name); //&quot;Nicholas&quot;
-alert(person2.hasOwnProperty(&quot;name&quot;)); //false
-delete person1.name;
-alert(person1.name); //&quot;Nicholas&quot;  
-alert(person1.hasOwnProperty(&quot;name&quot;)); //false
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;原型模式也不是没有缺点，首先，它省略了构造函数传递初始化参数这一环节，结果所有实例在默认情况下都取得了相同的属性值，这样非常不方便，但这还是不是原型的最大问题，原型模式的最大问题在于共享的本性所导致的，由于共享，因此因此一个实例修改了引用，另一个也随之更改了引用。因此我们通常不单独使用原型，而是结合原型模式与构造函数模式。&lt;/p&gt;
-
-&lt;h3 id=&quot;组合使用构造函数模式和原型模式&quot;&gt;组合使用构造函数模式和原型模式&lt;/h3&gt;
-&lt;p&gt;创建自定义对象最常见的方法是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;构建函数模式&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;原型模式&lt;/code&gt;，构建函数用于定义实例属性，原型模式用于定义方法 和 共享的属性。这样每个实例都有一份自己的实例属性，但同时又共享着对方法的引用，最大程度节省了内存。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
-this.name = name; 3 this.age = age;
-this.job = job;
-this.friends = [&quot;Shelby&quot;, &quot;Court&quot;];
- 2
-  }
-Person.prototype = {
-    constructor : Person,
-    sayName : function(){
-        alert(this.name);
-    }
-}
-var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-
-person1.friends.push(&quot;Van&quot;);
-alert(person1.friends);    //&quot;Shelby,Count,Van&quot;
-alert(person2.friends);    //&quot;Shelby,Count&quot;
-alert(person1.friends === person2.friends);//false
-alert(person1.sayName === person2.sayName);//true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;这种模式在 &lt;code class=&quot;highlighter-rouge&quot;&gt;ECMAScript&lt;/code&gt; 中是使用最广泛、认同度最高的一种创建自定义对象的方法。&lt;/p&gt;
-&lt;h3 id=&quot;动态原型模式&quot;&gt;动态原型模式&lt;/h3&gt;
-&lt;p&gt;动态原型模式与上面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;构建函数模式&lt;/code&gt; + &lt;code class=&quot;highlighter-rouge&quot;&gt;原型模式&lt;/code&gt; 并没有什么区别，只是把所有的信息都封装在了构造函数中。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job){
-    //属性
-    this.name = name; 
-    this.age = age; 
-    this.job = job;
-    //方法
-    //判断是否已经初始化方法
-    if (typeof this.sayName != &quot;function&quot;){
-    
-        Person.prototype.sayName = function(){
-            alert(this.name);
-        }; 
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;使用动态原型时，不能使用对象的字面量重写原型，如果在已经创建了实例的情况下重写原型，那么就会切断现有实例与新原型之间的联系。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;寄生构造函数模式&quot;&gt;寄生构造函数模式&lt;/h3&gt;
-&lt;p&gt;先看段代码，看下区别。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//工厂模式
-function createPerson(name, age, job){
-    var o = new Object();
-    o.name = name;
-    o.age = age;
-    o.job = job;
-    o.sayName = function(){
-        alert(this.name);
-    };
-    return o; 
-}
-var person1 = createPerson(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = createPerson(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-
-
-//构造函数模式
-function Person(name, age, job){
-        this.name = name;
-        this.age = age;
-        this.job = job;
-        this.sayName = function(){
-            alert(this.name);
-        }; 
-}
-var person1 = new Person(&quot;Nicholas&quot;, 29, &quot;Software Engineer&quot;);
-var person2 = new Person(&quot;Greg&quot;, 27, &quot;Doctor&quot;);
-
-
-//寄生构造函数模式
-function SpecialArray(){
-    //创建数组
-    var values = new Array();
-    //添加值
-    values.push.apply(values, arguments);
-    //添加方法  
-    values.toPipedString = function(){
-        return this.join(&quot;|&quot;);
-    };
-    //返回数组
-    return values;
-}
-
-var colors = new SpecialArray(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;);
-alert(colors.toPipedString()); //&quot;red|blue|green&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;寄生构造函数模式中返回的对象与构造函数或者与构造函数的原型属性之间没有关系。不能依赖 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符来确定对象类型。&lt;strong&gt;尽量不要使用这种模式。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;稳妥构造函数模式&quot;&gt;稳妥构造函数模式&lt;/h3&gt;
-
-&lt;p&gt;这种模式最大的豪好处是除了调用提供的方法，没有别的方式访问其数据成员。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function Person(name, age, job) {
-    var o = new Object();
- 
-    // private members
-    var nameUC = name.toUpperCase();
-
-    // public members
-    o.sayName = function() {
-        alert(name);
-    };
-    o.sayNameUC = function() {
-        alert(nameUC);
-    };
-
-    return o;
-}
-var person = Person(&quot;Nicholas&quot;, 32, &quot;software Engineer&quot;);
-
-person.sayName(); // &quot;Nicholas&quot;
-person.sayNameUC(); // &quot;NICHOLAS&quot;
-
-alert(person.name);  // undefined
-alert(person.nameUC);  // undefined
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;凡是想设为 private 的成员都不要挂到 Person 返回的对象 o 的属性上面，挂上了就是 public 的了。&lt;/p&gt;
-
-&lt;h2 id=&quot;继承&quot;&gt;继承&lt;/h2&gt;
-&lt;p&gt;许多 oo 语言都支持两种继承方式，接口继承（相对于OC 来说，就是协议，不知道理解的对不对） 和 实现继承。
-接口继承 只继承方法签名，实现继承则继承实际的方法。
-但是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中函数没有签名，没办法实现接口继承。只支持实现继承，而且实现继承是通过原型链实现的。&lt;/p&gt;
-&lt;h4 id=&quot;原型链&quot;&gt;原型链&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中描述了原型链的概念，并将原型链作为实现继承的主要方法。基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。
-构造函数、原型和失恋的关系：每个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例包含一个指向原型对象的内部指针。&lt;/p&gt;
-
-&lt;p&gt;如果我们让原型对象等于另一个类型的实例，此时的原型对象将包含一个指向另一个原型的指针，相应的，另一个原型中也包含着一个指向另一个构造函数的指针。假如另一个原型又是另一个类型的实例，那么上诉关系依然成立，如此层层递进，就构成了实例和原型的链条。这就是原型链的基本概念。（好绕啊。。。）&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;函数的原型对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;constructor&lt;/code&gt; 默认指向函数本身，原型对象除了有原型属性外，为了实现继承，还有一个原型链指针 &lt;code class=&quot;highlighter-rouge&quot;&gt;proto&lt;/code&gt;，该指针指向上一层的原型对象，而上一层的原型对象的结构依然类似，这样利用 &lt;code class=&quot;highlighter-rouge&quot;&gt;proto&lt;/code&gt; 一直指向 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的原型对象上，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的原型对象用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object.proto = null&lt;/code&gt; 表示原型链的最顶端，如此变形成了 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的原型链继承，同时也解释了为什么所有的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 对象都具有 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 的基本方法。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
-        this.property = true;
-}
-
-SuperType.prototype.getSuperValue = function(){
-    return this.property;
-};
-function SubType(){
-    this.subproperty = false;
-}
-
-SubType.prototype = new SuperType();
-SubType.prototype.getSubValue = function (){
-    return this.subproperty;
-};
-var instance = new SubType();
-alert(instance.getSuperValue()); //true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;上面的代码实例、构造函数和原型之间的关系如下图展示：
-&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型链.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;下面这张图很清晰的展示了原型链：
-&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型继承.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型与构造函数关系.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;原型链的问题&quot;&gt;原型链的问题&lt;/h5&gt;
-&lt;p&gt;原型链虽然强大，可以用来实现继承，但是也存在一些问题。最主要的问题来自包含引用类型值的原型。
-引用类型值的原型属性会被所有的实例共享，在通过原型实现继承时，原型实际上会成为另一个类型的实例。于是，原先的实例属性就变成现在的原型属性了。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
-        this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
-}
-function SubType(){
-}
-SubType.prototype = new SuperType();
-
-var instance1 = new SubType();
-instance1.colors.push(&quot;black&quot;);
-alert(instance1.colors); //&quot;red,blue,green,black&quot; 
-
-
-var instance2 = new SubType(); 
-alert(instance2.colors); //&quot;red,blue,green,black&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h4 id=&quot;借用构造函数&quot;&gt;借用构造函数&lt;/h4&gt;
-&lt;p&gt;为了解决原型中包含引用类型值所带来的问题，可以使用一种叫 &lt;code class=&quot;highlighter-rouge&quot;&gt;借用构造函数(constructor stealing)&lt;/code&gt; 的技术（有时间也叫伪造对象或者经典继承）。这种技术的基本思想相当简单，即在子类型构建函数的内部调用超类型构造函数。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(){
-    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
- function SubType(){
-//    SuperType
-    SuperType.call(this);
-}
-var instance1 = new SubType();
-instance1.colors.push(&quot;black&quot;);
-alert(instance1.colors);    //&quot;red,blue,green,black&quot;
-var instance2 = new SubType();
-alert(instance2.colors);    //&quot;red,blue,green&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;代码中 &lt;code class=&quot;highlighter-rouge&quot;&gt;SuperType.call(this);&lt;/code&gt; 借调了超类型的构造函数，我们实际上是在新创建  &lt;code class=&quot;highlighter-rouge&quot;&gt;SubType&lt;/code&gt; 实例的环境下调用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;SuperType&lt;/code&gt; 的构造方法。&lt;/p&gt;
-
-&lt;p&gt;借用构造函数可以在子类型构造函数想超类型构造函数传递参数。&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
-    this.name = name;
-}
-function SubType(){
-    //继承SuperType，同时还传递了参数 
-    SuperType.call(this, &quot;Nicholas&quot;);
-    //实例属性
-    this.age = 29;
-}
-var instance = new SubType();
-alert(instance.name);    //&quot;Nicholas&quot;;
-alert(instance.age);     //29
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;如果仅仅使用借用构造函数，也无法避免构造函数模式存在的问题：方法都在构造函数定义，因此就没办法函数复用了。而且在超类原型中定义的方法，对于子类是不可见的，结果所有类型都只能使用构造函数模式，所有，很少单独 &lt;code class=&quot;highlighter-rouge&quot;&gt;使用借用构造函数&lt;/code&gt; 的技术。&lt;/p&gt;
-
-&lt;h4 id=&quot;组合继承&quot;&gt;组合继承&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;组合继承（combination inheritance ）&lt;/code&gt; 有时候也叫伪经典继承，指的是将原型链和借用构造函数的技术组合到一块，从而发挥两者之长的一种继承模式。背后的思想是，借助原型链来实现对原型属性和方法的继续，使用 借用构造函数 来实现对实例属性的继承。这样既通过原型上定义方法实现了函数复用，有能够保证每个实例有自己的属性。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
-    this.name = name;
-    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
-}
- SuperType.prototype.sayName = function(){
-    alert(this.name);
-}
-
-function SubType(name, age){
-    //继承属性
-    SuperType.call(this, name);
-    this.age = age;
-}
-
-//继承方法
-SubType.prototype = new SuperType(); SubType.prototype.constructor = SubType; SubType.prototype.sayAge = function(){
-    alert(this.age);
-};
-
-var instance1 = new SubType(&quot;Nicholas&quot;, 29);
-instance1.colors.push(&quot;black&quot;);
-   alert(instance1.colors);
-instance1.sayName();
-instance1.sayAge();
-
-
-var instance2 = new SubType(&quot;Greg&quot;, 27);
-alert(instance2.colors);
-instance2.sayName();
-instance2.sayAge();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;组合是继承避免了原型链和借用构造函数的缺陷，融合了他们的优点，是 JavaScript 中最常见的继承模式。&lt;/p&gt;
-&lt;h4 id=&quot;原型式继承&quot;&gt;原型式继承&lt;/h4&gt;
-&lt;p&gt;原型式继承本身的实现是很简单的，但是其牵涉到的概念以及原理却不好说明白。原型的本质是就是一个对象.
-原型式继承更能节约内存，原型链读取成员的方式使得所有克隆出来的对象都共享每个属性与方法的唯一一份实例。只有在直接设置了某个克隆出来的对象的属性或者方法时，情况才会发生改变，但是原型式继承的这种优势在某些情况下因为其对继承而来的成员的读与写的不对等性，在有共享的引用型属性时，这种优势又会变为原型式继承的一种劣势.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function object(o){
-    function F(){}
-    F.prototype = o;
-    return new F();
-}
-var person = {
-        name: &quot;Nicholas&quot;,
-        friends: [&quot;Shelby&quot;, &quot;Court&quot;, &quot;Van&quot;]
-    };
-    var anotherPerson = object(person);
-    anotherPerson.name = &quot;Greg&quot;;
-    anotherPerson.friends.push(&quot;Rob&quot;);
-    var yetAnotherPerson = object(person);
-    yetAnotherPerson.name = &quot;Linda&quot;;
-    yetAnotherPerson.friends.push(&quot;Barbie&quot;);
-    alert(person.friends);   //&quot;Shelby,Court,Van,Rob,Barbie&quot;w
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h4 id=&quot;寄生式继承&quot;&gt;寄生式继承&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function object(o){
-    function F(){}
-    F.prototype = o;
-    return new F();
-}
-function createAnother(original{ 
-    varclone=object(original); 
-    clone.sayHi = function(){
-        alert(&quot;hi&quot;);
-    };
-    return clone;
- }
- 
- 
-var person = {
-    name: &quot;Nicholas&quot;,
-    friends: [&quot;Shelby&quot;, &quot;Court&quot;, &quot;Van&quot;]
-};
-var anotherPerson = createAnother(person);
-anotherPerson.sayHi(); //&quot;hi&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h4 id=&quot;寄生组合式继承&quot;&gt;寄生组合式继承&lt;/h4&gt;
-
-&lt;p&gt;还没搞懂。。先往下面看。。。&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function SuperType(name){
-    this.name = name;
-    this.colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
-}
-SuperType.prototype.sayName = function(){
-    alert(this.name);
-};
-function SubType(name, age){
-    SuperType.call(this, name);
-    this.age = age;
-}
-SubType.prototype = new SuperType();
-SubType.prototype.constructor = SubType;
-SubType.prototype.sayAge = function(){
-    alert(this.age);
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;小结&quot;&gt;小结&lt;/h1&gt;
-&lt;p&gt;JavaScript 支持面向对象（OO）编程，但不使用类或者接口。对象可以在代码执行过程中创建和增强，隐藏具有动态性而非严格意义上的实体。没有类的情况下，可以采用下列模式创建对象。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;工厂模式  使用简单的函数创建对象，为对象添加属性和方法，然后返回对象。这个模式后来被构建函数模式取代。&lt;/li&gt;
-  &lt;li&gt;构造函数模式 可以创建自定义引用类型，可以像创建内置对象实例一样使用 new 操作符。缺点是，每个成员都无法复用，包括函数。&lt;/li&gt;
-  &lt;li&gt;原型模式 使用构造函数的 prototype 属性可以指定那些应该共享的属性和方法。组合使用构造函数模式和原型模式时，使用构造函数定义实例属性，使用原型模式定义共享的属性和方法。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 主要通过原型链实现继承。原型链的构建是通过将一个类型的实例赋值给另一个构造函数的原型实现的。这样子类型就能够访问超类型的属性和方法。这一点和基于类的继承很相似。再次亮出这张图：
-&lt;img src=&quot;/img/in-post/Javascrpt高级程序设计读书笔记/JS原型继承.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;原型链的问题是对象实例共享的所有继承的属性和方法，因此不宜单独使用。
-&lt;strong&gt;借助原型链来实现对原型属性和方法的继续，使用 借用构造函数 来实现对实例属性的继承。这样既通过原型上定义方法实现了函数复用，有能够保证每个实例有自己的属性。&lt;/strong&gt;
-此外，还可以选择下面的继承方式：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;原型式继承&lt;/li&gt;
-  &lt;li&gt;寄生式继承&lt;/li&gt;
-  &lt;li&gt;寄生组合式继承&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Tue, 16 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/</guid>
-        
-        <category>JavaScript</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Javascrpt高级程序设计读书笔记03</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记03&quot;&gt;Javascrpt高级程序设计读书笔记03&lt;/h1&gt;
-&lt;h2 id=&quot;引用类型&quot;&gt;引用类型&lt;/h2&gt;
-&lt;p&gt;引用类型是一种数据结构，用于将数据和功能组织在一起。通常也被称为类。引用类型的对象本身是放置在堆中的，对象引用是存在栈中的。&lt;/p&gt;
-&lt;h3 id=&quot;堆栈&quot;&gt;堆、栈&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/jeffchen/archive/2006/12/28/605689.html&quot;&gt;堆栈的区别&lt;/a&gt;
-堆（Heap）栈（Stack）&lt;/p&gt;
-
-&lt;p&gt;1、内存分配方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收 。注意它与数据结构中的堆是两回事，分配方式是类似于链表。可能用到的关键字如下：new、malloc、delete、free等等。
-
-栈：由编译器(Compiler)自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;2、申请方式方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：需要程序员自己申请，并指明大小。在c中malloc函数如p1 = (char *)malloc(10)；在C++中用new运算符，但是注意p1、p2本身是在栈中的。因为他们还是可以认为是局部变量。
-
-栈：由系统自动分配。 例如，声明在函数中一个局部变量 int b；系统自动在栈中为b开辟空间。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;3、系统响应方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样代码中的delete语句才能正确的释放本内存空间。另外由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。
-
-栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;4、大小限制方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。
-
-栈：在Windows下, 栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在WINDOWS下，栈的大小是固定的（是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;5、效率方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：是由new分配的内存，一般速度比较慢，而且容易产生内存碎片，不过用起来最方便，另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是直接在进程的地址空间中保留一快内存，虽然用起来最不方便。但是速度快，也最灵活。
-
-栈：由系统自动分配，速度较快。但程序员是无法控制的。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;6、存放内容方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。
-
-栈：在函数调用时第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈，然后是函数中的局部变量。 注意: 静态变量是不入栈的。当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;7、存取效率方面：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;堆：char *s1 = &quot;Hellow Word&quot;；是在编译时就确定的；
-
-栈：char s1[] = &quot;Hellow Word&quot;； 是在运行时赋值的；用数组比用指针速度要快一些，因为指针在底层汇编中需要用edx寄存器中转一下，而数组在栈上直接读取。 ### Object 类型 目前看到的大多数引用类型值都是 `Object` 类型的实例。OC 里面的 `NSObject` 一样。 `Object` 实例有两种创建方式，第一张是使用 `new` 操作符后跟 `Object` 构造函数：
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = new Object();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;另一种就是使用字面量表示法。目的是简化创建过程中包含大量属性的对象。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var person = {
-    name : &quot;Yunis&quot;,
-    age : 16
-}
-
-var person = {}; // new Object()  
-person.name = &quot;Nicholas&quot;;
-person.age = 29;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;一般来说，访问对象的属性使用都是点语法，但是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中可以使用方括号来访问对象的属性：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alert(person[&quot;name&quot;]);//Yunis
-alert(person.name);//Yunis
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;通过方括号访问属性，还有另外一个用处，有些属性中包含导致语法错误的字符、或者关键字、保留字：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;person[&quot;first name&quot;] = &quot;Yunis&quot;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;一般来说，尽量使用点语法访问属性。&lt;/p&gt;
-
-&lt;h3 id=&quot;array-类型&quot;&gt;Array 类型&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的数组与其他语言的数组有很大的不同。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中数组中每一项都可以保存任何类型的数据。就是不同于其他语言，一个数组对象中，可以同时存在 字符串、数字、对象和数组等。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 的数组还可以动态调整大小，可以随着数据的添加自动增长。 &lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt; 的创建方式：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//创建一个空数组
-var colors = new Array();
-
-//这个是创建一个包含3个元素的数组
-var colors = new Array(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;);
-
-//这个是创建一个长度为20 的数组
-var colors = new Array(20);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;创建的过程可以省略 &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt; 关键字：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//创建一个空数组
-var colors = Array();
-
-//这个是创建一个包含3个元素的数组
-var colors = Array(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;);
-
-//这个是创建一个长度为20 的数组
-var colors = Array(20);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;也可以使用字面量创建：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//创建一个空数组
-var colors = [];
-
-//这个是创建一个包含3个元素的数组
-var colors = [&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;];
-
-
-❗️❗️❗️❗️❗️各个浏览器的处理也不一致，不哟啊使用下面的写法❗️❗️❗️❗️
-//❗️❗️❗️ 这样会创建一个包含两个数组的数组，一个数组长度是2，一个数组长度是3. ❗️❗️❗️ 
-var colors = [2,3，];
-
-//❗️❗️❗️ 这样会创建一个长度是4或者5的数组 ❗️❗️❗️ 
-var colors = [,,,,];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;与其他语言不通，数组读取超过了初始化的长度，不会报错。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = [&quot;u&quot;,&quot;j&quot;,];
-alert(colors[100]); // &quot;undefined&quot;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;并且 数组的 length 属性 不是只读的，是可以修改的。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = [&quot;u&quot;,&quot;j&quot;,];
-colors.length = 100;
-alert(colors.length); // 100
-
-var colors = [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;];
-//设置长度后，位于这个长度后的数据都会被清空，变为 undefined
-colors.length = 2;
-alert(colors); // a,b
-
-
-//可以使用 length 属性 方便的在数组尾部添加数据
-//因为数组的最后一项的索引始终是 length - 1 ，因此下一项的索引就是 length。
-var colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
-colors[colors.length] = &quot;black&quot;;//&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;,&quot;black&quot;
-colors[colors.length] = &quot;brown&quot;;//&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;,&quot;black&quot;,&quot;brown&quot;
-
-
-
-
-//如果我们超出当前数组的 长度添加一个元素
-var colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;];
-colors[99] = &quot;black&quot;;
-//长度就变成了 100  但是 索引 3 - 98 之间值都是 undefined
-alert(colors.length); // 100
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;检测数组&quot;&gt;检测数组&lt;/h4&gt;
-&lt;p&gt;对于一个网页、或者一个全局作用域而言，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符就可以得到满意的结果：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//判断 value 是不是数组
-if (value instanceof Array){ 
-    // 是，执行相应的操作
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;但是在多个框架或者说多个不同的全局执行环境，就存在了不同版本的 Array 的构造函数，&lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 就无法正确的工作了，需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Array.isArray()&lt;/code&gt; 方法。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//判断 value 是不是数组
-
-if (Array.isArray(value)){
-    // 是，执行相应的操作
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;转换方法&quot;&gt;转换方法&lt;/h4&gt;
-&lt;p&gt;可以使用 join() 方法使用不同的分割符来构建字符串。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;];
-alert(colors.join(&quot;,&quot;));       //red,green,blue
-alert(colors.join(&quot;||&quot;));      //red||green||blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;栈方法&quot;&gt;栈方法&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的数组可以表现的跟栈一样。栈的访问规则是后进先出（LIFO，Last-In-First-Out），也就是最后添加的数据会最早被移除。在栈中的推入和弹出操作只会发生在栈的顶部。&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 为数组提供了 &lt;code class=&quot;highlighter-rouge&quot;&gt;push()&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;pop()&lt;/code&gt; 方法。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;push()&lt;/code&gt; 方法可以接受任意数量的参数，把他们逐个添加到数组尾部，并返回修改后的数组长度。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;pop()&lt;/code&gt; 方法从数组末尾移除最后一项，并修改数组长度，然后返回移除的项。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = new Array();
-var count = colors.push(&quot;red&quot;, &quot;green&quot;);
-alert(colors); //red,green
-
-alert(count); //2
-count = colors.push(&quot;black&quot;);
-alert(count);     //3
-var item = colors.pop();
-alert(item);      //&quot;black&quot;
-alert(colors.length);   //2
-
-
-
-
-var colors = new Array(&quot;测试数据占位&quot;,&quot;测试数据占位01&quot;);
-var count = colors.push(&quot;red&quot;, &quot;green&quot;);
-alert(colors); //测试数据占位,测试数据占位01,red,green
-
-alert(count); //4
-count = colors.push(&quot;black&quot;);
-alert(count);     //5
-var item = colors.pop();
-alert(item);      //&quot;black&quot;
-alert(colors.length);   //4
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;队列方法&quot;&gt;队列方法&lt;/h4&gt;
-
-&lt;p&gt;数组也可以像队列一样使用，队列的访问规则是先进先出（FIFO，First-In-First-Out）。从队列的首部移除项，尾部添加项。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; shift()&lt;/code&gt; 能够移除数组中的第一个项并返回该项，同时数组长度加1.&lt;/p&gt;
-
-&lt;p&gt;结合之前的 &lt;code class=&quot;highlighter-rouge&quot;&gt;push()&lt;/code&gt; 方法，就可以像使用队列一样使用数组了。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//创建数组
-var colors = new Array();
-//推入两项 colors 变为  red green
-var count = colors.push(&quot;red&quot;, &quot;green&quot;);
-alert(count); //2
-//推入一项 colors 变为  red green black
-count = colors.push(&quot;black&quot;);
-alert(count);     //3
-
-//取得第一项并移除 colors 变为  green black
-var item = colors.shift();
-alert(item); //&quot;red&quot;
-alert(colors.length); //2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;unshift()&lt;/code&gt;  与 ` shift()&lt;code class=&quot;highlighter-rouge&quot;&gt; 方法相反，可以在数组前面添加任意多个项并返回新数组的长度。因此 &lt;/code&gt;unshift()&lt;code class=&quot;highlighter-rouge&quot;&gt; 和 &lt;/code&gt;pop()` 方法也可以以相反的方向模拟队列。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; var colors = new Array();
- var count = colors.unshift(&quot;red&quot;, &quot;green&quot;);
- alert(colors);//red green
-
- alert(count); //2
- count = colors.unshift(&quot;black&quot;,&quot;llll&quot;);
- alert(colors);//black llll red green
-
- alert(count);//4
- var item = colors.pop();
- alert(item);//green
- alert(colors.length);//3
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;重排序方法&quot;&gt;重排序方法&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;reverse()&lt;/code&gt; 反转数组[1,2,3] -&amp;gt; [3,2,1]
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sort()&lt;/code&gt; 默认排序是按照每一项的 Unicode 编码排序的。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = new Array(&quot;b&quot;,&quot;c&quot;,&quot;1&quot;,&quot;3&quot;,&quot;a&quot;,&quot;z&quot;,&quot;f&quot;);
-colors.sort();
-alert(colors);//1,3,a,b,c,f,z
-
-
-
-var colors = new Array(&quot;b&quot;,&quot;c&quot;,&quot;1&quot;,&quot;111&quot;,&quot;3&quot;,&quot;a&quot;,&quot;z&quot;,&quot;f&quot;);
-colors.sort();
-alert(colors);//1,111,3,a,b,c,f,z
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;可以自己写一个比较规则的函数当做参数传递给 &lt;code class=&quot;highlighter-rouge&quot;&gt;sort()&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-function compare(value1, value2) {
-    if (Number(value1) &amp;lt; Number(value2)) {
-        return -1;
-    } else if (Number(value1) &amp;gt; Number(value2)) {
-        return 1;
-    } else {                    
-        return 0; 
-    }                
-}
-
-var colors = new Array(&quot;1&quot;,&quot;2&quot;,&quot;5&quot;,&quot;4&quot;,&quot;3&quot;,&quot;22&quot;,&quot;11&quot;,&quot;9&quot;);
-colors.sort(compare);
-alert(colors);//1,2,3,4,5,9,11,22
-   
-   
-           
-var colors = new Array(&quot;b&quot;,&quot;c&quot;,&quot;1&quot;,&quot;111&quot;,&quot;3&quot;,&quot;a&quot;,&quot;z&quot;,&quot;f&quot;);
-colors.sort(compare);
-//❗️❗️❗️❗️  这到底是为什么。。有点晕
-alert(colors);//b,c,1,3,111,a,z,f
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sort()&lt;/code&gt; 有点坑爹啊。&lt;/p&gt;
-
-&lt;h4 id=&quot;操作方法&quot;&gt;操作方法&lt;/h4&gt;
-&lt;h5 id=&quot;concat&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;concat()&lt;/code&gt;&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;concat()&lt;/code&gt; 可以根据单签数组中的所有项创建一个新的数组。这个方法会先创建一个当前数组的副本，然后将他接收的参数添加到这个副本的末尾，组合返回新构建的数组。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;];
-var colors2 = colors.concat(&quot;yellow&quot;, [&quot;black&quot;, &quot;brown&quot;]);
-alert(colors);     //red,green,blue
-alert(colors2);    //red,green,blue,yellow,black,brown
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h5 id=&quot;slice&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;slice()&lt;/code&gt;&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;slice()&lt;/code&gt; 方法可以根据当前数组的一项或者多项创建一个新数组。可以接受一个或者两个参数（返回项的起始和结束位置）。如果只有一个参数，则该方法返回从改参数指定位置开始到当前数组末尾的所有项。如果有两个参数，该方法返回起始和结束位置之前的项，但不包括结束位置的项。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var colors = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;yellow&quot;, &quot;purple&quot;];
-var colors2 = colors.slice(1);
-var colors3 = colors.slice(1,4);
-alert(colors2);   //green,blue,yellow,purple
-alert(colors3);   //green,blue,yellow
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;splice&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;splice()&lt;/code&gt;&lt;/h5&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;splice()&lt;/code&gt; 方法是数组中很强大的方法，有多中用法，主要的用法有3种：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;删除 可以删除任意数量的项，只需要指定两个参数：要删除的第一项的位置和要删除的项数。例如：&lt;code class=&quot;highlighter-rouge&quot;&gt;splice(0,2)&lt;/code&gt; 会删除数组的前两项。&lt;/li&gt;
-  &lt;li&gt;插入 可以向指定位置插入任意数量的项，需要提供3个参数：起始位置、0（要删除的项个数）和要插入的项。如果需要插入多个项，可以再传入第4、5.以及任意多个项。例如：&lt;code class=&quot;highlighter-rouge&quot;&gt;splice(2,0,&quot;red&quot;,&quot;green&quot;)&lt;/code&gt; 会从当前数组的位置2开始插入 &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;red&quot;&lt;/code&gt; 和  &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;green&quot;&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;替换 可以向指定位置插入任意数量的项，切同时删除任意数量的项。需要提供3个参数：起始位置、要删除的项个数 和 要插入的项，插入的项数不必与删除的项数相同。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;splice()&lt;/code&gt; 方法始终会返回一个数组，该数组包含从原始数组中删除的项，如果没有删除返回一个空数组。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//删除
-var colors = [&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;];
-var removed = colors.splice(0,1);
-alert(colors); // green,blue
-alert(removed); // red 
-
-//插入
-removed = colors.splice(1, 0, &quot;yellow&quot;, &quot;orange&quot;);
-alert(colors); // green,yellow,orange,blue
-alert(removed); //返回一个空的数组
-
-//替换
-removed = colors.splice(1, 1, &quot;red&quot;, &quot;purple&quot;);
-alert(colors); // green,red,purple,orange,blue
-alert(removed); // yellow 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;位置方法&quot;&gt;位置方法&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;indexOf()&lt;/code&gt; 方法是从数组的开始位置向后查找
-&lt;code class=&quot;highlighter-rouge&quot;&gt;lastIndexOf()&lt;/code&gt; 方法是从数组的末尾位置向前查找。
-这两个方法都接收两个参数：要查找的项和 表示查找起点位置的索引（可选）。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var numbers = [1,2,3,4,5,4,3,2,1];
-
-alert(numbers.indexOf(4));        //3
-alert(numbers.indexOf(4, 4));     //5
-
-alert(numbers.lastIndexOf(4)); //5
-alert(numbers.lastIndexOf(4, 4)); //3
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;迭代方法&quot;&gt;迭代方法&lt;/h4&gt;
-&lt;p&gt;JavaScript 提供了5个迭代方法。每个方法都接收两个参数：&lt;strong&gt;要在每一项上运行的函数&lt;/strong&gt; 和 &lt;strong&gt;运行该函数的作用域对象&lt;/strong&gt;（可选，影响 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; 的值）。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;every() 对数组中每一项都运行特定函数，如果改函数每一项都返回 true，则返回true。&lt;/li&gt;
-  &lt;li&gt;some() 对数组中每一项都运行特定函数，如果改函数有任意一项返回 true，则返回true。&lt;/li&gt;
-  &lt;li&gt;forEach() 对数组的每一项运行特定函数。没有返回值。&lt;/li&gt;
-  &lt;li&gt;filter() 对数组的每一项运行特定函数。返回该函数会返回 true 的选项组成的数组。&lt;/li&gt;
-  &lt;li&gt;map() 对数组的每一项运行特定函数。返回每次函数调用的结果组成的数组。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;var numbers = [1,2,3,4,5,4,3,2,1];
-var everyResult = numbers.every(function(item, index, array){
-    return (item &amp;gt; 2);
-});
-alert(everyResult); //false
-
-
-var someResult = numbers.some(function(item, index, array){
-    return (item &amp;gt; 2);
-});
-alert(someResult); //true
-
-
-
-var filterResult = numbers.filter(function(item, index, array){
-    return (item &amp;gt; 2);
-});
-alert(filterResult); //[3,4,5,4,3]
-
-
-
-var mapResult = numbers.map(function(item, index, array){
-    return item * 2;
-});
-alert(mapResult);  //[2,4,6,8,10,8,6,4,2]
-
-
-numbers.forEach(function(item, index, array){
-    //对每一项进行处理 for 循环
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&quot;归并方法&quot;&gt;归并方法&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 提供了两个归并数组的方法 &lt;code class=&quot;highlighter-rouge&quot;&gt;reduce()&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;reduceRight()&lt;/code&gt;。都会迭代数组中的所有项区别是，&lt;code class=&quot;highlighter-rouge&quot;&gt;reduce()&lt;/code&gt; 是从数组的第一项开始，&lt;code class=&quot;highlighter-rouge&quot;&gt;reduceRight()&lt;/code&gt; 是从数组的最后一项开始。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var values = [1,2,3,4,5];
-var sum = values.reduce(function(prev, cur, index, array){
-    return prev + cur;
-});
-
-
-第1次执行 prev 是1，cur 是2.
-第2次执行 prev 是3，cur 是3.
-第3次执行 prev 是6，cur 是4.
-...
-最后的结果
-
-alert(sum); //15
-
-
-
-var sum = values.reduceRight(function(prev, cur, index, array){
-    return prev + cur;
-});
-第1次执行 prev 是5，cur 是4.
-第2次执行 prev 是9，cur 是3.
-第3次执行 prev 是12，cur 是2.
-...
-最后的结果
-
-alert(sum);
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;date-类型&quot;&gt;Date 类型&lt;/h3&gt;
-&lt;p&gt;创建一个日期对象：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var now = new Date();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;调用 Date 构造函数而不传递参数的情况下，新创建的对象自动获取当前日期和时间。&lt;/p&gt;
-
-&lt;p&gt;代码来说明一切：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 2005 年 5月 5日 下午 5点55分55秒
-//这里5月是因为月份是基于0 为其实月份，即：0 表示一月。
-var allFives = new Date(Date.UTC(2005, 4, 5, 17, 55, 55));
-
-//计算执行时间
-var start = Date.now();
-doSomething();
-var stop = Date.now(),
-    result = stop   start;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;regexp-类型&quot;&gt;RegExp 类型&lt;/h3&gt;
-&lt;p&gt;JavaScript 通过 RegExp 来支持正则表达式。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var expression = / pattern / flags ;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;pattern 代表正则表达式。
-flags 代表正则表达式flags .&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;g 全局（global）模式，匹配所有。&lt;/li&gt;
-  &lt;li&gt;i case-insensitive，不区分大小写。&lt;/li&gt;
-  &lt;li&gt;m 表示多行（multiline）模式。在达到一行文本的末尾是还会继续查找下一行中是否存在与模式匹配的项。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//匹配所有的 “at”
-var pattern1 = /at/g;
-
-//匹配第一个 bat 或者 cat，不区分大小写
-var pattern2 = /[bc]at/i;
-
-//匹配所有以 at 结尾的3个字符的集合，不区分大小写
-var pattern3 = /.at/gi;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;在 JavaScript 使用正则表达式下列字符需要使用转义字符
-&lt;code class=&quot;highlighter-rouge&quot;&gt;( [ { \ ^ $ | ) ? * + .]}&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//匹配第一个 “bat” 或者 “cat” 不区分大小写
-var pattern1 = /[bc]at/i;
-
-//匹配第一个&quot;[bc]at&quot; ，不区分大小写
-var pattern2 = /\[bc\]at/i;
-
-//匹配所有以 at 结尾的3个字符的集合，不区分大小写
-var pattern3 = /.at/gi;
-
-//匹配所有 “.at”，不区分大小写
-var pattern4 var pattern4 = /\.at/gi;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;待续。。。。看到头晕 5.4&lt;/p&gt;
-
-&lt;h3 id=&quot;function-类型&quot;&gt;Function 类型&lt;/h3&gt;
-&lt;p&gt;函数也是对象，函数名 实际上就是指向函数对象的指针，不会与某个函数绑定。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function sum (num1, num2) {
-    return num1 + num2;
-}
-var sum = function(num1, num2){
-    return num1 + num2;
-};
-
-alert(sum(10,10));        //20
-
-var anotherSum = sum;
-alert(anotherSum(10,10)); //20
-
-sum = null;
-alert(anotherSum(10,10)); //20
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;没有重载&quot;&gt;没有重载&lt;/h4&gt;
-&lt;p&gt;将函数名称想象为指针，就很好理解了为什么 JavaScript 中没有函数重载的概念了。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function addSomeNumber(num){
-    return num + 100;
-}
-function addSomeNumber(num) {
-    return num + 200;
-}
-
-var result = addSomeNumber(100); //300
-
-var addSomeNumber = function (num){
-    return num + 100;
-};
-
-addSomeNumber = function (num) { 
-    return num + 200;
-};
-var result = addSomeNumber(100); //300
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;函数声明-和-函数表达式&quot;&gt;函数声明 和 函数表达式&lt;/h4&gt;
-&lt;p&gt;解析器在向执行环境中加载数据时，对函数声明和函数表达式不是相同的处理，解析器会先读取函数声明，并使其在执行任何代码之前可用（可用访问），至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真正的被解释执行。下面的代码完全可以正确的执行：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alert(sum(10,10));
-function sum(num1, num2){
-    return num1 + num2;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这是因为在代码执行之前，解析器就已经通过一个名为 函数声明提升（function declaration hoisting）的过程，读取并将函数声明添加到执行环境中。读取并将函数声明添加到执行环境中。对代码求值时， JavaScript 引擎 在第一遍会声明函数并将它们放到代码树的顶部。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alert(sum(10,10));
-var sum = function(num1, num2){
-    return num1 + num2;
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;上面代码会在运行期产生错误，原因是函数位于一个初始化语句中，而不是一个函数声明中。&lt;/p&gt;
-
-&lt;h4 id=&quot;作为值的函数&quot;&gt;作为值的函数&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中 函数名本身就是变量，所以函数可以当做值来传递，还可以当做另一个函数的结果返回。&lt;/p&gt;
-&lt;h4 id=&quot;函数的内部属性&quot;&gt;函数的内部属性&lt;/h4&gt;
-&lt;p&gt;在函数内部有两个特殊的对象：&lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 主要是用来保存函数的参数，这个对象还有一个名叫 &lt;code class=&quot;highlighter-rouge&quot;&gt;callee&lt;/code&gt; 的属性，这个属性是一个指针，指向拥有 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 的函数。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-function factorial(num){
-        if (num &amp;lt;=1) {
-            return 1;
-        } else {
-            return num * factorial(num-1)
-        }
-}
-
-function factorial(num){
-    if (num &amp;lt;=1) {
-        return 1;
-    } else {
-        return num * arguments.callee(num-1)
-} }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;函数内部还有一个特殊对象是 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt;引用的是函数的执行环境对象。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;window.color = &quot;red&quot;;
-var o = { color: &quot;blue&quot; };
-function sayColor(){
-    alert(this.color);
-}
-sayColor();     //&quot;red&quot;
-o.sayColor = sayColor;
-o.sayColor();   //&quot;blue&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;函数的属性和方法&quot;&gt;函数的属性和方法&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;length&lt;/code&gt; 表示函数希望接收的命名参数的个数。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;prototype&lt;/code&gt; 保存了对象的所有实例方法。但是不能枚举。&lt;/p&gt;
-
-&lt;p&gt;每个函数还包括两个非继承来的方法： &lt;code class=&quot;highlighter-rouge&quot;&gt;apply()&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;call()&lt;/code&gt;，这两个方法的用途是在给特定的作用域调用函数，实际上等于设置函数体内 &lt;code class=&quot;highlighter-rouge&quot;&gt;this&lt;/code&gt; 对象的值。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;apply()&lt;/code&gt; 接收两个参数：一个是在其中运行函数的作用域，另一方是参数数组。其中第二个参数可以是 &lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt; 的实例，也可以是 &lt;code class=&quot;highlighter-rouge&quot;&gt;arguments&lt;/code&gt; 对象。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function sum(num1, num2){
-    return num1 + num2;
-}
-
-function callSum1(num1, num2){
-    return sum.apply(this, arguments);//传入 arguments 对象
-}
-
-function callSum2(num1, num2){
-    return sum.apply(this, [num1, num2]); //传入数组
-}
-
-alert(callSum1(10,10));   //20
-alert(callSum2(10,10));   //20
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;call()&lt;/code&gt; 函数必须明确的传入每一个参数。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;apply()&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;call()&lt;/code&gt; 真正强大是地方是能够扩充函数赖以运行的作用域。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;window.color = &quot;red&quot;;
-var o = { color: &quot;blue&quot; };
-function sayColor(){
-    alert(this.color);
-}
-sayColor(); //red
-
-sayColor.call(this); //red
-sayColor.call(window); //red
-sayColor.call(o); //blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;apply()&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;call()&lt;/code&gt; 扩充作用域的好处是对象不需要与方法有任何的耦合关系。&lt;/p&gt;
-
-&lt;p&gt;JavaScript 5 中 定义了 &lt;code class=&quot;highlighter-rouge&quot;&gt;bind()&lt;/code&gt;，这个方法会创建一个函数的实例，其 this 值会被绑定到传给 &lt;code class=&quot;highlighter-rouge&quot;&gt;bind()&lt;/code&gt; 函数的值。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;window.color = &quot;red&quot;;
-var o = { color: &quot;blue&quot; };
-
-function sayColor(){
-    alert(this.color);
-}
-
-var objectSayColor = sayColor.bind(o);
-objectSayColor();    //blue
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;基本包装类型&quot;&gt;基本包装类型&lt;/h4&gt;
-&lt;p&gt;为了方便操作基本类型值，JavaScript 提供了3个特殊的引用类型： &lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var s1 = &quot;some text&quot;;
-var s2 = s1.substring(2);
-
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;上面的代码中 s1 包含一个字符串，属于基本类型值，第二行中就使用了 s1 的 substring() 方法，理论上来说，s1属于基本类型，基本类型不是对象，不应该有方法。这是因为，为了我们更直观的进行操作，后台自动帮助我们完成了处理。当第二行代码访问s1时，访问过程处于一种读取模式，也就是要从内存中读取这个字符串的值。而在读取模式中访问字符串时，后台会自动完成下列操作：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;创建一个 String 类型的实例；&lt;/li&gt;
-  &lt;li&gt;在实例上调用指定的方法；&lt;/li&gt;
-  &lt;li&gt;销毁这个实例。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;具体的代码可以想象成下面的代码：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var s1 = new String(&quot;some text&quot;);
-var s2 = s1.substring(2);
-s1 = null;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;引用类型和基本包装类型的主要区别就是对象的生存周期。使用 new 操作符创建的引用类型的实例，在执行流离开当前作用域之前一直都保存在内存中的，而自动创建的基本包装类型的对象，则只存在于一行代码的瞬间，然后立即被销毁。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var s1 = &quot;some text&quot;;
-s1.color = &quot;red&quot;;
-alert(s1.color);   //undefined
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;String 方法 待续 编辑器已经卡的不行了&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
-&lt;p&gt;对象在 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中被称为引用类型的值，而且有一些内置的引用类型可以用来创建特定的对象。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;引用类型已传统的面向对象程序设计中的类相似，但实现不同；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 是一个基础类型，其他所用类型都从 &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; 继承了基本的行为；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt; 类型是一组值的有序列表，同时还提供了操作和转换这些值的功能；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Date&lt;/code&gt; 类型提供了有关日期和时间的信息，包括当前日期和时间以及相关的计算功能；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RegExp&lt;/code&gt; 类型是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 支持正则表达式的一个借口，提供最基本的和一些高级的正则表达式功能。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;函数是 &lt;code class=&quot;highlighter-rouge&quot;&gt;function&lt;/code&gt; 类型的实例，因此函数也是对象。所以函数也拥有方法。
-因为有了基本包装类型，所以 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 中的基本类型可以被当做对象来访问。三种基本 包装类型分别是：&lt;code class=&quot;highlighter-rouge&quot;&gt;Boolean&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;Number&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt;。以下是它们的共同特征：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;每个包装类型都映射到同名的基本类型；&lt;/li&gt;
-  &lt;li&gt;在读取模式下访问基本类型值时，就会创建对应的基本包装类型的一个对象，从而方便了数据操作；&lt;/li&gt;
-  &lt;li&gt;操作基本类型值的语句一经执行完毕，就会立即销毁创建的包装对象。&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Fri, 12 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/12/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B003/</guid>
-        
-        <category>Javascrpt</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Javascrpt高级程序设计读书笔记02</title>
-        <description>&lt;h1 id=&quot;javascrpt高级程序设计读书笔记02&quot;&gt;Javascrpt高级程序设计读书笔记02&lt;/h1&gt;
-
-&lt;h2 id=&quot;变量作用域和内存问题&quot;&gt;变量、作用域和内存问题&lt;/h2&gt;
-&lt;h3 id=&quot;基本类型和引用类型的值&quot;&gt;基本类型和引用类型的值&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 存在两种不同的数据类型的值：&lt;code class=&quot;highlighter-rouge&quot;&gt;基本类型值&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;引用类型值&lt;/code&gt;。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;基本类型值&lt;/code&gt; 指的是简单的数据段，为 &lt;code class=&quot;highlighter-rouge&quot;&gt;引用类型值&lt;/code&gt; 指那些可能由多个值构成的对象。
-引用类型的值是保存在内存中的对象，&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不允许直接访问内存中的位置，也就是不能直接操作对象的内存空间。操作对象时，实际是操作对象的引用而不是实际对象。（这种说法并不严格，当复制保存对象的某个变量时，操作的是对象的引用，但在为对象添加属性时，操作的是实际的对象。）&lt;/p&gt;
-&lt;h4 id=&quot;动态的属性&quot;&gt;动态的属性&lt;/h4&gt;
-&lt;p&gt;可以在 引用类型 创建后，对他添加属性和方法。&lt;/p&gt;
-&lt;h4 id=&quot;复制变量值&quot;&gt;复制变量值&lt;/h4&gt;
-&lt;p&gt;基本数据类型的复制是直接复制了一份值，引用数据类型，是复制了引用对象的指针，而不是引用对象本身。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; var obj1 = new Object();
-    var obj2 = obj1;
-    obj1.name = &quot;Nicholas&quot;;
-    alert(obj2.name);  //&quot;Nicholas&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;传递参数&quot;&gt;传递参数&lt;/h4&gt;
-&lt;p&gt;JavaScript 中的参数都是按照值传递的。&lt;/p&gt;
-
-&lt;h4 id=&quot;检查类型&quot;&gt;检查类型&lt;/h4&gt;
-&lt;p&gt;要检查一个变量是不是基本的数据类型，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 是最佳的工具。而通常我们需要的是知道这个对象是什么类型的对象，这个时间，就需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;result = variable instanceof constructor
-
-alert(person instanceof Object); //变量 person 是 Object 吗？
-alert(colors instanceof Array); //变量 colors 是 Array 吗？
-alert(pattern instanceof RegExp); //变量 pattern 是 RegExp 吗？
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h2 id=&quot;执行环境及作用域&quot;&gt;执行环境及作用域&lt;/h2&gt;
-
-&lt;p&gt;在一个页面中，第一次载入JS代码时创建一个全局执行环境，全局执行环境是最外围的执行环境，在Web浏览器中，全局执行环境被认为是window对象。因此，所有的全局变量和函数都是作为window对象的属性和方法创建的。
-每进入一个执行环境，都会建立一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象（Variable Object）&lt;/code&gt;，环境中定义的变量和函数都保存在这个对象中。虽然我们编写的代码无法直接访问它，但是解析器在处理数据时在后台使用它。
-每个函数都有自己的执行环境。当执行流进入一个函数时，函数的环境就会被推入一个环境栈中，当函数执行完毕，栈将环境弹出，把控制权返还给之前的执行环境。
-当代码在一个执行环境中执行时，会创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象(Variable Object)&lt;/code&gt; 的一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt; 的用途是保证对执行环境有权访问的所有变量和函数的有序访问。 &lt;code class=&quot;highlighter-rouge&quot;&gt;作用域链(Scope Chain)&lt;/code&gt; 的顶端始终是当前执行代码所在环境的&lt;code class=&quot;highlighter-rouge&quot;&gt;变量对象(Variable Object)&lt;/code&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;        var color = &quot;blue&quot;;
-        function changeColor() {
-            var anotherColor = &quot;red&quot;;
-            function swapColors() {
-                var tempColor = anotherColor;
-                anotherColor = color;
-                color = tempColor;
-                //这里可以访问 color anotherColor和tempColor
-            }
-            //  这里可以访问color anotherColor，但不能访问tempColor
-            swapColors();
-        }
-        //这里只能访问 color
-        changeColor();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;如果这个环境是函数（如 swapColors()），则将其活动对象（activation object)作为变量对象。活动对象在最开始时只包含一个变量，就是函数内部的arguments对象。作用域链中的下一个Variable Object来自该函数(swapColors())的包含环境（也就是changeColor())，而再下一个Variable object来自再下一个包含环境。这样，一直延续到全局执行环境，全局执行环境的Variable Object始终是作用域链中的最后一个对象&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://yanhaijing.com/javascript/2014/04/29/what-is-the-execution-context-in-javascript/&quot;&gt;了解JavaScript的执行上下文&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/ScopeChain.png&quot; alt=&quot;ScopeChain&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;全局环境有1个变量color和1个函数changecolor()。&lt;/li&gt;
-  &lt;li&gt;changecolor()函数的局部环境中具有1个anothercolor属性和1个swapcolors函数，当然，changecolor函数中可以访问自身以及它外围（也就是全局环境）中的变量。&lt;/li&gt;
-  &lt;li&gt;swapcolor()函数的局部环境中具有1个变量tempcolor。在该函数内部可以访问上面的2个环境（changecolor和window）中的所有变量，因为那2个环境都是它的父执行环境。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;通过上面的分析，我们可以得知内部环境可以通过作用域链访问所有的外部环境，但外部环境不能访问内部环境中的任何变量和函数。这些环境之间是线性、有次序的。每个环境都可以向上搜索作用域链，以便查询变量和函数名；但任何环境不能通过向下搜索作用域链条而进入另一个执行环境。对于上述例子的swapcolor()函数而言，其作用域链包括：swapcolor()的变量对象、changecolor（）变量对象和全局对象。swapcolor（）的局部环境开始先在自己的Variable Object中搜索变量和函数名，找不到，则向上搜索changecolor作用域链。。。。。以此类推。但是，changecolor()函数是无法访问swapcolor中的变量。&lt;/p&gt;
-
-&lt;h3 id=&quot;延长作用域链&quot;&gt;延长作用域链&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;javascript&lt;/code&gt; 的执行环境的类型共有两种：全局和局部（函数）。不过可以通过别的方法来延长作用域链。&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;try-catch语句的catch块&lt;/li&gt;
-  &lt;li&gt;with语句&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;对于catch语句来说，会创建一个新的变量对象，其中包含的是被抛出的错误对象的声明。在IE8及之前的javascript实现中，存在一个与标准不一样的地方，即在catch语句中捕获的错误对象会被添加到执行环境的变量对象，而不是catch语句的变量对象中。换句话说，即使是在catch块的外部也可以访问到错误对象。IE9中修复了这个问题。也就是说，在IE9以后的版本中，只能在catch的内部访问到错误对象。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;person={name:&quot;yhb&quot;,age:22,height:175,wife:{name:&quot;lwy&quot;,age:21}};  
-with(person.wife){  
-    console.log(name);  
-}  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;with语句将person.wife添加到当前作用域链的头部，所以输出的就是：“lwy”.
-with语句主要用来临时扩展作用域链，将语句中的对象添加到作用域的头部。&lt;/p&gt;
-
-&lt;h3 id=&quot;没有块级作用域&quot;&gt;没有块级作用域&lt;/h3&gt;
-&lt;p&gt;在其他语言中，由 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;&lt;/code&gt; 包含的代码块有自己的作用域，但是 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 不支持块级作用域。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (true) {
-    // color 会被加入离它最近的执行环境中。
-     var color = &quot;blue&quot;;
-}
-alert(color);    //&quot;blue&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h4 id=&quot;声明变量&quot;&gt;声明变量&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function add(num1, num2) {
-    var sum = num1 + num2;
-    return sum; 
-}
-var result = add(10, 20); //30
-alert(sum); //由于sum 不是有效的变量，因此会导致错误。
-
-
-function add(num1, num2) {
-    //如果不添加 var 关键字，sum 会被添加到全局环境中。
-    sum = num1 + num2;
-    return sum; 
-}
-var result = add(10, 20); //30 
-alert(sum); //30 
-        
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h4 id=&quot;查找标识符&quot;&gt;查找标识符&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var scope=&quot;global&quot;;  
-function t(){  
-    console.log(scope);  //输出undefined
-    var scope=&quot;local&quot;  
-    console.log(scope); //输出  local
-}  
-t(); 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;第一句输出的是： “undefined”，而不是 “global”
-第二讲输出的是：”local”
-  你可能会认为第一句会输出：”global”,因为代码还没执行var scope=”local”,所以肯定会输出“global”。
-  我说这想法完全没错，只不过用错了对象。我们首先要区分&lt;code class=&quot;highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;的函数作用域与我们熟知的C/C++等的块级作用域。
-  在C/C++中，花括号内中的每一段代码都具有各自的作用域，而且变量在声明它们的代码段之外是不可见的。而&lt;code class=&quot;highlighter-rouge&quot;&gt;Javascript&lt;/code&gt;压根没有块级作用域，而是函数作用域.
-所谓函数作用域就是说：-》变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。
-所以根据函数作用域的意思，可以将上述代码重写如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var scope=&quot;global&quot;;  
-function t(){  
-    var scope;  
-    console.log(scope);  
-    scope=&quot;local&quot;  
-    console.log(scope);  
-}  
-t(); 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h2 id=&quot;垃圾搜集&quot;&gt;垃圾搜集&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 具有自动垃圾收集机制，采用的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;标记清除(mark-and-sweep)&lt;/code&gt;,当变量进入环境，就将标量标记为 “进入环境”，理论上来说，只要被标记为 “进入环境” 就不会释放变量占用的内存，而当变量离开环境是，将其标记为 “离开环境”。&lt;/p&gt;
-
-&lt;h2 id=&quot;小结&quot;&gt;小结&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 变量可以用来保存两种类型的值：基本类型和引用类型。&lt;/li&gt;
-  &lt;li&gt;基本类型在内存中占用固定大小，因此被保存在栈内存中。&lt;/li&gt;
-  &lt;li&gt;从一个变量向另一个变量复制基本类型的值，会创建这个值的一个副本。&lt;/li&gt;
-  &lt;li&gt;引用类型的值是对象，保存在堆内存中。&lt;/li&gt;
-  &lt;li&gt;包含引用类型值的变量实际上包含的并不是对象本身，而是一个指向该对象的指针。&lt;/li&gt;
-  &lt;li&gt;从一个变量向另一个变量复制引用类型的值，复制的其实是指针，因此两个变量最终都指向同一个对象。&lt;/li&gt;
-  &lt;li&gt;确定一个值是那种基本的类型可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;typeof&lt;/code&gt; 操作符，而确定一个值是哪种引用类型可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;instanceof&lt;/code&gt; 操作符。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;所有的变量都存在于一个执行环境（也就是作用域）当中，这个执行环境决定了变量的声明周期，以及哪部分代码可以访问其中的变量。以下是关于执行环境总结：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;执行环境有全局执行环境和函数执行环境。&lt;/li&gt;
-  &lt;li&gt;每一次进入一个新的执行环境，都会创建一个用于搜索变量和函数的作用域链。&lt;/li&gt;
-  &lt;li&gt;函数的局部环境不仅有权访问函数作用域的变量，而且有权访问其包含环境（父环境），乃至全局环境。&lt;/li&gt;
-  &lt;li&gt;全局环境只能访问全局环境中定义的变量和函数，不能直接访问局部环境的任何数据。&lt;/li&gt;
-  &lt;li&gt;变量的执行环境有助于确定应该何时释放内存。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 是一门自动回收垃圾的语言，开发人员不用关心内存分配和回收的问题。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;离开作用域的值将被自动标记为可以回收，因此 将在垃圾回收期间被删除。&lt;/li&gt;
-  &lt;li&gt;”标记清除“是目前主流的垃圾收集算法，这种算法的思想是给当前不使用的值加上标记，然后在回收其内存。&lt;/li&gt;
-  &lt;li&gt;另一种垃圾收集算法是”引用计数“，这种算法的思想是跟踪记录所有值被引用的次数。 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 引擎目前都不再使用这种算法，但在IE 中访问非原生的 &lt;code class=&quot;highlighter-rouge&quot;&gt;JavaScript&lt;/code&gt; 对象（如 &lt;code class=&quot;highlighter-rouge&quot;&gt;DOM&lt;/code&gt; 元素）时，这种算法仍然可能导致问题。&lt;/li&gt;
-  &lt;li&gt;但代码中出现循环引用时的，”引用计数”的算法就会导致问题。&lt;/li&gt;
-  &lt;li&gt;解除变量的引用不仅有助于消除循环引用的现象，而且对垃圾回收也有好处。为了确保有效的回收内存，应该及时的解除不在使用的全局变量、全局对象属性已经循环引用变量的引用。&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Thu, 11 May 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/</guid>
         
         <category>JavaScript</category>
         

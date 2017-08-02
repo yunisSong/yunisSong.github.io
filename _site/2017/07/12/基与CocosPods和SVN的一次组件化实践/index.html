@@ -205,7 +205,9 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="基与cocospods和svn的一次组件化实践">基与CocosPods和SVN的一次组件化实践</h1>
+				<p>TODO:如何添加到 SVN
+ 文件描述 与 文件层级的关系。</p>
+<h1 id="基与cocospods和svn的一次组件化实践">基与CocosPods和SVN的一次组件化实践</h1>
 
 <blockquote>
   <p>入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。</p>
@@ -214,13 +216,15 @@
 <p>记录下步骤：</p>
 
 <h3 id="1安装-cocoapods-repo-svn-插件">1,安装 <code class="highlighter-rouge">cocoapods-repo-svn</code> 插件</h3>
-<p>没什么好多的，就是一行命令。
+<p>没什么好说的，就是一行命令。
 <code class="highlighter-rouge">gem install cocoapods-repo-svn</code></p>
 
 <h3 id="2提取共有代码创建-podspec-文件">2，提取共有代码，创建 <code class="highlighter-rouge">podspec</code> 文件</h3>
-<p>提取两个工程中的共有代码，然后进入目录，创建<code class="highlighter-rouge">podspec</code> 文件
-<code class="highlighter-rouge">pod spec create CommonWebTools</code>
-<code class="highlighter-rouge">CommonWebTools</code> 是你提取的私有库的名称。</p>
+<p>提取两个工程中的共有代码，然后进入目录，创建<code class="highlighter-rouge">podspec</code> 文件</p>
+
+<p><code class="highlighter-rouge">pod spec create CommonWebTools</code></p>
+
+<p><code class="highlighter-rouge">CommonWebTools</code> 是你提取的私有库的名称。</p>
 
 <h3 id="3编辑podspec文件内容">3，编辑<code class="highlighter-rouge">podspec</code>文件内容</h3>
 
@@ -239,9 +243,9 @@ Pod::Spec.new do |s|
 
     s.license      = "MIT"
 
-    s.author             = { "iThinkerYZ" =&gt; "690423479@qq.com" }
+    s.author             = { "iThinkerYZ" =&gt; "xxxxxxxx@qq.com" }
 
-  s.source       = { :svn =&gt; "http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
+  s.source       = { :svn =&gt; "http://xxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
 
  s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}"
 
@@ -255,7 +259,7 @@ Pod::Spec.new do |s|
 <h3 id="4使用">4，使用：</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>target 'TestComponentDemo' do
-pod 'CommonWebTools', :svn =&gt; "http://192.168.161.59:8888/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+pod 'CommonWebTools', :svn =&gt; "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
 end
 </code></pre>
 </div>
@@ -281,6 +285,13 @@ end
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/" data-toggle="tooltip" data-placement="top" title="自动化的一些实践">
+                        Next<br>
+                        <span>自动化的一些实践</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -385,6 +396,8 @@ end
                 				<a href="/tags/#JavaScript" title="JavaScript" rel="5">
                                     JavaScript
                                 </a>
+                            
+        				
                             
         				
                             

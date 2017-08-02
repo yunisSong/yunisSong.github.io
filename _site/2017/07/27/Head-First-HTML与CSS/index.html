@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（4）Closure - 三十一的博客 | Yunis Blog</title>
+    <title>Head First HTML与CSS - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift04/">
+    <link rel="canonical" href="http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,17 +181,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
-                        
                     </div>
-                    <h1>swift 学习（4）Closure</h1>
+                    <h1>Head First HTML与CSS</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on July 27, 2017</span>
                 </div>
             </div>
         </div>
@@ -209,148 +205,133 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（4）</p>
+				<h1 id="head-first-html与css">Head First HTML与CSS</h1>
 
-<h6 id="1闭包-closure">1，闭包 （Closure）</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>构建网页的文件名称不要有空格
+&lt;a href="test.html"&gt;点击跳转到同级目录下test.html 文件&lt;/a&gt;
+&lt;a href="../test.html"&gt;点击跳转到上级目录下test.html 文件&lt;/a&gt;
+&lt;a href="Yunis/test.html"&gt;点击跳转到Yunis目录下test.html 文件&lt;/a&gt;
+</code></pre>
+</div>
 
-<blockquote>
-  <p>Closures are so named because they have the ability to “close over” the variables and constants within the closure’s own scope. This simply means that a closure can access, store and manipulate the value of any variable or constant from the surrounding context. Variables and constants within the body of a closure are said to have been captured by the closure.</p>
-</blockquote>
+<p>列表</p>
 
-<p>闭包可以理解为是一个没有方法名的方法。形状类似于：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ul&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;/ul&gt;
 
-<blockquote>
-  <p>(parameterList) -&gt; returnType</p>
-</blockquote>
 
-<blockquote>
-  <p>(参数列表) -&gt; 返回值类型</p>
-</blockquote>
+&lt;ol&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;li&gt;....&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+</div>
 
-<p><strong>如何创建</strong></p>
+<p>跳转到页面指定位置</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>var multiplyClosure: (Int, Int) -&gt; Int
+<div class="highlighter-rouge"><pre class="highlight"><code>index.html :
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Head First Lounge Directions<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"jump"</span><span class="nt">&gt;</span>Directions<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 
-multiplyClosure = { (a: Int, b: Int) -&gt; Int in
-    return a * b
-}
 
-multiplyClosure = { (a, b) in
-    a*b
-}
 
-multiplyClosure = {
-    $0 * $1
-}
-let result = multiplyClosure(3, 2)
-print(result)
+
+当使用
+
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"index.html#jump"</span><span class="nt">&gt;</span>跳转<span class="nt">&lt;/a&gt;</span>
+
+会跳转到 index.html 页面 ID 为jump 的位置。
+</code></pre>
+</div>
+
+<p>相对路径、绝对路径</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a href="http"//www.Yunis.com/demo/test/play.html"&gt;网页&lt;/a&gt;
+
+&lt;a href="demo/test/play.html"&gt;网页&lt;/a&gt;
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">&lt;img&gt;</code> 元素</p>
+
+<p>alt</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>当 图片不可显示时，显示 alt 内容
+    &lt;img src="images/00drinks.gif" alt="这是一个备选的显示"&gt;
 
 </code></pre>
 </div>
 
-<p><strong>尾随闭包</strong></p>
+<p>CSS</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>func operateOnNumbers(_ a: Int, _ b: Int,
-                      operation: (Int, Int) -&gt; Int) -&gt; Int {
-    let result = operation(a, b)
-    print(result)
-    return result
+<div class="highlighter-rouge"><pre class="highlight"><code>一个元素可以有多个规则。
+    &lt;style type="text/css"&gt;
+        p {
+            color: maroon;
+        }
+    
+        h1,h2 {
+            font-family :sans-serif;
+            color :gray;
+        }
+    
+        h1 {
+            border-bottom:1px solid black;
+        }
+    
+    &lt;/style&gt;
+    
+    
+    
+    也可以这样引入 CSS 样式
+ &lt;link type = "text/css" rel = "stylesheet" href = "lounge.css"&gt;
+
+
+rel 属性指定了 HTML 文件和所链接的文件之间的关系。
+
+&lt;link&gt; 是一个 void 元素。
+
+
+
+可以为一个元素增加 class 属性，然后单独为这个属性的值设置样式。
+
+&lt;p class="greentea"&gt;
+      &lt;img src="../images/green.jpg"&gt;
+      Chock full of vitamins and minerals, this elixir
+      combines the healthful benefits of green tea with
+      a twist of chamomile blossoms and ginger root.
+    &lt;/p&gt;
+p.greentea {
+    color:green;
 }
-//正常调用
-operateOnNumbers(2, 21, operation: {
-    (a:Int,b:Int) -&gt;Int in a * b
-})
-//正常调用
-operateOnNumbers(2, 21, operation: multiplyClosure)
 
-//尾随闭包 带参数实现
-operateOnNumbers(2, 21){ (a:Int,b:Int) -&gt; Int in
-    a * b
+这样的话只要 class 是 greentea 这个值的话，都会设置为这个样式。
+.greentea {
+    color:green;
 }
-//尾随闭包
-operateOnNumbers(2, 21){
-    $0 * $1
-}
-</code></pre>
-</div>
 
-<p><strong>使用闭包进行自定义排序</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-let names = ["ZZZZZZ", "BB", "A", "CCCcccccccC", "EEEEE"]
-//基本用法
-names.sorted()
-
-//自定义排序算法
-names.sorted {
-    $0.characters.count &gt; $1.characters.count
-}
-</code></pre>
-</div>
-
-<p>sorted 函数</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code> public func sorted(by areInIncreasingOrder: (Element, Element) -&gt; Bool) -&gt; [Element]
-</code></pre>
-</div>
-
-<p><strong>其中(Element, Element) -&gt; Bool 闭包</strong></p>
-
-<p>swift中大量的使用了这种闭包的语法，可以使开发人员方便的自定义方法。</p>
-
-<p><strong>使用闭包进行迭代</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var prices = [1.5, 10, 4.99, 2.30, 8.19]
-
-let largePrices = prices.filter { (a) -&gt; Bool in
-    a &gt; 5
-}
-let largePrices01 = prices.filter {
-    return $0 &gt; 5
-}
-</code></pre>
-</div>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>public func filter(_ isIncluded: (Element) throws -&gt; Bool) rethrows -&gt; [Element]
+class 可以有多个值 使用空格分割。
 
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let listArray = ["你好,","我是","你的","益达"];
-let nomal0 = listArray.reduce("", {(a : String,b : String) -&gt; String in return a + b})
-print("nomal0 = \(nomal0)")
+<p><code class="highlighter-rouge">&lt;div&gt;</code></p>
 
-let nomal1 = listArray.reduce("", {(a : String,b : String) -&gt; String in a + b})
-print("nomal1 = \(nomal1)")
+<p>逻辑区，包围标签，相当于 一个块的概念，把里面的元素当做一个整体处理。</p>
 
-let nomal2 = listArray.reduce("", {(a,b) in a + b})
-print("nomal2 = \(nomal2)")
+<p><code class="highlighter-rouge">&lt;span&gt;</code></p>
 
-let nomal3 = listArray.reduce("") {
-    (a,b) in a + b
-}
-print("nomal3 = \(nomal3)")
-let nomal4 = listArray.reduce("") {
-    $0 + $1
-}
-print("nomal4 = \(nomal4)")
-</code></pre>
-</div>
-
-<p><em>上述方法结果一样。</em></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>let namesAndAges = ["Yunis":28,"Yunlia":18,"Tom":13,"Jack":8,"King":15]
-let lessThan18 = namesAndAges.filter {
-    return $0.value &lt; 18
-}
-print(lessThan18)//[("Jack", 8), ("Tom", 13), ("King", 15)]
-
-let namesList = lessThan18.map {
-    return $0.key
-}
-print(namesList)//["Jack", "Tom", "King"]
-</code></pre>
-</div>
+<p>创建内联字符和元素的逻辑分组。功能等同 <code class="highlighter-rouge">&lt;div&gt;</code></p>
 
 
 
@@ -362,17 +343,17 @@ print(namesList)//["Jack", "Tom", "King"]
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift03/" data-toggle="tooltip" data-placement="top" title="swift 学习（3）基础">
+                        <a href="/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/" data-toggle="tooltip" data-placement="top" title="自动化的一些实践">
                         Previous<br>
-                        <span>swift 学习（3）基础</span>
+                        <span>自动化的一些实践</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/03/01/swift05-Structures/" data-toggle="tooltip" data-placement="top" title="swift 学习（5）Structures">
+                        <a href="/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="iOS蓝牙框架的简单实用">
                         Next<br>
-                        <span>swift 学习（5）Structures</span>
+                        <span>iOS蓝牙框架的简单实用</span>
                         </a>
                     </li>
                     
