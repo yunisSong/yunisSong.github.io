@@ -5,9 +5,158 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 04 Aug 2017 08:47:48 +0800</pubDate>
-    <lastBuildDate>Fri, 04 Aug 2017 08:47:48 +0800</lastBuildDate>
+    <pubDate>Mon, 07 Aug 2017 15:55:04 +0800</pubDate>
+    <lastBuildDate>Mon, 07 Aug 2017 15:55:04 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>正则表达式必知必会</title>
+        <description>&lt;h1 id=&quot;正则表达式必知必会&quot;&gt;正则表达式必知必会&lt;/h1&gt;
+&lt;h3 id=&quot;匹配单个字符&quot;&gt;匹配单个字符&lt;/h3&gt;
+
+&lt;h4 id=&quot;匹配纯文本&quot;&gt;匹配纯文本&lt;/h4&gt;
+&lt;p&gt;相当于文本查找的功能（CMD + F）。但是一般的正则表达式引擎默认返回第一个匹配结果。&lt;/p&gt;
+&lt;h4 id=&quot;大小写匹配&quot;&gt;大小写匹配&lt;/h4&gt;
+&lt;h4 id=&quot;匹配任意字符&quot;&gt;匹配任意字符&lt;/h4&gt;
+&lt;p&gt;使用 . 来匹配任意字符。
+譬如：使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;yunis.&lt;/code&gt; 来匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;yunis1&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;yunis2&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;yunis3&lt;/code&gt;都是符合搜索结果的。&lt;/p&gt;
+&lt;h4 id=&quot;匹配特殊字符&quot;&gt;匹配特殊字符&lt;/h4&gt;
+&lt;p&gt;如果需要匹配特殊字符（ &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; 等）就需要使用元字符（ &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt; 反斜杠）来对他进行转义。
+譬如：使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;yunis\.&lt;/code&gt; 来匹配， &lt;code class=&quot;highlighter-rouge&quot;&gt;yunis.&lt;/code&gt; 是符合匹配结果的。&lt;/p&gt;
+&lt;h3 id=&quot;匹配一组字符&quot;&gt;匹配一组字符&lt;/h3&gt;
+&lt;h4 id=&quot;匹配多个字符串中的任意一个&quot;&gt;匹配多个字符串中的任意一个&lt;/h4&gt;
+&lt;p&gt;譬如：使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;[abc]hhhh&lt;/code&gt; 进行匹配。&lt;code class=&quot;highlighter-rouge&quot;&gt;ahhhh&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;bhhhh&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;chhhh&lt;/code&gt; 都是符合条件的搜索结果。&lt;/p&gt;
+&lt;h4 id=&quot;例如字符集合区间&quot;&gt;例如字符集合区间&lt;/h4&gt;
+&lt;p&gt;譬如：使用&lt;code class=&quot;highlighter-rouge&quot;&gt;[a-c]hhh&lt;/code&gt; 进行匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;ahhhh&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;bhhhh&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;chhhh&lt;/code&gt; 都是符合条件的搜索结果。
+使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;[0-9]hhh&lt;/code&gt; 进行匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;0hhh&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;1hhh&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;2hhh&lt;/code&gt; 。。。 &lt;code class=&quot;highlighter-rouge&quot;&gt;9hhh&lt;/code&gt; 都是符合条件的搜索结果。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A-Z 匹配 A 到 Z 的所有大写字母。&lt;/li&gt;
+  &lt;li&gt;a-z 匹配 a 到 z 的所有小写字母。&lt;/li&gt;
+  &lt;li&gt;A-F 匹配 A 到 F 的所有大写字母。&lt;/li&gt;
+  &lt;li&gt;A-z 匹配从 &lt;code class=&quot;highlighter-rouge&quot;&gt;ASCII&lt;/code&gt; 字符 A 到 &lt;code class=&quot;highlighter-rouge&quot;&gt;ASCII&lt;/code&gt; 字符 z 的所有字母。&lt;/li&gt;
+  &lt;li&gt;同一个字符集合里面可以给出多个字符区间。譬如 &lt;code class=&quot;highlighter-rouge&quot;&gt;[A-Za-z0-9]&lt;/code&gt; 可以匹配任何字母和数字。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;取非匹配&quot;&gt;取非匹配&lt;/h4&gt;
+&lt;p&gt;可以使用元字符 &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; 来标明你想对一个字符集合取非匹配结果。
+譬如：使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;a[\^0-9]&lt;/code&gt; 进行匹配, as,ab,ac 都是符合调剂的搜索结果，a0，a1,a2不是符合条件的搜索结果。&lt;/p&gt;
+&lt;h3 id=&quot;使用元字符&quot;&gt;使用元字符&lt;/h3&gt;
+&lt;h4 id=&quot;对特殊字符使用转义&quot;&gt;对特殊字符使用转义&lt;/h4&gt;
+&lt;p&gt;如果想匹配元字符需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt; 反斜杠来转义。
+譬如：匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt; 本身就需要转义，需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;\\&lt;/code&gt;来匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;\&lt;/code&gt;。
+    匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;[&lt;/code&gt; 需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;\[&lt;/code&gt; 来进行匹配。&lt;/p&gt;
+
+&lt;h4 id=&quot;匹配空白字符&quot;&gt;匹配空白字符&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\f&lt;/code&gt; 换页符&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\n&lt;/code&gt; 换行符&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\r&lt;/code&gt; 回车符&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\t&lt;/code&gt; 制表符（Tab）&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\v&lt;/code&gt; 垂直制表符
+    &lt;h4 id=&quot;匹配数字&quot;&gt;匹配数字&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\d&lt;/code&gt; 匹配任意一个数字字符 等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[0-9]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\D&lt;/code&gt; 匹配任意一个非数字字符 等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[^0-9]&lt;/code&gt;
+    &lt;h4 id=&quot;匹配字母与数字&quot;&gt;匹配字母与数字&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\w&lt;/code&gt; 匹配任意一个字母、数字或者下划线字符，等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[a-zA-z0-9_]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\W&lt;/code&gt; 匹配任何一个非字母、数字或者下划线字符，等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[^a-zA-z0-9_]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;匹配空白字符-1&quot;&gt;匹配空白字符&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\s&lt;/code&gt; 任意一个空白符 ，等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[\f\n\r\t\v]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\S&lt;/code&gt; 任意一个非空白符 ，等价于 &lt;code class=&quot;highlighter-rouge&quot;&gt;[^\f\n\r\t\v]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;重复匹配&quot;&gt;重复匹配&lt;/h3&gt;
+&lt;h4 id=&quot;匹配一个或多个字符&quot;&gt;匹配一个或多个字符&lt;/h4&gt;
+&lt;p&gt;想要匹配同一个字符或者字符集合的多次重复，只需要简单的给这个字符或字符集合加上一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 字符作为后缀就行了。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 匹配一个或者多个字符（至少一个，不匹配零个字符的情况）。譬如 a 匹配 a 本身，a+ 将匹配一个或多个连续出现的 a 。类似的 ,&lt;code class=&quot;highlighter-rouge&quot;&gt;[0-9]&lt;/code&gt; 匹配任意一个数字，&lt;code class=&quot;highlighter-rouge&quot;&gt;[0-9]+&lt;/code&gt; 匹配一个或多个连续的数字。&lt;/p&gt;
+
+&lt;p&gt;匹配邮箱：&lt;code class=&quot;highlighter-rouge&quot;&gt;[\w.]+@[\w.]\.\w+&lt;/code&gt;
+一般来说，在字符集合里面的元字符将被解释为普通字符，不需要被转义，但转义了也没有坏处。 &lt;code class=&quot;highlighter-rouge&quot;&gt;[\w.]&lt;/code&gt; 与 &lt;code class=&quot;highlighter-rouge&quot;&gt;[\w\\.]&lt;/code&gt; 是一样的。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 是一个元字符。如果需要匹配 + 本身，需要转义。&lt;/p&gt;
+
+&lt;h4 id=&quot;匹配零个或者多个字符&quot;&gt;匹配零个或者多个字符&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 匹配一个或者多个字符，&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 匹配零个或者多个字符。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 是元字符，匹配他本身需要转义。&lt;/p&gt;
+&lt;h4 id=&quot;匹配零个或者一个字符&quot;&gt;匹配零个或者一个字符&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 元字符 &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 的意思是匹配一个字符一次或者零次。
+譬如：&lt;code class=&quot;highlighter-rouge&quot;&gt;https?&lt;/code&gt; 进行匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;http&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;https&lt;/code&gt; 都是符合条件的搜索结果。&lt;/p&gt;
+&lt;h4 id=&quot;匹配重复次数&quot;&gt;匹配重复次数&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 匹配的字符个数没有上限。我们无法为他们将匹配的字符个数设定一个最大值。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 、&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;和 &lt;code class=&quot;highlighter-rouge&quot;&gt;？&lt;/code&gt; 至少匹配零个或者一个字符。无法为他们匹配的字符个数设定一个最小值。&lt;/li&gt;
+  &lt;li&gt;如果只使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 我们无法将他们匹配的字符个数设定为一个精确的数字。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;为重复匹配设定一个精确的值&quot;&gt;为重复匹配设定一个精确的值&lt;/h5&gt;
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt; 表示前一个字符匹配6次。
+譬如 &lt;code class=&quot;highlighter-rouge&quot;&gt;y{6}&lt;/code&gt; 进行匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;yyyyyy&lt;/code&gt; 是符合条件的匹配结果。&lt;/p&gt;
+&lt;h5 id=&quot;为重复匹配设定一个区间&quot;&gt;为重复匹配设定一个区间&lt;/h5&gt;
+&lt;p&gt;譬如使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;y{2,4}&lt;/code&gt; 进行匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;yy&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;yyy&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;yyyy&lt;/code&gt; 都是符合条件的搜索结果。&lt;/p&gt;
+&lt;h5 id=&quot;为重复匹配设定一个最小重复数字&quot;&gt;为重复匹配设定一个最小重复数字&lt;/h5&gt;
+&lt;p&gt;譬如使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;y{2,}&lt;/code&gt; 进行匹配，&lt;code class=&quot;highlighter-rouge&quot;&gt;yy&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;yyy&lt;/code&gt;,&lt;code class=&quot;highlighter-rouge&quot;&gt;yyyy&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;yyyyyyyyyyyy&lt;/code&gt; 都是符合条件的搜索结果。
+这个正则的意思是y至少重复2次。&lt;/p&gt;
+&lt;h5 id=&quot;防止过度匹配&quot;&gt;防止过度匹配&lt;/h5&gt;
+&lt;p&gt;下面一段文本 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;1234&amp;lt;/b&amp;gt;qweqweqweqweqweqweqw&amp;lt;b&amp;gt;5678&amp;lt;/b&amp;gt;&lt;/code&gt;
+当我们使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;.*&amp;lt;/b&amp;gt;&lt;/code&gt; 进行匹配时，我们希望得到的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;1234&amp;lt;/b&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;5678&amp;lt;/b&amp;gt;&lt;/code&gt; ，但是我们得到的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;1234&amp;lt;/b&amp;gt;qweqweqweqweqweqweqw&amp;lt;b&amp;gt;5678&amp;lt;/b&amp;gt;&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;这是因为什么呢？
+因为 &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 都是 &lt;code class=&quot;highlighter-rouge&quot;&gt;贪婪型&lt;/code&gt; 的元字符，它们进行匹配时的模式是多多益善而不是适可而止。它们会尽可能的从一段文本的开头一直匹配到这段文本的结尾，而不是从文本的开头匹配到第一个匹配时为止。&lt;/p&gt;
+
+&lt;p&gt;当不需要这种贪婪型模式时怎么办？使用它们的懒惰型版本，懒惰型版本会尽可能少的匹配字符。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;贪婪型元字符&lt;/th&gt;
+      &lt;th&gt;懒惰型元字符&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*?&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+?&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;n,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;n,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;当我们使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;.*?&amp;lt;/b&amp;gt;&lt;/code&gt; 进行匹配时，就能得到的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;1234&amp;lt;/b&amp;gt;&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;b&amp;gt;5678&amp;lt;/b&amp;gt;&lt;/code&gt; 的匹配结果。&lt;/p&gt;
+
+&lt;h3 id=&quot;位置匹配&quot;&gt;位置匹配&lt;/h3&gt;
+&lt;h4 id=&quot;边界&quot;&gt;边界&lt;/h4&gt;
+&lt;h5 id=&quot;单词边界&quot;&gt;单词边界&lt;/h5&gt;
+&lt;p&gt;文本 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog hjhjdogkjhkj hhh dogs.&lt;/code&gt; 当我们使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog&lt;/code&gt; 进行匹配时，我们只希望匹配到第一个单词 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog&lt;/code&gt;，但是匹配的结果是 &lt;strong&gt;dog&lt;/strong&gt; hjhj&lt;strong&gt;dog&lt;/strong&gt;kjhkj hhh &lt;strong&gt;dog&lt;/strong&gt;s.&lt;/p&gt;
+
+&lt;h3 id=&quot;使用子表达式&quot;&gt;使用子表达式&lt;/h3&gt;
+&lt;h3 id=&quot;回溯引用前后一致匹配&quot;&gt;回溯引用：前后一致匹配&lt;/h3&gt;
+&lt;h3 id=&quot;前后查找&quot;&gt;前后查找&lt;/h3&gt;
+&lt;h3 id=&quot;嵌入条件&quot;&gt;嵌入条件&lt;/h3&gt;
+
+</description>
+        <pubDate>Mon, 07 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</guid>
+        
+        <category>内功</category>
+        
+        <category>正则表达式</category>
+        
+        
+      </item>
     
       <item>
         <title>Processing symbol files</title>
@@ -24,6 +173,8 @@
         <pubDate>Fri, 04 Aug 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/</guid>
+        
+        <category>iOS</category>
         
         
       </item>
@@ -70,6 +221,8 @@ ruby    15149 Yunis    8u  IPv4 0xb0723eb7e38e11c5      0t0  TCP 127.0.0.1:terab
         <pubDate>Wed, 02 Aug 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/</guid>
+        
+        <category>jekyll</category>
         
         
       </item>
@@ -130,6 +283,8 @@ ruby    15149 Yunis    8u  IPv4 0xb0723eb7e38e11c5      0t0  TCP 127.0.0.1:terab
         <guid isPermaLink="true">http://localhost:4000/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/</guid>
         
         <category>蓝牙</category>
+        
+        <category>iOS</category>
         
         
       </item>
@@ -269,6 +424,8 @@ class 可以有多个值 使用空格分割。
         <link>http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/</guid>
         
+        <category>前端</category>
+        
         
       </item>
     
@@ -362,6 +519,8 @@ main()
         <link>http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/</guid>
         
+        <category>内功</category>
+        
         
       </item>
     
@@ -435,6 +594,8 @@ end
         <pubDate>Wed, 12 Jul 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
+        
+        <category>iOS</category>
         
         
       </item>
@@ -581,7 +742,7 @@ You may call this method to make a responder object such as a view the first res
         <link>http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
         
-        <category>Xcode</category>
+        <category>iOS</category>
         
         
       </item>
@@ -690,58 +851,7 @@ You may call this method to make a responder object such as a view the first res
         <link>http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</guid>
         
-        <category>weak</category>
-        
-        <category>读书笔记</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>(美团)深入理解Objective-C：Category</title>
-        <description>&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;美团深入理解objective-ccategory&quot;&gt;(美团)深入理解Objective-C：Category&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;原文地址：&lt;a href=&quot;http://tech.meituan.com/DiveIntoCategory.html&quot;&gt;深入理解Objective-C：Category&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;category-的其他使用场景&quot;&gt;Category 的其他使用场景&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;可以把类的实现分开在几个不同的文件里面。这样做有几个显而易见的好处:
-    &lt;ol&gt;
-      &lt;li&gt;可以减少单个文件的体积&lt;/li&gt;
-      &lt;li&gt;可以把不同的功能组织到不同的 category 里&lt;/li&gt;
-      &lt;li&gt;可以由多个开发者共同完成一个类&lt;/li&gt;
-      &lt;li&gt;可以按需加载想要的 category 等等。&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;声明私有方法&lt;/li&gt;
-  &lt;li&gt;模拟多继承&lt;/li&gt;
-  &lt;li&gt;把 framework 的私有方法公开&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;category-和-extension&quot;&gt;Category 和 Extension&lt;/h3&gt;
-
-&lt;h4 id=&quot;extension&quot;&gt;Extension&lt;/h4&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;extension 看起来很像一个匿名的category，但是 extension 和有名字的 category 几乎完全是两个东西。  extension 在编译期决议，它就是类的一部分，在编译期和头文件里的 @interface 以及实现文件里的 @implement 一起形成一个完整的类，它伴随类的产生而产生，亦随之一起消亡。 extension 一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加 extension ，所以你无法为系统的类比如 NSString 添加 extension。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;category&quot;&gt;category&lt;/h4&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;但是category则完全不一样，它是在运行期决议的。
-就category和extension的区别来看，我们可以推导出一个明显的事实，extension可以添加实例变量，而category是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;更直观的表示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Extension&amp;amp;Category/Extension&amp;amp;Category.png&quot; alt=&quot;ScopeChain&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 05 Jun 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/</guid>
+        <category>内功</category>
         
         <category>iOS</category>
         

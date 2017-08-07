@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>(转)Tips:取消UICollectionView的隐式动画 - 三十一的博客 | Yunis Blog</title>
+    <title>正则表达式必知必会 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/home-bg-o.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/home-bg-o.jpg')
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
     }
 
     
@@ -181,15 +181,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#内功" title="内功">内功</a>
+                        
+                        <a class="tag" href="/tags/#正则表达式" title="正则表达式">正则表达式</a>
                         
                     </div>
-                    <h1>(转)Tips:取消UICollectionView的隐式动画</h1>
+                    <h1>正则表达式必知必会</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on May 9, 2017</span>
+                    <span class="meta">Posted by 三十一 on August 7, 2017</span>
                 </div>
             </div>
         </div>
@@ -207,71 +209,140 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="转tips取消uicollectionview的隐式动画">(转)Tips:取消UICollectionView的隐式动画</h1>
-<blockquote>
-  <p>原文地址在串哥的博客 <a href="http://adad184.com/2015/11/10/disable-uicollectionview-implicit-animation/">Tips:取消UICollectionView的隐式动画</a></p>
-</blockquote>
+				<h1 id="正则表达式必知必会">正则表达式必知必会</h1>
+<h3 id="匹配单个字符">匹配单个字符</h3>
 
-<p>UICollectionView在 <code class="highlighter-rouge">reloadItems</code> 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)</p>
+<h4 id="匹配纯文本">匹配纯文本</h4>
+<p>相当于文本查找的功能（CMD + F）。但是一般的正则表达式引擎默认返回第一个匹配结果。</p>
+<h4 id="大小写匹配">大小写匹配</h4>
+<h4 id="匹配任意字符">匹配任意字符</h4>
+<p>使用 . 来匹配任意字符。
+譬如：使用 <code class="highlighter-rouge">yunis.</code> 来匹配，<code class="highlighter-rouge">yunis1</code>，<code class="highlighter-rouge">yunis2</code>，<code class="highlighter-rouge">yunis3</code>都是符合搜索结果的。</p>
+<h4 id="匹配特殊字符">匹配特殊字符</h4>
+<p>如果需要匹配特殊字符（ <code class="highlighter-rouge">.</code> 等）就需要使用元字符（ <code class="highlighter-rouge">\</code> 反斜杠）来对他进行转义。
+譬如：使用 <code class="highlighter-rouge">yunis\.</code> 来匹配， <code class="highlighter-rouge">yunis.</code> 是符合匹配结果的。</p>
+<h3 id="匹配一组字符">匹配一组字符</h3>
+<h4 id="匹配多个字符串中的任意一个">匹配多个字符串中的任意一个</h4>
+<p>譬如：使用 <code class="highlighter-rouge">[abc]hhhh</code> 进行匹配。<code class="highlighter-rouge">ahhhh</code>,<code class="highlighter-rouge">bhhhh</code>,<code class="highlighter-rouge">chhhh</code> 都是符合条件的搜索结果。</p>
+<h4 id="例如字符集合区间">例如字符集合区间</h4>
+<p>譬如：使用<code class="highlighter-rouge">[a-c]hhh</code> 进行匹配，<code class="highlighter-rouge">ahhhh</code>,<code class="highlighter-rouge">bhhhh</code>,<code class="highlighter-rouge">chhhh</code> 都是符合条件的搜索结果。
+使用 <code class="highlighter-rouge">[0-9]hhh</code> 进行匹配 <code class="highlighter-rouge">0hhh</code>，<code class="highlighter-rouge">1hhh</code>，<code class="highlighter-rouge">2hhh</code> 。。。 <code class="highlighter-rouge">9hhh</code> 都是符合条件的搜索结果。</p>
 
-<p>下面几种方法都可以帮你去除这些动画</p>
+<ul>
+  <li>A-Z 匹配 A 到 Z 的所有大写字母。</li>
+  <li>a-z 匹配 a 到 z 的所有小写字母。</li>
+  <li>A-F 匹配 A 到 F 的所有大写字母。</li>
+  <li>A-z 匹配从 <code class="highlighter-rouge">ASCII</code> 字符 A 到 <code class="highlighter-rouge">ASCII</code> 字符 z 的所有字母。</li>
+  <li>同一个字符集合里面可以给出多个字符区间。譬如 <code class="highlighter-rouge">[A-Za-z0-9]</code> 可以匹配任何字母和数字。</li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>//方法一
-[UIView performWithoutAnimation:^{
+<h4 id="取非匹配">取非匹配</h4>
+<p>可以使用元字符 <code class="highlighter-rouge">^</code> 来标明你想对一个字符集合取非匹配结果。
+譬如：使用 <code class="highlighter-rouge">a[\^0-9]</code> 进行匹配, as,ab,ac 都是符合调剂的搜索结果，a0，a1,a2不是符合条件的搜索结果。</p>
+<h3 id="使用元字符">使用元字符</h3>
+<h4 id="对特殊字符使用转义">对特殊字符使用转义</h4>
+<p>如果想匹配元字符需要使用 <code class="highlighter-rouge">\</code> 反斜杠来转义。
+譬如：匹配 <code class="highlighter-rouge">\</code> 本身就需要转义，需要使用 <code class="highlighter-rouge">\\</code>来匹配 <code class="highlighter-rouge">\</code>。
+    匹配 <code class="highlighter-rouge">[</code> 需要使用 <code class="highlighter-rouge">\[</code> 来进行匹配。</p>
 
-    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-}];
+<h4 id="匹配空白字符">匹配空白字符</h4>
+<ul>
+  <li><code class="highlighter-rouge">\f</code> 换页符</li>
+  <li><code class="highlighter-rouge">\n</code> 换行符</li>
+  <li><code class="highlighter-rouge">\r</code> 回车符</li>
+  <li><code class="highlighter-rouge">\t</code> 制表符（Tab）</li>
+  <li><code class="highlighter-rouge">\v</code> 垂直制表符
+    <h4 id="匹配数字">匹配数字</h4>
+  </li>
+  <li><code class="highlighter-rouge">\d</code> 匹配任意一个数字字符 等价于 <code class="highlighter-rouge">[0-9]</code></li>
+  <li><code class="highlighter-rouge">\D</code> 匹配任意一个非数字字符 等价于 <code class="highlighter-rouge">[^0-9]</code>
+    <h4 id="匹配字母与数字">匹配字母与数字</h4>
+  </li>
+  <li><code class="highlighter-rouge">\w</code> 匹配任意一个字母、数字或者下划线字符，等价于 <code class="highlighter-rouge">[a-zA-z0-9_]</code></li>
+  <li><code class="highlighter-rouge">\W</code> 匹配任何一个非字母、数字或者下划线字符，等价于 <code class="highlighter-rouge">[^a-zA-z0-9_]</code></li>
+</ul>
 
-//方法二
-[UIView animateWithDuration:0 animations:^{
-    [collectionView performBatchUpdates:^{
-        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-    } completion:nil];
-}];
-    
-//方法三
-[UIView setAnimationsEnabled:NO];
-[self.trackPanel performBatchUpdates:^{
-    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-} completion:^(BOOL finished) {
-    [UIView setAnimationsEnabled:YES];
-}];
-</code></pre>
-</div>
-<p>如果你的APP只支持iOS7+ 推荐使用第一种方式 <code class="highlighter-rouge">performWithoutAnimation</code> (感谢@sunnyxx的tip) 简单方便</p>
+<h4 id="匹配空白字符-1">匹配空白字符</h4>
+<ul>
+  <li><code class="highlighter-rouge">\s</code> 任意一个空白符 ，等价于 <code class="highlighter-rouge">[\f\n\r\t\v]</code></li>
+  <li><code class="highlighter-rouge">\S</code> 任意一个非空白符 ，等价于 <code class="highlighter-rouge">[^\f\n\r\t\v]</code></li>
+</ul>
 
-<hr />
-<p>but</p>
+<h3 id="重复匹配">重复匹配</h3>
+<h4 id="匹配一个或多个字符">匹配一个或多个字符</h4>
+<p>想要匹配同一个字符或者字符集合的多次重复，只需要简单的给这个字符或字符集合加上一个 <code class="highlighter-rouge">+</code> 字符作为后缀就行了。
+<code class="highlighter-rouge">+</code> 匹配一个或者多个字符（至少一个，不匹配零个字符的情况）。譬如 a 匹配 a 本身，a+ 将匹配一个或多个连续出现的 a 。类似的 ,<code class="highlighter-rouge">[0-9]</code> 匹配任意一个数字，<code class="highlighter-rouge">[0-9]+</code> 匹配一个或多个连续的数字。</p>
 
-<p>问题还没有结束 上面介绍的方法只能解决UIView的Animation 如果你的cell中还包含有CALayer的动画 比如这样</p>
+<p>匹配邮箱：<code class="highlighter-rouge">[\w.]+@[\w.]\.\w+</code>
+一般来说，在字符集合里面的元字符将被解释为普通字符，不需要被转义，但转义了也没有坏处。 <code class="highlighter-rouge">[\w.]</code> 与 <code class="highlighter-rouge">[\w\\.]</code> 是一样的。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.frameLayer.frame = self.frameView.bounds;
-}
-</code></pre>
-</div>
+<p><code class="highlighter-rouge">+</code> 是一个元字符。如果需要匹配 + 本身，需要转义。</p>
 
-<p>上述情况多用于自定义控件使用了layer.mask的情况 如果有这种情况 上面提到的方法是无法取消CALayer的动画的 但是解决办法也很简单</p>
+<h4 id="匹配零个或者多个字符">匹配零个或者多个字符</h4>
+<p><code class="highlighter-rouge">+</code> 匹配一个或者多个字符，<code class="highlighter-rouge">*</code> 匹配零个或者多个字符。
+<code class="highlighter-rouge">*</code> 是元字符，匹配他本身需要转义。</p>
+<h4 id="匹配零个或者一个字符">匹配零个或者一个字符</h4>
+<p><code class="highlighter-rouge">?</code> 元字符 <code class="highlighter-rouge">?</code> 的意思是匹配一个字符一次或者零次。
+譬如：<code class="highlighter-rouge">https?</code> 进行匹配，<code class="highlighter-rouge">http</code> 和 <code class="highlighter-rouge">https</code> 都是符合条件的搜索结果。</p>
+<h4 id="匹配重复次数">匹配重复次数</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    
-    self.frameLayer.frame = self.frameView.bounds;
-    
-    [CATransaction commit];
-    
-}
-</code></pre>
-</div>
+<ul>
+  <li><code class="highlighter-rouge">+</code> 和 <code class="highlighter-rouge">*</code> 匹配的字符个数没有上限。我们无法为他们将匹配的字符个数设定一个最大值。</li>
+  <li><code class="highlighter-rouge">+</code> 、<code class="highlighter-rouge">*</code>和 <code class="highlighter-rouge">？</code> 至少匹配零个或者一个字符。无法为他们匹配的字符个数设定一个最小值。</li>
+  <li>如果只使用 <code class="highlighter-rouge">+</code> 和 <code class="highlighter-rouge">*</code> 我们无法将他们匹配的字符个数设定为一个精确的数字。</li>
+</ul>
 
-<p>done!</p>
+<h5 id="为重复匹配设定一个精确的值">为重复匹配设定一个精确的值</h5>
+<p>使用 <code class="highlighter-rouge"><span class="p">{</span><span class="err">6</span><span class="p">}</span></code> 表示前一个字符匹配6次。
+譬如 <code class="highlighter-rouge">y{6}</code> 进行匹配，<code class="highlighter-rouge">yyyyyy</code> 是符合条件的匹配结果。</p>
+<h5 id="为重复匹配设定一个区间">为重复匹配设定一个区间</h5>
+<p>譬如使用 <code class="highlighter-rouge">y{2,4}</code> 进行匹配，<code class="highlighter-rouge">yy</code>,<code class="highlighter-rouge">yyy</code>,<code class="highlighter-rouge">yyyy</code> 都是符合条件的搜索结果。</p>
+<h5 id="为重复匹配设定一个最小重复数字">为重复匹配设定一个最小重复数字</h5>
+<p>譬如使用 <code class="highlighter-rouge">y{2,}</code> 进行匹配，<code class="highlighter-rouge">yy</code>,<code class="highlighter-rouge">yyy</code>,<code class="highlighter-rouge">yyyy</code>，<code class="highlighter-rouge">yyyyyyyyyyyy</code> 都是符合条件的搜索结果。
+这个正则的意思是y至少重复2次。</p>
+<h5 id="防止过度匹配">防止过度匹配</h5>
+<p>下面一段文本 <code class="highlighter-rouge">&lt;b&gt;1234&lt;/b&gt;qweqweqweqweqweqweqw&lt;b&gt;5678&lt;/b&gt;</code>
+当我们使用 <code class="highlighter-rouge">&lt;b&gt;.*&lt;/b&gt;</code> 进行匹配时，我们希望得到的是 <code class="highlighter-rouge">&lt;b&gt;1234&lt;/b&gt;</code> 和 <code class="highlighter-rouge">&lt;b&gt;5678&lt;/b&gt;</code> ，但是我们得到的是 <code class="highlighter-rouge">&lt;b&gt;1234&lt;/b&gt;qweqweqweqweqweqweqw&lt;b&gt;5678&lt;/b&gt;</code>。</p>
+
+<p>这是因为什么呢？
+因为 <code class="highlighter-rouge">*</code> 和 <code class="highlighter-rouge">+</code> 都是 <code class="highlighter-rouge">贪婪型</code> 的元字符，它们进行匹配时的模式是多多益善而不是适可而止。它们会尽可能的从一段文本的开头一直匹配到这段文本的结尾，而不是从文本的开头匹配到第一个匹配时为止。</p>
+
+<p>当不需要这种贪婪型模式时怎么办？使用它们的懒惰型版本，懒惰型版本会尽可能少的匹配字符。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>贪婪型元字符</th>
+      <th>懒惰型元字符</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">*</code></td>
+      <td><code class="highlighter-rouge">*?</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">+</code></td>
+      <td><code class="highlighter-rouge">+?</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge"><span class="p">{</span><span class="err">n,</span><span class="p">}</span></code></td>
+      <td><code class="highlighter-rouge"><span class="p">{</span><span class="err">n,</span><span class="p">}</span><span class="err">?</span></code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>当我们使用 <code class="highlighter-rouge">&lt;b&gt;.*?&lt;/b&gt;</code> 进行匹配时，就能得到的是 <code class="highlighter-rouge">&lt;b&gt;1234&lt;/b&gt;</code> 和 <code class="highlighter-rouge">&lt;b&gt;5678&lt;/b&gt;</code> 的匹配结果。</p>
+
+<h3 id="位置匹配">位置匹配</h3>
+<h4 id="边界">边界</h4>
+<h5 id="单词边界">单词边界</h5>
+<p>文本 <code class="highlighter-rouge">dog hjhjdogkjhkj hhh dogs.</code> 当我们使用 <code class="highlighter-rouge">dog</code> 进行匹配时，我们只希望匹配到第一个单词 <code class="highlighter-rouge">dog</code>，但是匹配的结果是 <strong>dog</strong> hjhj<strong>dog</strong>kjhkj hhh <strong>dog</strong>s.</p>
+
+<h3 id="使用子表达式">使用子表达式</h3>
+<h3 id="回溯引用前后一致匹配">回溯引用：前后一致匹配</h3>
+<h3 id="前后查找">前后查找</h3>
+<h3 id="嵌入条件">嵌入条件</h3>
 
 
 
@@ -283,19 +354,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/" data-toggle="tooltip" data-placement="top" title="关于 App Store 审核的一些事">
+                        <a href="/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/" data-toggle="tooltip" data-placement="top" title="Processing symbol files">
                         Previous<br>
-                        <span>关于 App Store 审核的一些事</span>
+                        <span>Processing symbol files</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/" data-toggle="tooltip" data-placement="top" title="JavaScript学习01">
-                        Next<br>
-                        <span>JavaScript学习01</span>
-                        </a>
-                    </li>
                     
                 </ul>
 
