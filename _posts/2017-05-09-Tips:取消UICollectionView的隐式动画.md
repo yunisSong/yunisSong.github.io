@@ -8,8 +8,7 @@ header-img: img/home-bg-o.jpg
 header-mask: 0.3
 catalog:    true
 tags:
-   - 动画
-   - Tips
+   - iOS
 ---
 
 # (转)Tips:取消UICollectionView的隐式动画

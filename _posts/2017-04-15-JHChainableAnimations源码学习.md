@@ -10,7 +10,6 @@ catalog:    true
 tags:
    - 源码
    - iOS
-   - 链式编程
 ---
 
 # JHChainableAnimations源码学习
