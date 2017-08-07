@@ -5,13 +5,14 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 07 Aug 2017 15:55:04 +0800</pubDate>
-    <lastBuildDate>Mon, 07 Aug 2017 15:55:04 +0800</lastBuildDate>
+    <pubDate>Mon, 07 Aug 2017 16:12:11 +0800</pubDate>
+    <lastBuildDate>Mon, 07 Aug 2017 16:12:11 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
         <title>正则表达式必知必会</title>
         <description>&lt;h1 id=&quot;正则表达式必知必会&quot;&gt;正则表达式必知必会&lt;/h1&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
 &lt;h3 id=&quot;匹配单个字符&quot;&gt;匹配单个字符&lt;/h3&gt;
 
 &lt;h4 id=&quot;匹配纯文本&quot;&gt;匹配纯文本&lt;/h4&gt;
@@ -140,6 +141,10 @@
 &lt;h4 id=&quot;边界&quot;&gt;边界&lt;/h4&gt;
 &lt;h5 id=&quot;单词边界&quot;&gt;单词边界&lt;/h5&gt;
 &lt;p&gt;文本 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog hjhjdogkjhkj hhh dogs.&lt;/code&gt; 当我们使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog&lt;/code&gt; 进行匹配时，我们只希望匹配到第一个单词 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog&lt;/code&gt;，但是匹配的结果是 &lt;strong&gt;dog&lt;/strong&gt; hjhj&lt;strong&gt;dog&lt;/strong&gt;kjhkj hhh &lt;strong&gt;dog&lt;/strong&gt;s.&lt;/p&gt;
+
+&lt;p&gt;这个时间就需要使用单词边界来限定了，单词边界由限定符 &lt;code class=&quot;highlighter-rouge&quot;&gt;\b&lt;/code&gt; 表示。&lt;/p&gt;
+
+&lt;p&gt;当我们使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;\bdog\b&lt;/code&gt; 来匹配时，只会匹配到第一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;dog&lt;/code&gt; 单词。&lt;/p&gt;
 
 &lt;h3 id=&quot;使用子表达式&quot;&gt;使用子表达式&lt;/h3&gt;
 &lt;h3 id=&quot;回溯引用前后一致匹配&quot;&gt;回溯引用：前后一致匹配&lt;/h3&gt;
