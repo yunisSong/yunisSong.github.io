@@ -347,11 +347,104 @@
   <li><code class="highlighter-rouge">$</code> 匹配一个字符串的结尾。</li>
   <li><code class="highlighter-rouge">(?m)</code> 匹配一行的开始。
     <h3 id="使用子表达式">使用子表达式</h3>
-    <h3 id="回溯引用前后一致匹配">回溯引用：前后一致匹配</h3>
-    <h3 id="前后查找">前后查找</h3>
-    <h3 id="嵌入条件">嵌入条件</h3>
+    <p>子表达式是一个更大的表达式的一部分；把一个表达式划分为一系列子表达式的目的是为了把那些子表达式当作一个独立的元素来使用。子表达式必须使用 <code class="highlighter-rouge">()</code> 括起来。
+譬如：使用</p>
   </li>
 </ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))\.){3}((1\d{1,2})|(\d{1,2})|(2[0-4]\d)|(25[0-5]))
+</code></pre>
+</div>
+
+<p>来匹配合法 IP 地址。
+这个正则的意思是：</p>
+
+<p><code class="highlighter-rouge">192.168.155.149</code></p>
+
+<ul>
+  <li>任何一个1位或者2位数字 <code class="highlighter-rouge">\d{1,2})</code></li>
+  <li>任何一个以1开头的3位数字 <code class="highlighter-rouge">(1\d{2})</code></li>
+  <li>任何一个以2开头、第2位数字在0-4之间的3位数字 <code class="highlighter-rouge">(2[0-4]\d)</code>。</li>
+  <li>任何一个以25开头、第3位数字在0-5之间的3位数字 <code class="highlighter-rouge">(25[0-5])</code>。</li>
+  <li>然后拼接上 <code class="highlighter-rouge">.</code>.</li>
+  <li>然后重复3次。</li>
+  <li>最后拼接上一个1到3位数字，这个数字是：
+    <ul>
+      <li>任何一个1位或者2位数字 <code class="highlighter-rouge">\d{1,2})</code></li>
+      <li>任何一个以1开头的3位数字 <code class="highlighter-rouge">(1\d{2})</code></li>
+      <li>任何一个以2开头、第2位数字在0-4之间的3位数字 <code class="highlighter-rouge">(2[0-4]\d)</code>。</li>
+      <li>任何一个以25开头、第3位数字在0-5之间的3位数字 <code class="highlighter-rouge">(25[0-5])</code>。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="回溯引用前后一致匹配">回溯引用：前后一致匹配</h3>
+<p>先看一个正则表达式：
+<code class="highlighter-rouge">[ ]+(\w+)[ ]+\1</code>
+这个表达式的意思是首先 <code class="highlighter-rouge">[ ]+</code> 匹配一个或者多个空格，然后 <code class="highlighter-rouge">(\w+)</code> 匹配一个或者多个字母或者数字字符，然后 <code class="highlighter-rouge">[ ]+</code> 匹配一个或者多个空格，最后 <code class="highlighter-rouge">\1</code> 的意思是一个回溯引用，它引用的是前面的表达式的第一个表达式。同理 <code class="highlighter-rouge">\2</code> 表示引用的是前面第2个表达式，<code class="highlighter-rouge">\3</code> 表示引用的是前面第3个表达式.</p>
+
+<p><code class="highlighter-rouge">(Y)(N).+\2</code>  这个表达式的意思是：
+首先匹配一个字母Y，然后匹配一个字母N，然后匹配一个或者多个任意字符，最后的 <code class="highlighter-rouge">\2</code> 表示引用之前的第2个表达式，这里引用的就是 <code class="highlighter-rouge">(N)</code> 表达式。</p>
+
+<p>这种引用是基于位置的引用，如果表达式的位置发生变化，可能就导致引用失效。</p>
+
+<blockquote>
+  <p>现在一些比较新的正则表达式支持“命名捕获”，支持位子表达式起一个唯一的名字，可以重复使用。</p>
+</blockquote>
+
+<h4 id="回溯引用在替换操作中的作用">回溯引用在替换操作中的作用</h4>
+<p>在替换操作中，回溯引用可以起到很大的作用。
+譬如下面一段文本</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>186-123-425
+345-456-132
+132-345-234
+</code></pre>
+</div>
+
+<p>是以<code class="highlighter-rouge">XXX-XXX-XXX</code> 的形式来展示的，如果想改成 <code class="highlighter-rouge">(XXX)(XXX)(XXX)</code> 的话，只需要先使用 <code class="highlighter-rouge">(\d{3})(-)(\d{3})(-)(\d{3})</code>
+把之前的符合替换规则的文本找出来，然后使用 <code class="highlighter-rouge">($1)($3)($5)</code> 进行替换就行了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(186)(123)(425)
+(345)(456)(132)
+(132)(345)(234)
+</code></pre>
+</div>
+<h6 id="大小写装换">大小写装换</h6>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">元字符</th>
+      <th style="text-align: center">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">\E</code></td>
+      <td style="text-align: center">结束 <code class="highlighter-rouge">\L</code> 或者 <code class="highlighter-rouge">\U</code> 装换</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">\l</code></td>
+      <td style="text-align: center">把下一个字符装换为小写</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">\L</code></td>
+      <td style="text-align: center">把 <code class="highlighter-rouge">\L</code> 到 <code class="highlighter-rouge">\E</code> 之间的字符全部装换为小写</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">\u</code></td>
+      <td style="text-align: center">把下一个字符装换大写</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">\U</code></td>
+      <td style="text-align: center">把 <code class="highlighter-rouge">\U</code> 到 <code class="highlighter-rouge">\E</code> 之间的字符全部装换为大写</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="前后查找">前后查找</h3>
+<h3 id="嵌入条件">嵌入条件</h3>
 
 
 

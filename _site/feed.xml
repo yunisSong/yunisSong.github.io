@@ -5,8 +5,8 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 08 Aug 2017 08:46:57 +0800</pubDate>
-    <lastBuildDate>Tue, 08 Aug 2017 08:46:57 +0800</lastBuildDate>
+    <pubDate>Wed, 09 Aug 2017 11:39:18 +0800</pubDate>
+    <lastBuildDate>Wed, 09 Aug 2017 11:39:18 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
@@ -149,11 +149,104 @@
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; 匹配一个字符串的结尾。&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(?m)&lt;/code&gt; 匹配一行的开始。
     &lt;h3 id=&quot;使用子表达式&quot;&gt;使用子表达式&lt;/h3&gt;
-    &lt;h3 id=&quot;回溯引用前后一致匹配&quot;&gt;回溯引用：前后一致匹配&lt;/h3&gt;
-    &lt;h3 id=&quot;前后查找&quot;&gt;前后查找&lt;/h3&gt;
-    &lt;h3 id=&quot;嵌入条件&quot;&gt;嵌入条件&lt;/h3&gt;
+    &lt;p&gt;子表达式是一个更大的表达式的一部分；把一个表达式划分为一系列子表达式的目的是为了把那些子表达式当作一个独立的元素来使用。子表达式必须使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt; 括起来。
+譬如：使用&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))\.){3}((1\d{1,2})|(\d{1,2})|(2[0-4]\d)|(25[0-5]))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;来匹配合法 IP 地址。
+这个正则的意思是：&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.155.149&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;任何一个1位或者2位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;\d{1,2})&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;任何一个以1开头的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(1\d{2})&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;任何一个以2开头、第2位数字在0-4之间的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(2[0-4]\d)&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;任何一个以25开头、第3位数字在0-5之间的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(25[0-5])&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;然后拼接上 &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;然后重复3次。&lt;/li&gt;
+  &lt;li&gt;最后拼接上一个1到3位数字，这个数字是：
+    &lt;ul&gt;
+      &lt;li&gt;任何一个1位或者2位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;\d{1,2})&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;任何一个以1开头的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(1\d{2})&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;任何一个以2开头、第2位数字在0-4之间的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(2[0-4]\d)&lt;/code&gt;。&lt;/li&gt;
+      &lt;li&gt;任何一个以25开头、第3位数字在0-5之间的3位数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;(25[0-5])&lt;/code&gt;。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;回溯引用前后一致匹配&quot;&gt;回溯引用：前后一致匹配&lt;/h3&gt;
+&lt;p&gt;先看一个正则表达式：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[ ]+(\w+)[ ]+\1&lt;/code&gt;
+这个表达式的意思是首先 &lt;code class=&quot;highlighter-rouge&quot;&gt;[ ]+&lt;/code&gt; 匹配一个或者多个空格，然后 &lt;code class=&quot;highlighter-rouge&quot;&gt;(\w+)&lt;/code&gt; 匹配一个或者多个字母或者数字字符，然后 &lt;code class=&quot;highlighter-rouge&quot;&gt;[ ]+&lt;/code&gt; 匹配一个或者多个空格，最后 &lt;code class=&quot;highlighter-rouge&quot;&gt;\1&lt;/code&gt; 的意思是一个回溯引用，它引用的是前面的表达式的第一个表达式。同理 &lt;code class=&quot;highlighter-rouge&quot;&gt;\2&lt;/code&gt; 表示引用的是前面第2个表达式，&lt;code class=&quot;highlighter-rouge&quot;&gt;\3&lt;/code&gt; 表示引用的是前面第3个表达式.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(Y)(N).+\2&lt;/code&gt;  这个表达式的意思是：
+首先匹配一个字母Y，然后匹配一个字母N，然后匹配一个或者多个任意字符，最后的 &lt;code class=&quot;highlighter-rouge&quot;&gt;\2&lt;/code&gt; 表示引用之前的第2个表达式，这里引用的就是 &lt;code class=&quot;highlighter-rouge&quot;&gt;(N)&lt;/code&gt; 表达式。&lt;/p&gt;
+
+&lt;p&gt;这种引用是基于位置的引用，如果表达式的位置发生变化，可能就导致引用失效。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;现在一些比较新的正则表达式支持“命名捕获”，支持位子表达式起一个唯一的名字，可以重复使用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;回溯引用在替换操作中的作用&quot;&gt;回溯引用在替换操作中的作用&lt;/h4&gt;
+&lt;p&gt;在替换操作中，回溯引用可以起到很大的作用。
+譬如下面一段文本&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;186-123-425
+345-456-132
+132-345-234
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;是以&lt;code class=&quot;highlighter-rouge&quot;&gt;XXX-XXX-XXX&lt;/code&gt; 的形式来展示的，如果想改成 &lt;code class=&quot;highlighter-rouge&quot;&gt;(XXX)(XXX)(XXX)&lt;/code&gt; 的话，只需要先使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;(\d{3})(-)(\d{3})(-)(\d{3})&lt;/code&gt;
+把之前的符合替换规则的文本找出来，然后使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;($1)($3)($5)&lt;/code&gt; 进行替换就行了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(186)(123)(425)
+(345)(456)(132)
+(132)(345)(234)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h6 id=&quot;大小写装换&quot;&gt;大小写装换&lt;/h6&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;元字符&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;说明&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\E&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;结束 &lt;code class=&quot;highlighter-rouge&quot;&gt;\L&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;\U&lt;/code&gt; 装换&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\l&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;把下一个字符装换为小写&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\L&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;把 &lt;code class=&quot;highlighter-rouge&quot;&gt;\L&lt;/code&gt; 到 &lt;code class=&quot;highlighter-rouge&quot;&gt;\E&lt;/code&gt; 之间的字符全部装换为小写&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\u&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;把下一个字符装换大写&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\U&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;把 &lt;code class=&quot;highlighter-rouge&quot;&gt;\U&lt;/code&gt; 到 &lt;code class=&quot;highlighter-rouge&quot;&gt;\E&lt;/code&gt; 之间的字符全部装换为大写&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;前后查找&quot;&gt;前后查找&lt;/h3&gt;
+&lt;h3 id=&quot;嵌入条件&quot;&gt;嵌入条件&lt;/h3&gt;
 
 </description>
         <pubDate>Mon, 07 Aug 2017 00:00:00 +0800</pubDate>
