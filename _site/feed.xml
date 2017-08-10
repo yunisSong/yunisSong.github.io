@@ -5,8 +5,8 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 09 Aug 2017 11:39:18 +0800</pubDate>
-    <lastBuildDate>Wed, 09 Aug 2017 11:39:18 +0800</lastBuildDate>
+    <pubDate>Thu, 10 Aug 2017 17:00:43 +0800</pubDate>
+    <lastBuildDate>Thu, 10 Aug 2017 17:00:43 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
@@ -245,8 +245,92 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
+&lt;p&gt;下面是一段 html 文本：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Head First Lounge&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Welcome to the New and Improved Head First Lounge&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://img.sootuu.com/vector/2006-4/2006420114643989.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当我们想把 h1标签中的文本全部改为大写时，可以这样操作。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(&amp;lt;h1&amp;gt;)(.*?)(&amp;lt;/h1&amp;gt;)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;然后&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$1\U$2\E$3&lt;/code&gt;&lt;/p&gt;
+
 &lt;h3 id=&quot;前后查找&quot;&gt;前后查找&lt;/h3&gt;
+&lt;h4 id=&quot;向前查找&quot;&gt;向前查找&lt;/h4&gt;
+&lt;p&gt;从语法上看，一个向前查找模式其实就是一个以 &lt;code class=&quot;highlighter-rouge&quot;&gt;?=&lt;/code&gt; 开头的子表达式，需要匹配的文本跟在 &lt;code class=&quot;highlighter-rouge&quot;&gt;=&lt;/code&gt; 后面。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;文本：
+http://www.baidu.com
+https://yunissong.github.io/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;.+(?=:)&lt;/code&gt; 查找时，&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; 前面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;http&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;https&lt;/code&gt; 会被匹配出来。&lt;/p&gt;
+&lt;h4 id=&quot;向后查找&quot;&gt;向后查找&lt;/h4&gt;
+&lt;p&gt;向后查找的操作符是 &lt;code class=&quot;highlighter-rouge&quot;&gt;?&amp;lt;=&lt;/code&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;文本：
+http://www.baidu.com
+https://yunissong.github.io/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;(?&amp;lt;=:).+&lt;/code&gt; 查找时， &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; 后面的 &lt;code class=&quot;highlighter-rouge&quot;&gt;//www.baidu.com&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;//yunissong.github.io/&lt;/code&gt; 会被匹配出来。&lt;/p&gt;
+
+&lt;h4 id=&quot;前后查找-1&quot;&gt;前后查找&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;h1&amp;gt;welcome to the New and Improved Head First Lounge&amp;lt;/h1&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;(?&amp;lt;=&amp;lt;h1&amp;gt;)(.*?)(?=&amp;lt;/h1&amp;gt;)&lt;/code&gt;,就能把 &lt;code class=&quot;highlighter-rouge&quot;&gt;h1&lt;/code&gt; 标签之间的内容匹配出来。&lt;/p&gt;
+&lt;h4 id=&quot;对前后查找取非&quot;&gt;对前后查找取非&lt;/h4&gt;
+&lt;p&gt;之前看到过对字符集合取非使用的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; 操作符。但是对去前后查找，取非是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt; 来替换 &lt;code class=&quot;highlighter-rouge&quot;&gt;=&lt;/code&gt; 取非。&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;操作符&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;说明&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(?=)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;正向前查找&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(?!)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;负向前查找&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(?&amp;lt;=)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;正向后查找&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;(?&amp;lt;!)&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;负向后查找&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 &lt;h3 id=&quot;嵌入条件&quot;&gt;嵌入条件&lt;/h3&gt;
+
+&lt;p&gt;未完待续。。。。&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 07 Aug 2017 00:00:00 +0800</pubDate>

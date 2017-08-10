@@ -169,7 +169,7 @@
         width: 100%;
         height: 100%;
         position: absolute;
-        background: rgba(0,0,0, 0.3);
+        background: rgba(0,0,0, 0.6);
     }
     
 </style>
@@ -443,8 +443,92 @@
   </tbody>
 </table>
 
+<p>下面是一段 html 文本：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>Head First Lounge<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Welcome to the New and Improved Head First Lounge<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;img</span> <span class="na">src=</span><span class="s">"http://img.sootuu.com/vector/2006-4/2006420114643989.jpg"</span><span class="nt">&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>当我们想把 h1标签中的文本全部改为大写时，可以这样操作。</p>
+
+<p><code class="highlighter-rouge">(&lt;h1&gt;)(.*?)(&lt;/h1&gt;)</code></p>
+
+<p>然后</p>
+
+<p><code class="highlighter-rouge">$1\U$2\E$3</code></p>
+
 <h3 id="前后查找">前后查找</h3>
+<h4 id="向前查找">向前查找</h4>
+<p>从语法上看，一个向前查找模式其实就是一个以 <code class="highlighter-rouge">?=</code> 开头的子表达式，需要匹配的文本跟在 <code class="highlighter-rouge">=</code> 后面。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>文本：
+http://www.baidu.com
+https://yunissong.github.io/
+</code></pre>
+</div>
+
+<p>当使用 <code class="highlighter-rouge">.+(?=:)</code> 查找时，<code class="highlighter-rouge">:</code> 前面的 <code class="highlighter-rouge">http</code> <code class="highlighter-rouge">https</code> 会被匹配出来。</p>
+<h4 id="向后查找">向后查找</h4>
+<p>向后查找的操作符是 <code class="highlighter-rouge">?&lt;=</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>文本：
+http://www.baidu.com
+https://yunissong.github.io/
+</code></pre>
+</div>
+
+<p>当使用 <code class="highlighter-rouge">(?&lt;=:).+</code> 查找时， <code class="highlighter-rouge">:</code> 后面的 <code class="highlighter-rouge">//www.baidu.com</code> <code class="highlighter-rouge">//yunissong.github.io/</code> 会被匹配出来。</p>
+
+<h4 id="前后查找-1">前后查找</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1&gt;welcome to the New and Improved Head First Lounge&lt;/h1&gt;
+</code></pre>
+</div>
+
+<p>使用 <code class="highlighter-rouge">(?&lt;=&lt;h1&gt;)(.*?)(?=&lt;/h1&gt;)</code>,就能把 <code class="highlighter-rouge">h1</code> 标签之间的内容匹配出来。</p>
+<h4 id="对前后查找取非">对前后查找取非</h4>
+<p>之前看到过对字符集合取非使用的是 <code class="highlighter-rouge">^</code> 操作符。但是对去前后查找，取非是使用 <code class="highlighter-rouge">!</code> 来替换 <code class="highlighter-rouge">=</code> 取非。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">操作符</th>
+      <th style="text-align: center">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">(?=)</code></td>
+      <td style="text-align: center">正向前查找</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">(?!)</code></td>
+      <td style="text-align: center">负向前查找</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">(?&lt;=)</code></td>
+      <td style="text-align: center">正向后查找</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="highlighter-rouge">(?&lt;!)</code></td>
+      <td style="text-align: center">负向后查找</td>
+    </tr>
+  </tbody>
+</table>
+
 <h3 id="嵌入条件">嵌入条件</h3>
+
+<p>未完待续。。。。</p>
 
 
 
