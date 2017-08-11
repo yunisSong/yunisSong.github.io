@@ -5,9 +5,37 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 10 Aug 2017 17:00:43 +0800</pubDate>
-    <lastBuildDate>Thu, 10 Aug 2017 17:00:43 +0800</lastBuildDate>
+    <pubDate>Fri, 11 Aug 2017 08:55:00 +0800</pubDate>
+    <lastBuildDate>Fri, 11 Aug 2017 08:55:00 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>小团队的iOS代码规范</title>
+        <description>&lt;h1 id=&quot;小团队的ios代码规范&quot;&gt;小团队的iOS代码规范&lt;/h1&gt;
+
+&lt;p&gt;本文摘抄自&lt;a font=&quot;24px&quot;&gt;&lt;a href=&quot;https://knightsj.github.io/2017/06/14/iOS%20%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/#more&quot;&gt;iOS 代码规范&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;变量&quot;&gt;变量&lt;/h3&gt;
+&lt;h4 id=&quot;变量名必须使用驼峰格式&quot;&gt;变量名必须使用驼峰格式&lt;/h4&gt;
+&lt;p&gt;类，协议使用大驼峰&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HomePageViewController.h
+&amp;lt;HeaderViewDelegate&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;对象等局部变量使用小驼峰：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *personName = @&quot;&quot;;
+NSUInteger totalCount = 0;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 11 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</guid>
+        
+        
+      </item>
     
       <item>
         <title>正则表达式必知必会</title>
@@ -330,7 +358,13 @@ https://yunissong.github.io/
 
 &lt;h3 id=&quot;嵌入条件&quot;&gt;嵌入条件&lt;/h3&gt;
 
-&lt;p&gt;未完待续。。。。&lt;/p&gt;
+&lt;p&gt;正则表达式里的条件要用 &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 来定义。&lt;/p&gt;
+
+&lt;p&gt;还是直接看例子容易理解。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 </description>
         <pubDate>Mon, 07 Aug 2017 00:00:00 +0800</pubDate>
@@ -927,117 +961,6 @@ You may call this method to make a responder object such as a view the first res
         <pubDate>Thu, 06 Jul 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>为什么使用weak修饰的变量会自动设置为nil</title>
-        <description>&lt;h1 id=&quot;为什么使用weak修饰的变量会自动设置为nil&quot;&gt;为什么使用weak修饰的变量会自动设置为nil&lt;/h1&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;Objective-C高级编程 iOS与OS X多线程和内存管理 读书笔记&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;为什么使用weak修饰的变量会自动设置为nil-1&quot;&gt;为什么使用weak修饰的变量会自动设置为nil&lt;/h3&gt;
-&lt;p&gt;我们知道：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;当使用&lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt;修饰符的变量的 引用对象 被废弃时，则将nil赋值给该变量。&lt;/li&gt;
-  &lt;li&gt;使用附有 __weak 修饰符的变量，即是使用注册到 autoreleasepool 中的对象。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;系统是如何实现的&quot;&gt;系统是如何实现的？&lt;/h3&gt;
-
-&lt;p&gt;先看下面的代码：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;__weak&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;obj1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;obj;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;经过编译器会装换为下面的代码;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    id obj1;
-    objc_initWeak(&amp;amp;obj1,obj);
-    objc_destroyWeak(&amp;amp;obj1);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_initWeak&lt;/code&gt; 函数初始化附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量，在变量作用域结束后通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_destroyWeak&lt;/code&gt; 函数释放该变量。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_initWeak&lt;/code&gt; 实现：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    obj1 = 0;
-    objc_storeWeak(&amp;amp;obj1,obj);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_destroyWeak&lt;/code&gt; 实现:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    objc_storeWeak(&amp;amp;obj1,0);
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;所以以上的代码与下面的源代码相同：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    id obj1;
-    obj1 = 0;
-    objc_storeWeak(&amp;amp;obj1,obj);
-    objc_storeWeak(&amp;amp;obj1,0);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_storeWeak&lt;/code&gt; 函数把第二个参数的赋值对象的地址作为键值，将第一个参数的附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量的地址注册到 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中。&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;*{obj:&amp;amp;obj1} 等同 {“key”:”Value”}*&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表 是作为一个散列表实现的。
-当 变量 废弃时，使用该对象的地址作为键进行查找，就能快速的获取对应的 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量的地址。另外，由于一个对象可以同时赋值给多个 附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量中，所以对于一个键，可注册多个变量的地址。&lt;/p&gt;
-
-&lt;p&gt;释放对象时，废弃谁都不持有的对象的同时，程序的动作是怎么样的呢？&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;objc_release&lt;/li&gt;
-  &lt;li&gt;因为引用计数为0所以执行 dealloc&lt;/li&gt;
-  &lt;li&gt;_onjc_rootDealloc&lt;/li&gt;
-  &lt;li&gt;objc_dispose&lt;/li&gt;
-  &lt;li&gt;objc_destrucInstance&lt;/li&gt;
-  &lt;li&gt;objc_clear_deallocating&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;对象废弃时 最后调用的 &lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt; 函数动作如下：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;从 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中获取废弃对象的地址为键值的记录&lt;/li&gt;
-  &lt;li&gt;将包含在记录中的所有附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符变量的地址，赋值为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;从 &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt; 表中删除该记录&lt;/li&gt;
-  &lt;li&gt;从引用计数表中删除废弃对象的地址为键值的记录。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;所以如果附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量 所引用的对象废弃后，将 nil 赋值给改变量的步骤是在这里实现的。&lt;/p&gt;
-
-&lt;p&gt;由此可知，如果大量的使用附有 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符的变量，会消耗对应的 &lt;code class=&quot;highlighter-rouge&quot;&gt;CPU&lt;/code&gt; 资源。良策是只在需要避免循环引用时使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;__weak&lt;/code&gt; 修饰符。&lt;/p&gt;
-
-&lt;h3 id=&quot;最后总结&quot;&gt;最后总结&lt;/h3&gt;
-
-&lt;p&gt;简单来说就是：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;使用 __weak 修饰符的变量 A ，A 引用变量 B ，这时系统会把 B 的地址作为Key ，A的地址作为 Value ，存储在一个系统的散列表中；&lt;/li&gt;
-  &lt;li&gt;当对象 B 被释放时，会先调用 release 然后引用计数为0；&lt;/li&gt;
-  &lt;li&gt;然后调用 dealloc ；&lt;/li&gt;
-  &lt;li&gt;接着会调用一个名为&lt;code class=&quot;highlighter-rouge&quot;&gt;objc_clear_deallocating&lt;/code&gt;的函数，这个函数的作用就是查找以 B 的地址为 key 的 Value，然后将改这些 Value 赋值为 nil，在把这些 Key 、Value 从散列表中删除；&lt;/li&gt;
-  &lt;li&gt;最后在引用计数表中将以 B 的地址为键值的记录删除。&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Mon, 26 Jun 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/</guid>
-        
-        <category>内功</category>
         
         <category>iOS</category>
         
