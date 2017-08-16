@@ -528,13 +528,129 @@ https://yunissong.github.io/
 
 <h3 id="嵌入条件">嵌入条件</h3>
 
-<p>正则表达式里的条件要用 <code class="highlighter-rouge">?</code> 来定义。</p>
+<blockquote>
+  <p>(123)456-7890 和 123-456-7890 都是可以接受的北美号码，而1234567890、(123)-456-7890和(123-456-7890)虽然包含了正确的数字，但是格式不对，如果我们使用下面的正则来匹配：</p>
+</blockquote>
 
-<p>还是直接看例子容易理解。</p>
+<p>文本：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>123-456-7890
+(123)456-7890
+(123)-456-7890
+(123-456-7890
+1234567890
+123 456 7890
 </code></pre>
 </div>
+
+<p>正则：</p>
+
+<p><code class="highlighter-rouge">\(?\d{3}\)?-?\d{3}-\d{4}</code></p>
+
+<p>这段正则的意思：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">\(?</code> 匹配了一个可选左括号；</li>
+  <li><code class="highlighter-rouge">\d{3}</code> 匹配了3位数字；</li>
+  <li><code class="highlighter-rouge">\)?</code>  匹配了一个可选右括号</li>
+  <li><code class="highlighter-rouge">-?</code> 匹配了一个可选的连字符；</li>
+  <li><code class="highlighter-rouge">\d{3}</code> 匹配了3位数字；</li>
+  <li><code class="highlighter-rouge">-</code> 匹配了一个连字符；</li>
+  <li><code class="highlighter-rouge">\d{4}</code> 匹配了4位数字。</li>
+</ul>
+
+<p>符合匹配的结果有：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>123-456-7890
+(123)456-7890
+(123)-456-7890
+(123-456-7890
+</code></pre>
+</div>
+
+<p>并不能排除不正确格式的电话号码。</p>
+
+<h4 id="正则表达式里的条件">正则表达式里的条件</h4>
+
+<p>正则表达式里的条件要用 <code class="highlighter-rouge">?</code> 来定义。
+之前我们已经见过几种特定的条件了。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">?</code> 匹配前一个字符或者表达式，如果它存在的话；</li>
+  <li><code class="highlighter-rouge">?=</code> 和 <code class="highlighter-rouge">?&lt;=</code> 匹配前面或者后面的文本，如果它存在的话；</li>
+  <li>嵌入语法也使用了<code class="highlighter-rouge">?</code>
+    <ul>
+      <li>根据一个回溯引用来进行条件处理。</li>
+      <li>根据一个前后查找来进行条件处理。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="回溯引用条件">回溯引用条件</h4>
+<p>回溯引用条件只有在前面一个表达式搜索取得成功的情况下才允许使用的一个表达式。</p>
+
+<p>需要把文本里面 <code class="highlighter-rouge">&lt;IMG&gt;</code> 标签全都找去来，不仅如此，如果某个 <code class="highlighter-rouge">&lt;IMG&gt;</code> 标签是一个链接 (<code class="highlighter-rouge">&lt;A&gt;</code> 标签包裹)，还需要把链接匹配出来。</p>
+
+<p>文本：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Nav bar --&gt;
+&lt;TD&gt;
+  &lt;A href="/home"&gt;&lt;IMG src="/images/home.gif"&gt;&lt;/A&gt;
+  &lt;IMG src="/images/home.gif"&gt;
+  &lt;A href="/home"&gt;&lt;IMG src="/images/home.gif"&gt;&lt;/A&gt;
+  &lt;IMG src="/images/home.gif"&gt;
+  &lt;A href="/home"&gt;&lt;IMG src="/images/home.gif"&gt;&lt;/A&gt;
+  &lt;IMG src="/images/home.gif"&gt;
+&lt;/TD&gt;
+</code></pre>
+</div>
+<p>正则：
+<code class="highlighter-rouge">(&lt;[Aa]\s+[^&gt;]+&gt;\s*)?&lt;[Ii][Mm][Gg]\s+[^&gt;]+&gt;(?(1)\s*&lt;/[Aa]&gt;)</code></p>
+
+<p>解析：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">(&lt;[Aa]\s+[^&gt;]+&gt;\s*)?</code> 将匹配一个 <code class="highlighter-rouge">&lt;A&gt;</code> 或 <code class="highlighter-rouge">&lt;a&gt;</code> 标签，以及标签内部的任何属性，这个标签可有可无，因为后面跟了一个 <code class="highlighter-rouge">？</code>；</li>
+  <li><code class="highlighter-rouge">&lt;[Ii][Mm][Gg]\s+[^&gt;]+&gt;</code> 匹配一个 <img /> (大小写均可) 标签以及任意属性。</li>
+  <li><code class="highlighter-rouge">(?(1)\s*&lt;/[Aa]&gt;)</code>  是一个回溯引用条件，<code class="highlighter-rouge">?(1)</code> 的意思是：如果第一个回溯引用存在这个例子中就是前面的 <code class="highlighter-rouge">&lt;A&gt;</code> 标签），则使用 <code class="highlighter-rouge">\s*&lt;/[Aa]&gt;</code> 继续匹配。只有前面的 <code class="highlighter-rouge">&lt;A&gt;</code> 标签匹配成功，才继续进行后面的匹配。如果(1) 存在，<code class="highlighter-rouge">\s*&lt;/[Aa]&gt;</code> 将匹配 结束标签 &lt;/A&gt; 之前的任意空白字符。</li>
+</ul>
+
+<h5 id="回溯引用条件否表达式">回溯引用条件否表达式</h5>
+<p>形式：
+<code class="highlighter-rouge">(?(backreference)true-regex|false-regex)</code>
+如果 backreference 成立 执行 true-regex ，不成了，执行 false-regex。</p>
+
+<blockquote>
+  <p>!!!! 本来想用这个查找下代码里面有多少是换行后的<code class="highlighter-rouge"><span class="p">{</span></code> 多少是空格后的<code class="highlighter-rouge"><span class="p">{</span></code>,<code class="highlighter-rouge">Xcode</code> 竟然不支持条件查找!!!.</p>
+</blockquote>
+
+<p>再来看之前那个电话号码的例子，正则改为：
+<code class="highlighter-rouge">(\()?\d{3}(?(1)\)|-)\d{3}-\d{4}</code></p>
+
+<p>解析：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">(\()?</code> 匹配了一个可选左括号；</li>
+  <li><code class="highlighter-rouge">\d{3}</code> 匹配了3位数字；</li>
+  <li><code class="highlighter-rouge">(?(1)\)|-)</code>
+    <ul>
+      <li><code class="highlighter-rouge">?(1)</code> 判断前面的条件是否成立，<code class="highlighter-rouge">(</code> 是否存在。</li>
+      <li>存在 执行 <code class="highlighter-rouge">\)</code>；</li>
+      <li>不存在，执行 <code class="highlighter-rouge">-</code>。</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">\d{3}</code> 匹配了3位数字</li>
+  <li><code class="highlighter-rouge">-</code> 匹配了一个连字符；</li>
+  <li><code class="highlighter-rouge">\d{4}</code> 匹配了4位数字。</li>
+</ul>
+
+<h4 id="前后查找条件">前后查找条件</h4>
+
+<p>其实就是之前的回溯引用差不多，不同的就是，这里的回溯条件使用了自定义的子正则表达式。</p>
+
+<p><code class="highlighter-rouge">d{5}(?(?=-)-\d{4})</code></p>
+
+<p><code class="highlighter-rouge">(?(?=-)-\d{4})</code> 的意思是如果 <code class="highlighter-rouge">(?=-)</code> 成立，则进行后面 <code class="highlighter-rouge">-\d{4}</code> 的匹配。</p>
 
 
 

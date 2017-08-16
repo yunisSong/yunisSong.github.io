@@ -194,25 +194,21 @@
         </h3>
         
         <div class="post-content-preview">
-            小团队的iOS代码规范
+            [TOC]
+小团队的iOS代码规范
 
-本文摘抄自iOS 代码规范
-变量
-变量名必须使用驼峰格式
-类，协议使用大驼峰
+本文摘抄自iOS 代码规范，稍加修改。
 
-HomePageViewController.h
-&lt;HeaderViewDelegate&gt;
-
-
-对象等局部变量使用小驼峰：
-
-NSString *personName = @"";
-NSUInteger totalCount = 0;
+1 核心原则
+1.1 代码应该简洁易懂，逻辑清晰
+因为软件是需要人来维护的。这个人在未来很可能不是你。所以首先是为人编写程序，其次才是计算机：
 
 
+  不要过分追求技巧，降低程序的可读性。
+  简洁的代码可以让bug无处藏身。要写出明显没有bug的代码，而不是没有明显bug的代码。
 
 
+1.2 编程时首先达到正确...
         </div>
     </a>
     <p class="post-meta">
@@ -383,21 +379,12 @@ CoreBluetooth 分为两种模式：
         <div class="post-content-preview">
             自动化的一些实践
 
-今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：
+  更新 Xcode 升级到8.3.3 以后，原有打包脚本出错，需要在指定目录添加一个plist文件，现修改如下：
 
 
-# -*- coding: utf-8 -*-
-import os
-import sys
-import time
-# 项目根目录
-project_path = ""
-#证书名称
-cerName = ""
-#工程名称
-projectName = ""+".xcodeproj"
-#scheme
-scheme = ...
+plist 文件内容如下，参考链接 stackoverflow：
+
+  You’ll have to at least specifiy an entry for method (app-store, ad-hoc, enterprise etc. - ...
         </div>
     </a>
     <p class="post-meta">
