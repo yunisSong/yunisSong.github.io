@@ -406,36 +406,36 @@ NSDictionary *NotificationInfo;
 
 <p>但是也有对这种做法的争议，但是整体利大于弊，推荐使用。</p>
 
-<h4 id="219-除了init和dealloc方法建议都使用点语法访问属性">2.1.9 除了init和dealloc方法，建议都使用点语法访问属性</h4>
+<h4 id="219-除了-init-和-dealloc-方法建议都使用点语法访问属性">2.1.9 除了 <code class="highlighter-rouge">init</code> 和 <code class="highlighter-rouge">dealloc</code> 方法，建议都使用点语法访问属性</h4>
 
 <p>使用点语法的好处：
-setter：</p>
+<code class="highlighter-rouge">setter</code>：</p>
 
 <ol>
-  <li>setter会遵守内存管理语义(strong, copy, weak)。</li>
+  <li><code class="highlighter-rouge">setter</code> 会遵守内存管理语义(<code class="highlighter-rouge">strong</code>, <code class="highlighter-rouge">copy</code>, <code class="highlighter-rouge">weak</code>)。</li>
   <li>通过在内部设置断点，有助于调试bug。</li>
   <li>可以过滤一些外部传入的值。</li>
-  <li>捕捉KVO通知。</li>
+  <li>捕捉 <code class="highlighter-rouge">KVO</code> 通知。</li>
 </ol>
 
-<p>getter：</p>
+<p><code class="highlighter-rouge">getter</code>：</p>
 
 <ol>
   <li>允许子类化。</li>
   <li>通过在内部设置断点，有助于调试bug。</li>
-  <li>实现懒加载（lazy initialization）。</li>
+  <li>实现懒加载（<code class="highlighter-rouge">lazy initialization</code>）。</li>
 </ol>
 
 <p><strong>注意：</strong></p>
 
 <ul>
-  <li>懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写getter方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。</li>
-  <li>在init和dealloc方法里面使用点语法的后果是：因为没有绕过setter和getter，在setter和getter里面可能会有很多其他的操作。而且如果它的子类重载了它的setter和getter方法，那么就可能导致该子类调用其他的方法。</li>
+  <li>懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写 <code class="highlighter-rouge">getter</code> 方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。</li>
+  <li>在 <code class="highlighter-rouge">init</code> 和 <code class="highlighter-rouge">dealloc</code> 方法里面使用点语法的后果是：因为没有绕过 <code class="highlighter-rouge">setter</code> 和 <code class="highlighter-rouge">getter</code> ，在 <code class="highlighter-rouge">setter</code> 和 <code class="highlighter-rouge">getter</code> 里面可能会有很多其他的操作。而且如果它的子类重载了它的 <code class="highlighter-rouge">setter</code> 和 <code class="highlighter-rouge">getter</code> 方法，那么就可能导致该子类调用其他的方法。</li>
 </ul>
 
 <h4 id="2110-属性声明严把权限">2.1.10 属性声明严把权限</h4>
 
-<p>对不需要外部修改的属性使用readonly。</p>
+<p>对不需要外部修改的属性使用 <code class="highlighter-rouge">readonly</code> 。</p>
 
 <h4 id="2111-尽量使用不可变对象">2.1.11 尽量使用不可变对象</h4>
 <p>建议尽量把对外公布出来的属性设置为只读，在实现文件内部设为读写。具体做法是：</p>
@@ -452,7 +452,7 @@ setter：</p>
 
 <h4 id="222-函数名与形参不能留空格返回类型与函数标识符有一个空格">2.2.2 函数名与形参不能留空格，返回类型与函数标识符有一个空格</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- (void)someMethod;
+<div class="highlighter-rouge"><pre class="highlight"><code>- (void)someMethod:(id)parameter;
 </code></pre>
 </div>
 
@@ -477,9 +477,7 @@ setter：</p>
 
 <p>推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-- (NSString *)descriptionWithLocale:(id)locale;
-- 
+<div class="highlighter-rouge"><pre class="highlight"><code>- (NSString *)descriptionWithLocale:(id)locale;
 </code></pre>
 </div>
 
@@ -499,11 +497,11 @@ setter：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>void function(param1,param2)
 {
-      if(param1 is unavailable){
+      if(param1 is unavailable) {
            return;
       }
     
-      if(param2 is unavailable){
+      if(param2 is unavailable) {
            return;
       }
      //Do some right thing
@@ -520,11 +518,13 @@ setter：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>int function()
 {
-    if(condition1){
+    if(condition1) {
         return count1
-    }else if(condition2){
+    }
+    else if(condition2) {
         return count2
-    }else{
+    }
+    else {
        return defaultCount
     } 
 }
@@ -534,9 +534,10 @@ setter：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>int function()
 {
-    if(condition1){
+    if(condition1) {
         return count1
-    }else if(condition2){
+    }
+    else if(condition2) {
         return count2
     }
 }
@@ -577,7 +578,7 @@ setter：</p>
 </div>
 
 <h4 id="2213-初始化方法">2.2.13 初始化方法</h4>
-<p>初始化方法返回类型必须是instancetype，不能是id。</p>
+<p>初始化方法返回类型必须是 <code class="highlighter-rouge">instancetype</code> ，不能是 <code class="highlighter-rouge">id</code>。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>- (instancetype)init { 
     self = [super init]; // call the designated initializer 
@@ -596,7 +597,8 @@ setter：</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>var hintStr;
 if (count &lt; 3) {
   hintStr = "Good";
-} else {
+} 
+else {
   hintStr = "";
 }
 </code></pre>
@@ -610,7 +612,7 @@ if (count &lt; 3) {
 </code></pre>
 </div>
 
-<h4 id="232-不要使用过多的分支要善于使用return来提前返回错误的情况">2.3.2 不要使用过多的分支，要善于使用return来提前返回错误的情况</h4>
+<h4 id="232-不要使用过多的分支要善于使用-return-来提前返回错误的情况">2.3.2 不要使用过多的分支，要善于使用 <code class="highlighter-rouge">return</code> 来提前返回错误的情况</h4>
 <p>推荐</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>- (void)someMethod { 
@@ -631,7 +633,7 @@ if (count &lt; 3) {
 </code></pre>
 </div>
 
-<h4 id="233-条件表达式如果很长则需要将他们提取出来赋给一个bool值">2.3.3 条件表达式如果很长，则需要将他们提取出来赋给一个BOOL值</h4>
+<h4 id="233-条件表达式如果很长则需要将他们提取出来赋给一个-bool-值">2.3.3 条件表达式如果很长，则需要将他们提取出来赋给一个 <code class="highlighter-rouge">BOOL</code> 值</h4>
 <p>推荐</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>let nameContainsSwift = sessionName.hasPrefix("Swift")
@@ -654,13 +656,13 @@ if (isSwiftSession) {
 <h4 id="234-条件语句的判断应该是变量在左常量在右">2.3.4 条件语句的判断应该是变量在左，常量在右</h4>
 <p>推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if ( count == 6) {
+<div class="highlighter-rouge"><pre class="highlight"><code>if ( count == 6 ) {
 }
 
-if ( count == 6) {
+if ( count == 6 ) {
 }
 
-if ( object == nil) {
+if ( object == nil ) {
 }
 
 if ( !object ) {
@@ -670,7 +672,7 @@ if ( !object ) {
 
 <p>不推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if ( 6 == count) {
+<div class="highlighter-rouge"><pre class="highlight"><code>if ( 6 == count ) {
 }
 
 if ( nil == object ) {
@@ -681,17 +683,17 @@ if ( nil == object ) {
 <h4 id="235-每个分支的实现代码都必须被大括号包围">2.3.5 每个分支的实现代码都必须被大括号包围</h4>
 <p>推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if (!error) {
+<div class="highlighter-rouge"><pre class="highlight"><code>if ( !error ) {
   return success;
 }
 </code></pre>
 </div>
 <p>不推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if (!error)
+<div class="highlighter-rouge"><pre class="highlight"><code>if ( !error )
     return success;
 
-if (!error) return success;
+if ( !error ) return success;
 
 
 </code></pre>
@@ -730,7 +732,7 @@ if (!error) return success;
 
 <h3 id="25-运算符">2.5 运算符</h3>
 
-<h4 id="251-运算符与变量之间的间隔">2.5.1 运算符与变量之间的间隔</h4>
+<h4 id="251-一元运算符与变量之间没有空格">2.5.1 一元运算符与变量之间没有空格</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>!bValue
 ~iValue
@@ -753,7 +755,7 @@ for(int i = 0; i &lt; 10; i++)
 
 <p>在多个不同的运算符同时存在的时候应该合理使用括号，不要盲目依赖操作符优先级。
 因为有的时候不能保证阅读你代码的人就一定能了解你写的算式里面所有操作符的优先级。</p>
-<h3 id="26-switch语句">2.6 Switch语句</h3>
+<h3 id="26-switch-语句">2.6 <code class="highlighter-rouge">Switch</code> 语句</h3>
 
 <h4 id="261-每个分支都必须用大括号括起来">2.6.1 每个分支都必须用大括号括起来</h4>
 
@@ -778,7 +780,7 @@ for(int i = 0; i &lt; 10; i++)
 </code></pre>
 </div>
 
-<h4 id="262--使用枚举类型时不能有default分支-除了使用枚举类型以外都必须有default分支">2.6.2  使用枚举类型时，不能有default分支， 除了使用枚举类型以外，都必须有default分支</h4>
+<h4 id="262--使用枚举类型时不能有-default-分支-除了使用枚举类型以外都必须有-default-分支">2.6.2  使用枚举类型时，不能有 <code class="highlighter-rouge">default</code> 分支， 除了使用枚举类型以外，都必须有 <code class="highlighter-rouge">default</code> 分支</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>RWTLeftMenuTopItemType menuType = RWTLeftMenuTopItemMain;  
 switch (menuType) {  
@@ -800,38 +802,39 @@ switch (menuType) {
 <h3 id="27-单例模式">2.7 单例模式</h3>
 <p>推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>+ (instancetype)sharedInstance { 
- static id sharedInstance = nil; 
- static dispatch_once_t onceToken = 0;
-       dispatch_once(&amp;onceToken, ^{ 
-  sharedInstance = [[self alloc] init];
-  }); 
- return sharedInstance; 
+<div class="highlighter-rouge"><pre class="highlight"><code>+ (instancetype)sharedInstance {
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&amp;onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 </code></pre>
 </div>
 <p>不推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>+ (instancetype)sharedInstance { 
- static id sharedInstance; 
- @synchronized(self) { 
- if (sharedInstance == nil) {  sharedInstance = [[MyClass alloc] init]; 
- } } 
- return sharedInstance; 
+<div class="highlighter-rouge"><pre class="highlight"><code>+ (instancetype)sharedInstance {
+    static id sharedInstance;
+    @synchronized(self) {
+        if (sharedInstance == nil) {
+            sharedInstance = [[MyClass alloc] init];
+        } }
+    return sharedInstance; 
 }
 </code></pre>
 </div>
 <h3 id="28-文件目录">2.8 文件目录</h3>
-<p>Xcode工程文件的物理路径要和逻辑路径保持一致。</p>
+<p><code class="highlighter-rouge">Xcode</code> 工程文件的物理路径要和逻辑路径保持一致。</p>
 <h3 id="29-字面量">2.9 字面量</h3>
 <p>在编码中应多用字面量语法，少用与之等价的方法。</p>
 
 <h4 id="291-声明时的字面量语法">2.9.1 声明时的字面量语法</h4>
-<p>在声明NSNumber，NSArray，NSDictionary时，应该尽量使用简洁字面量语法。</p>
+<p>在声明 <code class="highlighter-rouge">NSNumber</code>，<code class="highlighter-rouge">NSArray</code>，<code class="highlighter-rouge">NSDictionary</code> 时，应该尽量使用简洁字面量语法。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>NSNumber *intNumber = @1;
 NSNumber *floatNumber = @2.5f;
-NSArray *animals =[NSArray arrayWithObjects:@"cat", @"dog",@"mouse", @"badger", nil];
+NSArray *animals = @[@"cat", @"dog",@"mouse", @"badger"];
 Dictionary *dict = @{@"animal":@"tiger",@"phone":@"iPhone 6"};
 
 </code></pre>
@@ -843,20 +846,20 @@ Dictionary *dict = @{@"animal":@"tiger",@"phone":@"iPhone 6"};
 NSString *iphone = dict[@"phone"];
 </code></pre>
 </div>
-<h3 id="210-nsarray和nsdictionary">2.10 NSArray和NSDictionary</h3>
+<h3 id="210-nsarray-和-nsdictionary">2.10 <code class="highlighter-rouge">NSArray</code> 和 <code class="highlighter-rouge">NSDictionary</code></h3>
 
 <h4 id="2101-尽可能的使用字面量初始化">2.10.1 尽可能的使用字面量初始化</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>NSArray *animals =[NSArray arrayWithObjects:@"cat", @"dog",@"mouse", @"badger", nil];
+<div class="highlighter-rouge"><pre class="highlight"><code>NSArray *animals = @[@"cat", @"dog",@"mouse", @"badger"];
 Dictionary *dict = @{@"animal":@"tiger",@"phone":@"iPhone 6"};
 </code></pre>
 </div>
 
 <h4 id="2102-使用泛型">2.10.2 使用泛型</h4>
-<p>在定义NSArray和NSDictionary时使用泛型，可以保证程序的安全性，而且在使用 枚举块 函数时会自动识别 item 类型</p>
+<p>在定义 <code class="highlighter-rouge">NSArray</code> 和 <code class="highlighter-rouge">NSDictionary</code> 时使用泛型，可以保证程序的安全性，而且在使用 枚举块 函数时会自动识别 <strong>item</strong> 类型</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>NSArray&lt;NSString *&gt; *testArr = [NSArray arrayWithObjects:@"Hello", @"world", nil];
-NSDictionary&lt;NSString *, NSNumber *&gt; *dic = @{@"key":@(1), @"age":@(10)};
+<div class="highlighter-rouge"><pre class="highlight"><code>NSArray &lt;NSString *&gt;*testArr = [NSArray arrayWithObjects:@"Hello", @"world", nil];
+NSDictionary &lt;NSString *, NSNumber *&gt;*dic = @{@"key":@(1), @"age":@(10)};
 </code></pre>
 </div>
 
@@ -870,19 +873,19 @@ NSDictionary&lt;NSString *, NSNumber *&gt; *dic = @{@"key":@(1), @"age":@(10)};
 <p><code class="highlighter-rouge">addObject</code> 之前要非空判断。</p>
 
 <h4 id="2106-多用枚举块">2.10.6 多用枚举块</h4>
-<p>当遍历集合元素时，建议使用块枚举，因为相对于传统的for循环，它更加高效，而且简洁,还能获取到用传统的for循环无法提供的值.</p>
+<p>当遍历集合元素时，建议使用块枚举，因为相对于传统的 <strong>for</strong> 循环，它更加高效，而且简洁,还能获取到用传统的 <strong>for</strong> 循环无法提供的值.</p>
 
 <p>推荐</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    NSArray &lt;SYPushUserModel *&gt;*sourceArray = @[...];
-    [sourceArray enumerateObjectsUsingBlock:^(SYPushUserModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+<div class="highlighter-rouge"><pre class="highlight"><code>NSArray &lt;SYPushUserModel *&gt;*sourceArray = @[...];
+[sourceArray enumerateObjectsUsingBlock:^(SYPushUserModel * obj, NSUInteger idx, BOOL * stop) {
             
-    }];
+}];
 
-    NSDictionary &lt;NSString *,SYPushUserModel *&gt;*sourceDic = @{...};
-    [sourceDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SYPushUserModel * _Nonnull obj, BOOL * _Nonnull stop) {
+NSDictionary &lt;NSString *,SYPushUserModel *&gt;*sourceDic = @{...};
+[sourceDic enumerateKeysAndObjectsUsingBlock:^(NSString * key, SYPushUserModel * obj, BOOL * stop) {
         
-    }];
+}];
 </code></pre>
 </div>
 <h3 id="211-类">2.11 类</h3>
@@ -957,7 +960,7 @@ UIContentSizeCategoryAdjusting
 </div>
 
 <h4 id="2113-把类的实现代码分散到便于管理的多个分类中">2.11.3 把类的实现代码分散到便于管理的多个分类中</h4>
-<p>一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用Objecctive-C的分类机制，将类的这些方法按一定的逻辑划入几个分区中。使得代码逻辑清晰，便于维护。</p>
+<p>一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用 <strong>Objecctive-C</strong> 的分类机制，将类的这些方法按一定的逻辑划入几个分区中。使得代码逻辑清晰，便于维护。</p>
 
 <h3 id="212-枚举">2.12 枚举</h3>
 <p>要多使用 <code class="highlighter-rouge">NS_ENUM</code>,尽量少使用 C 语言风格的<code class="highlighter-rouge">enum</code></p>
@@ -973,14 +976,16 @@ UIContentSizeCategoryAdjusting
 </code></pre>
 </div>
 
-<h4 id="2122-使用枚举类型时不能有default分支">2.12.2 使用枚举类型时，不能有default分支</h4>
-<p>在Switch语句使用枚举类型时，不能有default分支， 除了使用枚举类型以外，都必须有default分支
-在Switch语句使用枚举类型的时候，如果使用了default分支，在将来就无法通过编译器来检查新增的枚举类型了。</p>
+<h4 id="2122-使用枚举类型时不能有-default-分支">2.12.2 使用枚举类型时，不能有 <code class="highlighter-rouge">default</code> 分支</h4>
+<p>在 <code class="highlighter-rouge">Switch</code> 语句使用枚举类型时，不能有 <code class="highlighter-rouge">default</code> 分支， 除了使用枚举类型以外，都必须有 <code class="highlighter-rouge">default</code> 分支
+在 <code class="highlighter-rouge">Switch</code> 语句使用枚举类型的时候，如果使用了 <code class="highlighter-rouge">default</code> 分支，在将来就无法通过编译器来检查新增的枚举类型了。</p>
 
 <h3 id="213-大括号该不该换行">2.13 大括号该不该换行</h3>
-<p>仁者见仁，智者见智的问题。
-推荐：
-程序的分界符“{”和“}”在if、else、else if、for、while、do等语句时，“{”前添加空格紧跟语句后，空格分割。在方法（函数）应独占一行并且位于同一列，同时与引用他们的语句对齐。“{}”之内的代码块使用缩进规则对齐。</p>
+<p>仁者见仁，智者见智的问题。</p>
+
+<p>程序的分界符 <strong>{</strong> 和 <strong>}</strong> 在 <strong>if</strong>、<strong>else</strong>、<strong>else if</strong>、<strong>for</strong>、<strong>while</strong>、<strong>do</strong>等语句时， <strong>{</strong> 前添加空格紧跟语句后，空格分割。在方法（函数）应独占一行并且位于同一列，同时与引用他们的语句对齐。 <strong>{}</strong> 之内的代码块使用缩进规则对齐。</p>
+
+<p>推荐：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>- (void)dealloc
 {
@@ -1041,7 +1046,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 </div>
 <h3 id="215-宏">2.15 宏</h3>
 
-<h4 id="2151-宏常量名都要使用大写字母用下划线_分割单词">2.15.1 宏、常量名都要使用大写字母，用下划线‘_’分割单词。</h4>
+<h4 id="2151-宏常量名都要使用大写字母用下划线-_-分割单词">2.15.1 宏、常量名都要使用大写字母，用下划线 <code class="highlighter-rouge">_</code> 分割单词。</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>#define URL_GAIN_QUOTE_LIST @"/v1/quote/list"
 #define URL_UPDATE_QUOTE_LIST @"/v1/quote/update"
@@ -1057,7 +1062,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 <h3 id="216-其他">2.16 其他</h3>
 
 <h4 id="2161-小括号内联复合表达式">2.16.1 小括号内联复合表达式</h4>
-<p>A compound statement enclosed in parentheses。推荐使用，形式如下：</p>
+<p><em>A compound statement enclosed in parentheses</em>。推荐使用，形式如下：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>RETURN_VALUE_RECEIVER = {(
     // Do whatever you want
@@ -1066,7 +1071,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 </code></pre>
 </div>
 
-<p>初始化时推荐使用，有点像block和内联函数的结合体，它最大的意义在于将代码整理分块，将同一个逻辑层级的代码包在一起；逻辑清晰，也方便拷贝使用。
+<p>初始化时推荐使用，有点像<strong>block</strong>和内联函数的结合体，它最大的意义在于将代码整理分块，将同一个逻辑层级的代码包在一起；逻辑清晰，也方便拷贝使用。
 推荐：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>UIView *backgroundView = ({
@@ -1111,6 +1116,13 @@ promotionsEntity.promotionColorStr   = activityItemDict[@"promotion_color"];
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/" data-toggle="tooltip" data-placement="top" title="使用wkhtmltopdf将Markdown转为带有标签的PDF">
+                        Next<br>
+                        <span>使用wkhtmltopdf将Markdown转为带有标签的PDF</span>
+                        </a>
+                    </li>
                     
                 </ul>
 

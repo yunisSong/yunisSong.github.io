@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>三十一的博客 | Yunis Blog</title>
+    <title>使用wkhtmltopdf将Markdown转为带有标签的PDF - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -153,478 +153,261 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>三十一</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">潜心修行。。。</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>使用wkhtmltopdf将Markdown转为带有标签的PDF</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on August 17, 2017</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/">
-        <h2 class="post-title">
-            使用wkhtmltopdf将Markdown转为带有标签的PDF
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            使用 wkhtmltopdf 将 Markdown 文件转为带有标签的 PDF 文件
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-1，使用 MWeb 编写 Markdown 文档
-。。。。
-2，导出为 HTML
+				<h1 id="使用-wkhtmltopdf-将-markdown-文件转为带有标签的-pdf-文件">使用 <code class="highlighter-rouge">wkhtmltopdf</code> 将 <code class="highlighter-rouge">Markdown</code> 文件转为带有标签的 PDF 文件</h1>
 
-3，编辑 HTML 样式
-使用 sublime text 打开 HTML 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。
+<h3 id="1使用-mweb-编写-markdown-文档">1，使用 <code class="highlighter-rouge">MWeb</code> 编写 <code class="highlighter-rouge">Markdown</code> 文档</h3>
+<p>。。。。</p>
+<h3 id="2导出为-html">2，导出为 <code class="highlighter-rouge">HTML</code></h3>
+<p><img src="/img/in-post/markDownToHtml.png" alt="" /></p>
+<h3 id="3编辑-html-样式">3，编辑 HTML 样式</h3>
+<p>使用 <code class="highlighter-rouge">sublime text</code> 打开 <code class="highlighter-rouge">HTML</code> 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。</p>
 
-.markdown-body {
+<div class="highlighter-rouge"><pre class="highlight"><code>.markdown-body {
   min-width: 200px;
-  ma...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 17, 2017
-    </p>
+  max-width: none;/* 修改 */
+  margin: 0 auto;
+  padding: 20px;
+
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 58px;/* 修改 */
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+</code></pre>
 </div>
-<hr>
 
-<div class="post-preview">
-    <a href="/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
-        <h2 class="post-title">
-            小团队的iOS代码规范
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            [TOC]
-小团队的iOS代码规范
-
-本文摘抄自iOS 代码规范，稍加修改。
-
-1 核心原则
-1.1 代码应该简洁易懂，逻辑清晰
-因为软件是需要人来维护的。这个人在未来很可能不是你。所以首先是为人编写程序，其次才是计算机：
-
-
-  不要过分追求技巧，降低程序的可读性。
-  简洁的代码可以让bug无处藏身。要写出明显没有bug的代码，而不是没有明显bug的代码。
-
-
-1.2 编程时首先达到正确...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 11, 2017
-    </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #e8f2fb;/* 修改 */
+  border-radius: 3px;
+}
+</code></pre>
 </div>
-<hr>
 
-<div class="post-preview">
-    <a href="/2017/08/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">
-        <h2 class="post-title">
-            正则表达式必知必会
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            正则表达式必知必会
-匹配单个字符
-
-匹配纯文本
-相当于文本查找的功能（CMD + F）。但是一般的正则表达式引擎默认返回第一个匹配结果。
-大小写匹配
-匹配任意字符
-使用 . 来匹配任意字符。
-譬如：使用 yunis. 来匹配，yunis1，yunis2，yunis3都是符合搜索结果的。
-匹配特殊字符
-如果需要匹配特殊字符（ . 等）就需要使用元字符（ \ 反斜杠）来对他进行转义。
-譬如：使用...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 7, 2017
-    </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #e8f2fb;/* 修改 */
+  border-radius: 3px;
+}
+</code></pre>
 </div>
-<hr>
 
-<div class="post-preview">
-    <a href="/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/">
-        <h2 class="post-title">
-            Processing symbol files
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Xcode真机调试出现“* is busy: Processing symbol files”
-
-解决方案：
-
-  重新插拔数据线；
-  打开iTunes；
-  终极解决方案：重启手机。
-
-
-
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 4, 2017
-    </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>.markdown-body strong {
+  font-weight: bold;
+  color: #0a366f;/* 修改 */
+}
+</code></pre>
 </div>
-<hr>
+<h3 id="4下载-wkhtmltopdf">4，下载 <code class="highlighter-rouge">wkhtmltopdf</code></h3>
+<p>下载地址为 <a href="https://wkhtmltopdf.org/downloads.html">wkhtmltopdf</a>.
+建议打开 VPN ，不然下载速度好慢的。</p>
+<h3 id="4使用-wkhtmltopdf-转换为-pdf">4，使用 <code class="highlighter-rouge">wkhtmltopdf</code> 转换为 PDF</h3>
+<p>进入 <code class="highlighter-rouge">HTML</code> 文件所在目录，使用命令：</p>
 
-<div class="post-preview">
-    <a href="/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/">
-        <h2 class="post-title">
-            jekyll启动本地服务时报端口错误
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            jekyll启动本地服务时报端口错误
-
-报错内容为：
-
-
-  Auto-regeneration: enabled for ‘/Users/Yunis/Documents/Github/yunisSong.github.io’
-Configuration file: /Users/Yunis/Documents/Github/yunisSong.github.io/_config.yml
-j...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 2, 2017
-    </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; wkhtmltopdf  index.html 编码规范.pdf
+</code></pre>
 </div>
-<hr>
+<p>其中 <code class="highlighter-rouge">index.html</code> 为刚才导出的文件 ，<code class="highlighter-rouge">编码规范.pdf</code> 为你要生成的PDF 文件</p>
+<blockquote>
+  <p>一定要到<code class="highlighter-rouge">HTML</code> 文件所在目录执行这个命令。我因为这个原因傻逼的找了半天错误原因。</p>
+</blockquote>
 
-<div class="post-preview">
-    <a href="/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/">
-        <h2 class="post-title">
-            iOS蓝牙框架的简单实用
-        </h2>
+<p>样式大概是这个样子的：
+<img src="/img/in-post/wkhtmltopdfDemo.png" alt="" /></p>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" data-toggle="tooltip" data-placement="top" title="小团队的iOS代码规范">
+                        Previous<br>
+                        <span>小团队的iOS代码规范</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
         
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
-        <div class="post-content-preview">
-            iOS蓝牙框架的简单实用
 
-CoreBluetooth 分为两种模式：
-
-1，peripheral 外设
-
-2，central 中心
-
-蓝牙中心模式流程
-
-
-  建立中心角色
-  扫描外设（discover）
-  连接外设(connect)
-  扫描外设中的服务和特征(discover)
-    
-      4.1 获取外设的services
-      4.2 获取外设的Characte...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on August 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/27/Head-First-HTML%E4%B8%8ECSS/">
-        <h2 class="post-title">
-            Head First HTML与CSS
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Head First HTML与CSS
-
-构建网页的文件名称不要有空格
-&lt;a href="test.html"&gt;点击跳转到同级目录下test.html 文件&lt;/a&gt;
-&lt;a href="../test.html"&gt;点击跳转到上级目录下test.html 文件&lt;/a&gt;
-&lt;a href="Yunis/test.html"&gt;点击跳转到Yun...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 27, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/">
-        <h2 class="post-title">
-            自动化的一些实践
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            自动化的一些实践
-
-  更新 Xcode 升级到8.3.3 以后，原有打包脚本出错，需要在指定目录添加一个plist文件，现修改如下：
-
-
-plist 文件内容如下，参考链接 stackoverflow：
-
-  You’ll have to at least specifiy an entry for method (app-store, ad-hoc, enterprise etc. - ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 13, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/">
-        <h2 class="post-title">
-            基与CocosPods和SVN的一次组件化实践
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            TODO:如何添加到 SVN
- 文件描述 与 文件层级的关系。
-基与CocosPods和SVN的一次组件化实践
-
-
-  入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。
-
-
-...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 12, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
-        <h2 class="post-title">
-            输入框切换键盘卡顿的解决办法
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            输入框切换键盘卡顿的解决办法
-
-今天开发碰到一个问题：
-有两个输入框，一个输入手机号码、一个输入验证码。
-客户要求：手机号输入框输入满11位时，切换到验证码输入框。
-
-很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：
-
-    //监听位数
-    if (field.text.length &gt;= 11) {
-        dispatch_async(dispat...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 8, 2017
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    
-    <li class="next">
-        <a href="/page2">Older Posts &rarr;</a>
-    </li>
-    
-</ul>
-
-
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#Swift" title="Swift" rel="12">
+                				<a href="/tags/#Swift" title="Swift" rel="12">
                                     Swift
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Shell" title="Shell" rel="2">
+                				<a href="/tags/#Shell" title="Shell" rel="2">
                                     Shell
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="15">
+                				<a href="/tags/#iOS" title="iOS" rel="15">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#转载" title="转载" rel="2">
+                				<a href="/tags/#转载" title="转载" rel="2">
                                     转载
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#GCD" title="GCD" rel="2">
+                				<a href="/tags/#GCD" title="GCD" rel="2">
                                     GCD
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#轮子" title="轮子" rel="2">
+                				<a href="/tags/#轮子" title="轮子" rel="2">
                                     轮子
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="6">
                                     JavaScript
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#内功" title="内功" rel="5">
+                				<a href="/tags/#内功" title="内功" rel="5">
                                     内功
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/gg.jpeg" />
-                        
-                        
-                            <p>大龄码农的进修之路。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/iOSSurf">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/yunisSong">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
-                <h5>大神博客</h5>
+                <h5>FRIENDS</h5>
                 <ul class="list-inline">
                     
                         <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
@@ -643,10 +426,52 @@ plist 文件内容如下，参考链接 stackoverflow：
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
     <!-- Footer -->
@@ -803,6 +628,50 @@ plist 文件内容如下，参考链接 stackoverflow：
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

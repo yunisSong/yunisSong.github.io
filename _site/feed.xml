@@ -5,9 +5,92 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 16 Aug 2017 17:29:45 +0800</pubDate>
-    <lastBuildDate>Wed, 16 Aug 2017 17:29:45 +0800</lastBuildDate>
+    <pubDate>Thu, 17 Aug 2017 10:35:06 +0800</pubDate>
+    <lastBuildDate>Thu, 17 Aug 2017 10:35:06 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>使用wkhtmltopdf将Markdown转为带有标签的PDF</title>
+        <description>&lt;h1 id=&quot;使用-wkhtmltopdf-将-markdown-文件转为带有标签的-pdf-文件&quot;&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt; 将 &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; 文件转为带有标签的 PDF 文件&lt;/h1&gt;
+
+&lt;h3 id=&quot;1使用-mweb-编写-markdown-文档&quot;&gt;1，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;MWeb&lt;/code&gt; 编写 &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; 文档&lt;/h3&gt;
+&lt;p&gt;。。。。&lt;/p&gt;
+&lt;h3 id=&quot;2导出为-html&quot;&gt;2，导出为 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/img/in-post/markDownToHtml.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;3编辑-html-样式&quot;&gt;3，编辑 HTML 样式&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sublime text&lt;/code&gt; 打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body {
+  min-width: 200px;
+  max-width: none;/* 修改 */
+  margin: 0 auto;
+  padding: 20px;
+
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333;
+  overflow: hidden;
+  font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Segoe UI&quot;, Arial, freesans, sans-serif;
+  font-size: 58px;/* 修改 */
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #e8f2fb;/* 修改 */
+  border-radius: 3px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #e8f2fb;/* 修改 */
+  border-radius: 3px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body strong {
+  font-weight: bold;
+  color: #0a366f;/* 修改 */
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;4下载-wkhtmltopdf&quot;&gt;4，下载 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;下载地址为 &lt;a href=&quot;https://wkhtmltopdf.org/downloads.html&quot;&gt;wkhtmltopdf&lt;/a&gt;.
+建议打开 VPN ，不然下载速度好慢的。&lt;/p&gt;
+&lt;h3 id=&quot;4使用-wkhtmltopdf-转换为-pdf&quot;&gt;4，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt; 转换为 PDF&lt;/h3&gt;
+&lt;p&gt;进入 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件所在目录，使用命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$-&amp;gt; wkhtmltopdf  index.html 编码规范.pdf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; 为刚才导出的文件 ，&lt;code class=&quot;highlighter-rouge&quot;&gt;编码规范.pdf&lt;/code&gt; 为你要生成的PDF 文件&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;一定要到&lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件所在目录执行这个命令。我因为这个原因傻逼的找了半天错误原因。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;样式大概是这个样子的：
+&lt;img src=&quot;/img/in-post/wkhtmltopdfDemo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 17 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</guid>
+        
+        
+      </item>
     
       <item>
         <title>小团队的iOS代码规范</title>
@@ -212,36 +295,36 @@ NSDictionary *NotificationInfo;
 
 &lt;p&gt;但是也有对这种做法的争议，但是整体利大于弊，推荐使用。&lt;/p&gt;
 
-&lt;h4 id=&quot;219-除了init和dealloc方法建议都使用点语法访问属性&quot;&gt;2.1.9 除了init和dealloc方法，建议都使用点语法访问属性&lt;/h4&gt;
+&lt;h4 id=&quot;219-除了-init-和-dealloc-方法建议都使用点语法访问属性&quot;&gt;2.1.9 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;init&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;dealloc&lt;/code&gt; 方法，建议都使用点语法访问属性&lt;/h4&gt;
 
 &lt;p&gt;使用点语法的好处：
-setter：&lt;/p&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt;：&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;setter会遵守内存管理语义(strong, copy, weak)。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 会遵守内存管理语义(&lt;code class=&quot;highlighter-rouge&quot;&gt;strong&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;copy&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt;)。&lt;/li&gt;
   &lt;li&gt;通过在内部设置断点，有助于调试bug。&lt;/li&gt;
   &lt;li&gt;可以过滤一些外部传入的值。&lt;/li&gt;
-  &lt;li&gt;捕捉KVO通知。&lt;/li&gt;
+  &lt;li&gt;捕捉 &lt;code class=&quot;highlighter-rouge&quot;&gt;KVO&lt;/code&gt; 通知。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;getter：&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt;：&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;允许子类化。&lt;/li&gt;
   &lt;li&gt;通过在内部设置断点，有助于调试bug。&lt;/li&gt;
-  &lt;li&gt;实现懒加载（lazy initialization）。&lt;/li&gt;
+  &lt;li&gt;实现懒加载（&lt;code class=&quot;highlighter-rouge&quot;&gt;lazy initialization&lt;/code&gt;）。&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写getter方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。&lt;/li&gt;
-  &lt;li&gt;在init和dealloc方法里面使用点语法的后果是：因为没有绕过setter和getter，在setter和getter里面可能会有很多其他的操作。而且如果它的子类重载了它的setter和getter方法，那么就可能导致该子类调用其他的方法。&lt;/li&gt;
+  &lt;li&gt;懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。&lt;/li&gt;
+  &lt;li&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;init&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;dealloc&lt;/code&gt; 方法里面使用点语法的后果是：因为没有绕过 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; ，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 里面可能会有很多其他的操作。而且如果它的子类重载了它的 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 方法，那么就可能导致该子类调用其他的方法。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;2110-属性声明严把权限&quot;&gt;2.1.10 属性声明严把权限&lt;/h4&gt;
 
-&lt;p&gt;对不需要外部修改的属性使用readonly。&lt;/p&gt;
+&lt;p&gt;对不需要外部修改的属性使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;readonly&lt;/code&gt; 。&lt;/p&gt;
 
 &lt;h4 id=&quot;2111-尽量使用不可变对象&quot;&gt;2.1.11 尽量使用不可变对象&lt;/h4&gt;
 &lt;p&gt;建议尽量把对外公布出来的属性设置为只读，在实现文件内部设为读写。具体做法是：&lt;/p&gt;
@@ -258,7 +341,7 @@ setter：&lt;/p&gt;
 
 &lt;h4 id=&quot;222-函数名与形参不能留空格返回类型与函数标识符有一个空格&quot;&gt;2.2.2 函数名与形参不能留空格，返回类型与函数标识符有一个空格&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod:(id)parameter;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -283,9 +366,7 @@ setter：&lt;/p&gt;
 
 &lt;p&gt;推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-- (NSString *)descriptionWithLocale:(id)locale;
-- 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (NSString *)descriptionWithLocale:(id)locale;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -305,11 +386,11 @@ setter：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void function(param1,param2)
 {
-      if(param1 is unavailable){
+      if(param1 is unavailable) {
            return;
       }
     
-      if(param2 is unavailable){
+      if(param2 is unavailable) {
            return;
       }
      //Do some right thing
@@ -326,11 +407,13 @@ setter：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int function()
 {
-    if(condition1){
+    if(condition1) {
         return count1
-    }else if(condition2){
+    }
+    else if(condition2) {
         return count2
-    }else{
+    }
+    else {
        return defaultCount
     } 
 }
@@ -340,9 +423,10 @@ setter：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int function()
 {
-    if(condition1){
+    if(condition1) {
         return count1
-    }else if(condition2){
+    }
+    else if(condition2) {
         return count2
     }
 }
@@ -383,7 +467,7 @@ setter：&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;2213-初始化方法&quot;&gt;2.2.13 初始化方法&lt;/h4&gt;
-&lt;p&gt;初始化方法返回类型必须是instancetype，不能是id。&lt;/p&gt;
+&lt;p&gt;初始化方法返回类型必须是 &lt;code class=&quot;highlighter-rouge&quot;&gt;instancetype&lt;/code&gt; ，不能是 &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (instancetype)init { 
     self = [super init]; // call the designated initializer 
@@ -402,7 +486,8 @@ setter：&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var hintStr;
 if (count &amp;lt; 3) {
   hintStr = &quot;Good&quot;;
-} else {
+} 
+else {
   hintStr = &quot;&quot;;
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -416,7 +501,7 @@ if (count &amp;lt; 3) {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;232-不要使用过多的分支要善于使用return来提前返回错误的情况&quot;&gt;2.3.2 不要使用过多的分支，要善于使用return来提前返回错误的情况&lt;/h4&gt;
+&lt;h4 id=&quot;232-不要使用过多的分支要善于使用-return-来提前返回错误的情况&quot;&gt;2.3.2 不要使用过多的分支，要善于使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;return&lt;/code&gt; 来提前返回错误的情况&lt;/h4&gt;
 &lt;p&gt;推荐&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod { 
@@ -437,7 +522,7 @@ if (count &amp;lt; 3) {
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;233-条件表达式如果很长则需要将他们提取出来赋给一个bool值&quot;&gt;2.3.3 条件表达式如果很长，则需要将他们提取出来赋给一个BOOL值&lt;/h4&gt;
+&lt;h4 id=&quot;233-条件表达式如果很长则需要将他们提取出来赋给一个-bool-值&quot;&gt;2.3.3 条件表达式如果很长，则需要将他们提取出来赋给一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOL&lt;/code&gt; 值&lt;/h4&gt;
 &lt;p&gt;推荐&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let nameContainsSwift = sessionName.hasPrefix(&quot;Swift&quot;)
@@ -460,13 +545,13 @@ if (isSwiftSession) {
 &lt;h4 id=&quot;234-条件语句的判断应该是变量在左常量在右&quot;&gt;2.3.4 条件语句的判断应该是变量在左，常量在右&lt;/h4&gt;
 &lt;p&gt;推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( count == 6) {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( count == 6 ) {
 }
 
-if ( count == 6) {
+if ( count == 6 ) {
 }
 
-if ( object == nil) {
+if ( object == nil ) {
 }
 
 if ( !object ) {
@@ -476,7 +561,7 @@ if ( !object ) {
 
 &lt;p&gt;不推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( 6 == count) {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( 6 == count ) {
 }
 
 if ( nil == object ) {
@@ -487,17 +572,17 @@ if ( nil == object ) {
 &lt;h4 id=&quot;235-每个分支的实现代码都必须被大括号包围&quot;&gt;2.3.5 每个分支的实现代码都必须被大括号包围&lt;/h4&gt;
 &lt;p&gt;推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (!error) {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( !error ) {
   return success;
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;不推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (!error)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( !error )
     return success;
 
-if (!error) return success;
+if ( !error ) return success;
 
 
 &lt;/code&gt;&lt;/pre&gt;
@@ -536,7 +621,7 @@ if (!error) return success;
 
 &lt;h3 id=&quot;25-运算符&quot;&gt;2.5 运算符&lt;/h3&gt;
 
-&lt;h4 id=&quot;251-运算符与变量之间的间隔&quot;&gt;2.5.1 运算符与变量之间的间隔&lt;/h4&gt;
+&lt;h4 id=&quot;251-一元运算符与变量之间没有空格&quot;&gt;2.5.1 一元运算符与变量之间没有空格&lt;/h4&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!bValue
 ~iValue
@@ -559,7 +644,7 @@ for(int i = 0; i &amp;lt; 10; i++)
 
 &lt;p&gt;在多个不同的运算符同时存在的时候应该合理使用括号，不要盲目依赖操作符优先级。
 因为有的时候不能保证阅读你代码的人就一定能了解你写的算式里面所有操作符的优先级。&lt;/p&gt;
-&lt;h3 id=&quot;26-switch语句&quot;&gt;2.6 Switch语句&lt;/h3&gt;
+&lt;h3 id=&quot;26-switch-语句&quot;&gt;2.6 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句&lt;/h3&gt;
 
 &lt;h4 id=&quot;261-每个分支都必须用大括号括起来&quot;&gt;2.6.1 每个分支都必须用大括号括起来&lt;/h4&gt;
 
@@ -584,7 +669,7 @@ for(int i = 0; i &amp;lt; 10; i++)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;262--使用枚举类型时不能有default分支-除了使用枚举类型以外都必须有default分支&quot;&gt;2.6.2  使用枚举类型时，不能有default分支， 除了使用枚举类型以外，都必须有default分支&lt;/h4&gt;
+&lt;h4 id=&quot;262--使用枚举类型时不能有-default-分支-除了使用枚举类型以外都必须有-default-分支&quot;&gt;2.6.2  使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支， 除了使用枚举类型以外，都必须有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支&lt;/h4&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RWTLeftMenuTopItemType menuType = RWTLeftMenuTopItemMain;  
 switch (menuType) {  
@@ -606,38 +691,39 @@ switch (menuType) {
 &lt;h3 id=&quot;27-单例模式&quot;&gt;2.7 单例模式&lt;/h3&gt;
 &lt;p&gt;推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance { 
- static id sharedInstance = nil; 
- static dispatch_once_t onceToken = 0;
-       dispatch_once(&amp;amp;onceToken, ^{ 
-  sharedInstance = [[self alloc] init];
-  }); 
- return sharedInstance; 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance {
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&amp;amp;onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;不推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance { 
- static id sharedInstance; 
- @synchronized(self) { 
- if (sharedInstance == nil) {  sharedInstance = [[MyClass alloc] init]; 
- } } 
- return sharedInstance; 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance {
+    static id sharedInstance;
+    @synchronized(self) {
+        if (sharedInstance == nil) {
+            sharedInstance = [[MyClass alloc] init];
+        } }
+    return sharedInstance; 
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h3 id=&quot;28-文件目录&quot;&gt;2.8 文件目录&lt;/h3&gt;
-&lt;p&gt;Xcode工程文件的物理路径要和逻辑路径保持一致。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Xcode&lt;/code&gt; 工程文件的物理路径要和逻辑路径保持一致。&lt;/p&gt;
 &lt;h3 id=&quot;29-字面量&quot;&gt;2.9 字面量&lt;/h3&gt;
 &lt;p&gt;在编码中应多用字面量语法，少用与之等价的方法。&lt;/p&gt;
 
 &lt;h4 id=&quot;291-声明时的字面量语法&quot;&gt;2.9.1 声明时的字面量语法&lt;/h4&gt;
-&lt;p&gt;在声明NSNumber，NSArray，NSDictionary时，应该尽量使用简洁字面量语法。&lt;/p&gt;
+&lt;p&gt;在声明 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSNumber&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt; 时，应该尽量使用简洁字面量语法。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSNumber *intNumber = @1;
 NSNumber *floatNumber = @2.5f;
-NSArray *animals =[NSArray arrayWithObjects:@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;, nil];
+NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;];
 Dictionary *dict = @{@&quot;animal&quot;:@&quot;tiger&quot;,@&quot;phone&quot;:@&quot;iPhone 6&quot;};
 
 &lt;/code&gt;&lt;/pre&gt;
@@ -649,20 +735,20 @@ Dictionary *dict = @{@&quot;animal&quot;:@&quot;tiger&quot;,@&quot;phone&quot;:@
 NSString *iphone = dict[@&quot;phone&quot;];
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h3 id=&quot;210-nsarray和nsdictionary&quot;&gt;2.10 NSArray和NSDictionary&lt;/h3&gt;
+&lt;h3 id=&quot;210-nsarray-和-nsdictionary&quot;&gt;2.10 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt;&lt;/h3&gt;
 
 &lt;h4 id=&quot;2101-尽可能的使用字面量初始化&quot;&gt;2.10.1 尽可能的使用字面量初始化&lt;/h4&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray *animals =[NSArray arrayWithObjects:@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;, nil];
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;];
 Dictionary *dict = @{@&quot;animal&quot;:@&quot;tiger&quot;,@&quot;phone&quot;:@&quot;iPhone 6&quot;};
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;2102-使用泛型&quot;&gt;2.10.2 使用泛型&lt;/h4&gt;
-&lt;p&gt;在定义NSArray和NSDictionary时使用泛型，可以保证程序的安全性，而且在使用 枚举块 函数时会自动识别 item 类型&lt;/p&gt;
+&lt;p&gt;在定义 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt; 时使用泛型，可以保证程序的安全性，而且在使用 枚举块 函数时会自动识别 &lt;strong&gt;item&lt;/strong&gt; 类型&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray&amp;lt;NSString *&amp;gt; *testArr = [NSArray arrayWithObjects:@&quot;Hello&quot;, @&quot;world&quot;, nil];
-NSDictionary&amp;lt;NSString *, NSNumber *&amp;gt; *dic = @{@&quot;key&quot;:@(1), @&quot;age&quot;:@(10)};
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray &amp;lt;NSString *&amp;gt;*testArr = [NSArray arrayWithObjects:@&quot;Hello&quot;, @&quot;world&quot;, nil];
+NSDictionary &amp;lt;NSString *, NSNumber *&amp;gt;*dic = @{@&quot;key&quot;:@(1), @&quot;age&quot;:@(10)};
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -676,19 +762,19 @@ NSDictionary&amp;lt;NSString *, NSNumber *&amp;gt; *dic = @{@&quot;key&quot;:@(1
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObject&lt;/code&gt; 之前要非空判断。&lt;/p&gt;
 
 &lt;h4 id=&quot;2106-多用枚举块&quot;&gt;2.10.6 多用枚举块&lt;/h4&gt;
-&lt;p&gt;当遍历集合元素时，建议使用块枚举，因为相对于传统的for循环，它更加高效，而且简洁,还能获取到用传统的for循环无法提供的值.&lt;/p&gt;
+&lt;p&gt;当遍历集合元素时，建议使用块枚举，因为相对于传统的 &lt;strong&gt;for&lt;/strong&gt; 循环，它更加高效，而且简洁,还能获取到用传统的 &lt;strong&gt;for&lt;/strong&gt; 循环无法提供的值.&lt;/p&gt;
 
 &lt;p&gt;推荐&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    NSArray &amp;lt;SYPushUserModel *&amp;gt;*sourceArray = @[...];
-    [sourceArray enumerateObjectsUsingBlock:^(SYPushUserModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray &amp;lt;SYPushUserModel *&amp;gt;*sourceArray = @[...];
+[sourceArray enumerateObjectsUsingBlock:^(SYPushUserModel * obj, NSUInteger idx, BOOL * stop) {
             
-    }];
+}];
 
-    NSDictionary &amp;lt;NSString *,SYPushUserModel *&amp;gt;*sourceDic = @{...};
-    [sourceDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SYPushUserModel * _Nonnull obj, BOOL * _Nonnull stop) {
+NSDictionary &amp;lt;NSString *,SYPushUserModel *&amp;gt;*sourceDic = @{...};
+[sourceDic enumerateKeysAndObjectsUsingBlock:^(NSString * key, SYPushUserModel * obj, BOOL * stop) {
         
-    }];
+}];
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;h3 id=&quot;211-类&quot;&gt;2.11 类&lt;/h3&gt;
@@ -763,7 +849,7 @@ UIContentSizeCategoryAdjusting
 &lt;/div&gt;
 
 &lt;h4 id=&quot;2113-把类的实现代码分散到便于管理的多个分类中&quot;&gt;2.11.3 把类的实现代码分散到便于管理的多个分类中&lt;/h4&gt;
-&lt;p&gt;一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用Objecctive-C的分类机制，将类的这些方法按一定的逻辑划入几个分区中。使得代码逻辑清晰，便于维护。&lt;/p&gt;
+&lt;p&gt;一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用 &lt;strong&gt;Objecctive-C&lt;/strong&gt; 的分类机制，将类的这些方法按一定的逻辑划入几个分区中。使得代码逻辑清晰，便于维护。&lt;/p&gt;
 
 &lt;h3 id=&quot;212-枚举&quot;&gt;2.12 枚举&lt;/h3&gt;
 &lt;p&gt;要多使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ENUM&lt;/code&gt;,尽量少使用 C 语言风格的&lt;code class=&quot;highlighter-rouge&quot;&gt;enum&lt;/code&gt;&lt;/p&gt;
@@ -779,14 +865,16 @@ UIContentSizeCategoryAdjusting
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;2122-使用枚举类型时不能有default分支&quot;&gt;2.12.2 使用枚举类型时，不能有default分支&lt;/h4&gt;
-&lt;p&gt;在Switch语句使用枚举类型时，不能有default分支， 除了使用枚举类型以外，都必须有default分支
-在Switch语句使用枚举类型的时候，如果使用了default分支，在将来就无法通过编译器来检查新增的枚举类型了。&lt;/p&gt;
+&lt;h4 id=&quot;2122-使用枚举类型时不能有-default-分支&quot;&gt;2.12.2 使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支&lt;/h4&gt;
+&lt;p&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支， 除了使用枚举类型以外，都必须有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支
+在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句使用枚举类型的时候，如果使用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支，在将来就无法通过编译器来检查新增的枚举类型了。&lt;/p&gt;
 
 &lt;h3 id=&quot;213-大括号该不该换行&quot;&gt;2.13 大括号该不该换行&lt;/h3&gt;
-&lt;p&gt;仁者见仁，智者见智的问题。
-推荐：
-程序的分界符“{”和“}”在if、else、else if、for、while、do等语句时，“{”前添加空格紧跟语句后，空格分割。在方法（函数）应独占一行并且位于同一列，同时与引用他们的语句对齐。“{}”之内的代码块使用缩进规则对齐。&lt;/p&gt;
+&lt;p&gt;仁者见仁，智者见智的问题。&lt;/p&gt;
+
+&lt;p&gt;程序的分界符 &lt;strong&gt;{&lt;/strong&gt; 和 &lt;strong&gt;}&lt;/strong&gt; 在 &lt;strong&gt;if&lt;/strong&gt;、&lt;strong&gt;else&lt;/strong&gt;、&lt;strong&gt;else if&lt;/strong&gt;、&lt;strong&gt;for&lt;/strong&gt;、&lt;strong&gt;while&lt;/strong&gt;、&lt;strong&gt;do&lt;/strong&gt;等语句时， &lt;strong&gt;{&lt;/strong&gt; 前添加空格紧跟语句后，空格分割。在方法（函数）应独占一行并且位于同一列，同时与引用他们的语句对齐。 &lt;strong&gt;{}&lt;/strong&gt; 之内的代码块使用缩进规则对齐。&lt;/p&gt;
+
+&lt;p&gt;推荐：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)dealloc
 {
@@ -847,7 +935,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 &lt;/div&gt;
 &lt;h3 id=&quot;215-宏&quot;&gt;2.15 宏&lt;/h3&gt;
 
-&lt;h4 id=&quot;2151-宏常量名都要使用大写字母用下划线_分割单词&quot;&gt;2.15.1 宏、常量名都要使用大写字母，用下划线‘_’分割单词。&lt;/h4&gt;
+&lt;h4 id=&quot;2151-宏常量名都要使用大写字母用下划线-_-分割单词&quot;&gt;2.15.1 宏、常量名都要使用大写字母，用下划线 &lt;code class=&quot;highlighter-rouge&quot;&gt;_&lt;/code&gt; 分割单词。&lt;/h4&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define URL_GAIN_QUOTE_LIST @&quot;/v1/quote/list&quot;
 #define URL_UPDATE_QUOTE_LIST @&quot;/v1/quote/update&quot;
@@ -863,7 +951,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 &lt;h3 id=&quot;216-其他&quot;&gt;2.16 其他&lt;/h3&gt;
 
 &lt;h4 id=&quot;2161-小括号内联复合表达式&quot;&gt;2.16.1 小括号内联复合表达式&lt;/h4&gt;
-&lt;p&gt;A compound statement enclosed in parentheses。推荐使用，形式如下：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A compound statement enclosed in parentheses&lt;/em&gt;。推荐使用，形式如下：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RETURN_VALUE_RECEIVER = {(
     // Do whatever you want
@@ -872,7 +960,7 @@ static const CGFloat ZOCImageThumbnailHeight = 50.0f;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;初始化时推荐使用，有点像block和内联函数的结合体，它最大的意义在于将代码整理分块，将同一个逻辑层级的代码包在一起；逻辑清晰，也方便拷贝使用。
+&lt;p&gt;初始化时推荐使用，有点像&lt;strong&gt;block&lt;/strong&gt;和内联函数的结合体，它最大的意义在于将代码整理分块，将同一个逻辑层级的代码包在一起；逻辑清晰，也方便拷贝使用。
 推荐：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UIView *backgroundView = ({
@@ -1939,38 +2027,6 @@ You may call this method to make a responder object such as a view the first res
         <pubDate>Sat, 08 Jul 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Xcode断点无效的处理方式</title>
-        <description>&lt;h1 id=&quot;xcode断点无效的处理方式&quot;&gt;Xcode断点无效的处理方式&lt;/h1&gt;
-
-&lt;p&gt;原文链接&lt;a href=&quot;http://blog.csdn.net/skylin19840101/article/details/72185975&quot;&gt;xcode断点无效无法调试的一个问题&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;在某一次”svn update”后，突然发现Xcode无法断点调试了，这是什么鬼？&lt;/p&gt;
-
-&lt;p&gt;根据大家的经验，试了各种方式&lt;/p&gt;
-
-&lt;p&gt;1、Product-&amp;gt;Debug workflow取消选中show Disassembly when debug&lt;/p&gt;
-
-&lt;p&gt;2、修改Generate Debug Symbols 为YES
-3、Edit Scheme -&amp;gt; Run -&amp;gt; Debug executable 勾选&lt;/p&gt;
-
-&lt;p&gt;按照上面的方法检查一遍，一切都是OK的，没啥问题，但就是无法调试.&lt;/p&gt;
-
-&lt;p&gt;后来经过和修改Xcode工程的同事确认，原来是他们修改了一个配置参数，将”&lt;code class=&quot;highlighter-rouge&quot;&gt;Deployment Postprocessing&lt;/code&gt;“设为YES&lt;/p&gt;
-
-&lt;p&gt;这样做的目的是减少调试信息，减少IPA体积，同时保护IPA。
-所以，可以在debug下设为NO，release下设为YES&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 06 Jul 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
         
         <category>iOS</category>
         
