@@ -5,9 +5,83 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 17 Aug 2017 10:35:06 +0800</pubDate>
-    <lastBuildDate>Thu, 17 Aug 2017 10:35:06 +0800</lastBuildDate>
+    <pubDate>Fri, 18 Aug 2017 16:15:05 +0800</pubDate>
+    <lastBuildDate>Fri, 18 Aug 2017 16:15:05 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>如果做一个展示进度的刻度盘</title>
+        <description>&lt;h1 id=&quot;如果做一个展示进度的刻度盘&quot;&gt;如果做一个展示进度的刻度盘&lt;/h1&gt;
+
+&lt;p&gt;先上效果图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Pane/Pane0.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/img/in-post/Pane/Pane17.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/img/in-post/Pane/PaneAngle.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1如何绘制弧形间隔的刻度线&quot;&gt;1，如何绘制弧形间隔的刻度线。&lt;/h3&gt;
+&lt;p&gt;首先是如何绘制一个连续的弧形线条，这个很简单：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    UIBezierPath *tickPath = [UIBezierPath bezierPathWithArcCenter:cneter radius:radius - 12 startAngle:startAngle endAngle:endAngle clockwise:YES];
+    CAShapeLayer *perLayer = [CAShapeLayer layer];
+    perLayer.strokeColor = strokeColor.CGColor;;
+    perLayer.fillColor = [UIColor clearColor].CGColor;
+    perLayer.allowsEdgeAntialiasing=YES;
+    perLayer.contentsScale = [UIScreen mainScreen].scale;
+    perLayer.lineWidth   = 0.6;
+    perLayer.path = tickPath.CGPath;
+    [self.layer addSublayer:perLayer];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其实带有间隔的刻度线原理是跟这个一致的，我们只需要想着每个分割的刻度是一个连续的圆弧线，只不过它的 &lt;code class=&quot;highlighter-rouge&quot;&gt;startAngle&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;endAngle&lt;/code&gt; 差值很小。然后外面其实的一段段的绘制一个个 &lt;code class=&quot;highlighter-rouge&quot;&gt;CAShapeLayer&lt;/code&gt; 的弧线。&lt;/p&gt;
+
+&lt;p&gt;具体的代码就是：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    CGPoint cneter = self.center;
+    CGFloat radius = self.radius;
+    CGFloat perAngle = (endAngle - startAngle)/scaleLineCount;
+    UIColor *strokeColor = self.normalColor;
+    //绘制最外围刻度列表
+    for (NSInteger i = 0; i&amp;lt;= scaleLineCount; i++) {
+        CGFloat startAngel = (startAngle+ perAngle * i);
+        CGFloat endAngel   = startAngel + perAngle/5;
+        UIBezierPath *tickPath = [UIBezierPath bezierPathWithArcCenter:cneter radius:radius startAngle:startAngel endAngle:endAngel clockwise:YES];
+        CAShapeLayer *perLayer = [CAShapeLayer layer];
+        perLayer.strokeColor = strokeColor.CGColor;;
+        perLayer.allowsEdgeAntialiasing=YES;
+        perLayer.contentsScale = [UIScreen mainScreen].scale;
+        perLayer.lineWidth   = scaleLineWidth;
+        perLayer.path = tickPath.CGPath;
+        [self.layer addSublayer:perLayer];
+        [self.layerViewsArray addObject:perLayer];
+
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;scaleLineCount&lt;/code&gt; 是要分成多少刻度。&lt;/p&gt;
+
+&lt;h3 id=&quot;2如何给进度加上动画&quot;&gt;2，如何给进度加上动画&lt;/h3&gt;
+&lt;p&gt;动画就简单粗暴了，一个个修改 &lt;code class=&quot;highlighter-rouge&quot;&gt;CAShapeLayer&lt;/code&gt; 的背景色。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CAShapeLayer *perLayer = self.layerViewsArray[self.index];
+perLayer.strokeColor = self.hightColor.CGColor;;
+[self.layerHeightViewsArray addObject:perLayer];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;demo 已上传 &lt;a href=&quot;https://github.com/yunisSong/SYPanView/tree/master&quot;&gt;SYPanView&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 18 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
     
       <item>
         <title>使用wkhtmltopdf将Markdown转为带有标签的PDF</title>
@@ -88,6 +162,31 @@
         <pubDate>Thu, 17 Aug 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</link>
         <guid isPermaLink="true">http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Shell sed 的简单使用</title>
+        <description>&lt;h1 id=&quot;shell-sed-的简单使用&quot;&gt;Shell sed 的简单使用&lt;/h1&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sed -i &quot;&quot; 's/aaa/bbbb/g' /Users/Yunis/Desktop/XXX.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这句shell 命令的意思是，查找到 aaa 把它替换为 bbbb 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/Users/Yunis/Desktop/XXX.py&lt;/code&gt; 是要替换文本的路径。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;&quot;&lt;/code&gt; 表示要备份的路径，为空表示不备份。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; :替换
+&lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; :全部替换标记&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 17 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+        
+        <category>Shell</category>
         
         
       </item>
@@ -1749,6 +1848,7 @@ class 可以有多个值 使用空格分割。
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;p&gt;需要放在脚本里面 targerIPA_parth 路径下。&lt;/p&gt;
 
 &lt;p&gt;今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：&lt;/p&gt;
@@ -1838,197 +1938,6 @@ updateIPAToPGY()
         <guid isPermaLink="true">http://localhost:4000/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/</guid>
         
         <category>内功</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>基与CocosPods和SVN的一次组件化实践</title>
-        <description>&lt;p&gt;TODO:如何添加到 SVN
- 文件描述 与 文件层级的关系。&lt;/p&gt;
-&lt;h1 id=&quot;基与cocospods和svn的一次组件化实践&quot;&gt;基与CocosPods和SVN的一次组件化实践&lt;/h1&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;记录下步骤：&lt;/p&gt;
-
-&lt;h3 id=&quot;1安装-cocoapods-repo-svn-插件&quot;&gt;1,安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;cocoapods-repo-svn&lt;/code&gt; 插件&lt;/h3&gt;
-&lt;p&gt;没什么好说的，就是一行命令。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;gem install cocoapods-repo-svn&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2提取共有代码创建-podspec-文件&quot;&gt;2，提取共有代码，创建 &lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件&lt;/h3&gt;
-&lt;p&gt;提取两个工程中的共有代码，然后进入目录，创建&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt; 文件&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pod spec create CommonWebTools&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CommonWebTools&lt;/code&gt; 是你提取的私有库的名称。&lt;/p&gt;
-
-&lt;h3 id=&quot;3编辑podspec文件内容&quot;&gt;3，编辑&lt;code class=&quot;highlighter-rouge&quot;&gt;podspec&lt;/code&gt;文件内容&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-Pod::Spec.new do |s|
-
-    s.name         = &quot;CommonWebTools&quot;
-
-    s.version      = &quot;0.0.1&quot;
-
-    s.summary      = &quot;提取公用代码.&quot;
-
-    s.description  = &quot;Good&quot;
-
-    s.homepage     = &quot;http://www.baidu.com&quot;
-
-    s.license      = &quot;MIT&quot;
-
-    s.author             = { &quot;iThinkerYZ&quot; =&amp;gt; &quot;xxxxxxxx@qq.com&quot; }
-
-  s.source       = { :svn =&amp;gt; &quot;http://xxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot; }
-
- s.source_files = &quot;CommonWebTools&quot;, &quot;CommonWebTools/*.{h,m}&quot;
-
-
-  end
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;多个s.source_files文件使用 ， 分割&lt;/p&gt;
-
-&lt;h3 id=&quot;4使用&quot;&gt;4，使用：&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;target 'TestComponentDemo' do
-pod 'CommonWebTools', :svn =&amp;gt; &quot;http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo&quot;
-end
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;5如何更新代码&quot;&gt;5，如何更新代码&lt;/h3&gt;
-
-&lt;p&gt;提交代码后，
-使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;pod update --verbose --no-repo-update&lt;/code&gt;
-即可生效。&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 12 Jul 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/</guid>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>输入框切换键盘卡顿的解决办法</title>
-        <description>&lt;h1 id=&quot;输入框切换键盘卡顿的解决办法&quot;&gt;输入框切换键盘卡顿的解决办法&lt;/h1&gt;
-
-&lt;p&gt;今天开发碰到一个问题：
-有两个输入框，一个输入手机号码、一个输入验证码。
-客户要求：手机号输入框输入满11位时，切换到验证码输入框。&lt;/p&gt;
-
-&lt;p&gt;很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //监听位数
-    if (field.text.length &amp;gt;= 11) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //输入框取消响应
-            [field resignFirstResponder];
-            //验证码输入框 响应键盘
-            [self.codeField becomeFirstResponder];
-
-        });
-     }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;很愉快的提交了代码，但是测试的小伙伴告诉我，键盘切换的时间有卡顿。？？？？一脸懵逼！！&lt;/p&gt;
-
-&lt;p&gt;这也会卡？&lt;/p&gt;
-
-&lt;p&gt;然后想到了是不是因为动画引起的问题？
-更改如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  //监听位数
-    if (field.text.length &amp;gt;= 11) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView performWithoutAnimation:^{
-                //输入框取消响应
-                [field resignFirstResponder];
-                //验证码输入框 响应键盘
-                [self.codeField becomeFirstResponder];
-            }];
-        });
-     }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;还是不行，是在没有办法了，最后搜索到这样一个答案：
-&lt;a href=&quot;https://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8?answertab=votes#tab-top&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A responder object only becomes the first responder if the current responder can resign first-responder status (canResignFirstResponder) and the new responder can become first responder.
-You may call this method to make a responder object such as a view the first responder. However, you should only call it on that view if it is part of a view hierarchy. If the view’s window property holds a UIWindow object, it has been installed in a view hierarchy; if it returns nil, the view is detached from any hierarchy.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[txtAddNew performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;心想这样总可以了吧。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    [field resignFirstResponder];
-    [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;。。。
-还是不行。。&lt;/p&gt;
-
-&lt;p&gt;最后把    &lt;code class=&quot;highlighter-rouge&quot;&gt;[field resignFirstResponder];&lt;/code&gt; 这样代码注释掉才可以。&lt;/p&gt;
-
-&lt;p&gt;最终版本：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    //监听位数
-    if (field.text.length &amp;gt;= 11) {
-        //切换键盘响应
-        //解决切换键盘卡顿
-        [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-     }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;猜测应该是键盘所在的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt; 切换导致的这个问题。&lt;/p&gt;
-
-&lt;p&gt;如果先取消第一个输入框的响应，再让第二个输入框响应， 这样的话会先把当前键盘所在的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt; 销毁，然后创建新的 &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt;，就会导致卡顿。&lt;/p&gt;
-
-&lt;p&gt;如果不先取消第一个键盘的响应，就不会销毁 window 也不会创建新的 window ，就不会卡顿。有时间了写个 demo 验证下。&lt;/p&gt;
-
-&lt;p&gt;好尴尬，在模拟器上测试。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
-2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
-2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
-2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 
-
-
-
-
-2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
-2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
-2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
-2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;窗口都没有变化。。。这让老夫如何是好！&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 08 Jul 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
-        
-        <category>iOS</category>
         
         
       </item>

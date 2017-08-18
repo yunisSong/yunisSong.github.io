@@ -184,6 +184,64 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/">
+        <h2 class="post-title">
+            基与CocosPods和SVN的一次组件化实践
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            TODO:如何添加到 SVN
+ 文件描述 与 文件层级的关系。
+基与CocosPods和SVN的一次组件化实践
+
+
+  入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。
+
+
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on July 12, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+        <h2 class="post-title">
+            输入框切换键盘卡顿的解决办法
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            输入框切换键盘卡顿的解决办法
+
+今天开发碰到一个问题：
+有两个输入框，一个输入手机号码、一个输入验证码。
+客户要求：手机号输入框输入满11位时，切换到验证码输入框。
+
+很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：
+
+    //监听位数
+    if (field.text.length &gt;= 11) {
+        dispatch_async(dispat...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on July 8, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/">
         <h2 class="post-title">
             Xcode断点无效的处理方式
@@ -430,73 +488,6 @@ JavaScript 存在两种不同的数据类型的值：基本类型值 和 引用�
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记01
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记01
-
-script 元素
-向 HTML 页面加入 JavaScript 的主要方法，就是使用 script 。
-包括6个属性：
-
-
-  async 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。
-  charset 可选。 表示通过 src 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 10, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/">
-        <h2 class="post-title">
-            JavaScript学习01
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            JavaScript学习01
-
-
-  开始观看这系列文章 
-  从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件
-
-
-script 标签
-HTML的脚本必须位于 &lt;script&gt; 和 &lt;/script&gt; 之中。
-
-&lt;script&gt;
-
-JS脚本
-
-&lt;/script&gt;
-
-
-
-标签
-成对出现的&lt;&gt;...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 10, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -537,13 +528,13 @@ JS脚本
                             
                         
                             
-                                <a href="/tags/#Shell" title="Shell" rel="2">
+                                <a href="/tags/#Shell" title="Shell" rel="3">
                                     Shell
                                 </a>
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="15">
+                                <a href="/tags/#iOS" title="iOS" rel="16">
                                     iOS
                                 </a>
                             

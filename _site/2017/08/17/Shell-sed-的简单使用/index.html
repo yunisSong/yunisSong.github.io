@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>输入框切换键盘卡顿的解决办法 - 三十一的博客 | Yunis Blog</title>
+    <title>Shell sed 的简单使用 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,15 +181,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Shell" title="Shell">Shell</a>
                         
                     </div>
-                    <h1>输入框切换键盘卡顿的解决办法</h1>
+                    <h1>Shell sed 的简单使用</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on July 8, 2017</span>
+                    <span class="meta">Posted by 三十一 on August 17, 2017</span>
                 </div>
             </div>
         </div>
@@ -207,108 +207,18 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="输入框切换键盘卡顿的解决办法">输入框切换键盘卡顿的解决办法</h1>
+				<h1 id="shell-sed-的简单使用">Shell sed 的简单使用</h1>
 
-<p>今天开发碰到一个问题：
-有两个输入框，一个输入手机号码、一个输入验证码。
-客户要求：手机号输入框输入满11位时，切换到验证码输入框。</p>
-
-<p>很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>    //监听位数
-    if (field.text.length &gt;= 11) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //输入框取消响应
-            [field resignFirstResponder];
-            //验证码输入框 响应键盘
-            [self.codeField becomeFirstResponder];
-
-        });
-     }
+<div class="highlighter-rouge"><pre class="highlight"><code>sed -i "" 's/aaa/bbbb/g' /Users/Yunis/Desktop/XXX.py
 </code></pre>
 </div>
 
-<p>很愉快的提交了代码，但是测试的小伙伴告诉我，键盘切换的时间有卡顿。？？？？一脸懵逼！！</p>
+<p>这句shell 命令的意思是，查找到 aaa 把它替换为 bbbb 
+<code class="highlighter-rouge">/Users/Yunis/Desktop/XXX.py</code> 是要替换文本的路径。</p>
 
-<p>这也会卡？</p>
-
-<p>然后想到了是不是因为动画引起的问题？
-更改如下：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>  //监听位数
-    if (field.text.length &gt;= 11) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView performWithoutAnimation:^{
-                //输入框取消响应
-                [field resignFirstResponder];
-                //验证码输入框 响应键盘
-                [self.codeField becomeFirstResponder];
-            }];
-        });
-     }
-</code></pre>
-</div>
-
-<p>还是不行，是在没有办法了，最后搜索到这样一个答案：
-<a href="https://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8?answertab=votes#tab-top">stackoverflow</a></p>
-
-<blockquote>
-  <p>A responder object only becomes the first responder if the current responder can resign first-responder status (canResignFirstResponder) and the new responder can become first responder.
-You may call this method to make a responder object such as a view the first responder. However, you should only call it on that view if it is part of a view hierarchy. If the view’s window property holds a UIWindow object, it has been installed in a view hierarchy; if it returns nil, the view is detached from any hierarchy.</p>
-</blockquote>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[txtAddNew performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-</code></pre>
-</div>
-
-<p>心想这样总可以了吧。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>    [field resignFirstResponder];
-    [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-
-</code></pre>
-</div>
-
-<p>。。。
-还是不行。。</p>
-
-<p>最后把    <code class="highlighter-rouge">[field resignFirstResponder];</code> 这样代码注释掉才可以。</p>
-
-<p>最终版本：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>    //监听位数
-    if (field.text.length &gt;= 11) {
-        //切换键盘响应
-        //解决切换键盘卡顿
-        [self.codeField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0];
-     }
-</code></pre>
-</div>
-
-<p>猜测应该是键盘所在的 <code class="highlighter-rouge">window</code> 切换导致的这个问题。</p>
-
-<p>如果先取消第一个输入框的响应，再让第二个输入框响应， 这样的话会先把当前键盘所在的 <code class="highlighter-rouge">window</code> 销毁，然后创建新的 <code class="highlighter-rouge">window</code>，就会导致卡顿。</p>
-
-<p>如果不先取消第一个键盘的响应，就不会销毁 window 也不会创建新的 window ，就不会卡顿。有时间了写个 demo 验证下。</p>
-
-<p>好尴尬，在模拟器上测试。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
-2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
-2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
-2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 
-
-
-
-
-2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
-2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
-2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
-2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 
-</code></pre>
-</div>
-
-<p>窗口都没有变化。。。这让老夫如何是好！</p>
+<p><code class="highlighter-rouge">""</code> 表示要备份的路径，为空表示不备份。
+<code class="highlighter-rouge">s</code> :替换
+<code class="highlighter-rouge">g</code> :全部替换标记</p>
 
 
 
@@ -320,17 +230,17 @@ You may call this method to make a responder object such as a view the first res
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/" data-toggle="tooltip" data-placement="top" title="Xcode断点无效的处理方式">
+                        <a href="/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" data-toggle="tooltip" data-placement="top" title="小团队的iOS代码规范">
                         Previous<br>
-                        <span>Xcode断点无效的处理方式</span>
+                        <span>小团队的iOS代码规范</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/07/12/%E5%9F%BA%E4%B8%8ECocosPods%E5%92%8CSVN%E7%9A%84%E4%B8%80%E6%AC%A1%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/" data-toggle="tooltip" data-placement="top" title="基与CocosPods和SVN的一次组件化实践">
+                        <a href="/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/" data-toggle="tooltip" data-placement="top" title="使用wkhtmltopdf将Markdown转为带有标签的PDF">
                         Next<br>
-                        <span>基与CocosPods和SVN的一次组件化实践</span>
+                        <span>使用wkhtmltopdf将Markdown转为带有标签的PDF</span>
                         </a>
                     </li>
                     
