@@ -234,84 +234,89 @@
 
 <p>今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：</p>
 
-<p>```</p>
-<h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
-<p>import os
+<div class="highlighter-rouge"><pre class="highlight"><code># -*- coding: utf-8 -*-
+import os
 import sys
-import time</p>
+import time
 
-<p>#发布到蒲公英的说明文档
-updateDescription = “”</p>
-<h1 id="项目根目录">项目根目录</h1>
-<p>project_path = “”</p>
+#发布到蒲公英的说明文档
+updateDescription = ""
+# 项目根目录
+project_path = ""
 
-<p>#打包证书名称
-cerName = “”
+#打包证书名称
+cerName = ""
 #发布证书
-#cerName = “”
+#cerName = ""
 #工程名称
-projectName = “”+”.xcodeproj”
+projectName = ""+".xcodeproj"
 #scheme
-scheme = “”</p>
-<h1 id="打包后ipa存储目录">打包后ipa存储目录</h1>
-<p>targerIPA_parth = “”</p>
+scheme = ""
+# 打包后ipa存储目录
+targerIPA_parth = ""
 
-<p>#时间戳
-timeStr = time.strftime(‘%Y-%m-%d%H%M%S’,time.localtime(time.time()))
+
+
+#时间戳
+timeStr = time.strftime('%Y-%m-%d%H%M%S',time.localtime(time.time()))
 #activePath
-activePath = targerIPA_parth +timeStr+”.xcarchive”
+activePath = targerIPA_parth +timeStr+".xcarchive"
 #蒲公英Key
-PGY_key=””
+PGY_key=""
 #蒲公英APIKey
-PGY_APIkey=””</p>
+PGY_APIkey=""
 
-<h1 id="清理项目-创建build目录">清理项目 创建build目录</h1>
-<p>def clean_project_mkdir_build():
-    print(“<strong>**</strong>clean<strong>**</strong>”)
-    os.system(‘cd %s;xcodebuild clean -project “%s” -scheme %s -configuration release’ % (project_path,projectName,scheme)) # clean 项目</p>
 
-<p>def build_project():
-    print(“build xcarchive start”)
-    os.system (‘xcodebuild -list’)
-    os.system (‘cd %s;xcodebuild archive -project “%s” -scheme %s -configuration release -sdk iphoneos10.3  IPHONEOS_DEPLOYMENT_TARGET=9.0 -archivePath %s;’ % (project_path,projectName,scheme,activePath))
-    print(“build xcarchive end”)</p>
+# 清理项目 创建build目录
+def clean_project_mkdir_build():
+    print("******clean******")
+    os.system('cd %s;xcodebuild clean -project "%s" -scheme %s -configuration release' % (project_path,projectName,scheme)) # clean 项目
 
-<h1 id="打包ipa-并且保存在桌面">打包ipa 并且保存在桌面</h1>
-<p>def build_ipa():
-    print(“build IPA start”)
+def build_project():
+    print("build xcarchive start")
+    os.system ('xcodebuild -list')
+    os.system ('cd %s;xcodebuild archive -project "%s" -scheme %s -configuration release -sdk iphoneos10.3  IPHONEOS_DEPLOYMENT_TARGET=9.0 -archivePath %s;' % (project_path,projectName,scheme,activePath))
+    print("build xcarchive end")
+
+# 打包ipa 并且保存在桌面
+def build_ipa():
+    print("build IPA start")
     os.chdir(targerIPA_parth)
-    os.system (‘xcodebuild -exportArchive -archivePath %s -exportPath %s -exportOptionsPlist %sIPA.plist’%(activePath,targerIPA_parth,targerIPA_parth))
-    print(“build IPA end”)</p>
+    os.system ('xcodebuild -exportArchive -archivePath %s -exportPath %s -exportOptionsPlist %sIPA.plist'%(activePath,targerIPA_parth,targerIPA_parth))
+    print("build IPA end")
 
-<p>def updateIPAToPGY():
-    print(“开始上传蒲公英”)
-    os.system (‘curl -F "updateDescription=%s" -F "file=@%scopm_cust.ipa" -F "uKey=%s" -F "_api_key=%s" https://qiniu-storage.pgyer.com/apiv1/app/upload’%(updateDescription,targerIPA_parth,PGY_key,PGY_APIkey))
-    print(“上传蒲公英完成”)</p>
 
-<p>def updateSVN():
-    print(“更新SVN数据”)
-    os.chdir(project_path)  <br />
-    os.system (‘svn upgrade ‘)
-    os.system (‘svn update ‘)  <br />
-    print(“更新SVN完成”)</p>
+def updateIPAToPGY():
+    print("开始上传蒲公英")
+    os.system ('curl -F \"updateDescription=%s\" -F \"file=@%scopm_cust.ipa\" -F \"uKey=%s\" -F \"_api_key=%s\" https://qiniu-storage.pgyer.com/apiv1/app/upload'%(updateDescription,targerIPA_parth,PGY_key,PGY_APIkey))
+    print("上传蒲公英完成")
 
-<p>def main():</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#更新SVN
-updateSVN()
-# 清理并创建build目录
-clean_project_mkdir_build()
-# 编译coocaPods项目文件并 执行编译目录
-build_project()
-# 打包ipa 并制定到桌面
-build_ipa()
-#上传到蒲公英
-updateIPAToPGY()
+def updateSVN():
+    print("更新SVN数据")
+    os.chdir(project_path)    
+    os.system ('svn upgrade ')
+    os.system ('svn update ')    
+    print("更新SVN完成")
+
+
+def main():
+    
+    #更新SVN
+    updateSVN()
+    # 清理并创建build目录
+    clean_project_mkdir_build()
+    # 编译coocaPods项目文件并 执行编译目录
+    build_project()
+    # 打包ipa 并制定到桌面
+    build_ipa()
+    #上传到蒲公英
+    updateIPAToPGY()
+
+# 执行
+main()
 </code></pre>
 </div>
-
-<h1 id="执行">执行</h1>
-<p>main()```</p>
 
 
 
@@ -389,7 +394,7 @@ updateIPAToPGY()
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="16">
+                				<a href="/tags/#iOS" title="iOS" rel="17">
                                     iOS
                                 </a>
                             
@@ -429,9 +434,11 @@ updateIPAToPGY()
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="5">
+                				<a href="/tags/#内功" title="内功" rel="6">
                                     内功
                                 </a>
+                            
+        				
                             
         				
                             

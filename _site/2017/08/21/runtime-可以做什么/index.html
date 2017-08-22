@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>Head First HTML与CSS - 三十一的博客 | Yunis Blog</title>
+    <title>runtime 可以做什么 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/07/27/Head-First-HTML%E4%B8%8ECSS/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/21/runtime-%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,15 +181,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#前端" title="前端">前端</a>
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#内功" title="内功">内功</a>
                         
                     </div>
-                    <h1>Head First HTML与CSS</h1>
+                    <h1>runtime 可以做什么</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on July 27, 2017</span>
+                    <span class="meta">Posted by 三十一 on August 21, 2017</span>
                 </div>
             </div>
         </div>
@@ -207,133 +209,60 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="head-first-html与css">Head First HTML与CSS</h1>
+				<h1 id="runtime-可以做什么">runtime 可以做什么</h1>
+<blockquote>
+  <p>这篇文字不扯淡，不讲runtime是什么，只总结下runtime 可以用来干什么。
+这几篇文章写的很好：
+<a href="http://tech.glowing.com/cn/objective-c-runtime/">Objective-C Runtime</a></p>
+</blockquote>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>构建网页的文件名称不要有空格
-&lt;a href="test.html"&gt;点击跳转到同级目录下test.html 文件&lt;/a&gt;
-&lt;a href="../test.html"&gt;点击跳转到上级目录下test.html 文件&lt;/a&gt;
-&lt;a href="Yunis/test.html"&gt;点击跳转到Yunis目录下test.html 文件&lt;/a&gt;
+<blockquote>
+  <p><a href="http://tech.glowing.com/cn/method-swizzling-aop/">Method Swizzling 和 AOP 实践</a></p>
+
+  <p><a href="http://southpeak.github.io/categories/objectivec/">南大(南锋子)的一系列文章</a>（打开稍慢）</p>
+
+  <p><a href="http://blog.csdn.net/sps900608/article/details/51863147">精通Objective-C进阶技巧：使用运行时系统API</a></p>
+
+  <p>然后饶神总结的也不错,里面好多干货
+<a href="http://www.jianshu.com/p/64a7c9f7f6b2">iOS 基础知识点网址</a></p>
+
+  <p>美团技术团队
+<a href="http://tech.meituan.com/DiveIntoCategory.html">深入理解Objective-C：Category</a>
+<a href="http://tech.meituan.com/DiveIntoMethodCache.html">深入理解Objective-C：方法缓存</a>
+<a href="http://www.mulle-kybernetik.com/artikel/Optimization/opti-3-imp-deluxe.html">Obj-C Optimization: IMP Cacheing Deluxe</a></p>
+
+  <p>杨小鱼（玉令天下）
+<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/">Objective-C Runtime</a></p>
+</blockquote>
+
+<h4 id="1获取类属性列表值方法">1，获取类属性列表、值、方法</h4>
+
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2BProperty.m">获取model的属性、属性值、方法列表 demo地址</a></p>
+<h4 id="2替换已有函数包括系统方法">2，替换已有函数(包括系统方法)</h4>
+<p>可以把系统方法替换为我们自己的方法。</p>
+
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIAlertController%2BexchangeMethod.m">替换系统弹框方法，统一修改弹框标题  demo地址</a></p>
+
+<h4 id="3动态挂载对象">3，动态挂载对象</h4>
+
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIView%2BredDot.m">为View 加一个小红点的公用方法  demo地址</a></p>
+<h4 id="4动态创建类-kvo-底层实现原理">4,动态创建类 KVO 底层实现原理</h4>
+<p><a href="http://www.jianshu.com/p/6305af232100">KVO的底层实现原理</a></p>
+<h4 id="5自动归档归档解档">5，自动归档、归档解档</h4>
+
+<p>           </p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[coder encodeObject:value forKey:propertyName];
+
+[self setValue:value forKey:propertyName];
 </code></pre>
 </div>
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2Bencode.m">统一为property添加方法 不用一个个的写 demo地址</a></p>
+<h4 id="6给分类添加属性">6，给分类添加属性</h4>
 
-<p>列表</p>
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIView%2BredDot.m">为View 加一个小红点的公用方法  demo地址</a></p>
+<h4 id="7字典转模型">7，字典转模型</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ul&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;ol&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;li&gt;....&lt;/li&gt;
-&lt;/ol&gt;
-</code></pre>
-</div>
-
-<p>跳转到页面指定位置</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>index.html :
-<span class="nt">&lt;html&gt;</span>
-  <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;title&gt;</span>Head First Lounge Directions<span class="nt">&lt;/title&gt;</span>
-  <span class="nt">&lt;/head&gt;</span>
-  <span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"jump"</span><span class="nt">&gt;</span>Directions<span class="nt">&lt;/h1&gt;</span>
-  <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-
-
-
-
-当使用
-
-<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"index.html#jump"</span><span class="nt">&gt;</span>跳转<span class="nt">&lt;/a&gt;</span>
-
-会跳转到 index.html 页面 ID 为jump 的位置。
-</code></pre>
-</div>
-
-<p>相对路径、绝对路径</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a href="http"//www.Yunis.com/demo/test/play.html"&gt;网页&lt;/a&gt;
-
-&lt;a href="demo/test/play.html"&gt;网页&lt;/a&gt;
-</code></pre>
-</div>
-
-<p><code class="highlighter-rouge">&lt;img&gt;</code> 元素</p>
-
-<p>alt</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>当 图片不可显示时，显示 alt 内容
-    &lt;img src="images/00drinks.gif" alt="这是一个备选的显示"&gt;
-
-</code></pre>
-</div>
-
-<p>CSS</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>一个元素可以有多个规则。
-    &lt;style type="text/css"&gt;
-        p {
-            color: maroon;
-        }
-    
-        h1,h2 {
-            font-family :sans-serif;
-            color :gray;
-        }
-    
-        h1 {
-            border-bottom:1px solid black;
-        }
-    
-    &lt;/style&gt;
-    
-    
-    
-    也可以这样引入 CSS 样式
- &lt;link type = "text/css" rel = "stylesheet" href = "lounge.css"&gt;
-
-
-rel 属性指定了 HTML 文件和所链接的文件之间的关系。
-
-&lt;link&gt; 是一个 void 元素。
-
-
-
-可以为一个元素增加 class 属性，然后单独为这个属性的值设置样式。
-
-&lt;p class="greentea"&gt;
-      &lt;img src="../images/green.jpg"&gt;
-      Chock full of vitamins and minerals, this elixir
-      combines the healthful benefits of green tea with
-      a twist of chamomile blossoms and ginger root.
-    &lt;/p&gt;
-p.greentea {
-    color:green;
-}
-
-这样的话只要 class 是 greentea 这个值的话，都会设置为这个样式。
-.greentea {
-    color:green;
-}
-
-class 可以有多个值 使用空格分割。
-
-</code></pre>
-</div>
-
-<p><code class="highlighter-rouge">&lt;div&gt;</code></p>
-
-<p>逻辑区，包围标签，相当于 一个块的概念，把里面的元素当做一个整体处理。</p>
-
-<p><code class="highlighter-rouge">&lt;span&gt;</code></p>
-
-<p>创建内联字符和元素的逻辑分组。功能等同 <code class="highlighter-rouge">&lt;div&gt;</code></p>
+<p><a href="https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2BdicToModel.m">同样是获取类的属性，然后调用 <code class="highlighter-rouge">[instance setValue:value forKey:key]</code> 赋值  demo地址</a></p>
 
 
 
@@ -345,17 +274,17 @@ class 可以有多个值 使用空格分割。
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/07/13/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5/" data-toggle="tooltip" data-placement="top" title="自动化的一些实践">
+                        <a href="/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/" data-toggle="tooltip" data-placement="top" title="如果做一个展示进度的刻度盘">
                         Previous<br>
-                        <span>自动化的一些实践</span>
+                        <span>如果做一个展示进度的刻度盘</span>
                         </a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/" data-toggle="tooltip" data-placement="top" title="iOS蓝牙框架的简单实用">
+                        <a href="/2017/08/21/%E5%87%8F%E8%82%A5%E8%AE%A1%E5%88%92%E5%BC%80%E5%A7%8B%E5%AE%9E%E6%96%BD/" data-toggle="tooltip" data-placement="top" title="减肥计划开始实施">
                         Next<br>
-                        <span>iOS蓝牙框架的简单实用</span>
+                        <span>减肥计划开始实施</span>
                         </a>
                     </li>
                     
