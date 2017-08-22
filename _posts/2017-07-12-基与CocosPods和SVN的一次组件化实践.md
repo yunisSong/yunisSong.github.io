@@ -11,30 +11,41 @@ tags:
    - iOS
 ---
 
-TODO:如何添加到 SVN
- 文件描述 与 文件层级的关系。
 # 基与CocosPods和SVN的一次组件化实践
 
 >入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。
 
 记录下步骤：
 
+## 0 安装 `CocoaPods`
 
-### 1,安装 `cocoapods-repo-svn` 插件
-没什么好说的，就是一行命令。
-`gem install cocoapods-repo-svn`
+如何安装 `CocoaPods` ，参考链接：[最新 macOS Sierra 10.12.3 安装CocoaPods及使用详解](http://www.jianshu.com/p/b64b4fd08d3c)
+其中安装源可以更换为：`https://gems.ruby-china.org/`
 
-### 2，提取共有代码，创建 `podspec` 文件
-提取两个工程中的共有代码，然后进入目录，创建`podspec` 文件
+## 1 建立私有库
 
-`pod spec create CommonWebTools`
+### 1.1 安装 `cocoapods-repo-svn` 插件
 
-`CommonWebTools` 是你提取的私有库的名称。
-
-### 3，编辑`podspec`文件内容
+如果在 `SVN` 环境使用  `CocoaPods` ，需要安装一下这个插件 `cocoapods-repo-svn`，打开终端，输入：
 
 ```
+$-> gem install cocoapods-repo-svn
+```
 
+### 1.2 创建 `podspec` 文件
+
+将要进行打包的代码提取出来，创建 `podspec` 文件。
+
+
+```
+$-> pod spec create CommonWebTools
+```
+
+`CommonWebTools` 是提取的私有库的名称。
+
+### 1.3 编辑 `podspec` 文件内容
+
+```
 Pod::Spec.new do |s|
 
     s.name         = "CommonWebTools"
@@ -49,30 +60,76 @@ Pod::Spec.new do |s|
 
     s.license      = "MIT"
 
-    s.author             = { "iThinkerYZ" => "xxxxxxxx@qq.com" }
+    s.author       = { "XXX" => "XXXXX@qq.com" }
 
-  s.source       = { :svn => "http://xxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
+    s.source       = { :svn => "http://XXXXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
 
- s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}"
+    s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}", "CommonWebTools/IflyMsc/*.{h,m}", "CommonWebTools/IflyMsc/isr/*.{h,m}"
 
+    s.vendored_frameworks = 'CommonWebTools/IflyMsc/lib/**/*.framework'
 
   end
 
 ```
-多个s.source_files文件使用 ， 分割
+`s.source` 是添加到 `SVN` 的文件路径。
+`s.source_files` 是 要加载的文件集合。
+其中 `CommonWebTools` 和 `AccountModel` 与路径的关系图是这样的（`AccountModel` 是我建立的另外一个测试集成的库）：
 
-### 4，使用：
+![](/img/in-post/cocospodsSVN.jpg)
+
+SVN 库的依赖管理还没有搞清楚,暂时先不理会。
 
 ```
-target 'TestComponentDemo' do
-pod 'CommonWebTools', :svn => "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+ s.dependency 'MJExtension' :path => 'https://github.com/CoderMJLee/MJExtension.git'
+```
+## 2 使用私有库
+
+### 2.1 集成使用
+
+建立新工程 `TestSVNCocoaPods`，进入工程目录，建立 `Podfile`文件。
+
+
+```
+$-> touch Podfile 
+```
+
+编辑内容：
+
+```
+target 'TestSVNCocoaPods' do
+
+	pod 'CommonWebTools', :svn => "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+
+	pod 'AccountModel', :svn => "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+
+
 end
 ```
-### 5，如何更新代码
 
-提交代码后，
-使用 `pod update --verbose --no-repo-update`
-即可生效。
+使用 git 的直接可以使用：
+
+
+```
+pod 'MJExtension'
+```
+
+然后终端执行：
+
+
+```
+$-> pod install --verbose --no-repo-update
+```
+
+
+### 2.2 更新代码
+
+库文件修改、提交代码后， 使用终端执行：
+**要进入到工程目录下执行这个更新命令。**
+
+```
+$-> pod update --verbose --no-repo-update 
+```
+
 
 
 
