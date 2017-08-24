@@ -71,17 +71,33 @@ Pod::Spec.new do |s|
   end
 
 ```
-`s.source` 是添加到 `SVN` 的文件路径。
-`s.source_files` 是 要加载的文件集合。
+
 其中 `CommonWebTools` 和 `AccountModel` 与路径的关系图是这样的（`AccountModel` 是我建立的另外一个测试集成的库）：
 
 ![](/img/in-post/cocospodsSVN.jpg)
 
-SVN 库的依赖管理还没有搞清楚,暂时先不理会。
+
+
+建立子文件夹：
 
 ```
- s.dependency 'MJExtension' :path => 'https://github.com/CoderMJLee/MJExtension.git'
+
+s.subspec 'IflyMsc' do |ss|
+
+	ss.source_files = 'CommonWebTools/IflyMsc/Definition.h','CommonWebTools/IflyMsc/isr/*.{h,m}'
+	ss.vendored_frameworks = 'CommonWebTools/IflyMsc/lib/**/*.framework'   
+	ss.ios.frameworks = 'AVFoundation', 'SystemConfiguration','Foundation','CoreTelephony','AudioToolbox','UIKit','CoreLocation','Contacts','AddressBook','QuartzCore','QuartzCore'
+	ss.libraries = 'z','c++','icucore'
+
+end
 ```
+
+* `.source` 是添加到 `SVN` 的文件路径。
+* `.source_files` 是 要加载的文件集合。
+* `.vendored_frameworks` 是自定义的 `framework`。
+* `.ios.frameworks` 是添加的系统 `framework`，名称不带后缀。譬如： `AVFoundation.framework` 直接写：`AVFoundation`。
+* `.libraries` 是添加系统的动态库。譬如 `libz.tbd` 添加的时间，只需要填入 `z` 就行，同理，`libc++.tbd`,只填入`c++`就行。
+* `.dependency` 是依赖于那个库。
 ## 2 使用私有库
 
 ### 2.1 集成使用
