@@ -9,6 +9,8 @@ header-mask: 0.3
 catalog:    true
 tags:
    - iOS
+   - 内功
+   - CocosPods
 ---
 
 # 基与CocosPods和SVN的一次组件化实践
@@ -68,6 +70,22 @@ Pod::Spec.new do |s|
     s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}", "CommonWebTools/IflyMsc/*.{h,m}", "CommonWebTools/IflyMsc/isr/*.{h,m}"
 
     s.vendored_frameworks = 'CommonWebTools/IflyMsc/lib/**/*.framework'
+    
+    s.resources    = 'AlipaySDK/AlipaySDK.bundle'
+    
+    s.ios.frameworks = 'SystemConfiguration','CoreTelephony','QuartzCore','CoreText','CoreGraphics','UIKit','Foundation','CoreMotion','CFNetwork'
+    
+    s.libraries = 'z','c++'
+    
+    
+    s.subspec 'OpenSSL' do |openssl|
+
+		openssl.source_files = 'AlipaySDK/openssl','AlipaySDK/openssl/*.{h,m}'
+		openssl.ios.vendored_libraries = 'AlipaySDK/openssl/libcrypto.a','AlipaySDK/openssl/libssl.a'
+		openssl.libraries = 'ssl', 'crypto'
+		openssl.xcconfig = { 'HEADER_SEARCH_PATHS' => "${PODS_ROOT}/#{s.name}/AlipaySDK"}
+
+	end
 
   end
 
