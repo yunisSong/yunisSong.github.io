@@ -62,16 +62,27 @@ Month.october.rawValue // 10
 
 #### **Initializing with the raw value**
 
+` You can use the raw value to instantiate an enumeration value with an initializer. `
+
+但是当使用 `Month(rawValue: 5)` 初始化得到一个 Month 枚举时，得到的值是一个 `optional`，当使用 100 初始化是 会得到一个 `nil` 值，所以直接使用会报错。需要使用 `!` 解包。
+
 ```
 let fifthMonth = Month(rawValue: 5)
 monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
 
  let fifthMonth = Month(rawValue: 5)!monthsUntilWinterBreak(from: fifthMonth)  // 7
 ```
+
+
 #### **String raw values**
 
 ```
 enum Icon: String {  case music  case sports  case weather  var filename: String {    // 2    return "\(rawValue.capitalized).png"  }}let icon = Icon.weathericon.filename // Weather.png
+
+
+
+var coinPurse : Array = Array.init(arrayLiteral: Coin.penny,Coin.nickel,Coin.dime,Coin.quarter,Coin.quarter)
+
 ```
 
 #### **Associated values**
@@ -79,6 +90,10 @@ enum Icon: String {  case music  case sports  case weather  var filename: St
 * 每个枚举值都有0个或者多个关联值
 * 每个枚举值的关联值都有自己的数据类型
 * 你可以像定义方法参数一样定义关联值
+
+An enumeration can have raw values or associated values, but not both.
+
+一个 `enumeration` 可以使用 `raw values` 或者 `associated values`，但是只能同时使用其中的一个。
 
 ```
 enum WithdrawalResult {  case success(newBalance: Int)  case error(message: String)}
