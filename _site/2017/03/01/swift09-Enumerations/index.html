@@ -282,6 +282,10 @@ Month.october.rawValue // 10
 
 <h4 id="initializing-with-the-raw-value"><strong>Initializing with the raw value</strong></h4>
 
+<p><code class="highlighter-rouge"> You can use the raw value to instantiate an enumeration value with an initializer. </code></p>
+
+<p>但是当使用 <code class="highlighter-rouge">Month(rawValue: 5)</code> 初始化得到一个 Month 枚举时，得到的值是一个 <code class="highlighter-rouge">optional</code>，当使用 100 初始化是 会得到一个 <code class="highlighter-rouge">nil</code> 值，所以直接使用会报错。需要使用 <code class="highlighter-rouge">!</code> 解包。</p>
+
 <div class="highlighter-rouge"><pre class="highlight"><code>let fifthMonth = Month(rawValue: 5)
 monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
 
@@ -289,6 +293,7 @@ monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
 monthsUntilWinterBreak(from: fifthMonth)  // 7
 </code></pre>
 </div>
+
 <h4 id="string-raw-values"><strong>String raw values</strong></h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>enum Icon: String {
@@ -302,6 +307,11 @@ monthsUntilWinterBreak(from: fifthMonth)  // 7
 }
 let icon = Icon.weather
 icon.filename // Weather.png
+
+
+
+var coinPurse : Array = Array.init(arrayLiteral: Coin.penny,Coin.nickel,Coin.dime,Coin.quarter,Coin.quarter)
+
 </code></pre>
 </div>
 
@@ -312,6 +322,10 @@ icon.filename // Weather.png
   <li>每个枚举值的关联值都有自己的数据类型</li>
   <li>你可以像定义方法参数一样定义关联值</li>
 </ul>
+
+<p>An enumeration can have raw values or associated values, but not both.</p>
+
+<p>一个 <code class="highlighter-rouge">enumeration</code> 可以使用 <code class="highlighter-rouge">raw values</code> 或者 <code class="highlighter-rouge">associated values</code>，但是只能同时使用其中的一个。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>enum WithdrawalResult {
   case success(newBalance: Int)
@@ -538,7 +552,7 @@ if age {
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="6">
+                				<a href="/tags/#内功" title="内功" rel="10">
                                     内功
                                 </a>
                             

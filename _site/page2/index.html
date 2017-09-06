@@ -184,6 +184,99 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/">
+        <h2 class="post-title">
+            Processing symbol files
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Xcode真机调试出现“* is busy: Processing symbol files”
+
+解决方案：
+
+  重新插拔数据线；
+  打开iTunes；
+  终极解决方案：重启手机。
+
+
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 4, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/">
+        <h2 class="post-title">
+            jekyll启动本地服务时报端口错误
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            jekyll启动本地服务时报端口错误
+
+报错内容为：
+
+
+  Auto-regeneration: enabled for ‘/Users/Yunis/Documents/Github/yunisSong.github.io’
+Configuration file: /Users/Yunis/Documents/Github/yunisSong.github.io/_config.yml
+j...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 2, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/">
+        <h2 class="post-title">
+            iOS蓝牙框架的简单实用
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            iOS蓝牙框架的简单实用
+
+CoreBluetooth 分为两种模式：
+
+1，peripheral 外设
+
+2，central 中心
+
+蓝牙中心模式流程
+
+
+  建立中心角色
+  扫描外设（discover）
+  连接外设(connect)
+  扫描外设中的服务和特征(discover)
+    
+      4.1 获取外设的services
+      4.2 获取外设的Characte...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 1, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/07/27/Head-First-HTML%E4%B8%8ECSS/">
         <h2 class="post-title">
             Head First HTML与CSS
@@ -246,13 +339,14 @@ plist 文件内容如下，参考链接 stackoverflow：
         </h3>
         
         <div class="post-content-preview">
-            TODO:如何添加到 SVN
- 文件描述 与 文件层级的关系。
-基与CocosPods和SVN的一次组件化实践
+            基与CocosPods和SVN的一次组件化实践
 
 
   入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。
+也许不应该叫组件化，但是找不到更合适的词语了。
 
+
+记录下步骤：
 
 ...
         </div>
@@ -390,101 +484,6 @@ Category 的其他使用场景
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/05/23/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">
-        <h2 class="post-title">
-            算法学习
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            算法学习
-
-栈
-
-- (void)push:(id)element
-{
-    if (!items) {
-        items = [NSMutableArray new];
-    }
-
-    [items addObject:element];
-}
-- (id)pop
-{
-    id elenmet = items.lastObject;
-    NSLog(@"pop = ...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 23, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/18/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B005/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记05
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Javascrpt高级程序设计读书笔记05
-
-函数表达式
-递归
-
-function factorial(num){
-    if (num &lt;= 1){
-         return 1;
-    } else { 6
-         return num * factorial(num-1);
-    }
-}
-
-
-
-var anotherFactorial = factorial...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 18, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/16/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B004/">
-        <h2 class="post-title">
-            Javascrpt高级程序设计读书笔记04
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            面向对象的程序设计
-面向对象（Object-Oriented,OO）的语言有一个标志，那就是它们都有类的概念，而通过类可以创建多个具有相同属性和方法的对象。 JavaScript 中没有类的概念，因此它的对象也与基于类的语言中的对象有所不同。
-
-JavaScript 中对对象的定义为：无序属性是集合，其属性可以包含基本值、对象或者函数。严格的讲，就相当于说对象是一组没有特定顺序的值。
-
-Ja...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 16, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -571,7 +570,7 @@ Ja...
                             
                         
                             
-                                <a href="/tags/#内功" title="内功" rel="6">
+                                <a href="/tags/#内功" title="内功" rel="10">
                                     内功
                                 </a>
                             

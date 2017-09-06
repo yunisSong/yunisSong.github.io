@@ -183,6 +183,10 @@
                         
                         <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
                         
+                        <a class="tag" href="/tags/#内功" title="内功">内功</a>
+                        
+                        <a class="tag" href="/tags/#CocosPods" title="CocosPods">CocosPods</a>
+                        
                     </div>
                     <h1>基与CocosPods和SVN的一次组件化实践</h1>
                     
@@ -207,31 +211,43 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>TODO:如何添加到 SVN
- 文件描述 与 文件层级的关系。</p>
-<h1 id="基与cocospods和svn的一次组件化实践">基与CocosPods和SVN的一次组件化实践</h1>
+				<h1 id="基与cocospods和svn的一次组件化实践">基与CocosPods和SVN的一次组件化实践</h1>
 
 <blockquote>
-  <p>入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。</p>
+  <p>入职新公司，发现两个工程共享一套代码，每次修改一个地方，就要同步到另外一个地方去修改，有时间就会很容易遗忘修改另外一个工程。刚好之前看过一些模块化的文章，这次就尝试下，把公用的代码打成一个私有库，每次更新代码都去到私有库去更新，只需要更新一个，两个工程就都可以兼顾到。
+也许不应该叫组件化，但是找不到更合适的词语了。</p>
 </blockquote>
 
 <p>记录下步骤：</p>
 
-<h3 id="1安装-cocoapods-repo-svn-插件">1,安装 <code class="highlighter-rouge">cocoapods-repo-svn</code> 插件</h3>
-<p>没什么好说的，就是一行命令。
-<code class="highlighter-rouge">gem install cocoapods-repo-svn</code></p>
+<h2 id="0-安装-cocoapods">0 安装 <code class="highlighter-rouge">CocoaPods</code></h2>
 
-<h3 id="2提取共有代码创建-podspec-文件">2，提取共有代码，创建 <code class="highlighter-rouge">podspec</code> 文件</h3>
-<p>提取两个工程中的共有代码，然后进入目录，创建<code class="highlighter-rouge">podspec</code> 文件</p>
+<p>如何安装 <code class="highlighter-rouge">CocoaPods</code> ，参考链接：<a href="http://www.jianshu.com/p/b64b4fd08d3c">最新 macOS Sierra 10.12.3 安装CocoaPods及使用详解</a>
+其中安装源可以更换为：<code class="highlighter-rouge">https://gems.ruby-china.org/</code></p>
 
-<p><code class="highlighter-rouge">pod spec create CommonWebTools</code></p>
+<h2 id="1-建立私有库">1 建立私有库</h2>
 
-<p><code class="highlighter-rouge">CommonWebTools</code> 是你提取的私有库的名称。</p>
+<h3 id="11-安装-cocoapods-repo-svn-插件">1.1 安装 <code class="highlighter-rouge">cocoapods-repo-svn</code> 插件</h3>
 
-<h3 id="3编辑podspec文件内容">3，编辑<code class="highlighter-rouge">podspec</code>文件内容</h3>
+<p>如果在 <code class="highlighter-rouge">SVN</code> 环境使用  <code class="highlighter-rouge">CocoaPods</code> ，需要安装一下这个插件 <code class="highlighter-rouge">cocoapods-repo-svn</code>，打开终端，输入：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-Pod::Spec.new do |s|
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; gem install cocoapods-repo-svn
+</code></pre>
+</div>
+
+<h3 id="12-创建-podspec-文件">1.2 创建 <code class="highlighter-rouge">podspec</code> 文件</h3>
+
+<p>将要进行打包的代码提取出来，创建 <code class="highlighter-rouge">podspec</code> 文件。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; pod spec create CommonWebTools
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">CommonWebTools</code> 是提取的私有库的名称。</p>
+
+<h3 id="13-编辑-podspec-文件内容">1.3 编辑 <code class="highlighter-rouge">podspec</code> 文件内容</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Pod::Spec.new do |s|
 
     s.name         = "CommonWebTools"
 
@@ -245,31 +261,105 @@ Pod::Spec.new do |s|
 
     s.license      = "MIT"
 
-    s.author             = { "iThinkerYZ" =&gt; "xxxxxxxx@qq.com" }
+    s.author       = { "XXX" =&gt; "XXXXX@qq.com" }
 
-  s.source       = { :svn =&gt; "http://xxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
+    s.source       = { :svn =&gt; "http://XXXXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo" }
 
- s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}"
+    s.source_files = "CommonWebTools", "CommonWebTools/*.{h,m}", "CommonWebTools/IflyMsc/*.{h,m}", "CommonWebTools/IflyMsc/isr/*.{h,m}"
 
+    s.vendored_frameworks = 'CommonWebTools/IflyMsc/lib/**/*.framework'
+    
+    s.resources    = 'AlipaySDK/AlipaySDK.bundle'
+    
+    s.ios.frameworks = 'SystemConfiguration','CoreTelephony','QuartzCore','CoreText','CoreGraphics','UIKit','Foundation','CoreMotion','CFNetwork'
+    
+    s.libraries = 'z','c++'
+    
+    
+    s.subspec 'OpenSSL' do |openssl|
+
+		openssl.source_files = 'AlipaySDK/openssl','AlipaySDK/openssl/*.{h,m}'
+		openssl.ios.vendored_libraries = 'AlipaySDK/openssl/libcrypto.a','AlipaySDK/openssl/libssl.a'
+		openssl.libraries = 'ssl', 'crypto'
+		openssl.xcconfig = { 'HEADER_SEARCH_PATHS' =&gt; "${PODS_ROOT}/#{s.name}/AlipaySDK"}
+
+	end
 
   end
 
 </code></pre>
 </div>
-<p>多个s.source_files文件使用 ， 分割</p>
 
-<h3 id="4使用">4，使用：</h3>
+<p>其中 <code class="highlighter-rouge">CommonWebTools</code> 和 <code class="highlighter-rouge">AccountModel</code> 与路径的关系图是这样的（<code class="highlighter-rouge">AccountModel</code> 是我建立的另外一个测试集成的库）：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>target 'TestComponentDemo' do
-pod 'CommonWebTools', :svn =&gt; "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+<p><img src="/img/in-post/cocospodsSVN.jpg" alt="" /></p>
+
+<p>建立子文件夹：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+s.subspec 'IflyMsc' do |ss|
+
+	ss.source_files = 'CommonWebTools/IflyMsc/Definition.h','CommonWebTools/IflyMsc/isr/*.{h,m}'
+	ss.vendored_frameworks = 'CommonWebTools/IflyMsc/lib/**/*.framework'   
+	ss.ios.frameworks = 'AVFoundation', 'SystemConfiguration','Foundation','CoreTelephony','AudioToolbox','UIKit','CoreLocation','Contacts','AddressBook','QuartzCore','QuartzCore'
+	ss.libraries = 'z','c++','icucore'
+
 end
 </code></pre>
 </div>
-<h3 id="5如何更新代码">5，如何更新代码</h3>
 
-<p>提交代码后，
-使用 <code class="highlighter-rouge">pod update --verbose --no-repo-update</code>
-即可生效。</p>
+<ul>
+  <li><code class="highlighter-rouge">.source</code> 是添加到 <code class="highlighter-rouge">SVN</code> 的文件路径。</li>
+  <li><code class="highlighter-rouge">.source_files</code> 是 要加载的文件集合。</li>
+  <li><code class="highlighter-rouge">.vendored_frameworks</code> 是自定义的 <code class="highlighter-rouge">framework</code>。</li>
+  <li><code class="highlighter-rouge">.ios.frameworks</code> 是添加的系统 <code class="highlighter-rouge">framework</code>，名称不带后缀。譬如： <code class="highlighter-rouge">AVFoundation.framework</code> 直接写：<code class="highlighter-rouge">AVFoundation</code>。</li>
+  <li><code class="highlighter-rouge">.libraries</code> 是添加系统的动态库。譬如 <code class="highlighter-rouge">libz.tbd</code> 添加的时间，只需要填入 <code class="highlighter-rouge">z</code> 就行，同理，<code class="highlighter-rouge">libc++.tbd</code>,只填入<code class="highlighter-rouge">c++</code>就行。</li>
+  <li><code class="highlighter-rouge">.dependency</code> 是依赖于那个库。
+    <h2 id="2-使用私有库">2 使用私有库</h2>
+  </li>
+</ul>
+
+<h3 id="21-集成使用">2.1 集成使用</h3>
+
+<p>建立新工程 <code class="highlighter-rouge">TestSVNCocoaPods</code>，进入工程目录，建立 <code class="highlighter-rouge">Podfile</code>文件。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; touch Podfile 
+</code></pre>
+</div>
+
+<p>编辑内容：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>target 'TestSVNCocoaPods' do
+
+	pod 'CommonWebTools', :svn =&gt; "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+
+	pod 'AccountModel', :svn =&gt; "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"
+
+
+end
+</code></pre>
+</div>
+
+<p>使用 git 的直接可以使用：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pod 'MJExtension'
+</code></pre>
+</div>
+
+<p>然后终端执行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; pod install --verbose --no-repo-update
+</code></pre>
+</div>
+
+<h3 id="22-更新代码">2.2 更新代码</h3>
+
+<p>库文件修改、提交代码后， 使用终端执行：
+<strong>要进入到工程目录下执行这个更新命令。</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; pod update --verbose --no-repo-update 
+</code></pre>
+</div>
 
 
 
@@ -387,7 +477,7 @@ end
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="6">
+                				<a href="/tags/#内功" title="内功" rel="10">
                                     内功
                                 </a>
                             

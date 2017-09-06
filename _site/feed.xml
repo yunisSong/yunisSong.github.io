@@ -5,313 +5,305 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 22 Aug 2017 11:47:56 +0800</pubDate>
-    <lastBuildDate>Tue, 22 Aug 2017 11:47:56 +0800</lastBuildDate>
+    <pubDate>Wed, 06 Sep 2017 16:25:39 +0800</pubDate>
+    <lastBuildDate>Wed, 06 Sep 2017 16:25:39 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
-        <title>减肥计划开始实施</title>
-        <description>&lt;h1 id=&quot;减肥计划开始实施&quot;&gt;减肥计划开始实施&lt;/h1&gt;
+        <title>命令行软件</title>
+        <description>&lt;h1 id=&quot;命令行软件&quot;&gt;命令行软件&lt;/h1&gt;
 
-&lt;p&gt;今天在知乎上看到这篇文章，&lt;a href=&quot;https://zhuanlan.zhihu.com/p/24107946&quot;&gt;我想我终于找到了最有效的减肥方法&lt;/a&gt;,对我触动很大，决定尝试下，希望体重可以得到控制，现在都165+了，身体感觉很笨重，稍微运动下就喘的不行，睡觉还打呼，早起起床都感觉没有睡好，没什么精神。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mac&lt;/code&gt; 下安装命令行软件 使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install&lt;/code&gt;，譬如 安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;tree&lt;/code&gt; ，就是 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install tree&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;以下是原文作者的一些建议：&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tree&lt;/code&gt;
+&lt;img src=&quot;/media/15046854241597/shell_tree.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 06 Sep 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/09/06/%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BD%AF%E4%BB%B6/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/09/06/%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BD%AF%E4%BB%B6/</guid>
+        
+        <category>内功</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>单元测试</title>
+        <description>&lt;h1 id=&quot;单元测试&quot;&gt;单元测试&lt;/h1&gt;
+&lt;h3 id=&quot;为什么要写单元测试&quot;&gt;为什么要写单元测试&lt;/h3&gt;
+&lt;h3 id=&quot;如何写单元测试&quot;&gt;如何写单元测试&lt;/h3&gt;
+&lt;h4 id=&quot;那些应该写单元测试那些不应该&quot;&gt;那些应该写单元测试。那些不应该&lt;/h4&gt;
+
+&lt;p&gt;为了更方便地进行单元测试，业务代码应避免以下情况：&lt;/p&gt;
+
+&lt;p&gt;存在太多条件逻辑
+构造函数中做的事情太多
+存在太多全局状态
+混杂了太多无关的逻辑
+存在太多静态方法
+存在过多外部依赖&lt;/p&gt;
+
+&lt;p&gt;http://liuyanwei.jumppo.com/2016/03/10/iOS-unit-test.html&lt;/p&gt;
+
+&lt;p&gt;http://www.hollischuang.com/archives/972&lt;/p&gt;
+
+&lt;p&gt;单元测试在实际工作无法推进的原因，无外乎以下两点：缺乏实施动力和缺少实战经验。&lt;/p&gt;
+
+&lt;p&gt;http://xiangwangfeng.com/2016/10/17/%E8%B5%B0%E5%87%BA-iOS-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%9A%84%E5%9B%B0%E5%A2%83/&lt;/p&gt;
+
+&lt;p&gt;SDWeb 如何写单元测试&lt;/p&gt;
+
+&lt;p&gt;http://www.uml.org.cn/Test/201306072.asp&lt;/p&gt;
+
+&lt;p&gt;https://www.wangjiawen.com/ios/ios-unit-testing-of-kiwi&lt;/p&gt;
+
+&lt;p&gt;http://tmq.qq.com/2017/07/ios/&lt;/p&gt;
+
+&lt;p&gt;http://draveness.me/ios-kai-fa-zhong-de-zhong-gou.html&lt;/p&gt;
+
+&lt;p&gt;https://doc.yonyoucloud.com/doc/FunctionalReactiveProgrammingOniOS/chapter6/testing_viewModels.html&lt;/p&gt;
+
+&lt;p&gt;https://charminglee1973.wordpress.com/2015/06/02/ios%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B9%8Bviewcontroller%E7%AF%87/&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 31 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/31/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/31/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+        
+        <category>内功</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>NSAssert简单使用</title>
+        <description>&lt;h1 id=&quot;nsassert简单使用&quot;&gt;NSAssert简单使用&lt;/h1&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSAssert&lt;/code&gt; 的定义如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define NSAssert(condition, desc, ...)	\
+    do {				\
+	__PRAGMA_PUSH_NO_EXTRA_ARG_WARNINGS \
+	if (!(condition)) {		\
+        NSString *__assert_file__ = [NSString stringWithUTF8String:__FILE__]; \
+            __assert_file__ = __assert_file__ ? __assert_file__ : @&quot;&amp;lt;Unknown File&amp;gt;&quot;; \
+	    [[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd \
+		object:self file:__assert_file__ \
+	    	lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
+	}				\
+        __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
+    } while(0)
+#endif
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;第一，在所有减肥方法要你改正的习惯中，找出改正它会让你极度不舒适的以及中度不舒适的，永远的放弃考虑它。不管它可能多有效。
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;condition&lt;/code&gt; 判断条件为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt; 的时候，程序终止，提示错误，提示语为 &lt;code class=&quot;highlighter-rouge&quot;&gt;desc&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;condition&lt;/code&gt; 判断条件为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt; 的时候，程序继续运行。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; NSAssert(self.umPushAppKey != nil, @&quot;请设置友盟key&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey != nil&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt;，程序终止，提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;请设置友盟key&lt;/code&gt;。
     &lt;ul&gt;
-      &lt;li&gt;1，跑步&lt;/li&gt;
-      &lt;li&gt;2，节食&lt;/li&gt;
+      &lt;li&gt;提示语为： &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 不为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey != nil&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt;，程序继续运行。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; NSAssert(self.umPushAppKey, @&quot;请设置友盟key&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt;，程序终止，提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;请设置友盟key&lt;/code&gt;。
+    &lt;ul&gt;
+      &lt;li&gt;提示语为： &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 不为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt;，程序继续运行。&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 28 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/28/NSAssert%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/28/NSAssert%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS应用架构谈学习笔记</title>
+        <description>&lt;h1 id=&quot;ios应用架构谈学习笔记&quot;&gt;iOS应用架构谈学习笔记&lt;/h1&gt;
+
+&lt;p&gt;本文是学习 &lt;a href=&quot;https://casatwy.com/&quot;&gt;反革命工程师&lt;/a&gt; 关于架构的的一系列博文的笔记。&lt;/p&gt;
+
+&lt;p&gt;原博文链接：
+&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html&quot;&gt;iOS应用架构谈 开篇&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html&quot;&gt;iOS应用架构谈 view层的组织和调用方案&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html&quot;&gt;iOS应用架构谈 网络层设计方案&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-ben-di-chi-jiu-hua-fang-an-ji-dong-tai-bu-shu.html&quot;&gt;iOS应用架构谈 本地持久化方案及动态部署&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iOS-Modulization.html&quot;&gt;iOS应用架构谈 组件化方案&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;view层的组织和调用方案&quot;&gt;view层的组织和调用方案&lt;/h2&gt;
+
+&lt;h3 id=&quot;代码布局&quot;&gt;代码布局&lt;/h3&gt;
+&lt;p&gt;代码布局的大概样式。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - Life Cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //加载页面
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //布局
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    //监听事件
+}
+- (void)dealloc
+{
+    
+}
+#pragma mark - Intial Methods
+//初始化数据
+- (void)assignDate
+{
+    
+}
+- (void)settingAppearance
+{
+    
+}
+- (void)loadSubViews
+{
+    
+}
+#pragma mark - Target Methods
+//点击事件或通知事件
+
+#pragma mark - Network Methods
+//网络请求
+
+#pragma mark - Public Method
+//外部方法
+
+#pragma mark - Private Method
+//本类方法
+
+#pragma mark - Delegate
+//代理方法
+
+
+#pragma mark - Lazy Loads
+//懒加载 Getter方法
+
+#pragma mark - set
+//Setter方法
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;每一个delegate都把对应的protocol名字带上，delegate方法不要到处乱写，写到一块区域里面去&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;在ios开发领域中怎样才算是mvc划分的正确姿势&quot;&gt;在iOS开发领域中，怎样才算是MVC划分的正确姿势？&lt;/h3&gt;
+
+&lt;p&gt;M应该做的事：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;给ViewController提供数据&lt;/li&gt;
+  &lt;li&gt;给ViewController存储数据提供接口&lt;/li&gt;
+  &lt;li&gt;提供经过抽象的业务基本组件，供Controller调度&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;C应该做的事：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;管理View Container的生命周期&lt;/li&gt;
+  &lt;li&gt;负责生成所有的View实例，并放入View Container&lt;/li&gt;
+  &lt;li&gt;监听来自View与业务有关的事件，通过与Model的合作，来完成对应事件的业务。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;V应该做的事：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;响应与业务无关的事件，并因此引发动画效果，点击反馈（如果合适的话，尽量还是放在View去做）等。&lt;/li&gt;
+  &lt;li&gt;界面元素表达&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;拆分的心法&quot;&gt;拆分的心法&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;第一心法：保留最重要的任务，拆分其它不重要的任务&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;在iOS开发领域内，UIViewController承载了非常多的事情，比如View的初始化，业务逻辑，事件响应，数据加工等等，当然还有更多我现在也列举不出来，但是我们知道有一件事情Controller肯定逃不掉要做：协调V和M。也就是说，不管怎么拆，协调工作是拆不掉的。那么剩下的事情我们就可以拆了，比如    UITableView的DataSource。&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;第二 在所有试过的减肥方法中，列出一两个你的舒适度最高的，或者说完成它不那么让你痛苦的。&lt;/p&gt;
+    &lt;p&gt;第二心法：拆分后的模块要尽可能提高可复用性，尽量做到DRY&lt;/p&gt;
 
     &lt;ul&gt;
-      &lt;li&gt;去附近的校园散步&lt;/li&gt;
-      &lt;li&gt;在跑步机上快走&lt;/li&gt;
-      &lt;li&gt;举哑铃&lt;/li&gt;
+      &lt;li&gt;根据第一心法拆开来的东西，很有可能还是强业务相关的，这种情况有的时候无法避免。但我们拆也要拆得好看，拆出来的部分最好能够归成某一类对象，然后最好能够抽象出一个通用逻辑出来，使他能够复用。即使不能抽出通用逻辑，那也尽量抽象出一个protocol，来实现IOP。这里有篇关于&lt;a href=&quot;https://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-er-duo-tai.html&quot;&gt;IOP的文章&lt;/a&gt;，大家看了就明白优越性了。&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;第三，尽可能优化舒适度较高的这个选项，尽量让它更舒服一些，让它成为生活的一部分。
+  &lt;li&gt;
+    &lt;p&gt;第三心法：要尽可能提高拆分模块后的抽象度&lt;/p&gt;
+
     &lt;ul&gt;
-      &lt;li&gt;在跑步机上快走 可以看游戏视频。可以有空调。&lt;/li&gt;
+      &lt;li&gt;尽量高层级的抽象。&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;第四，我拒绝挨饿了。我花了三天，找到了吃东西时候我最舒适的饱度，我根本不相信什么七分饱八分饱，饱了就是饱了。我决定坚持这个饱度。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;今天是 二零一六年八月二十一号&lt;/p&gt;
+&lt;h4 id=&quot;设计心法&quot;&gt;设计心法&lt;/h4&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt; &lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;八月&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;九月&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;十月&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;十一月&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;十二月&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;01&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;02&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;03&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;04&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;05&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;06&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;07&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;08&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;09&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;10&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;12&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;16&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;17&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;21&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;未完成&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;23&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;27&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;28&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;29&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;31&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;ul&gt;
+  &lt;li&gt;第一心法：尽可能减少继承层级，涉及苹果原生对象的尽量不要继承
+    &lt;ul&gt;
+      &lt;li&gt;继承是罪恶，尽量不要继承。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;第二心法：做好代码规范，规定好代码在文件中的布局，尤其是ViewController
+    &lt;ul&gt;
+      &lt;li&gt;这主要是为了提高可维护性。在一个文件非常大的对象中，尤其要限制好不同类型的代码在文件中的布局。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;第三心法：能不放在Controller做的事情就尽量不要放在Controller里面去做&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;小总结&quot;&gt;小总结&lt;/h4&gt;
+
+&lt;p&gt;其实针对View层的架构设计，还是要做好三点：&lt;code class=&quot;highlighter-rouge&quot;&gt;代码规范&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;架构模式&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;工具集&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;代码规范对于View层来说意义重大，毕竟View层非常重业务，如果代码布局混乱，后来者很难接手，也很难维护。&lt;/p&gt;
+
+&lt;p&gt;架构模式具体如何选择，完全取决于业务复杂度。如果业务相当相当复杂，那就可以使用VIPER，如果相对简单，那就直接MVC稍微改改就好了。每一种已经成为定式的架构模式不见得都适合各自公司对应的业务，所以需要各位架构师根据情况去做一些拆分或者改变。拆分一般都不会出现问题，改变的时候，只要别把MVC三个角色搞混就好了，M该做啥做啥，C该做啥做啥，V该做啥做啥，不要乱来。关于大部分的架构模式应该是什么样子，这篇文章里都已经说过了，不过我认为最重要的还是后面的心法，模式只是招术，熟悉了心法才能大巧不工。&lt;/p&gt;
+
+&lt;p&gt;View层的工具集主要还是集中在如何对View进行布局，以及一些特定的View，比如带搜索提示的搜索框这种。这篇文章只提到了View布局的工具集，其它的工具集相对而言是更加取决于各自公司的业务的，各自实现或者使用CocoaPods里现成的都不是很难。&lt;/p&gt;
+
+&lt;p&gt;对于小规模或者中等规模iOS开发团队来说，做好以上三点就足够了。在大规模团队中，有一个额外问题要考虑，就是跨业务页面调用方案的设计。&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 21 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/21/%E5%87%8F%E8%82%A5%E8%AE%A1%E5%88%92%E5%BC%80%E5%A7%8B%E5%AE%9E%E6%96%BD/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/21/%E5%87%8F%E8%82%A5%E8%AE%A1%E5%88%92%E5%BC%80%E5%A7%8B%E5%AE%9E%E6%96%BD/</guid>
+        <pubDate>Wed, 23 Aug 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/08/23/iOS%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%B0%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/08/23/iOS%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%B0%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         
-        <category>减肥</category>
+        <category>内功</category>
         
         
       </item>
@@ -1926,137 +1918,6 @@ https://yunissong.github.io/
         <category>内功</category>
         
         <category>正则表达式</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Processing symbol files</title>
-        <description>&lt;h1 id=&quot;xcode真机调试出现-is-busy-processing-symbol-files&quot;&gt;Xcode真机调试出现“* is busy: Processing symbol files”&lt;/h1&gt;
-
-&lt;p&gt;解决方案：&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;重新插拔数据线；&lt;/li&gt;
-  &lt;li&gt;打开iTunes；&lt;/li&gt;
-  &lt;li&gt;终极解决方案：重启手机。&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Fri, 04 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/04/Xcode%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%87%BA%E7%8E%B0-is-busy-Processing-symbol-files/</guid>
-        
-        <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>jekyll启动本地服务时报端口错误</title>
-        <description>&lt;h1 id=&quot;jekyll启动本地服务时报端口错误&quot;&gt;jekyll启动本地服务时报端口错误&lt;/h1&gt;
-
-&lt;p&gt;报错内容为：&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Auto-regeneration: enabled for ‘/Users/Yunis/Documents/Github/yunisSong.github.io’
-Configuration file: /Users/Yunis/Documents/Github/yunisSong.github.io/_config.yml
-jekyll 3.4.1 | Error:  Address already in use - bind(2) for 127.0.0.1:4000&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;一直本地的服务启动不起来，是端口被占用了，应该是我之前启动的jekyll 服务没有关闭，导致新服务启动不了。最终的解决方案如下。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/jekyll端口错误.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;1,查看占用端口的进程&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 查看占用4000端口的服务
-sudo lsof -wni tcp:4000
-
-结果如下：
-COMMAND   PID  USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
-ruby    15149 Yunis    8u  IPv4 0xb0723eb7e38e11c5      0t0  TCP 127.0.0.1:terabase (LISTEN)
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;2，杀掉占用端口的进程（sudo kill -9 PID）&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo kill -9 15149
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;3，再次启动 jekyll 服务正常。&lt;/p&gt;
-
-&lt;p&gt;参考链接：https://stackoverflow.com/a/39351624/7771598&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 02 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/02/jekyll%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E6%97%B6%E6%8A%A5%E7%AB%AF%E5%8F%A3%E9%94%99%E8%AF%AF/</guid>
-        
-        <category>jekyll</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS蓝牙框架的简单实用</title>
-        <description>&lt;h1 id=&quot;ios蓝牙框架的简单实用&quot;&gt;iOS蓝牙框架的简单实用&lt;/h1&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CoreBluetooth&lt;/code&gt; 分为两种模式：&lt;/p&gt;
-
-&lt;p&gt;1，&lt;code class=&quot;highlighter-rouge&quot;&gt;peripheral&lt;/code&gt; 外设&lt;/p&gt;
-
-&lt;p&gt;2，&lt;code class=&quot;highlighter-rouge&quot;&gt;central&lt;/code&gt; 中心&lt;/p&gt;
-
-&lt;h3 id=&quot;蓝牙中心模式流程&quot;&gt;蓝牙中心模式流程&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;建立中心角色&lt;/li&gt;
-  &lt;li&gt;扫描外设（discover）&lt;/li&gt;
-  &lt;li&gt;连接外设(connect)&lt;/li&gt;
-  &lt;li&gt;扫描外设中的服务和特征(discover)
-    &lt;ul&gt;
-      &lt;li&gt;4.1 获取外设的services&lt;/li&gt;
-      &lt;li&gt;4.2 获取外设的Characteristics,获取Characteristics的值，获取Characteristics的Descriptor和Descriptor的值&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;与外设做数据交互(explore and interact)&lt;/li&gt;
-  &lt;li&gt;订阅Characteristic的通知&lt;/li&gt;
-  &lt;li&gt;断开连接(disconnect)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;蓝牙外设模式流程&quot;&gt;蓝牙外设模式流程&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;启动一个Peripheral管理对象&lt;/li&gt;
-  &lt;li&gt;本地Peripheral设置服务,特性,描述，权限等等&lt;/li&gt;
-  &lt;li&gt;Peripheral发送广告&lt;/li&gt;
-  &lt;li&gt;设置处理订阅、取消订阅、读characteristic、写characteristic的委托方法&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;示意图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/iOS_CoreBluetooth.png&quot; alt=&quot;思维导图&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;大神写的文章，写的很详细，最后提供了一个蓝牙库，封装的很简便。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/07/17/ios-BLE-1.html&quot;&gt;iOS蓝牙开发（一）蓝牙相关基础知识&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/08/14/ios-BLE-2.html&quot;&gt;ios蓝牙开发（二）ios连接外设的代码实现&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/09/07/ios-BLE-3.html&quot;&gt;ios蓝牙开发（三）app作为外设被连接的实现&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://liuyanwei.jumppo.com/2015/09/11/ios-BLE-4.html&quot;&gt;ios蓝牙开发（四）BabyBluetooth蓝牙库介绍&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 01 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/01/iOS%E8%93%9D%E7%89%99%E6%A1%86%E6%9E%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8/</guid>
-        
-        <category>蓝牙</category>
-        
-        <category>iOS</category>
         
         
       </item>

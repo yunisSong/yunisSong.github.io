@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>减肥计划开始实施 - 三十一的博客 | Yunis Blog</title>
+    <title>NSAssert简单使用 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/08/21/%E5%87%8F%E8%82%A5%E8%AE%A1%E5%88%92%E5%BC%80%E5%A7%8B%E5%AE%9E%E6%96%BD/">
+    <link rel="canonical" href="http://localhost:4000/2017/08/28/NSAssert%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/in-post/减肥.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/in-post/减肥.jpg')
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
     }
 
     
@@ -181,15 +181,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#减肥" title="减肥">减肥</a>
-                        
                     </div>
-                    <h1>减肥计划开始实施</h1>
+                    <h1>NSAssert简单使用</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on August 21, 2017</span>
+                    <span class="meta">Posted by 三十一 on August 28, 2017</span>
                 </div>
             </div>
         </div>
@@ -207,300 +205,56 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="减肥计划开始实施">减肥计划开始实施</h1>
+				<h1 id="nsassert简单使用">NSAssert简单使用</h1>
 
-<p>今天在知乎上看到这篇文章，<a href="https://zhuanlan.zhihu.com/p/24107946">我想我终于找到了最有效的减肥方法</a>,对我触动很大，决定尝试下，希望体重可以得到控制，现在都165+了，身体感觉很笨重，稍微运动下就喘的不行，睡觉还打呼，早起起床都感觉没有睡好，没什么精神。</p>
+<p><code class="highlighter-rouge">NSAssert</code> 的定义如下：</p>
 
-<p>以下是原文作者的一些建议：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>#define NSAssert(condition, desc, ...)	\
+    do {				\
+	__PRAGMA_PUSH_NO_EXTRA_ARG_WARNINGS \
+	if (!(condition)) {		\
+        NSString *__assert_file__ = [NSString stringWithUTF8String:__FILE__]; \
+            __assert_file__ = __assert_file__ ? __assert_file__ : @"&lt;Unknown File&gt;"; \
+	    [[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd \
+		object:self file:__assert_file__ \
+	    	lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
+	}				\
+        __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
+    } while(0)
+#endif
+</code></pre>
+</div>
 
 <ul>
-  <li>第一，在所有减肥方法要你改正的习惯中，找出改正它会让你极度不舒适的以及中度不舒适的，永远的放弃考虑它。不管它可能多有效。
-    <ul>
-      <li>1，跑步</li>
-      <li>2，节食</li>
-    </ul>
-  </li>
-  <li>
-    <p>第二 在所有试过的减肥方法中，列出一两个你的舒适度最高的，或者说完成它不那么让你痛苦的。</p>
-
-    <ul>
-      <li>去附近的校园散步</li>
-      <li>在跑步机上快走</li>
-      <li>举哑铃</li>
-    </ul>
-  </li>
-  <li>第三，尽可能优化舒适度较高的这个选项，尽量让它更舒服一些，让它成为生活的一部分。
-    <ul>
-      <li>在跑步机上快走 可以看游戏视频。可以有空调。</li>
-    </ul>
-  </li>
-  <li>第四，我拒绝挨饿了。我花了三天，找到了吃东西时候我最舒适的饱度，我根本不相信什么七分饱八分饱，饱了就是饱了。我决定坚持这个饱度。</li>
+  <li>当 <code class="highlighter-rouge">condition</code> 判断条件为 <code class="highlighter-rouge">假</code> 的时候，程序终止，提示错误，提示语为 <code class="highlighter-rouge">desc</code>。</li>
+  <li>当 <code class="highlighter-rouge">condition</code> 判断条件为 <code class="highlighter-rouge">真</code> 的时候，程序继续运行。</li>
 </ul>
 
-<p>今天是 二零一六年八月二十一号</p>
+<div class="highlighter-rouge"><pre class="highlight"><code> NSAssert(self.umPushAppKey != nil, @"请设置友盟key");
+</code></pre>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th style="text-align: center">八月</th>
-      <th style="text-align: center">九月</th>
-      <th style="text-align: center">十月</th>
-      <th style="text-align: center">十一月</th>
-      <th style="text-align: center">十二月</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>01</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>02</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>03</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>04</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>05</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>06</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>07</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>08</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>09</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>13</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>14</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>15</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>16</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>17</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>18</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>19</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>20</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>21</td>
-      <td style="text-align: center"><code class="highlighter-rouge">未完成</code></td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>22</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>23</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>24</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>25</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>26</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>27</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>28</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>29</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>30</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-    <tr>
-      <td>31</td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-      <td style="text-align: center"> </td>
-    </tr>
-  </tbody>
-</table>
+<ul>
+  <li>当 <code class="highlighter-rouge">self.umPushAppKey</code> 为 <code class="highlighter-rouge">nil</code>，判断条件 <code class="highlighter-rouge">self.umPushAppKey != nil</code> 为 <code class="highlighter-rouge">假</code>，程序终止，提示 <code class="highlighter-rouge">请设置友盟key</code>。
+    <ul>
+      <li>提示语为： <code class="highlighter-rouge">Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'</code></li>
+    </ul>
+  </li>
+  <li>当 <code class="highlighter-rouge">self.umPushAppKey</code> 不为 <code class="highlighter-rouge">nil</code>，判断条件 <code class="highlighter-rouge">self.umPushAppKey != nil</code> 为 <code class="highlighter-rouge">真</code>，程序继续运行。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> NSAssert(self.umPushAppKey, @"请设置友盟key");
+</code></pre>
+</div>
+
+<ul>
+  <li>当 <code class="highlighter-rouge">self.umPushAppKey</code> 为 <code class="highlighter-rouge">nil</code>，判断条件 <code class="highlighter-rouge">self.umPushAppKey</code> 为 <code class="highlighter-rouge">假</code>，程序终止，提示 <code class="highlighter-rouge">请设置友盟key</code>。
+    <ul>
+      <li>提示语为： <code class="highlighter-rouge">Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'</code></li>
+    </ul>
+  </li>
+  <li>当 <code class="highlighter-rouge">self.umPushAppKey</code> 不为 <code class="highlighter-rouge">nil</code>，判断条件 <code class="highlighter-rouge">self.umPushAppKey</code> 为 <code class="highlighter-rouge">真</code>，程序继续运行。</li>
+</ul>
 
 
 
@@ -512,12 +266,19 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/08/21/runtime-%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/" data-toggle="tooltip" data-placement="top" title="runtime 可以做什么">
+                        <a href="/2017/08/23/iOS%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%B0%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-toggle="tooltip" data-placement="top" title="iOS应用架构谈学习笔记">
                         Previous<br>
-                        <span>runtime 可以做什么</span>
+                        <span>iOS应用架构谈学习笔记</span>
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2017/08/31/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" data-toggle="tooltip" data-placement="top" title="单元测试">
+                        Next<br>
+                        <span>单元测试</span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -529,6 +290,20 @@
             </div>  
 
     <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
 
     <!-- Sidebar Container -->
@@ -597,7 +372,7 @@
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="6">
+                				<a href="/tags/#内功" title="内功" rel="10">
                                     内功
                                 </a>
                             
@@ -840,6 +615,50 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 
