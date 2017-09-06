@@ -95,7 +95,16 @@ Pod::Spec.new do |s|
 
 ![](/img/in-post/cocospodsSVN.jpg)
 
+设置 pod 工程的 pch 文件内容：
 
+```
+s.prefix_header_contents = "// 注释下行则不打印日志\n//#define __SHOW__DEBUGLog__\n\n#ifdef __SHOW__DEBUGLog__\n#define DEBUGLog( s, ... ) NSLog( @\"<%@:(%d)> %@\", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )\n#else\n#define DEBUGLog( s, ... ) {}\n#endif"
+
+---
+
+spec.prefix_header_file = 'iphone/include/prefix.pch'
+spec.prefix_header_contents = '#import "SomeClass.h"'
+```
 
 建立子文件夹：
 
@@ -117,6 +126,150 @@ end
 * `.ios.frameworks` 是添加的系统 `framework`，名称不带后缀。譬如： `AVFoundation.framework` 直接写：`AVFoundation`。
 * `.libraries` 是添加系统的动态库。譬如 `libz.tbd` 添加的时间，只需要填入 `z` 就行，同理，`libc++.tbd`,只填入`c++`就行。
 * `.dependency` 是依赖于那个库。
+* `.ios.vendored_libraries` 静态库
+
+### 1.4 千言万语 不如一个demo
+#### 1.4.1 `IflyMsc`
+```
+Pod::Spec.new do |s|
+
+	s.name         = "IflyMsc"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "IflyMsc"
+	
+	s.description  = "IflyMsc"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" => "XXXXX@qq.com" }
+
+	s.source       = { :svn => "http://XXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.source_files = 'IflyMsc','IflyMsc/*.{h,m}'
+
+	s.vendored_frameworks = 'IflyMsc/lib/*.framework'   
+
+	s.libraries = 'z','c++','icucore'
+
+	s.ios.frameworks = 'AVFoundation', 'SystemConfiguration','Foundation','CoreTelephony','AudioToolbox','UIKit','CoreLocation','Contacts','AddressBook','QuartzCore','QuartzCore'
+
+   	s.prefix_header_contents = "// 注释下行则不打印日志\n//#define __SHOW__DEBUGLog__\n\n#ifdef __SHOW__DEBUGLog__\n#define DEBUGLog( s, ... ) NSLog( @\"<%@:(%d)> %@\", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )\n#else\n#define DEBUGLog( s, ... ) {}\n#endif"
+
+
+
+	s.subspec 'isr' do |ss|
+
+		ss.source_files = 'IflyMsc/isr','IflyMsc/isr/*.{h,m}'
+
+    	end
+
+
+end
+```
+目录层级：
+![](/media/15039102892405/15046888657724.jpg)
+
+#### 1.4.2 `AlipaySDK`
+
+```
+Pod::Spec.new do |s|
+
+	s.name         = "AlipaySDK"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "AlipaySDK"
+	
+	s.description  = "AlipaySDK"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" => "XXXXX@qq.com" }
+
+	s.source       = { :svn => "http://XXXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.source_files = 'AlipaySDK','AlipaySDK/*.{h,m}'
+
+	s.resources    = 'AlipaySDK/AlipaySDK.bundle'
+
+	s.vendored_frameworks = 'AlipaySDK/*.framework' 
+
+
+	s.ios.frameworks = 'SystemConfiguration','CoreTelephony','QuartzCore','CoreText','CoreGraphics','UIKit','Foundation','CoreMotion','CFNetwork'
+
+	s.libraries = 'z','c++'
+
+	s.subspec 'OpenSSL' do |openssl|
+
+		openssl.source_files = 'AlipaySDK/openssl','AlipaySDK/openssl/*.{h,m}'
+		openssl.ios.vendored_libraries = 'AlipaySDK/openssl/libcrypto.a','AlipaySDK/openssl/libssl.a'
+		openssl.libraries = 'ssl', 'crypto'
+		openssl.xcconfig = { 'HEADER_SEARCH_PATHS' => "${PODS_ROOT}/#{s.name}/AlipaySDK"}
+
+	end
+
+	s.subspec 'Util' do |ss|
+
+		ss.source_files = 'AlipaySDK/Util','AlipaySDK/Util/*.{h,m}'
+	end
+
+end
+```
+目录层级：
+![](/media/15039102892405/15046890957785.jpg)
+
+#### 1.4.3 `PushNotification`
+```
+Pod::Spec.new do |s|
+
+	s.name         = "PushNotification"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "PushNotification"
+	
+	s.description  = "PushNotification"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" => "XXXXX@qq.com" }
+
+	s.source       = { :svn => "http://XXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.dependency 'Account'
+
+	s.dependency 'APPHelpTool'
+
+	s.source_files = 'PushNotification','PushNotification/*.{h,m}','PushNotification/UMessage_Sdk_1.5.0a/UMessage.h'
+
+	s.ios.vendored_libraries = 'PushNotification/UMessage_Sdk_1.5.0a/libUMessage_Sdk_1.5.0a.a'
+
+
+
+end
+```
+目录层级：
+![](media/15039102892405/15046891948750.jpg)
 ## 2 使用私有库
 
 ### 2.1 集成使用
