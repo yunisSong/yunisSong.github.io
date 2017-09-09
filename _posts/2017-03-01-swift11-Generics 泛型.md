@@ -16,5 +16,15 @@ tags:
 
 > generics are a way to systematically define sets of types.
 
-之前其实学习的时间已经接触过泛型，譬如，Array、
+
+```
+let animalAges: [Int] = [2,5,7,9]
+let animalAges: Array<Int> = [2,5,7,9]
+
+let intNames: Dictionary<Int, String> = [42: "forty-two"]
+let intNames2: [Int: String] = [42: "forty-two", 7: "seven"]
+
+func swapped<T, U>(_ x: T, _ y: U) -> (U, T) {  return (y, x)}
+swapped(33, "Jay")  // returns ("Jay", 33)
+```
 
