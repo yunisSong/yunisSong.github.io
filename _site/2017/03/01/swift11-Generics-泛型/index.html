@@ -215,7 +215,18 @@
   <p>generics are a way to systematically define sets of types.</p>
 </blockquote>
 
-<p>之前其实学习的时间已经接触过泛型，譬如，Array、</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>let animalAges: [Int] = [2,5,7,9]
+let animalAges: Array&lt;Int&gt; = [2,5,7,9]
+
+let intNames: Dictionary&lt;Int, String&gt; = [42: "forty-two"]
+let intNames2: [Int: String] = [42: "forty-two", 7: "seven"]
+
+func swapped&lt;T, U&gt;(_ x: T, _ y: U) -&gt; (U, T) {
+  return (y, x)
+}
+swapped(33, "Jay")  // returns ("Jay", 33)
+</code></pre>
+</div>
 
 
 
@@ -281,7 +292,7 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#Swift" title="Swift" rel="12">
+                				<a href="/tags/#Swift" title="Swift" rel="13">
                                     Swift
                                 </a>
                             

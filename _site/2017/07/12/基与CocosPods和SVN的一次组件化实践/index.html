@@ -294,6 +294,17 @@
 
 <p><img src="/img/in-post/cocospodsSVN.jpg" alt="" /></p>
 
+<p>设置 pod 工程的 pch 文件内容：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>s.prefix_header_contents = "// 注释下行则不打印日志\n//#define __SHOW__DEBUGLog__\n\n#ifdef __SHOW__DEBUGLog__\n#define DEBUGLog( s, ... ) NSLog( @\"&lt;%@:(%d)&gt; %@\", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )\n#else\n#define DEBUGLog( s, ... ) {}\n#endif"
+
+---
+
+spec.prefix_header_file = 'iphone/include/prefix.pch'
+spec.prefix_header_contents = '#import "SomeClass.h"'
+</code></pre>
+</div>
+
 <p>建立子文件夹：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>
@@ -314,10 +325,153 @@ end
   <li><code class="highlighter-rouge">.vendored_frameworks</code> 是自定义的 <code class="highlighter-rouge">framework</code>。</li>
   <li><code class="highlighter-rouge">.ios.frameworks</code> 是添加的系统 <code class="highlighter-rouge">framework</code>，名称不带后缀。譬如： <code class="highlighter-rouge">AVFoundation.framework</code> 直接写：<code class="highlighter-rouge">AVFoundation</code>。</li>
   <li><code class="highlighter-rouge">.libraries</code> 是添加系统的动态库。譬如 <code class="highlighter-rouge">libz.tbd</code> 添加的时间，只需要填入 <code class="highlighter-rouge">z</code> 就行，同理，<code class="highlighter-rouge">libc++.tbd</code>,只填入<code class="highlighter-rouge">c++</code>就行。</li>
-  <li><code class="highlighter-rouge">.dependency</code> 是依赖于那个库。
-    <h2 id="2-使用私有库">2 使用私有库</h2>
-  </li>
+  <li><code class="highlighter-rouge">.dependency</code> 是依赖于那个库。</li>
+  <li><code class="highlighter-rouge">.ios.vendored_libraries</code> 静态库</li>
 </ul>
+
+<h3 id="14-千言万语-不如一个demo">1.4 千言万语 不如一个demo</h3>
+<h4 id="141-iflymsc">1.4.1 <code class="highlighter-rouge">IflyMsc</code></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>Pod::Spec.new do |s|
+
+	s.name         = "IflyMsc"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "IflyMsc"
+	
+	s.description  = "IflyMsc"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" =&gt; "XXXXX@qq.com" }
+
+	s.source       = { :svn =&gt; "http://XXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.source_files = 'IflyMsc','IflyMsc/*.{h,m}'
+
+	s.vendored_frameworks = 'IflyMsc/lib/*.framework'   
+
+	s.libraries = 'z','c++','icucore'
+
+	s.ios.frameworks = 'AVFoundation', 'SystemConfiguration','Foundation','CoreTelephony','AudioToolbox','UIKit','CoreLocation','Contacts','AddressBook','QuartzCore','QuartzCore'
+
+   	s.prefix_header_contents = "// 注释下行则不打印日志\n//#define __SHOW__DEBUGLog__\n\n#ifdef __SHOW__DEBUGLog__\n#define DEBUGLog( s, ... ) NSLog( @\"&lt;%@:(%d)&gt; %@\", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )\n#else\n#define DEBUGLog( s, ... ) {}\n#endif"
+
+
+
+	s.subspec 'isr' do |ss|
+
+		ss.source_files = 'IflyMsc/isr','IflyMsc/isr/*.{h,m}'
+
+    	end
+
+
+end
+</code></pre>
+</div>
+<p>目录层级：
+<img src="/media/15039102892405/15046888657724.jpg" alt="" /></p>
+
+<h4 id="142-alipaysdk">1.4.2 <code class="highlighter-rouge">AlipaySDK</code></h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Pod::Spec.new do |s|
+
+	s.name         = "AlipaySDK"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "AlipaySDK"
+	
+	s.description  = "AlipaySDK"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" =&gt; "XXXXX@qq.com" }
+
+	s.source       = { :svn =&gt; "http://XXXXXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.source_files = 'AlipaySDK','AlipaySDK/*.{h,m}'
+
+	s.resources    = 'AlipaySDK/AlipaySDK.bundle'
+
+	s.vendored_frameworks = 'AlipaySDK/*.framework' 
+
+
+	s.ios.frameworks = 'SystemConfiguration','CoreTelephony','QuartzCore','CoreText','CoreGraphics','UIKit','Foundation','CoreMotion','CFNetwork'
+
+	s.libraries = 'z','c++'
+
+	s.subspec 'OpenSSL' do |openssl|
+
+		openssl.source_files = 'AlipaySDK/openssl','AlipaySDK/openssl/*.{h,m}'
+		openssl.ios.vendored_libraries = 'AlipaySDK/openssl/libcrypto.a','AlipaySDK/openssl/libssl.a'
+		openssl.libraries = 'ssl', 'crypto'
+		openssl.xcconfig = { 'HEADER_SEARCH_PATHS' =&gt; "${PODS_ROOT}/#{s.name}/AlipaySDK"}
+
+	end
+
+	s.subspec 'Util' do |ss|
+
+		ss.source_files = 'AlipaySDK/Util','AlipaySDK/Util/*.{h,m}'
+	end
+
+end
+</code></pre>
+</div>
+<p>目录层级：
+<img src="/media/15039102892405/15046890957785.jpg" alt="" /></p>
+
+<h4 id="143-pushnotification">1.4.3 <code class="highlighter-rouge">PushNotification</code></h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>Pod::Spec.new do |s|
+
+	s.name         = "PushNotification"
+
+	s.version      = "0.0.1"
+
+	s.summary      = "PushNotification"
+	
+	s.description  = "PushNotification"
+	
+	s.homepage     = "http://www.baidu.com"
+
+	s.license      = "MIT"
+
+	s.author       = { "XXX" =&gt; "XXXXX@qq.com" }
+
+	s.source       = { :svn =&gt; "http://XXXXX/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/Modules" }
+	
+	s.requires_arc = true
+
+	s.ios.deployment_target = '9.0'
+
+	s.dependency 'Account'
+
+	s.dependency 'APPHelpTool'
+
+	s.source_files = 'PushNotification','PushNotification/*.{h,m}','PushNotification/UMessage_Sdk_1.5.0a/UMessage.h'
+
+	s.ios.vendored_libraries = 'PushNotification/UMessage_Sdk_1.5.0a/libUMessage_Sdk_1.5.0a.a'
+
+
+
+end
+</code></pre>
+</div>
+<p>目录层级：
+<img src="media/15039102892405/15046891948750.jpg" alt="" /></p>
+<h2 id="2-使用私有库">2 使用私有库</h2>
 
 <h3 id="21-集成使用">2.1 集成使用</h3>
 
@@ -425,7 +579,7 @@ end
                     <div class="tags">
         				
                             
-                				<a href="/tags/#Swift" title="Swift" rel="12">
+                				<a href="/tags/#Swift" title="Swift" rel="13">
                                     Swift
                                 </a>
                             
