@@ -4,7 +4,7 @@ title:      Swift30Projects
 subtitle:   在不断填坑中前进。。
 date:       2017-09-08
 author:     三十一
-header-img: img/in-post/P72_02_4272x2848.jpg
+header-img: img/in-post/Swift30Projects.jpg
 header-mask: 0.3
 catalog:    true
 tags:
