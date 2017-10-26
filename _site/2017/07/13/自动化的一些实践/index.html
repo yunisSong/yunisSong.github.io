@@ -208,6 +208,38 @@
                 post-container">
 
 				<h1 id="自动化的一些实践">自动化的一些实践</h1>
+
+<h3 id="xcode版本更新后报错">Xcode版本更新后报错</h3>
+<h4 id="xcode9">Xcode9</h4>
+<p>更新到 Xcode 9 后报错</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Error Domain=IDEProvisioningErrorDomain Code=9 ""XXXXXX.app" requires a provisioning profile." UserInfo={NSLocalizedDescription="XXXXXXX.app" requires a provisioning profile., NSLocalizedRecoverySuggestion=Select a provisioning profile for the "Default" build configuration in the project editor.}
+
+</code></pre>
+</div>
+
+<p>参考链接：<a href="https://stackoverflow.com/a/45888412">stackoverflow</a> ,plist 文件内容修改如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;dict&gt;</span>
+      <span class="nt">&lt;key&gt;</span>provisioningProfiles<span class="nt">&lt;/key&gt;</span>
+      <span class="nt">&lt;dict&gt;</span>
+          <span class="nt">&lt;key&gt;</span>MY_APP_BUNDLE_ID<span class="nt">&lt;/key&gt;</span>
+          <span class="nt">&lt;string&gt;</span>MY_PROFILE_NAME_AS_SHOWN_BY_XCODE or UUID_FOUND_IN_MOBILEPROVISION_FILE<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;/dict&gt;</span>
+      <span class="nt">&lt;key&gt;</span>method<span class="nt">&lt;/key&gt;</span>
+      <span class="nt">&lt;string&gt;</span>development<span class="nt">&lt;/string&gt;</span>
+      <span class="nt">&lt;key&gt;</span>uploadBitcode<span class="nt">&lt;/key&gt;</span>
+      <span class="nt">&lt;false/&gt;</span>
+      <span class="nt">&lt;key&gt;</span>uploadSymbols<span class="nt">&lt;/key&gt;</span>
+      <span class="nt">&lt;true/&gt;</span>
+  <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre>
+</div>
+<h4 id="xcode833">Xcode8.3.3</h4>
 <blockquote>
   <p>更新 Xcode 升级到8.3.3 以后，原有打包脚本出错，需要在指定目录添加一个plist文件，现修改如下：</p>
 </blockquote>
@@ -230,8 +262,10 @@
 </code></pre>
 </div>
 
-<p>需要放在脚本里面 targerIPA_parth 路径下。</p>
+<hr />
+<p><code class="highlighter-rouge">plist</code> 文件需要放在脚本里面 targerIPA_parth 路径下。</p>
 
+<h3 id="打包脚本">打包脚本</h3>
 <p>今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># -*- coding: utf-8 -*-
@@ -394,7 +428,7 @@ main()
                             
         				
                             
-                				<a href="/tags/#iOS" title="iOS" rel="17">
+                				<a href="/tags/#iOS" title="iOS" rel="18">
                                     iOS
                                 </a>
                             
@@ -434,9 +468,13 @@ main()
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="10">
+                				<a href="/tags/#内功" title="内功" rel="11">
                                     内功
                                 </a>
+                            
+        				
+                            
+        				
                             
         				
                             
@@ -562,7 +600,7 @@ main()
                 <p class="copyright text-muted">
                     Copyright &copy; 三十一 2017
                     <br>
-                    Theme by <a href="https://yunissong.github.io/">三十一</a> |
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"
@@ -609,15 +647,15 @@ main()
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
-     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
 -->
 <!--
     <script>
@@ -690,7 +728,7 @@ main()
             l = $('<li class="'+n+'_nav"></li>').append(c);
             $(selector).append(l);
         });
-        return true;    
+        return true;
     }
 
     generateCatalog(".catalog-body");
@@ -721,7 +759,6 @@ main()
         });
     });
 </script>
-
 
 
 

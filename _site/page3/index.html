@@ -184,6 +184,100 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+        <h2 class="post-title">
+            输入框切换键盘卡顿的解决办法
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            输入框切换键盘卡顿的解决办法
+
+今天开发碰到一个问题：
+有两个输入框，一个输入手机号码、一个输入验证码。
+客户要求：手机号输入框输入满11位时，切换到验证码输入框。
+
+很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：
+
+    //监听位数
+    if (field.text.length &gt;= 11) {
+        dispatch_async(dispat...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on July 8, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/">
+        <h2 class="post-title">
+            Xcode断点无效的处理方式
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Xcode断点无效的处理方式
+
+原文链接xcode断点无效无法调试的一个问题
+
+在某一次”svn update”后，突然发现Xcode无法断点调试了，这是什么鬼？
+
+根据大家的经验，试了各种方式
+
+1、Product-&gt;Debug workflow取消选中show Disassembly when debug
+
+2、修改Generate Debug Symbols 为YES
+3、Edi...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on July 6, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/">
+        <h2 class="post-title">
+            为什么使用weak修饰的变量会自动设置为nil
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            为什么使用weak修饰的变量会自动设置为nil
+
+  Objective-C高级编程 iOS与OS X多线程和内存管理 读书笔记
+
+
+为什么使用weak修饰的变量会自动设置为nil
+我们知道：
+
+
+  当使用__weak修饰符的变量的 引用对象 被废弃时，则将nil赋值给该变量。
+  使用附有 __weak 修饰符的变量，即是使用注册到 autoreleasepool 中的对象。
+
+
+系统是...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on June 26, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/06/05/(%E7%BE%8E%E5%9B%A2)%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Objective-C-Category/">
         <h2 class="post-title">
             (美团)深入理解Objective-C：Category
@@ -394,96 +488,6 @@ script 元素
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/">
-        <h2 class="post-title">
-            JavaScript学习01
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            JavaScript学习01
-
-
-  开始观看这系列文章 
-  从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件
-
-
-script 标签
-HTML的脚本必须位于 &lt;script&gt; 和 &lt;/script&gt; 之中。
-
-&lt;script&gt;
-
-JS脚本
-
-&lt;/script&gt;
-
-
-
-标签
-成对出现的&lt;&gt;...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 10, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/">
-        <h2 class="post-title">
-            (转)Tips:取消UICollectionView的隐式动画
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            (转)Tips:取消UICollectionView的隐式动画
-
-  原文地址在串哥的博客 Tips:取消UICollectionView的隐式动画
-
-
-UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)
-
-下面几种方法都可以帮你去除这些...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 9, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">
-        <h2 class="post-title">
-            关于 App Store 审核的一些事
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            关于 App Store 审核的一些事
-
-事情经过
-因为一个功能应不应该使用内购，跟苹果爸爸来回周旋了一个月，其间又是邮件又是电话，直到最后申诉，苹果爸爸才正视我的述求，最终通过了审核。
-当我几次 态度明确的 通过邮件、视频回复审核人员，我们基于付费的功能是与 app 的使用没有关系的，对方打来电话，告诉我：您这个 app 我们也是几次商讨后才认为是需要使用内购的，巴拉巴拉一堆话。我就说根据...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on May 8, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -530,7 +534,7 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="17">
+                                <a href="/tags/#iOS" title="iOS" rel="18">
                                     iOS
                                 </a>
                             
@@ -570,9 +574,13 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
                             
                         
                             
-                                <a href="/tags/#内功" title="内功" rel="10">
+                                <a href="/tags/#内功" title="内功" rel="11">
                                     内功
                                 </a>
+                            
+                        
+                            
+                        
                             
                         
                             
@@ -696,7 +704,7 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
                 <p class="copyright text-muted">
                     Copyright &copy; 三十一 2017
                     <br>
-                    Theme by <a href="https://yunissong.github.io/">三十一</a> |
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"
@@ -743,15 +751,15 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
-     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
 -->
 <!--
     <script>
@@ -811,7 +819,6 @@ UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动�
 
 
 <!-- Side Catalog -->
-
 
 
 

@@ -5,9 +5,1081 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 19 Sep 2017 11:22:51 +0800</pubDate>
-    <lastBuildDate>Tue, 19 Sep 2017 11:22:51 +0800</lastBuildDate>
+    <pubDate>Thu, 26 Oct 2017 15:33:43 +0800</pubDate>
+    <lastBuildDate>Thu, 26 Oct 2017 15:33:43 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>Python编程快速上手 — 让繁琐工作自动化</title>
+        <description>&lt;h1 id=&quot;python编程快速上手--让繁琐工作自动化&quot;&gt;Python编程快速上手 — 让繁琐工作自动化&lt;/h1&gt;
+&lt;h3 id=&quot;基础概念&quot;&gt;基础概念&lt;/h3&gt;
+&lt;h4 id=&quot;导入模块&quot;&gt;导入模块&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;import string
+import random,sys,os
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from random import *
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;使用这种形式的 import 语句，调用 random 模块中的函数时不需要 random.前缀。 但是，使用完整的名称会让代码更可读，所以最好是使用普通形式的 import 语句。&lt;/p&gt;
+
+&lt;h4 id=&quot;声明函数&quot;&gt;声明函数&lt;/h4&gt;
+&lt;h5 id=&quot;不带参数&quot;&gt;不带参数&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def Hello():
+    print(&quot;----hello world.----&quot;)
+
+Hello()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;带有参数&quot;&gt;带有参数&lt;/h5&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;输出中文需要在开头加入&lt;code class=&quot;highlighter-rouge&quot;&gt;# -*- coding: UTF-8 -*-&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;#coding=utf-8&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def Hello(name):
+    print(&quot;----hello world.----&quot; + name)
+
+Hello(&quot;Yunis&quot;)
+Hello(&quot;三十一&quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;带有多个参数&quot;&gt;带有多个参数&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def Hello(name,age):
+    print( name + &quot; is &quot; + str(age) + &quot; years old this year&quot;)
+
+Hello(&quot;Yunis&quot;,18)
+Hello(&quot;三十一&quot;,25)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;关键字参数-和-print&quot;&gt;关键字参数 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;print()&lt;/code&gt;&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  print('Hello')
+  print('World')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;输出为：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Hello 
+World
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这是因为 &lt;code class=&quot;highlighter-rouge&quot;&gt;print()&lt;/code&gt;函数自动在传入的字符串末尾 添加了换行符。
+可以通过 end 关键字参数，设置这个末尾。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;print('Hello', end='')
+print('World')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;输出为：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HelloWorld
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;类似地，如果向 print()传入多个字符串值,该函数就会自动用一个空格分隔它们。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print('cats', 'dogs', 'mice') 
+&amp;gt;&amp;gt;&amp;gt; cats dogs mice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以传入 &lt;code class=&quot;highlighter-rouge&quot;&gt;sep&lt;/code&gt; 关键字参数，替换掉默认的分隔字符.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; print('cats', 'dogs', 'mice', sep=',')
+&amp;gt;&amp;gt;&amp;gt; cats,dogs,mice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;作用域&quot;&gt;作用域&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;全局作用域中的代码不能使用任何局部变量;&lt;/li&gt;
+  &lt;li&gt;但是，局部作用域可以访问全局变量;&lt;/li&gt;
+  &lt;li&gt;一个函数的局部作用域中的代码，不能使用其他局部作用域中的变量。
+  ⁃	* 如果在不同的作用域中，你可以用相同的名字命名不同的变量。也就是说，可以有一个名为 spam 的局部变量，和一个名为 spam 的全局变量。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果需要在一个函数内修改全局变量，就使用 global 语句。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;def spam():
+    global eggs
+    eggs = 'spam'
+      
+eggs = 'global'
+spam()
+print(eggs)//spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;如果变量在全局作用域中使用(即在所有函数之外)，它就总是全局变量。&lt;/li&gt;
+  &lt;li&gt;如果在一个函数中，有针对该变量的 global 语句，它就是全局变量。&lt;/li&gt;
+  &lt;li&gt;否则，如果该变量用于函数中的赋值语句，它就是局部变量。&lt;/li&gt;
+  &lt;li&gt;但是，如果该变量没有用在赋值语句中，它就是全局变量。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;异常处理&quot;&gt;异常处理&lt;/h4&gt;
+&lt;p&gt;错误可以由 try 和 except 语句来处理。那些可能出错的语句被放在 try 子句中。 如果错误发生，程序执行就转到接下来的 except 子句开始处。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;def spam(divideBy):
+    try:
+        return 42 / divideBy 
+    except ZeroDivisionError:
+        print('Error: Invalid argument.')
+        
+print(spam(2))
+print(spam(12))
+print(spam(1))
+
+#Error: Invalid argument. 
+#None
+print(spam(0))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;列表&quot;&gt;列表&lt;/h4&gt;
+
+&lt;h5 id=&quot;下标取值&quot;&gt;下标取值&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spam = ['cat', 'bat','dog']
+print(spam[0])  #cat
+print(spam[-1]) #dog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;cat&lt;/th&gt;
+      &lt;th&gt;bat&lt;/th&gt;
+      &lt;th&gt;dog&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;正向&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;负向&lt;/td&gt;
+      &lt;td&gt;-3&lt;/td&gt;
+      &lt;td&gt;-2&lt;/td&gt;
+      &lt;td&gt;-1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h5 id=&quot;切片获取子列表&quot;&gt;切片获取子列表&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spam = ['cat', 'bat','dog']
+
+print(spam[:-1])  #['cat', 'bat']
+print(spam[0:-1]) #['cat', 'bat']
+print(spam[0:1])  #['cat']
+print(spam[:1])   #['cat']
+print(spam[0:2])  #['cat', 'bat']
+print(spam[0:3])  #['cat', 'bat', 'dog']
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;列表链接复制&quot;&gt;列表链接、复制&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 操作符可以连接两个列表，得到一个新列表。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spam = ['cat', 'bat','dog'] + [1,2,3]
+print(spam)  #['cat', 'bat', 'dog', 1, 2, 3]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;多重赋值技巧&quot;&gt;多重赋值技巧&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spam = ['cat', 'bat','dog']
+x,y,z = spam
+print(x)  #cat
+print(y)  #bat
+print(z)  #dog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;元组-字符串-列表--转换&quot;&gt;元组 、字符串 、列表  转换&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; tuple(['cat', 'dog', 5]) 
+ ('cat', 'dog', 5)
+&amp;gt;&amp;gt;&amp;gt; list(('cat', 'dog', 5)) 
+ ['cat', 'dog', 5]
+&amp;gt;&amp;gt;&amp;gt; list('hello')
+['h', 'e', 'l', 'l', 'o']
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;自动化任务&quot;&gt;自动化任务&lt;/h3&gt;
+
+&lt;h4 id=&quot;正则表达式&quot;&gt;正则表达式&lt;/h4&gt;
+&lt;p&gt;Python 中所有正则表达式的函数都在 re 模块中。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 匹配0次或者一次&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; 匹配0次或者多次&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 匹配1次或者多次&lt;/li&gt;
+  &lt;li&gt;{n}匹配 n 次前面的分组。&lt;/li&gt;
+  &lt;li&gt;{n,}匹配 n 次或更多前面的分组。&lt;/li&gt;
+  &lt;li&gt;{,m}匹配零次到 m 次前面的分组。&lt;/li&gt;
+  &lt;li&gt;{n,m}匹配至少 n 次、至多 m 次前面的分组。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;n,m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;*?&lt;/code&gt;或&lt;code class=&quot;highlighter-rouge&quot;&gt;+?&lt;/code&gt;对前面的分组进行非贪心匹配。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;^spam&lt;/code&gt; 意味着字符串必须以 spam 开始。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;spam$&lt;/code&gt;意味着字符串必须以 spam 结束。&lt;/li&gt;
+  &lt;li&gt;.匹配所有字符，换行符除外。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\d&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;\w&lt;/code&gt; 和&lt;code class=&quot;highlighter-rouge&quot;&gt;\s&lt;/code&gt; 分别匹配数字、单词和空格。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;\D&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;\W &lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;\S&lt;/code&gt; 分别匹配出数字、单词和空格外的所有字符。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[abc]&lt;/code&gt;匹配方括号内的任意字符(诸如 a、b 或 c)。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[^abc]&lt;/code&gt;匹配不在方括号内的任意字符。
+    &lt;h5 id=&quot;用-sub方法替换字符串&quot;&gt;用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sub()&lt;/code&gt;方法替换字符串&lt;/h5&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;&amp;gt;&amp;gt;&amp;gt; namesRegex = re.compile(r'Agent \w+')
+&amp;gt;&amp;gt;&amp;gt; namesRegex.sub('CENSORED', 'Agent Alice gave the secret documents to Agent Bob.') 
+
+'CENSORED gave the secret documents to CENSORED.'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;有时候，你可能需要使用匹配的文本本身，作为替换的一部分。在 sub()的第一 个参数中，可以输入\1、\2、\3……。表示“在替换中输入分组 1、2、3……的文本”。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; agentNamesRegex = re.compile(r'Agent (\w)\w*')
+&amp;gt;&amp;gt;&amp;gt; agentNamesRegex.sub(r'\1****', 'Agent Alice told Agent Carol that Agent Eve knew Agent Bob was a double agent.')
+
+A**** told C**** that E**** knew B**** was a double agent.'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;读写文件&quot;&gt;读写文件&lt;/h4&gt;
+&lt;h5 id=&quot;文件及文件路径&quot;&gt;文件及文件路径&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;相对路径：相对于程序的当前工作目录。&lt;/li&gt;
+  &lt;li&gt;绝对路径：总是从根文件开始。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;os.makedirs()&lt;/code&gt; 创建文件夹&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;调用 os.path.abspath(path)将返回参数的绝对路径的字符串。这是将相对路径转 换为绝对路径的简便方法。&lt;/li&gt;
+  &lt;li&gt;调用 os.path.isabs(path)，如果参数是一个绝对路径，就返回 True，如果参数是 一个相对路径，就返回 False。&lt;/li&gt;
+  &lt;li&gt;调用 os.path.relpath(path, start)将返回从 start 路径到 path 的相对路径的字符串。 如果没有提供 start，就使用当前工作目录作为开始路径。&lt;/li&gt;
+  &lt;li&gt;调用 os.path.getsize(path)将返回 path 参数中文件的字节数。&lt;/li&gt;
+  &lt;li&gt;调用 os.listdir(path)将返回文件名字符串的列表，包含 path 参数中的每个文件 (请注意，这个函数在 os 模块中，而不是 os.path)。&lt;/li&gt;
+  &lt;li&gt;检查路径有效性
+    &lt;ul&gt;
+      &lt;li&gt;如果 path 参数所指的文件或文件夹存在，调用 os.path.exists(path)将返回 True， 否则返回 False&lt;/li&gt;
+      &lt;li&gt;如果 path 参数存在，并且是一个文件，调用 os.path.isfile(path)将返回 True，否 则返回 False&lt;/li&gt;
+      &lt;li&gt;如果 path 参数存在，并且是一个文件夹，调用 os.path.isdir(path)将返回 True， 否则返回 False。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;===
+在 Python 中，读写文件有 3 个步骤:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt; 函数，返回一个 File 对象。&lt;/li&gt;
+  &lt;li&gt;调用 File 对象的 &lt;code class=&quot;highlighter-rouge&quot;&gt;read()&lt;/code&gt;或 &lt;code class=&quot;highlighter-rouge&quot;&gt;write()&lt;/code&gt;方法。&lt;/li&gt;
+  &lt;li&gt;调用 File 对象的&lt;code class=&quot;highlighter-rouge&quot;&gt; close()&lt;/code&gt;方法，关闭该文件。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;helloFile = open('/Users/your_home_folder/hello.txt')
+
+读文件
+helloContent = helloFile.read()
+
+写文件
+baconFile = open('bacon.txt', 'w')
+baconFile.write('Hello world!\n')
+baconFile.close()
+
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;项目-生成随机试卷及答案&quot;&gt;项目： 生成随机试卷及答案&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;创建35个试卷文件及对应的答案文件。&lt;/li&gt;
+  &lt;li&gt;为每一个试卷随机生成50道题目，次序随机。&lt;/li&gt;
+  &lt;li&gt;为每一个问题提供一个正确答案和三个错误答案，次序随机。&lt;/li&gt;
+  &lt;li&gt;将测试题目写入试卷文件，将对应的答案写入相应的答案文件中。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import random
+import os
+
+# 进入工作目录
+os.chdir('/Users/Yunis/Desktop/学习/Python/random')
+# 打印当前工作目录
+print(&quot;当前工作目录为 %s&quot;%(os.getcwd()))
+
+# 首都以及首都集合字典 习题集及答案
+capitals = {'Alabama': 'Montgomery', 'Alaska': 'Juneau', 'Arizona': 'Phoenix','Arkansas': 'Little Rock', 'California': 'Sacramento', 'Colorado': 'Denver', 'Connecticut': 'Hartford', 'Delaware': 'Dover', 'Florida': 'Tallahassee', 'Georgia': 'Atlanta', 'Hawaii': 'Honolulu', 'Idaho': 'Boise', 'Illinois': 'Springfield', 'Indiana': 'Indianapolis', 'Iowa': 'Des Moines', 'Kansas': 'Topeka', 'Kentucky': 'Frankfort', 'Louisiana': 'Baton Rouge', 'Maine': 'Augusta', 'Maryland': 'Annapolis', 'Massachusetts': 'Boston', 'Michigan': 'Lansing', 'Minnesota': 'Saint Paul', 'Mississippi': 'Jackson', 'Missouri': 'Jefferson City', 'Montana': 'Helena', 'Nebraska': 'Lincoln', 'Nevada': 'Carson City', 'New Hampshire': 'Concord', 'New Jersey': 'Trenton', 'New Mexico': 'Santa Fe', 'New York': 'Albany', 'North Carolina': 'Raleigh',
+'North Dakota': 'Bismarck', 'Ohio': 'Columbus', 'Oklahoma': 'Oklahoma City', 'Oregon': 'Salem', 'Pennsylvania': 'Harrisburg', 'Rhode Island': 'Providence', 'South Carolina': 'Columbia', 'South Dakota': 'Pierre', 'Tennessee': 'Nashville', 'Texas': 'Austin', 'Utah': 'Salt Lake City', 'Vermont': 'Montpelier', 'Virginia': 'Richmond', 'Washington': 'Olympia', 'West Virginia': 'Charleston', 'Wisconsin': 'Madison', 'Wyoming': 'Cheyenne'}
+
+# 循环35次 因为要出35分试卷
+for quizNum in range(35):
+    quizFile = open('capitalsquiz%s.txt' % (quizNum + 1), 'w')
+    answerKeyFile = open('capitalsquiz_answers%s.txt' % (quizNum + 1), 'w')
+    quizFile.write('Name:\n\nDate:\n\nPeriod:\n\n')
+    quizFile.write((' ' * 20) + 'State Capitals Quiz (Form %s)' % (quizNum + 1))
+    quizFile.write('\n\n')
+    # 获取字典 keys
+    states = list(capitals.keys())
+    # 用于将一个列表中的元素打乱。
+    random.shuffle(states)
+
+    # 每份试卷有50道题目
+    for questionNum in range(50):
+        # Get right and wrong answers.
+        correctAnswer = capitals[states[questionNum]]
+        # 获取答案列表
+        wrongAnswers = list(capitals.values())
+        # 删除正确的答案选项
+        del wrongAnswers[wrongAnswers.index(correctAnswer)]
+        # 从错误的答案选项随机选出3个错误的答案
+        wrongAnswers = random.sample(wrongAnswers, 3)
+        # 给当前题目设置答案集合
+        answerOptions = wrongAnswers + [correctAnswer]
+        # 打乱 答案顺序
+        random.shuffle(answerOptions)
+        # 在试卷文件 写入 题号 以及题目
+        quizFile.write('%s. What is the capital of %s?\n' % (questionNum + 1,states[questionNum]))
+        # 在试卷文件 写入答案选项
+        for i in range(4):
+            quizFile.write(' %s. %s\n' % ('ABCD'[i], answerOptions[i]))
+        quizFile.write('\n')
+        # 把正确答案的题号以及正确答案写入答案文件
+        answerKeyFile.write('%s. %s\n' % (questionNum + 1, 'ABCD'[
+        answerOptions.index(correctAnswer)]))
+
+    # 关闭试卷文件
+    quizFile.close()
+    # 关闭答案文件
+    answerKeyFile.close()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;项目-多重剪贴板&quot;&gt;项目： 多重剪贴板&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.pyw&lt;/code&gt; 扩展名意味着 Python 运行该程序时，不会显示终端窗口。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+# mcb.pyw - Saves and loads pieces of text to the clipboard.
+#  Usage: py.exe mcb.pyw save &amp;lt;keyword&amp;gt; - Saves clipboard to keyword.
+#         py.exe mcb.pyw &amp;lt;keyword&amp;gt; - Loads keyword to clipboard.
+#         py.exe mcb.pyw list - Loads all keywords to clipboard.
+import shelve, pyperclip, sys
+# .pyw 扩展名意味着 Python 运行该程序时，不会显示终端窗口
+
+# 进入工作目录
+os.chdir('/Users/Yunis/Desktop/学习/Python/mcb')
+# 打印当前工作目录
+print(&quot;当前工作目录为 %s&quot;%(os.getcwd()))
+
+# shelve是一额简单的数据存储方案，他只有一个函数就是open()，这个函数接收一个参数就是文件名，然后返回一个shelf对象，你可以用他来存储东西，就可以简单的把他当作一个字典，当你存储完毕的时候，就调用close函数来关闭
+
+# 建立一个存储容器
+mcbShelf = shelve.open('mcb')
+
+# 判断参数有几个，
+if len(sys.argv) == 3:
+    # 判断第2个参数是否为save
+    if sys.argv[1].lower() == 'save' :
+        # 把粘贴板的值保存在 mcbShelf
+        mcbShelf[sys.argv[2]] = pyperclip.paste()
+    elif  sys.argv[1].lower() == 'del' :
+        # 删除关键字对应的值
+        mcbShelf.pop(sys.argv[2])
+elif len(sys.argv) == 2:
+    if sys.argv[1].lower() == 'list':
+        # 把容器中保存的key 填充到粘贴板
+        pyperclip.copy(str(list(mcbShelf.keys())))
+    elif sys.argv[1] in mcbShelf:
+        # 根据传的参数，把容器中对应key的值取出来放置在粘贴板中
+        pyperclip.copy(mcbShelf[sys.argv[1]])
+# 关闭
+mcbShelf.close()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;组织文件&quot;&gt;组织文件&lt;/h4&gt;
+&lt;h5 id=&quot;shutil-模块&quot;&gt;shutil 模块&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;shutil.copy(source, destination)
+    &lt;ol&gt;
+      &lt;li&gt;将路径 source 处的文件复制到路径 destination 处的文件夹(source 和 destination 都是字符串)&lt;/li&gt;
+      &lt;li&gt;如果 destination 是一个文件名，它将 作为被复制文件的新名字。&lt;/li&gt;
+      &lt;li&gt;该函数返回一个字符串，表示被复制文件的路径。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;shutil.copytree(source, destination)
+    &lt;ol&gt;
+      &lt;li&gt;将路径source处的文件 夹，包括它的所有文件和子文件夹，复制到路径 destination 处的文件夹。&lt;/li&gt;
+      &lt;li&gt;source 和 destination 参数都是字符串。&lt;/li&gt;
+      &lt;li&gt;该函数返回一个字符串，是新复制的文件夹的路径。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;shutil.move(source, destination)
+    &lt;ol&gt;
+      &lt;li&gt;将路径 source 处的文件夹移动到路径 destination，并返回新位置的绝对路径的字符串。&lt;/li&gt;
+      &lt;li&gt;如果 destination 指向一个文件夹，source 文件将移动到 destination 中，并保持 原来的文件名。&lt;/li&gt;
+      &lt;li&gt;destination 路径也可以指定一个文件名。source 文件被移动 并改名。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;用 os.unlink(path)将删除 path 处的文件。&lt;/li&gt;
+  &lt;li&gt;调用 os.rmdir(path)将删除 path 处的文件夹。该文件夹必须为空，其中没有任
+何文件和文件夹。&lt;/li&gt;
+  &lt;li&gt;调用 shutil.rmtree(path)将删除 path 处的文件夹，它包含的所有文件和文件夹都会被删除。&lt;/li&gt;
+  &lt;li&gt;os.walk()函数 被传入一个字符串值，即一个文件夹的路径。你可以在一个 for 循环语句中使用 os.walk()函数，遍历目录树，就像使用 range()函数遍历一个范围的 数字一样。
+    &lt;ol&gt;
+      &lt;li&gt;当前文件夹名称的字符串。&lt;/li&gt;
+      &lt;li&gt;当前文件夹中子文件夹的字符串的列表。&lt;/li&gt;
+      &lt;li&gt;当前文件夹中文件的字符串的列表。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import os
+for folderName, subfolders, filenames in os.walk('/Users/Yunis/Desktop/学习/Python'):
+    print('The current folder is ' + folderName)
+    for subfolder in subfolders:
+        print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
+    for filename in filenames:
+        print('FILE INSIDE ' + folderName + ': '+ filename)
+    print('')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;zipfile-模块&quot;&gt;zipfile 模块&lt;/h5&gt;
+
+&lt;h6 id=&quot;读取-zip-文件&quot;&gt;读取 ZIP 文件&lt;/h6&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Python&quot;&gt;# -*- coding: UTF-8 -*-
+import os,zipfile
+
+os.chdir('/Users/Yunis/Desktop/学习/Python/zipfile')
+exampleZip = zipfile.ZipFile('t.txt.zip')
+# 获取压缩文件集合
+print(exampleZip.namelist())
+# 获取指定文件信息
+spamInfo = exampleZip.getinfo('t.txt')
+# 文件真实大小
+print(spamInfo.file_size)
+# 文件压缩后的大小
+print(spamInfo.compress_size)
+exampleZip.close()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5 id=&quot;从-zip-文件中解压缩&quot;&gt;从 ZIP 文件中解压缩&lt;/h5&gt;
+&lt;ul&gt;
+  &lt;li&gt;extractall()
+    &lt;ul&gt;
+      &lt;li&gt;extractall()方法从 ZIP 文件中解压缩所有文件和文件夹&lt;/li&gt;
+      &lt;li&gt;可以向 extractall()传递的一个文件夹名称，它将文件解压缩到那个文件夹，而不是当前工作 目录。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;extract()
+    &lt;ul&gt;
+      &lt;li&gt;extract()方法从 ZIP 文件中解压缩单个文件&lt;/li&gt;
+      &lt;li&gt;传递给 extract()的字符串，必须匹配 namelist()返回的字符串列表中的一个。&lt;/li&gt;
+      &lt;li&gt;extract()传递第二个参数，将文件解压缩到指定的文件夹，而不是当 前工作目录。如果第二个参数指定的文件夹不存在，Python 就会创建它。&lt;/li&gt;
+      &lt;li&gt;extract() 的返回值是被压缩后文件的绝对路径。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import os,zipfile
+os.chdir('/Users/Yunis/Desktop/学习/Python/zipfile')
+exampleZip = zipfile.ZipFile('t.txt.zip')
+# 解压缩所用文件和文件夹 'Yunis' 为路径参数，表示解压缩到这个路径，参数为空表示解压缩到当前路径
+# exampleZip.extractall('Yunis')
+# 解压缩 单个't.txt' 文件到 'SSY' 路径下，路径为空解压到当前路径
+exampleZip.extract('t.txt','SSY')
+exampleZip.close()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;创建和添加到-zip-文件&quot;&gt;创建和添加到 ZIP 文件&lt;/h5&gt;
+
+&lt;p&gt;要创建你自己的压缩 ZIP 文件，必须以“写模式”打开 ZipFile 对象，即传入’w’ 作为第二个参数(这类似于向 open()函数传入’w’，以写模式打开一个文本文件)。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;exampleZip = zipfile.ZipFile('t.txt.zip','w')&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import os,zipfile
+os.chdir('/Users/Yunis/Desktop/学习/Python/zipfile')
+# 创建压缩文件
+newZip = zipfile.ZipFile('new.zip','w')
+# 把 t.txt 文件 写入 压缩文件内 compress_type ：压缩方式
+newZip.write('t.txt', compress_type=zipfile.ZIP_DEFLATED)
+newZip.close()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;将带有美国风格日期的文件改名为欧洲风格日期&quot;&gt;将带有美国风格日期的文件改名为欧洲风格日期&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import shutil,os,re
+
+def renameDatesInpath(path):
+    # 获取文件路径下的文件集合
+    # print(path)
+    # 创建正则表达式
+    datePattern = re.compile(r'^(.*?)((0|1)\d)-((0|1|2|3)\d)-((19|20)\d\d)(.*?)$')
+
+    # 获取文件路径下的文件集合
+    for amerFilename in os.listdir(path):
+        # 正则表达式对象匹配结果
+        # Regex 对象的 search()方法查找传入的字符串，寻找该正则表达式的所有匹配。如 果字符串中没有找到该正则表达式模式，search()方法将返回 None。如果找到了该模式， search()方法将返回一个 Match 对象。Match 对象有一个 group()方法，它返回被查找字 符串中实际匹配的文本
+        mo = datePattern.search(amerFilename)
+        # 如果这个文件没有匹配，开始匹配下个文件
+        if mo == None :
+            continue
+        # re.compile(r'^(.*?)((0|1)\d)-((0|1|2|3)\d)-((19|20)\d\d)(.*?)$')
+        # group index
+        # datePattern = re.compile(r'^(1)((2)3)-((4)5)-((6)7)(8)$')
+
+        # 获取 Match 对象 对应的字符串
+        beforePart = mo.group(1)
+        monthPart = mo.group(2)
+        dayPart = mo.group(4)
+        yearPart = mo.group(6)
+        afterPart = mo.group(8)
+        # 组成新的文件名
+        euroFilename = beforePart + dayPart + '-' + monthPart + '-' + yearPart + afterPart
+
+
+        absWorkingDir = os.path.abspath(path)
+        amerFilename = os.path.join(absWorkingDir, amerFilename)
+        euroFilename = os.path.join(absWorkingDir, euroFilename)
+        print('Renaming &quot;%s&quot; to &quot;%s&quot;...' % (amerFilename, euroFilename))
+        shutil.move(amerFilename, euroFilename) # uncomment after testing
+
+renameDatesInpath('/Users/Yunis/Desktop/学习/Python/date')
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;从-web-抓取信息&quot;&gt;从 Web 抓取信息&lt;/h4&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;requests&lt;/code&gt; 下载文件，并保存到硬盘。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;调用 requests.get()下载该文件。&lt;/li&gt;
+  &lt;li&gt;用’wb’调用 open()，以写二进制的方式打开一个新文件。&lt;/li&gt;
+  &lt;li&gt;利用 Respose 对象的 iter_content()方法做循环。&lt;/li&gt;
+  &lt;li&gt;在每次迭代中调用 write()，将内容写入该文件。&lt;/li&gt;
+  &lt;li&gt;调用 close()关闭该文件。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import requests,os,sys
+
+currentFilePath = sys.path[0]
+webFilePath = os.path.join(currentFilePath, &quot;file&quot;)
+os.chdir(webFilePath)
+print(os.getcwd())
+res = requests.get(&quot;http://static.open-open.com/lib/uploadImg/20160623/20160623173015_416.png&quot;)
+playFile = open('python.jpg', 'wb')
+for chunk in res.iter_content(100000):
+    playFile.write(chunk)
+playFile.close()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;用-beautifulsoup-模块解析-html&quot;&gt;用 BeautifulSoup 模块解析 HTML&lt;/h5&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;&lt;strong&gt;传递给 select()方法的选择器&lt;/strong&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;strong&gt;将匹配…&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('div')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有名为&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt;的元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('#author')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;带有 &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt; 属性为 &lt;code class=&quot;highlighter-rouge&quot;&gt;author&lt;/code&gt; 的元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('.notice')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;CSS class&lt;/code&gt; 属性名为 &lt;code class=&quot;highlighter-rouge&quot;&gt;notice&lt;/code&gt; 的元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('div span')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有在&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt;元素之内的&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;span&amp;gt;&lt;/code&gt;元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('div &amp;gt; span')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有直接在&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt;元素之内的&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;span&amp;gt;&lt;/code&gt;元素，中间没有其他元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('input[name]')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有名为&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;input&amp;gt;&lt;/code&gt;，并有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; 属性，其值无所谓的元素&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;soup.select('input[type=&quot;button&quot;]')&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;所有名为&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;input&amp;gt;&lt;/code&gt;，并有一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; 属性，其值为 &lt;code class=&quot;highlighter-rouge&quot;&gt;button&lt;/code&gt; 的元素&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;这段代码将带有 id=&quot;author&quot;的元素，从示例 HTML 中找出来
+
+elems = exampleSoup.select('#author')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;im-feeling-lucky-google-查找&quot;&gt;“I’m Feeling Lucky” Google 查找&lt;/h4&gt;
+
+</description>
+        <pubDate>Thu, 12 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/12/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/12/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/</guid>
+        
+        <category>Python</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>七周七语言：理解多种编程范型--Ruby</title>
+        <description>&lt;h1 id=&quot;七周七语言理解多种编程范型ruby&quot;&gt;七周七语言：理解多种编程范型–Ruby&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;无论用哪一类语言，都必须全面、透彻地理解集合。&lt;/li&gt;
+  &lt;li&gt;当你新接触一门语言的时候，有些问题是需要首先去思考的，“这门语言的编程模型是什么”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ruby&quot;&gt;Ruby&lt;/h3&gt;
+&lt;h4 id=&quot;基本语法&quot;&gt;基本语法&lt;/h4&gt;
+&lt;p&gt;解释型， 意味着Ruby代码由解释器而非编译器执行。
+动态类型，意味着类型在运行时而非编译时绑定。
+尽管从执行速度上说，Ruby 谈不上有多高效，但它却能让程序员的编程效率大幅提高。
+在Ruby中，一切皆 为对象，就连每个单独的数字也不例外。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):009:0&amp;gt; 4.class
+=&amp;gt; Integer
+irb(main):011:0&amp;gt; 4.methods
+=&amp;gt; [:%, :&amp;amp;, :*, :+, :-, :/, :&amp;lt;, :&amp;gt;, :^, :|, :~, :-@, :**, :&amp;lt;=&amp;gt;, :&amp;lt;&amp;lt;, :&amp;gt;&amp;gt;, :&amp;lt;=, :&amp;gt;=, :==, :===, :[], :inspect, :size, :succ, :to_int, :to_s, :to_i, :to_f, :next, :div, :upto, :chr, :ord, :coerce, :divmod, :fdiv, :modulo, :remainder, :abs, :magnitude, :integer?, :floor, :ceil, :round, :truncate, :odd?, :even?, :downto, :times, :pred, :bit_length, :digits, :to_r, :numerator, :denominator, :rationalize, :gcd, :lcm, :gcdlcm, :+@, :eql?, :singleton_method_added, :i, :real?, :zero?, :nonzero?, :finite?, :infinite?, :step, :positive?, :negative?, :quo, :arg, :rectangular, :rect, :polar, :real, :imaginary, :imag, :abs2, :angle, :phase, :conjugate, :conj, :to_c, :between?, :clamp, :instance_of?, :kind_of?, :is_a?, :tap, :public_send, :remove_instance_variable, :singleton_method, :instance_variable_set, :define_singleton_method, :method, :public_method, :extend, :to_enum, :enum_for, :=~, :!~, :respond_to?, :freeze, :object_id, :send, :display, :nil?, :hash, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :frozen?, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variable_get, :instance_variables, :instance_variable_defined?, :!, :!=, :__send__, :equal?, :instance_eval, :instance_exec, :__id__]
+irb(main):018:0&amp;gt; 4.to_f
+=&amp;gt; 4.0
+irb(main):027:0&amp;gt; false.class
+=&amp;gt; FalseClass
+irb(main):028:0&amp;gt; true.class
+=&amp;gt; TrueClass
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):002:0&amp;gt; x = 4
+=&amp;gt; 4
+irb(main):003:0&amp;gt; puts &quot;判断语句&quot; if x == 4
+判断语句
+=&amp;gt; nil
+irb(main):004:0&amp;gt; puts &quot;判断语句&quot; unless x == 4
+=&amp;gt; nil
+irb(main):005:0&amp;gt; puts &quot;判断语句&quot; unless x == 5
+判断语句
+=&amp;gt; nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):006:0&amp;gt; x = x + 2 while x &amp;lt; 10
+=&amp;gt; nil
+irb(main):007:0&amp;gt; x
+=&amp;gt; 10
+
+
+irb(main):008:0&amp;gt; x = x - 1 until x == 1
+=&amp;gt; nil
+irb(main):009:0&amp;gt; x
+=&amp;gt; 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
+ 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
+ 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;and&lt;/code&gt; 等同于 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;or&lt;/code&gt; 等同于 &lt;code class=&quot;highlighter-rouge&quot;&gt;||&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;直到真正尝试执代码时，&lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby&lt;/code&gt; 才进行类型检查。这一概念叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;动态类型&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;在面向对象设计思想中，有这样一个重要原则:对&lt;code class=&quot;highlighter-rouge&quot;&gt;接口&lt;/code&gt;编码，不对实现编码。&lt;/p&gt;
+
+&lt;h4 id=&quot;ruby-与-正则表达式&quot;&gt;Ruby 与 正则表达式&lt;/h4&gt;
+&lt;h5 id=&quot;创建正则表达式&quot;&gt;创建正则表达式&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;将模式的定义放在两个正斜杠之间,返回一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Regexp&lt;/code&gt;对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;reg1 = /^[a-z]*$/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;创建一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Regexp&lt;/code&gt;对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;reg2 = Regexp.new(‘^[a-z]*$’) &lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;使用前置的&lt;code class=&quot;highlighter-rouge&quot;&gt;%r&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;reg3 = %r{^[a-z]*$}  &lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;匹配&quot;&gt;匹配&lt;/h5&gt;
+&lt;p&gt;匹配正则式: String和Regexp都支持以下两个方法&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;match&lt;/code&gt;方法: 匹配成功时返回&lt;code class=&quot;highlighter-rouge&quot;&gt;MatchData&lt;/code&gt;类的一个实例；否则返回nil；&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;=~&lt;/code&gt; 操作符: 匹配成功,返回一个索引(integer)；否则,返回nil；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;    puts( /abc/ =~ 'abc' )              #=&amp;gt;return 0
+    puts( /abc/ =~ 'cdg' )              #=&amp;gt;return nil
+    puts( /abc/.match('abc') )          #=&amp;gt;return abc
+    puts( /abc/.match('cdg') )          #=&amp;gt;return nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;联系1&quot;&gt;联系1&lt;/h4&gt;
+
+&lt;h5 id=&quot;ruby-替换字符串的方法&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby&lt;/code&gt; 替换字符串的方法。&lt;/h5&gt;
+&lt;p&gt;1，通过 正则&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):005:0&amp;gt; string = &quot;Hello Ruby.&quot;
+=&amp;gt; &quot;Hello Ruby.&quot;
+irb(main):006:0&amp;gt; string.gsub(/Ruby/,'world')
+=&amp;gt; &quot;Hello world.&quot;
+
+
+irb(main):025:0&amp;gt; string = &quot;Hello Ruby.&quot;
+=&amp;gt; &quot;Hello Ruby.&quot;
+irb(main):026:0&amp;gt; string.gsub(/(.)/,'&amp;lt;\1&amp;gt;')
+=&amp;gt; &quot;&amp;lt;H&amp;gt;&amp;lt;e&amp;gt;&amp;lt;l&amp;gt;&amp;lt;l&amp;gt;&amp;lt;o&amp;gt;&amp;lt; &amp;gt;&amp;lt;R&amp;gt;&amp;lt;u&amp;gt;&amp;lt;b&amp;gt;&amp;lt;y&amp;gt;&amp;lt;.&amp;gt;&quot;
+
+
+irb(main):001:0&amp;gt; string = &quot;Hello Ruby.&quot;
+=&amp;gt; &quot;Hello Ruby.&quot;
+irb(main):002:0&amp;gt;  string.gsub(/(\w)/,'&amp;lt;\1&amp;gt;')
+=&amp;gt; &quot;&amp;lt;H&amp;gt;&amp;lt;e&amp;gt;&amp;lt;l&amp;gt;&amp;lt;l&amp;gt;&amp;lt;o&amp;gt; &amp;lt;R&amp;gt;&amp;lt;u&amp;gt;&amp;lt;b&amp;gt;&amp;lt;y&amp;gt;.&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2,&lt;code class=&quot;highlighter-rouge&quot;&gt;replace&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):027:0&amp;gt; string = &quot;Hello Ruby.&quot;
+=&amp;gt; &quot;Hello Ruby.&quot;
+irb(main):028:0&amp;gt; string.replace(&quot;Yunis.&quot;)
+=&amp;gt; &quot;Yunis.&quot;
+irb(main):029:0&amp;gt; puts string
+Yunis.
+=&amp;gt; nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&quot;range&quot;&gt;range&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):030:0&amp;gt; rang1 = (1..10).to_a
+=&amp;gt; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+irb(main):031:0&amp;gt; range2 = ('bar'..'bat').to_a
+=&amp;gt; [&quot;bar&quot;, &quot;bas&quot;, &quot;bat&quot;]
+
+
+
+
+irb(main):046:0&amp;gt; (1..10).each{puts &quot;Yunis&quot;}
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+=&amp;gt; 1..10
+
+
+
+irb(main):047:0&amp;gt; (1..10).each{|index| puts &quot;Yunis #{index}&quot;}
+Yunis 1
+Yunis 2
+Yunis 3
+Yunis 4
+Yunis 5
+Yunis 6
+Yunis 7
+Yunis 8
+Yunis 9
+Yunis 10
+=&amp;gt; 1..10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&quot;执行-ruby-文件&quot;&gt;执行 Ruby 文件&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$-&amp;gt; ruby /Users/Yunis/Desktop/First.rb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;正则匹配规则&quot;&gt;正则匹配规则&lt;/h5&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;规则&lt;/th&gt;
+      &lt;th&gt;说明&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/a/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配字符 a&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/\?/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配特殊字符?。特殊字符包括^, $, ? , ., /, \, [, ], {, }, (, ), +, *.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配任意字符，例如/a./匹配ab和ac。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[ab]c/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配ac和bc,[]之间代表范围,例如：/[a-z]/ , /[a-zA-Z0-9]/。&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[^a-zA-Z0-9]/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配不在该范围内的字符串&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\d]/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表任意数字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\w]/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表任意字母，数字或者_&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\s]/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表空白字符，包括空格，TAB和换行&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\D]/,/[\W]/,/[\S]/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;均为上述的否定情况&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表0或1个字符&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表0或多个字符&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;代表1或多个字符&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/d{3}/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配3个数字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/d{1,10}/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配1-10个数字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d{3,}/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配3个数字以上&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/([A-Z]\d){5}/&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;匹配首位是大写字母，后面4个是数字的字符串&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h5 id=&quot;猜数字的程序&quot;&gt;猜数字的程序。&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;number = rand(10)
+
+
+def testRuby(number1,number2)
+    
+    if (number1 &amp;gt; number2)
+        puts &quot;你输入的数字#{number1}大于随机数&quot;
+        inputNumber = gets().to_i
+        testRuby(inputNumber,number2)
+        
+        elsif (number1 &amp;lt; number2)
+        puts &quot;你输入的数字#{number1}小于随机数&quot;
+        inputNumber = gets().to_i
+        testRuby(inputNumber,number2)
+        
+        else
+        puts &quot;恭喜你猜对了。&quot;
+    end
+    
+end
+
+
+puts &quot;猜猜数字是多少？&quot;
+inputNumber = gets().to_i
+testRuby(inputNumber,number)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&quot;函数&quot;&gt;函数&lt;/h4&gt;
+&lt;h5 id=&quot;定义函数&quot;&gt;定义函数&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;irb(main):001:0&amp;gt; def rubyTest
+irb(main):002:1&amp;gt; true
+irb(main):003:1&amp;gt; end
+=&amp;gt; :rubyTest
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;数组&quot;&gt;数组&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;irb(main):015:0&amp;gt; aniamls = [&quot;lions&quot;,&quot;tigers&quot;,&quot;bears&quot;]
+=&amp;gt; [&quot;lions&quot;, &quot;tigers&quot;, &quot;bears&quot;]
+irb(main):016:0&amp;gt; aniamls[0]
+=&amp;gt; &quot;lions&quot;
+irb(main):017:0&amp;gt; aniamls[0..2]
+=&amp;gt; [&quot;lions&quot;, &quot;tigers&quot;, &quot;bears&quot;]
+irb(main):018:0&amp;gt; aniamls[-2]
+=&amp;gt; &quot;tigers&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ruby 中数组 可以塞不同是数据类型。&lt;/p&gt;
+&lt;h5 id=&quot;散列表&quot;&gt;散列表&lt;/h5&gt;
+&lt;p&gt;集合里面就是一个个用来存储对象的桶。在 散列表的桶里，每个对象上都贴着一张标识。这标识就是键，而对象就是键所对应的值。散列表就是一串这样的键值对。&lt;/p&gt;
+&lt;h5 id=&quot;代码块和-yield&quot;&gt;代码块和 yield&lt;/h5&gt;
+&lt;h5 id=&quot;定义类&quot;&gt;定义类&lt;/h5&gt;
+&lt;h5 id=&quot;编写-mixin&quot;&gt;编写 Mixin&lt;/h5&gt;
+&lt;h5 id=&quot;模块可枚举和集合&quot;&gt;模块、可枚举和集合&lt;/h5&gt;
+
+</description>
+        <pubDate>Thu, 21 Sep 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/09/21/%E4%B8%83%E5%91%A8%E4%B8%83%E8%AF%AD%E8%A8%80-%E7%90%86%E8%A7%A3%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B-Ruby/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/09/21/%E4%B8%83%E5%91%A8%E4%B8%83%E8%AF%AD%E8%A8%80-%E7%90%86%E8%A7%A3%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B-Ruby/</guid>
+        
+        <category>内功</category>
+        
+        <category>七周七语言</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>iOS 11、iPhone X、Xcode9适配</title>
+        <description>&lt;h1 id=&quot;ios-11iphone-xxcode9适配&quot;&gt;iOS 11、iPhone X、Xcode9适配&lt;/h1&gt;
+
+&lt;p&gt;遇到的问题&lt;/p&gt;
+
+&lt;h3 id=&quot;1-启动图变形&quot;&gt;1 启动图变形。&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/media/15059019605960/%E5%90%AF%E5%8A%A8%E5%9B%BE%E5%8F%98%E5%BD%A2.png&quot; alt=&quot;启动图变形&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;项目采用的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt; 当启动视图，&lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt;里面加载一个图片填充了整个视图，由于之前的 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone&lt;/code&gt; 宽高比例差别不到，也就没有注意到图片的变形，今天 在 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone X&lt;/code&gt; 上图片变形严重。
+解决方案：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchImage&lt;/code&gt;，但是美工需要切各个不同 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone&lt;/code&gt; 的图片。&lt;/li&gt;
+  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt;，重新设置 图片的约束。设置left、right、top与视图相同，比例设置为原图片比例。然后视图背景设置为与图片边框相同的背景。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;2-导航视图上移被-刘海遮挡&quot;&gt;2 导航视图上移，被 刘海遮挡&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15059019605960/15059020743807.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/media/15059019605960/15059020905209.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/media/15059019605960/15059021153942.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我们项目中的导航视图都是自定义的导航视图，所以会出现这样的问题。
+这个解决起来就简单粗暴了。
+判断 手机型号，然后重新设置视图高度。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;UIDevice+SYHelp.h&quot;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIDevice&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;SYHelp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isiPhoneX&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIScreen&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mainScreen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;812&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isiOS11&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;currentDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;systemVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;floatValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;3-mjrefresh-视图不隐藏&quot;&gt;3 MJRefresh 视图不隐藏&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;/media/15059019605960/15059023075980.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这个解决方法就是判断手机型号和系统版本号，然后让视图上移。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    BOOL isIphoneX = [UIDevice isiPhoneX];
+    BOOL isiOS11 = [UIDevice isiOS11];
+    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (isiOS11) {
+            make.left.right.bottom.equalTo(self);
+            if (isIphoneX) {
+                make.top.equalTo(self).offset(- 44);//兼容mj bug
+            }else{
+                make.top.equalTo(self).offset(- 20);//兼容mj bug
+            }
+        }else
+        {
+            make.edges.equalTo(self);
+
+        }
+  
+    }];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;或者也可以使用最新版的 &lt;code class=&quot;highlighter-rouge&quot;&gt;MJRefresh&lt;/code&gt; 也许作者已经适配了 &lt;code class=&quot;highlighter-rouge&quot;&gt;iOS 11&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;xcode-9&quot;&gt;Xcode 9&lt;/h3&gt;
+
+&lt;p&gt;目前使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Xcode 9&lt;/code&gt; 没有发现有特殊需要修改的地方。&lt;/p&gt;
+
+&lt;p&gt;使用半天的感受：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;代码提示更烂了，感觉还不如 8，有时候输入回车键不会自动填充大括号了。&lt;/li&gt;
+  &lt;li&gt;使用起来略卡。&lt;/li&gt;
+  &lt;li&gt;支持多开模拟器，安装app 也很方便，直接把 &lt;code class=&quot;highlighter-rouge&quot;&gt;.app&lt;/code&gt; 文件拖拽就可以安装。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;–&lt;/h3&gt;
+&lt;p&gt;总体来说，我们的项目适配的工作量还是很小的，我用了一个下午把两个工程的适配都做好了，主要是我们工程中大量的采用 &lt;code class=&quot;highlighter-rouge&quot;&gt;H5&lt;/code&gt; 页面，适配的工作没有那么大。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 20 Sep 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/09/20/iOS-11-iPhone-X-Xcode9%E9%80%82%E9%85%8D/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/09/20/iOS-11-iPhone-X-Xcode9%E9%80%82%E9%85%8D/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
     
       <item>
         <title>Swift30Projects</title>
@@ -125,6 +1197,24 @@
 &lt;p&gt;额，其实就是个恶趣味，挺有趣的。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/media/15046854241597/15046872820303.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;figlet&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;figlet&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;将输入字符转换成艺术字体。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;figlet &quot;Y u n i s&quot;&lt;/code&gt;
+&lt;img src=&quot;/media/15046854241597/WX20171023-150731@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;bwm-ng&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bwm-ng&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;实时网速查看
+&lt;code class=&quot;highlighter-rouge&quot;&gt;bwm-ng  -d&lt;/code&gt;
+&lt;img src=&quot;/media/15046854241597/WX20171023-150816@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;htop&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;htop&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;进程管理软件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;htop&lt;/code&gt;
+&lt;img src=&quot;/media/15046854241597/WX20171023-150840@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 06 Sep 2017 00:00:00 +0800</pubDate>
@@ -556,1019 +1646,6 @@ perLayer.strokeColor = self.hightColor.CGColor;;
         <guid isPermaLink="true">http://localhost:4000/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/</guid>
         
         <category>iOS</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>使用wkhtmltopdf将Markdown转为带有标签的PDF</title>
-        <description>&lt;h1 id=&quot;使用-wkhtmltopdf-将-markdown-文件转为带有标签的-pdf-文件&quot;&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt; 将 &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; 文件转为带有标签的 PDF 文件&lt;/h1&gt;
-
-&lt;h3 id=&quot;1使用-mweb-编写-markdown-文档&quot;&gt;1，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;MWeb&lt;/code&gt; 编写 &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; 文档&lt;/h3&gt;
-&lt;p&gt;。。。。&lt;/p&gt;
-&lt;h3 id=&quot;2导出为-html&quot;&gt;2，导出为 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/img/in-post/markDownToHtml.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-&lt;h3 id=&quot;3编辑-html-样式&quot;&gt;3，编辑 HTML 样式&lt;/h3&gt;
-&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;sublime text&lt;/code&gt; 打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body {
-  min-width: 200px;
-  max-width: none;/* 修改 */
-  margin: 0 auto;
-  padding: 20px;
-
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  color: #333;
-  overflow: hidden;
-  font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Segoe UI&quot;, Arial, freesans, sans-serif;
-  font-size: 58px;/* 修改 */
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body code {
-  padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  margin: 0;
-  font-size: 85%;
-  background-color: #e8f2fb;/* 修改 */
-  border-radius: 3px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #e8f2fb;/* 修改 */
-  border-radius: 3px;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.markdown-body strong {
-  font-weight: bold;
-  color: #0a366f;/* 修改 */
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;4下载-wkhtmltopdf&quot;&gt;4，下载 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;下载地址为 &lt;a href=&quot;https://wkhtmltopdf.org/downloads.html&quot;&gt;wkhtmltopdf&lt;/a&gt;.
-建议打开 VPN ，不然下载速度好慢的。&lt;/p&gt;
-&lt;h3 id=&quot;4使用-wkhtmltopdf-转换为-pdf&quot;&gt;4，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;wkhtmltopdf&lt;/code&gt; 转换为 PDF&lt;/h3&gt;
-&lt;p&gt;进入 &lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件所在目录，使用命令：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$-&amp;gt; wkhtmltopdf  index.html 编码规范.pdf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; 为刚才导出的文件 ，&lt;code class=&quot;highlighter-rouge&quot;&gt;编码规范.pdf&lt;/code&gt; 为你要生成的PDF 文件&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;一定要到&lt;code class=&quot;highlighter-rouge&quot;&gt;HTML&lt;/code&gt; 文件所在目录执行这个命令。我因为这个原因傻逼的找了半天错误原因。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;样式大概是这个样子的：
-&lt;img src=&quot;/img/in-post/wkhtmltopdfDemo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 17 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Shell sed 的简单使用</title>
-        <description>&lt;h1 id=&quot;shell-sed-的简单使用&quot;&gt;Shell sed 的简单使用&lt;/h1&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sed -i &quot;&quot; 's/aaa/bbbb/g' /Users/Yunis/Desktop/XXX.py
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这句 &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt; 命令的意思是，查找到 &lt;code class=&quot;highlighter-rouge&quot;&gt;aaa&lt;/code&gt; 把它替换为 &lt;code class=&quot;highlighter-rouge&quot;&gt;bbbb&lt;/code&gt; 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;/Users/Yunis/Desktop/XXX.py&lt;/code&gt; 是要替换文本的路径。&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;&quot;&lt;/code&gt; 表示要备份的路径，为空表示不备份。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; :替换
-&lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; :全部替换标记&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 17 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
-        
-        <category>Shell</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>小团队的iOS代码规范</title>
-        <description>&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;小团队的ios代码规范&quot;&gt;小团队的iOS代码规范&lt;/h1&gt;
-
-&lt;p&gt;本文摘抄自&lt;a font=&quot;24px&quot;&gt;&lt;a href=&quot;https://knightsj.github.io/2017/06/14/iOS%20%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/#more&quot;&gt;iOS 代码规范&lt;/a&gt;&lt;/a&gt;，稍加修改。&lt;/p&gt;
-
-&lt;h2 id=&quot;1-核心原则&quot;&gt;1 核心原则&lt;/h2&gt;
-&lt;h3 id=&quot;11-代码应该简洁易懂逻辑清晰&quot;&gt;1.1 代码应该简洁易懂，逻辑清晰&lt;/h3&gt;
-&lt;p&gt;因为软件是需要人来维护的。这个人在未来很可能不是你。所以首先是为人编写程序，其次才是计算机：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;不要过分追求技巧，降低程序的可读性。&lt;/li&gt;
-  &lt;li&gt;简洁的代码可以让bug无处藏身。要写出明显没有bug的代码，而不是没有明显bug的代码。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;12-编程时首先达到正确性其次考虑效率&quot;&gt;1.2 编程时首先达到正确性，其次考虑效率&lt;/h3&gt;
-&lt;p&gt;在正确可用的代码写出之前就过度地考虑扩展，重用的问题，使得工程过度复杂。&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;先把眼前的问题解决掉，解决好，再考虑将来的扩展问题。&lt;/li&gt;
-  &lt;li&gt;先写出可用的代码，反复推敲，再考虑是否需要重用的问题。&lt;/li&gt;
-  &lt;li&gt;先写出可用，简单，明显没有bug的代码，再考虑测试的问题。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;13-面向变化编程而不是面向需求编程&quot;&gt;1.3 面向变化编程，而不是面向需求编程&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;不要相信产品说的话，要时刻做好需求会改的准备。&lt;/strong&gt;
-&lt;strong&gt;不要相信产品说的话，要时刻做好需求会改的准备。&lt;/strong&gt;
-&lt;strong&gt;不要相信产品说的话，要时刻做好需求会改的准备。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;每次迭代不能仅仅为了当前的需求，写出扩展性强，易修改的程序才是负责任的做法，对自己负责，对公司负责。&lt;/p&gt;
-&lt;h2 id=&quot;2-具体规范&quot;&gt;2 具体规范&lt;/h2&gt;
-&lt;h3 id=&quot;21-变量属性&quot;&gt;2.1 变量、属性&lt;/h3&gt;
-&lt;h6 id=&quot;211-命名必须使用驼峰格式&quot;&gt;2.1.1 命名必须使用驼峰格式&lt;/h6&gt;
-&lt;p&gt;类，协议使用大驼峰&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HomePageViewController.h
-&amp;lt;HeaderViewDelegate&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;对象等局部变量使用小驼峰：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *personName = @&quot;&quot;;
-NSUInteger totalCount = 0;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;212-变量的名称必须同时包含功能与类型&quot;&gt;2.1.2 变量的名称必须同时包含功能与类型&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UIButton *addBtn //添加按钮
-UILabel *nameLbl //名字标签
-NSString *addressStr//地址字符串
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;213-系统常用类作实例变量声明时加入后缀&quot;&gt;2.1.3 系统常用类作实例变量声明时加入后缀&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;类型&lt;/th&gt;
-      &lt;th&gt;后缀&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UIViewController&lt;/td&gt;
-      &lt;td&gt;VC&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UIView&lt;/td&gt;
-      &lt;td&gt;View&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UILabel&lt;/td&gt;
-      &lt;td&gt;Lbl&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UIButton&lt;/td&gt;
-      &lt;td&gt;Btn&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UIImage&lt;/td&gt;
-      &lt;td&gt;Img&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;UIImageView&lt;/td&gt;
-      &lt;td&gt;ImagView&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSArray&lt;/td&gt;
-      &lt;td&gt;Array&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSMutableArray&lt;/td&gt;
-      &lt;td&gt;Marray&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSDictionary&lt;/td&gt;
-      &lt;td&gt;Dict&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSMutableDictionary&lt;/td&gt;
-      &lt;td&gt;Mdict&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSString&lt;/td&gt;
-      &lt;td&gt;Str&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSMutableString&lt;/td&gt;
-      &lt;td&gt;MStr&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSSet&lt;/td&gt;
-      &lt;td&gt;Set&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;NSMutableSet&lt;/td&gt;
-      &lt;td&gt;Mset&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h4 id=&quot;213-下划线不应出现在局部变量&quot;&gt;2.1.3 下划线不应出现在局部变量&lt;/h4&gt;
-&lt;p&gt;推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSDictionary *notificationInfo;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSDictionary *_notificationInfo;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;214-定义指针类型的变量&quot;&gt;2.1.4 定义指针类型的变量&lt;/h4&gt;
-&lt;p&gt;定义指针类型的变量时,&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;放在变量前，与类型保持一个空格。
-推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSDictionary *notificationInfo;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSDictionary*notificationInfo;
-NSDictionary* notificationInfo;
-NSDictionary * notificationInfo;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;215-不要出现仅依靠大小写区分的命名&quot;&gt;2.1.5 不要出现仅依靠大小写区分的命名&lt;/h4&gt;
-&lt;p&gt;程序中不要出现仅靠大小区分的相似的标识符。
-不推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSDictionary *notificationInfo;
-NSDictionary *NotificationInfo;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;216-私有属性应放到匿名分类中&quot;&gt;2.1.6 私有属性应放到匿名分类中&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RWTDetailViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GADBannerView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;googleAdView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ADBannerView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iAdView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIWebView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;adXWebView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;217-形容词性的bool属性的getter应该加上is前缀&quot;&gt;2.1.7 形容词性的BOOL属性的getter应该加上is前缀&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isEditable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;editable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;218-使用getter方法做懒加载&quot;&gt;2.1.8 使用getter方法做懒加载&lt;/h4&gt;
-
-&lt;p&gt;实例化一个对象是需要耗费资源的，如果这个对象里的某个属性的实例化要调用很多配置和计算，就需要懒加载它，在使用它的前一刻对它进行实例化：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//推荐这样写
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;demoView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;demoView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_demoView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_demoView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIView&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initWithFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backgroundColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_demoView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;但是也有对这种做法的争议，但是整体利大于弊，推荐使用。&lt;/p&gt;
-
-&lt;h4 id=&quot;219-除了-init-和-dealloc-方法建议都使用点语法访问属性&quot;&gt;2.1.9 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;init&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;dealloc&lt;/code&gt; 方法，建议都使用点语法访问属性&lt;/h4&gt;
-
-&lt;p&gt;使用点语法的好处：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt;：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 会遵守内存管理语义(&lt;code class=&quot;highlighter-rouge&quot;&gt;strong&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;copy&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;weak&lt;/code&gt;)。&lt;/li&gt;
-  &lt;li&gt;通过在内部设置断点，有助于调试bug。&lt;/li&gt;
-  &lt;li&gt;可以过滤一些外部传入的值。&lt;/li&gt;
-  &lt;li&gt;捕捉 &lt;code class=&quot;highlighter-rouge&quot;&gt;KVO&lt;/code&gt; 通知。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt;：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;允许子类化。&lt;/li&gt;
-  &lt;li&gt;通过在内部设置断点，有助于调试bug。&lt;/li&gt;
-  &lt;li&gt;实现懒加载（&lt;code class=&quot;highlighter-rouge&quot;&gt;lazy initialization&lt;/code&gt;）。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。&lt;/li&gt;
-  &lt;li&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;init&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;dealloc&lt;/code&gt; 方法里面使用点语法的后果是：因为没有绕过 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; ，在 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 里面可能会有很多其他的操作。而且如果它的子类重载了它的 &lt;code class=&quot;highlighter-rouge&quot;&gt;setter&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;getter&lt;/code&gt; 方法，那么就可能导致该子类调用其他的方法。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2110-属性声明严把权限&quot;&gt;2.1.10 属性声明严把权限&lt;/h4&gt;
-
-&lt;p&gt;对不需要外部修改的属性使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;readonly&lt;/code&gt; 。&lt;/p&gt;
-
-&lt;h4 id=&quot;2111-尽量使用不可变对象&quot;&gt;2.1.11 尽量使用不可变对象&lt;/h4&gt;
-&lt;p&gt;建议尽量把对外公布出来的属性设置为只读，在实现文件内部设为读写。具体做法是：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;在头文件中，设置对象属性为 &lt;code class=&quot;highlighter-rouge&quot;&gt;readonly&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;在实现文件中设置为 &lt;code class=&quot;highlighter-rouge&quot;&gt;readwrite&lt;/code&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;22-函数&quot;&gt;2.2 函数&lt;/h3&gt;
-
-&lt;h4 id=&quot;221-函数保持单一性&quot;&gt;2.2.1 函数保持单一性&lt;/h4&gt;
-&lt;p&gt;函数是为一特定功能而编写，不是万能工具箱，保持单一性，一个函数只做一件事情。&lt;/p&gt;
-
-&lt;h4 id=&quot;222-函数名与形参不能留空格返回类型与函数标识符有一个空格&quot;&gt;2.2.2 函数名与形参不能留空格，返回类型与函数标识符有一个空格&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod:(id)parameter;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;223-如果参数过长则每个参数一行以冒号对齐&quot;&gt;2.2.3 如果参数过长，则每个参数一行，以冒号对齐。&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod:(id)parameter
-        parameter1:(id)parameter1
-        parameter2:(id)parameter2;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;224-如果函数名比参数名短则每个参数占用一行垂直对齐非冒号对齐&quot;&gt;2.2.4 如果函数名比参数名短，则每个参数占用一行,垂直对齐（非冒号对齐）&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod:(id)parameter
-        a:(id)parameter1
-        b:(id)parameter2;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;225-函数名用小写字母开头的单词组合而成&quot;&gt;2.2.5 函数名用小写字母开头的单词组合而成&lt;/h4&gt;
-
-&lt;p&gt;函数名力求清晰、明了、通过函数名就能够判断函数的主要功能。函数名中不同意义字段之间不要用下划线连接，而要把每个字段的首字母大写以示区分。&lt;/p&gt;
-
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (NSString *)descriptionWithLocale:(id)locale;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (NSString *)DescriptionWithLocale:(id)locale;
-- (NSString *)description_locale:(id)locale;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;226-避免函数有太多的参数参数个数尽量控制在5个以内&quot;&gt;2.2.6 避免函数有太多的参数，参数个数尽量控制在5个以内&lt;/h4&gt;
-&lt;p&gt;如果参数的确比较多，考虑这些参数定义成一个结构（或一个类）。&lt;/p&gt;
-
-&lt;h4 id=&quot;227-对输入参数的正确性和有效性进行检查&quot;&gt;2.2.7 对输入参数的正确性和有效性进行检查&lt;/h4&gt;
-&lt;p&gt;很多程序错误和崩溃是由非法参数引起的。对外提供的函数接口，一定要检查输入参数。
-对输入参数的正确性和有效性进行检查，参数错误立即返回。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void function(param1,param2)
-{
-      if(param1 is unavailable) {
-           return;
-      }
-    
-      if(param2 is unavailable) {
-           return;
-      }
-     //Do some right thing
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;228-函数方法体的规模不能太大&quot;&gt;2.2.8 函数（方法）体的规模不能太大&lt;/h4&gt;
-&lt;p&gt;函数（方法）体的规模不能太大，尽量控制在可以在一屏幕内显示。&lt;/p&gt;
-
-&lt;h4 id=&quot;229-对于有返回值的函数方法每一个分支都必须有返回值&quot;&gt;2.2.9 对于有返回值的函数（方法），每一个分支都必须有返回值&lt;/h4&gt;
-
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int function()
-{
-    if(condition1) {
-        return count1
-    }
-    else if(condition2) {
-        return count2
-    }
-    else {
-       return defaultCount
-    } 
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int function()
-{
-    if(condition1) {
-        return count1
-    }
-    else if(condition2) {
-        return count2
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2210-如果在不同的函数内部有相同的功能&quot;&gt;2.2.10 如果在不同的函数内部有相同的功能&lt;/h4&gt;
-&lt;p&gt;如果在不同的函数内部有相同的功能，应该把相同的功能抽取出来单独作为另一个函数&lt;/p&gt;
-
-&lt;h4 id=&quot;2211-方法名前缀&quot;&gt;2.2.11 方法名前缀&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;刷新视图的方法名要以 &lt;code class=&quot;highlighter-rouge&quot;&gt;refresh&lt;/code&gt; 为首。&lt;/li&gt;
-  &lt;li&gt;更新数据的方法名要以 &lt;code class=&quot;highlighter-rouge&quot;&gt;update&lt;/code&gt; 为首。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)refreshHeaderViewWithCount:(NSUInteger)count;
-
-- (void)updateDataSourceWithViewModel:(ViewModel *)viewModel;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2212-函数之间保留一个空行&quot;&gt;2.2.12 函数之间保留一个空行&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)refreshHeaderViewWithCount:(NSUInteger)count;
-
-- (void)updateDataSourceWithViewModel:(ViewModel *)viewModel;
-
-- (void)refreshHeaderViewWithCount:(NSUInteger)count
-{
-}
-
-- (void)updateDataSourceWithViewModel:(ViewModel *)viewModel
-{
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2213-初始化方法&quot;&gt;2.2.13 初始化方法&lt;/h4&gt;
-&lt;p&gt;初始化方法返回类型必须是 &lt;code class=&quot;highlighter-rouge&quot;&gt;instancetype&lt;/code&gt; ，不能是 &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (instancetype)init { 
-    self = [super init]; // call the designated initializer 
-    if (self) { 
-        // Custom initialization 
-    } 
-    return self; 
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;23-if-语句&quot;&gt;2.3 &lt;code class=&quot;highlighter-rouge&quot;&gt;if&lt;/code&gt; 语句&lt;/h3&gt;
-
-&lt;h4 id=&quot;231-必须列出所有分支穷举所有的情况而且每个分支都必须给出明确的结果&quot;&gt;2.3.1 必须列出所有分支（穷举所有的情况），而且每个分支都必须给出明确的结果&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var hintStr;
-if (count &amp;lt; 3) {
-  hintStr = &quot;Good&quot;;
-} 
-else {
-  hintStr = &quot;&quot;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var hintStr;
-if (count &amp;lt; 3) {
- hintStr = &quot;Good&quot;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;232-不要使用过多的分支要善于使用-return-来提前返回错误的情况&quot;&gt;2.3.2 不要使用过多的分支，要善于使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;return&lt;/code&gt; 来提前返回错误的情况&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod { 
-  if (!goodCondition) {
-    return;
-  }
-  //Do something
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)someMethod { 
-  if (goodCondition) {
-    //Do something
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;233-条件表达式如果很长则需要将他们提取出来赋给一个-bool-值&quot;&gt;2.3.3 条件表达式如果很长，则需要将他们提取出来赋给一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;BOOL&lt;/code&gt; 值&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let nameContainsSwift = sessionName.hasPrefix(&quot;Swift&quot;)
-let isCurrentYear = sessionDateCompontents.year == 2014
-let isSwiftSession = nameContainsSwift &amp;amp;&amp;amp; isCurrentYear
-if (isSwiftSession) { 
-   // Do something
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( sessionName.hasPrefix(&quot;Swift&quot;) &amp;amp;&amp;amp; (sessionDateCompontents.year == 2014) ) { 
-    // Do something
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;234-条件语句的判断应该是变量在左常量在右&quot;&gt;2.3.4 条件语句的判断应该是变量在左，常量在右&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( count == 6 ) {
-}
-
-if ( count == 6 ) {
-}
-
-if ( object == nil ) {
-}
-
-if ( !object ) {
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( 6 == count ) {
-}
-
-if ( nil == object ) {
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;235-每个分支的实现代码都必须被大括号包围&quot;&gt;2.3.5 每个分支的实现代码都必须被大括号包围&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( !error ) {
-  return success;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ( !error )
-    return success;
-
-if ( !error ) return success;
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;236--条件过多过长的时候应该换行&quot;&gt;2.3.6  条件过多，过长的时候应该换行&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (condition1() &amp;amp;&amp;amp; 
-    condition2() &amp;amp;&amp;amp; 
-    condition3() &amp;amp;&amp;amp; 
-    condition4()) {
-  // Do something
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (condition1() &amp;amp;&amp;amp; condition2() &amp;amp;&amp;amp; condition3() &amp;amp;&amp;amp; condition4()) {
-  // Do something
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;24-注释&quot;&gt;2.4 注释&lt;/h3&gt;
-&lt;p&gt;推荐写注释，但不是必须的，有以下几种情况是必须写注释的：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;公共接口（注释要告诉阅读代码的人，当前类能实现什么功能）。&lt;/li&gt;
-  &lt;li&gt;涉及到比较深层专业知识的代码（注释要体现出实现原理和思想）。&lt;/li&gt;
-  &lt;li&gt;容易产生歧义的代码（但是严格来说，容易让人产生歧义的代码是不允许存在的）。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;每次修改代码后，要相应的修改注释。
-每次修改代码后，要相应的修改注释。
-每次修改代码后，要相应的修改注释。&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;25-运算符&quot;&gt;2.5 运算符&lt;/h3&gt;
-
-&lt;h4 id=&quot;251-一元运算符与变量之间没有空格&quot;&gt;2.5.1 一元运算符与变量之间没有空格&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!bValue
-~iValue
-++iCount
-*strSource
-&amp;amp;fSum
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;252-二元运算符与变量之间必须有空格&quot;&gt;2.5.2 二元运算符与变量之间必须有空格&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fWidth = 5 + 5;
-fLength = fWidth * 2;
-fHeight = fWidth + fLength;
-for(int i = 0; i &amp;lt; 10; i++)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;253-多个不同的运算符同时存在时应该使用括号来明确优先级&quot;&gt;2.5.3 多个不同的运算符同时存在时应该使用括号来明确优先级&lt;/h4&gt;
-
-&lt;p&gt;在多个不同的运算符同时存在的时候应该合理使用括号，不要盲目依赖操作符优先级。
-因为有的时候不能保证阅读你代码的人就一定能了解你写的算式里面所有操作符的优先级。&lt;/p&gt;
-&lt;h3 id=&quot;26-switch-语句&quot;&gt;2.6 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句&lt;/h3&gt;
-
-&lt;h4 id=&quot;261-每个分支都必须用大括号括起来&quot;&gt;2.6.1 每个分支都必须用大括号括起来&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;switch (integer) {  
-  case 1:  {
-    // ...  
-    break;  
-   }
-  case 2: {  
-    // ...  
-    break;  
-  }  
-  case 3: {
-    // ...  
-    break; 
-  }
-  default:{
-    // ...  
-    break; 
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;262--使用枚举类型时不能有-default-分支-除了使用枚举类型以外都必须有-default-分支&quot;&gt;2.6.2  使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支， 除了使用枚举类型以外，都必须有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RWTLeftMenuTopItemType menuType = RWTLeftMenuTopItemMain;  
-switch (menuType) {  
-  case RWTLeftMenuTopItemMain: {
-    // ...  
-    break; 
-   }
-  case RWTLeftMenuTopItemShows: {
-    // ...  
-    break; 
-  }
-  case RWTLeftMenuTopItemSchedule: {
-    // ...  
-    break; 
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;27-单例模式&quot;&gt;2.7 单例模式&lt;/h3&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&amp;amp;onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;不推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (instancetype)sharedInstance {
-    static id sharedInstance;
-    @synchronized(self) {
-        if (sharedInstance == nil) {
-            sharedInstance = [[MyClass alloc] init];
-        } }
-    return sharedInstance; 
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;28-文件目录&quot;&gt;2.8 文件目录&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Xcode&lt;/code&gt; 工程文件的物理路径要和逻辑路径保持一致。&lt;/p&gt;
-&lt;h3 id=&quot;29-字面量&quot;&gt;2.9 字面量&lt;/h3&gt;
-&lt;p&gt;在编码中应多用字面量语法，少用与之等价的方法。&lt;/p&gt;
-
-&lt;h4 id=&quot;291-声明时的字面量语法&quot;&gt;2.9.1 声明时的字面量语法&lt;/h4&gt;
-&lt;p&gt;在声明 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSNumber&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt; 时，应该尽量使用简洁字面量语法。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSNumber *intNumber = @1;
-NSNumber *floatNumber = @2.5f;
-NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;];
-Dictionary *dict = @{@&quot;animal&quot;:@&quot;tiger&quot;,@&quot;phone&quot;:@&quot;iPhone 6&quot;};
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;292-集合类取下标的字面量语法&quot;&gt;2.9.2 集合类取下标的字面量语法&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *cat = animals[0];
-NSString *iphone = dict[@&quot;phone&quot;];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;210-nsarray-和-nsdictionary&quot;&gt;2.10 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt;&lt;/h3&gt;
-
-&lt;h4 id=&quot;2101-尽可能的使用字面量初始化&quot;&gt;2.10.1 尽可能的使用字面量初始化&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray *animals = @[@&quot;cat&quot;, @&quot;dog&quot;,@&quot;mouse&quot;, @&quot;badger&quot;];
-Dictionary *dict = @{@&quot;animal&quot;:@&quot;tiger&quot;,@&quot;phone&quot;:@&quot;iPhone 6&quot;};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2102-使用泛型&quot;&gt;2.10.2 使用泛型&lt;/h4&gt;
-&lt;p&gt;在定义 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSArray&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;NSDictionary&lt;/code&gt; 时使用泛型，可以保证程序的安全性，而且在使用 枚举块 函数时会自动识别 &lt;strong&gt;item&lt;/strong&gt; 类型&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray &amp;lt;NSString *&amp;gt;*testArr = [NSArray arrayWithObjects:@&quot;Hello&quot;, @&quot;world&quot;, nil];
-NSDictionary &amp;lt;NSString *, NSNumber *&amp;gt;*dic = @{@&quot;key&quot;:@(1), @&quot;age&quot;:@(10)};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2103-判断边界&quot;&gt;2.10.3 判断边界&lt;/h4&gt;
-&lt;p&gt;数组取下标的时候尽可能的判断是否越界。&lt;/p&gt;
-
-&lt;h4 id=&quot;2104-取第一个元素或最后一个元素的时候使用系统提供的方法&quot;&gt;2.10.4 取第一个元素或最后一个元素的时候使用系统提供的方法&lt;/h4&gt;
-&lt;p&gt;取第一个元素或最后一个元素的时候使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;firtstObject&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;lastObject&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h4 id=&quot;2105--非空判断&quot;&gt;2.10.5  非空判断&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObject&lt;/code&gt; 之前要非空判断。&lt;/p&gt;
-
-&lt;h4 id=&quot;2106-多用枚举块&quot;&gt;2.10.6 多用枚举块&lt;/h4&gt;
-&lt;p&gt;当遍历集合元素时，建议使用块枚举，因为相对于传统的 &lt;strong&gt;for&lt;/strong&gt; 循环，它更加高效，而且简洁,还能获取到用传统的 &lt;strong&gt;for&lt;/strong&gt; 循环无法提供的值.&lt;/p&gt;
-
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSArray &amp;lt;SYPushUserModel *&amp;gt;*sourceArray = @[...];
-[sourceArray enumerateObjectsUsingBlock:^(SYPushUserModel * obj, NSUInteger idx, BOOL * stop) {
-            
-}];
-
-NSDictionary &amp;lt;NSString *,SYPushUserModel *&amp;gt;*sourceDic = @{...};
-[sourceDic enumerateKeysAndObjectsUsingBlock:^(NSString * key, SYPushUserModel * obj, BOOL * stop) {
-        
-}];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;211-类&quot;&gt;2.11 类&lt;/h3&gt;
-
-&lt;h4 id=&quot;2111-类的布局&quot;&gt;2.11.1 类的布局&lt;/h4&gt;
-&lt;p&gt;推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - Life Cycle
-- (instancetype)init;
-
-- (void)viewDidLoad;
-
-- (void)viewWillAppear:(BOOL)animated;
-
-- (void)viewDidAppear:(BOOL)animated;
-
-- (void)dealloc
-
-#pragma mark - Intial Methods
-//初始化数据
-- (void)assignDate
-
-- (void)settingAppearance
-
-- (void)loadSubViews
-
-#pragma mark - Target Methods
-//点击事件或通知事件
-
-#pragma mark - Network Methods
-//网络请求
-
-#pragma mark - Public Method
-//外部方法
-
-#pragma mark - Private Method
-//本类方法
-
-#pragma mark - Delegate
-//代理方法
-
-#pragma mark - Lazy Loads
-//懒加载 Getter方法
-
-#pragma mark - set
-//Setter方法
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2112-在类声明中包含多个-protocol&quot;&gt;2.11.2 在类声明中包含多个 &lt;code class=&quot;highlighter-rouge&quot;&gt;Protocol&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;如果在类声明中包含多个 &lt;code class=&quot;highlighter-rouge&quot;&gt;Protocol&lt;/code&gt;，每个 &lt;code class=&quot;highlighter-rouge&quot;&gt;Protocol&lt;/code&gt; 占用一行，与第一个对齐，保持清晰易读。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@interface SYNotificationTool : NSObject&amp;lt;UNUserNotificationCenterDelegate,
-                                         UITableViewDelegate,
-                                         UITableViewDataSource,
-                                         UITabBarControllerDelegate,
-                                         UIContentSizeCategoryAdjusting&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;如果第一行显示不完全，推荐&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@interface SYOpenMessageListNotificationTool : NSObject
-&amp;lt;
-UNUserNotificationCenterDelegate,
-UITableViewDelegate,
-UITableViewDataSource,
-UITabBarControllerDelegate,
-UIContentSizeCategoryAdjusting
-&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2113-把类的实现代码分散到便于管理的多个分类中&quot;&gt;2.11.3 把类的实现代码分散到便于管理的多个分类中&lt;/h4&gt;
-&lt;p&gt;一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用 &lt;strong&gt;Objecctive-C&lt;/strong&gt; 的分类机制，将类的这些方法按一定的逻辑划入几个分区中。使得代码逻辑清晰，便于维护。&lt;/p&gt;
-
-&lt;h3 id=&quot;212-枚举&quot;&gt;2.12 枚举&lt;/h3&gt;
-&lt;p&gt;要多使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;NS_ENUM&lt;/code&gt;,尽量少使用 C 语言风格的&lt;code class=&quot;highlighter-rouge&quot;&gt;enum&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;2121-用枚举表示状态选项状态码&quot;&gt;2.12.1 用枚举表示状态，选项，状态码&lt;/h4&gt;
-&lt;p&gt;推荐使用用枚举表示状态，选项，状态码。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;typedef NS_ENUM(NSUInteger, EOCConnectionState) {
-  EOCConnectionStateDisconnected,
-  EOCConnectionStateConnecting,
-  EOCConnectionStateConnected,
-};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2122-使用枚举类型时不能有-default-分支&quot;&gt;2.12.2 使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支&lt;/h4&gt;
-&lt;p&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句使用枚举类型时，不能有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支， 除了使用枚举类型以外，都必须有 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支
-在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Switch&lt;/code&gt; 语句使用枚举类型的时候，如果使用了 &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; 分支，在将来就无法通过编译器来检查新增的枚举类型了。&lt;/p&gt;
-
-&lt;h3 id=&quot;213-大括号该不该换行&quot;&gt;2.13 大括号该不该换行&lt;/h3&gt;
-&lt;p&gt;仁者见仁，智者见智的问题。&lt;/p&gt;
-
-&lt;p&gt;程序的分界符 &lt;strong&gt;{&lt;/strong&gt; 和 &lt;strong&gt;}&lt;/strong&gt; 在 &lt;strong&gt;if&lt;/strong&gt;、&lt;strong&gt;else&lt;/strong&gt;、&lt;strong&gt;else if&lt;/strong&gt;、&lt;strong&gt;for&lt;/strong&gt;、&lt;strong&gt;while&lt;/strong&gt;、&lt;strong&gt;do&lt;/strong&gt;等语句时， &lt;strong&gt;{&lt;/strong&gt; 前添加空格紧跟语句后，空格分割。在方法（函数）应独占一行并且位于同一列，同时与引用他们的语句对齐。 &lt;strong&gt;{}&lt;/strong&gt; 之内的代码块使用缩进规则对齐。&lt;/p&gt;
-
-&lt;p&gt;推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- (void)dealloc
-{
-    // Do Something
-}
-
-if (isUpdated) {
-    // Do Something
-}
-
-if (user.isHappy) {
-    //Do something
-}
-else {
-    //Do something else
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;214-常量&quot;&gt;2.14 常量&lt;/h3&gt;
-
-&lt;h4 id=&quot;2141-常量应该以相关类名作为前缀&quot;&gt;2.14.1 常量应该以相关类名作为前缀&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;推荐：
-static const NSTimeInterval ZOCSignInViewControllerFadeOutAnimationDuration = 0.4;
-不推荐：
-static const NSTimeInterval fadeOutTime = 0.4;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2142-建议使用类型常量不建议使用-define-预处理命令&quot;&gt;2.14.2 建议使用类型常量，不建议使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;#define&lt;/code&gt; 预处理命令&lt;/h4&gt;
-&lt;p&gt;首先比较一下这两种声明常量的区别：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;预处理命令：简单的文本替换，不包括类型信息，并且可被任意修改。&lt;/li&gt;
-  &lt;li&gt;类型常量：包括类型信息，并且可以设置其使用范围，而且不可被修改。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;使用预处理虽然能达到替换文本的目的，但是本身还是有局限性的：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;不具备类型信息。&lt;/li&gt;
-  &lt;li&gt;可以被任意修改。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;2143-对外公开某个常量&quot;&gt;2.14.3 对外公开某个常量&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;推荐：
-//头文件
-extern NSString *const ZOCCacheControllerDidClearCacheNotification;
-//实现文件
-static NSString * const ZOCCacheControllerDidClearCacheNotification = @&quot;ZOCCacheControllerDidClearCacheNotification&quot;;
-static const CGFloat ZOCImageThumbnailHeight = 50.0f;
-
-不推荐：
-#define CompanyName @&quot;Apple Inc.&quot; 
-#define magicNumber 42
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;215-宏&quot;&gt;2.15 宏&lt;/h3&gt;
-
-&lt;h4 id=&quot;2151-宏常量名都要使用大写字母用下划线-_-分割单词&quot;&gt;2.15.1 宏、常量名都要使用大写字母，用下划线 &lt;code class=&quot;highlighter-rouge&quot;&gt;_&lt;/code&gt; 分割单词。&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define URL_GAIN_QUOTE_LIST @&quot;/v1/quote/list&quot;
-#define URL_UPDATE_QUOTE_LIST @&quot;/v1/quote/update&quot;
-#define URL_LOGIN  @&quot;/v1/user/login”
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2152-宏定义中如果包含表达式或变量表达式和变量必须用小括号括起来&quot;&gt;2.15.2 宏定义中如果包含表达式或变量，表达式和变量必须用小括号括起来。&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define MY_MIN(A, B)  ((A)&amp;gt;(B)?(B):(A))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;216-其他&quot;&gt;2.16 其他&lt;/h3&gt;
-
-&lt;h4 id=&quot;2161-小括号内联复合表达式&quot;&gt;2.16.1 小括号内联复合表达式&lt;/h4&gt;
-&lt;p&gt;&lt;em&gt;A compound statement enclosed in parentheses&lt;/em&gt;。推荐使用，形式如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;RETURN_VALUE_RECEIVER = {(
-    // Do whatever you want
-    RETURN_VALUE; // 返回值
-)};
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;初始化时推荐使用，有点像&lt;strong&gt;block&lt;/strong&gt;和内联函数的结合体，它最大的意义在于将代码整理分块，将同一个逻辑层级的代码包在一起；逻辑清晰，也方便拷贝使用。
-推荐：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UIView *backgroundView = ({
-    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-    view.backgroundColor = [UIColor redColor];
-    view.alpha = 0.8f;
-    view;
-});
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2162-源代码中关系较为紧密的代码应尽可能相邻&quot;&gt;2.16.2 源代码中关系较为紧密的代码应尽可能相邻&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CGFloat fWidth;
-CGFloat fLength;
-CGFloat fHeight;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;2163-相关的赋值语句等号对齐&quot;&gt;2.16.3 相关的赋值语句等号对齐&lt;/h4&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;promotionsEntity.promotionImageStr   = activityItemDict[@&quot;promotion_image&quot;];
-promotionsEntity.promotionIdNum      = activityItemDict[@&quot;promotion_id&quot;];
-promotionsEntity.promotionNameStr    = activityItemDict[@&quot;promotion_name&quot;];
-promotionsEntity.promotionColorStr   = activityItemDict[@&quot;promotion_color&quot;];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-</description>
-        <pubDate>Fri, 11 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</guid>
         
         
       </item>

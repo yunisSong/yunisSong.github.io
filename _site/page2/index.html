@@ -184,6 +184,104 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/08/17/%E4%BD%BF%E7%94%A8wkhtmltopdf%E5%B0%86MarkDown%E8%BD%AC%E4%B8%BA%E5%B8%A6%E6%9C%89%E6%A0%87%E7%AD%BE%E7%9A%84PDF/">
+        <h2 class="post-title">
+            使用wkhtmltopdf将Markdown转为带有标签的PDF
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            使用 wkhtmltopdf 将 Markdown 文件转为带有标签的 PDF 文件
+
+1，使用 MWeb 编写 Markdown 文档
+。。。。
+2，导出为 HTML
+
+3，编辑 HTML 样式
+使用 sublime text 打开 HTML 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。
+
+.markdown-body {
+  min-width: 200px;
+  ma...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 17, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/08/17/Shell-sed-%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">
+        <h2 class="post-title">
+            Shell sed 的简单使用
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Shell sed 的简单使用
+
+sed -i "" 's/aaa/bbbb/g' /Users/Yunis/Desktop/XXX.py
+
+
+
+这句 shell 命令的意思是，查找到 aaa 把它替换为 bbbb 
+/Users/Yunis/Desktop/XXX.py 是要替换文本的路径。
+
+"" 表示要备份的路径，为空表示不备份。
+s :替换
+g :全部替换标记
+
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 17, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/08/11/%E5%B0%8F%E5%9B%A2%E9%98%9F%E7%9A%84iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">
+        <h2 class="post-title">
+            小团队的iOS代码规范
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            [TOC]
+小团队的iOS代码规范
+
+本文摘抄自iOS 代码规范，稍加修改。
+
+1 核心原则
+1.1 代码应该简洁易懂，逻辑清晰
+因为软件是需要人来维护的。这个人在未来很可能不是你。所以首先是为人编写程序，其次才是计算机：
+
+
+  不要过分追求技巧，降低程序的可读性。
+  简洁的代码可以让bug无处藏身。要写出明显没有bug的代码，而不是没有明显bug的代码。
+
+
+1.2 编程时首先达到正确...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on August 11, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/08/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">
         <h2 class="post-title">
             正则表达式必知必会
@@ -345,12 +443,11 @@ CoreBluetooth 分为两种模式：
         <div class="post-content-preview">
             自动化的一些实践
 
-  更新 Xcode 升级到8.3.3 以后，原有打包脚本出错，需要在指定目录添加一个plist文件，现修改如下：
+Xcode版本更新后报错
+Xcode9
+更新到 Xcode 9 后报错
 
-
-plist 文件内容如下，参考链接 stackoverflow：
-
-  You’ll have to at least specifiy an entry for method (app-store, ad-hoc, enterprise etc. - ...
+Error Domain=IDEProvisioningErrorDomain Code=9 ""XXXXXX.app" requires a provisioning profile." UserInfo={NSLocalizedDescription="XXXXXXX.app" requires...
         </div>
     </a>
     <p class="post-meta">
@@ -384,100 +481,6 @@ plist 文件内容如下，参考链接 stackoverflow：
     </a>
     <p class="post-meta">
         Posted by 三十一 on July 12, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/08/%E8%BE%93%E5%85%A5%E6%A1%86%E5%88%87%E6%8D%A2%E9%94%AE%E7%9B%98%E5%8D%A1%E9%A1%BF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
-        <h2 class="post-title">
-            输入框切换键盘卡顿的解决办法
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            输入框切换键盘卡顿的解决办法
-
-今天开发碰到一个问题：
-有两个输入框，一个输入手机号码、一个输入验证码。
-客户要求：手机号输入框输入满11位时，切换到验证码输入框。
-
-很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：
-
-    //监听位数
-    if (field.text.length &gt;= 11) {
-        dispatch_async(dispat...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 8, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/07/06/Xcode%E6%96%AD%E7%82%B9%E6%97%A0%E6%95%88%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F/">
-        <h2 class="post-title">
-            Xcode断点无效的处理方式
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            Xcode断点无效的处理方式
-
-原文链接xcode断点无效无法调试的一个问题
-
-在某一次”svn update”后，突然发现Xcode无法断点调试了，这是什么鬼？
-
-根据大家的经验，试了各种方式
-
-1、Product-&gt;Debug workflow取消选中show Disassembly when debug
-
-2、修改Generate Debug Symbols 为YES
-3、Edi...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on July 6, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/06/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8weak%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%AE%BE%E7%BD%AE%E4%B8%BAnil/">
-        <h2 class="post-title">
-            为什么使用weak修饰的变量会自动设置为nil
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            为什么使用weak修饰的变量会自动设置为nil
-
-  Objective-C高级编程 iOS与OS X多线程和内存管理 读书笔记
-
-
-为什么使用weak修饰的变量会自动设置为nil
-我们知道：
-
-
-  当使用__weak修饰符的变量的 引用对象 被废弃时，则将nil赋值给该变量。
-  使用附有 __weak 修饰符的变量，即是使用注册到 autoreleasepool 中的对象。
-
-
-系统是...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on June 26, 2017
     </p>
 </div>
 <hr>
@@ -528,7 +531,7 @@ plist 文件内容如下，参考链接 stackoverflow：
                             
                         
                             
-                                <a href="/tags/#iOS" title="iOS" rel="17">
+                                <a href="/tags/#iOS" title="iOS" rel="18">
                                     iOS
                                 </a>
                             
@@ -568,9 +571,13 @@ plist 文件内容如下，参考链接 stackoverflow：
                             
                         
                             
-                                <a href="/tags/#内功" title="内功" rel="10">
+                                <a href="/tags/#内功" title="内功" rel="11">
                                     内功
                                 </a>
+                            
+                        
+                            
+                        
                             
                         
                             
@@ -694,7 +701,7 @@ plist 文件内容如下，参考链接 stackoverflow：
                 <p class="copyright text-muted">
                     Copyright &copy; 三十一 2017
                     <br>
-                    Theme by <a href="https://yunissong.github.io/">三十一</a> |
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="100px" height="20px"
@@ -741,15 +748,15 @@ plist 文件内容如下，参考链接 stackoverflow：
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/ 
-     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers   
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
 -->
 <!--
     <script>
@@ -809,7 +816,6 @@ plist 文件内容如下，参考链接 stackoverflow：
 
 
 <!-- Side Catalog -->
-
 
 
 
