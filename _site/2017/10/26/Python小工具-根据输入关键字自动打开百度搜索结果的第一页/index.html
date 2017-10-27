@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>swift 学习（9）Enumerations - 三十一的博客 | Yunis Blog</title>
+    <title>Python小工具-根据输入关键字自动打开百度搜索结果的第一页 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2017/03/01/swift09-Enumerations/">
+    <link rel="canonical" href="http://localhost:4000/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,13 +155,13 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+<!-- <img src="/img/in-post/post-Python0.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+        background-image: url('/img/in-post/post-Python0.jpg')
     }
 
     
@@ -181,15 +181,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Swift" title="Swift">Swift</a>
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
                         
                     </div>
-                    <h1>swift 学习（9）Enumerations</h1>
+                    <h1>Python小工具-根据输入关键字自动打开百度搜索结果的第一页</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on March 1, 2017</span>
+                    <span class="meta">Posted by 三十一 on October 26, 2017</span>
                 </div>
             </div>
         </div>
@@ -207,234 +207,72 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>#swift 学习（9）Enumerations
-[toc]</p>
-<blockquote>
-  <p>An enumeration is a list of related values that define a common type and let you work with values in a type-safe way.
-枚举是定义一个公共类型的相关值的列表，可让您以类型安全的方式使用值。</p>
-</blockquote>
+				<h1 id="python小工具-根据输入关键字自动打开百度搜索结果的第一页">Python小工具-根据输入关键字自动打开百度搜索结果的第一页</h1>
 
-<h4 id="声明枚举"><strong>声明枚举</strong></h4>
+<p><img src="http://upload-images.jianshu.io/upload_images/234403-493ea52f7309279f.gif?imageMogr2/auto-orient/strip" alt="PythonBaidu.gif" /></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month {
-  case january
-  case february
-  case march
-  case april
-  case may
-  case june
-  case july
-  case august
-  case september
-  case october
-  case november
-  case december
-}
+<p><img src="/img/in-post/PythonBaidu.gif" alt="PythonBaidu.gif" /></p>
 
-enum Month {
-  case january, february, march, april, may, june, july, august,
-  september, october, november, december
-}
+<p>步骤分析:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. 伪装浏览器的 User-Agent
+2. 读取输入参数并组装为请求参数
+3. 使用 `requests` 模块请求数据
+4. 使用 `bs4` 查找需要的链接数据
+5. 使用`webbrowser`模块 打开链接。 代码如下：
 </code></pre>
 </div>
 
-<p>声明带有计算属性的枚举</p>
+<div class="highlighter-rouge"><pre class="highlight"><code># -*- coding: UTF-8 -*-
+import requests, sys, webbrowser, bs4
 
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month {
-    case january, february, march, april, may, june, july, august,
-    september, october, november, december
-    //let semester = month.semester // "Autumn"
-    var semester : String {
-        switch self {
-        case .august, .september, .october, .november, .december:
-            return "Autumn"
-        case .january, .february, .march, .april, .may:
-            return "Spring"
-        case .june, .july:
-            return "Summer"
-        }
-    }
-    
-}
-var month = Month.april
-month = .september
-let semester = month.semester // "Autumn"
-</code></pre>
-</div>
+#伪装浏览器头
+def camouflageWrowser():
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0'}
+    return headers
 
-<h4 id="raw-values"><strong>Raw values</strong></h4>
-<blockquote>
-  <p>Unlike enumeration values in C, Swift enum values are not backed by integers as a default. 
-与C中的枚举值不同，Swift枚举值默认不支持整数。</p>
-</blockquote>
+# 读取输入参数并组装为搜索用的参数
+def readInputParameterAndFormat():
+    searchWorld =  ' '.join(sys.argv[1:])
+    payload = {'wd':u'%s'%searchWorld}
+    print("searchWorld = " + searchWorld)
+    return  payload
 
-<p>需要手动设定</p>
+# 搜索关键字
+def requestsWithParameter(headers,parameter):
+    url = 'http://www.baidu.com/s'
+    r = requests.get(url, params=parameter, headers=headers, timeout=5)
+    return r
 
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Month: Int {
-  case january = 1, february, march, april, may, june, july,
-  august, september, october, november, december
-}
+# 查找需要的内容
+def findNeedResult(request):
+    # 查找需要的内容
+    soup = bs4.BeautifulSoup(request.text,"html.parser")
+    linkElems = soup.select('.result &gt; .t &gt; a[href]')
+    topLinkElems = soup.select('.result-op &gt; .t &gt; a[href]')
+    return linkElems + topLinkElems
 
-Month.october.rawValue // 10
-
-</code></pre>
-</div>
-
-<h4 id="initializing-with-the-raw-value"><strong>Initializing with the raw value</strong></h4>
-
-<p><code class="highlighter-rouge"> You can use the raw value to instantiate an enumeration value with an initializer. </code></p>
-
-<p>但是当使用 <code class="highlighter-rouge">Month(rawValue: 5)</code> 初始化得到一个 Month 枚举时，得到的值是一个 <code class="highlighter-rouge">optional</code>，当使用 100 初始化是 会得到一个 <code class="highlighter-rouge">nil</code> 值，所以直接使用会报错。需要使用 <code class="highlighter-rouge">!</code> 解包。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>let fifthMonth = Month(rawValue: 5)
-monthsUntilWinterBreak(from: fifthMonth) // Error: value not unwrapped
-
- let fifthMonth = Month(rawValue: 5)!
-monthsUntilWinterBreak(from: fifthMonth)  // 7
-</code></pre>
-</div>
-
-<h4 id="string-raw-values"><strong>String raw values</strong></h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum Icon: String {
-  case music
-  case sports
-  case weather
-  var filename: String {
-    // 2
-    return "\(rawValue.capitalized).png"
-  }
-}
-let icon = Icon.weather
-icon.filename // Weather.png
+# 打开全部搜索结果
+def openElement(el):
+    webbrowser.open(el.get('href'))
 
 
+#伪装浏览器头
+headers = camouflageWrowser()
+# 读取输入参数
+payload = readInputParameterAndFormat()
+# 请求关键字数据
+r = requestsWithParameter(headers,payload)
+# 解析返回的结果
+linkElems =  findNeedResult(r)
 
-var coinPurse : Array = Array.init(arrayLiteral: Coin.penny,Coin.nickel,Coin.dime,Coin.quarter,Coin.quarter)
+for el in linkElems:
+    openElement(el)
 
 </code></pre>
 </div>
-
-<h4 id="associated-values"><strong>Associated values</strong></h4>
-
-<ul>
-  <li>每个枚举值都有0个或者多个关联值</li>
-  <li>每个枚举值的关联值都有自己的数据类型</li>
-  <li>你可以像定义方法参数一样定义关联值</li>
-</ul>
-
-<p>An enumeration can have raw values or associated values, but not both.</p>
-
-<p>一个 <code class="highlighter-rouge">enumeration</code> 可以使用 <code class="highlighter-rouge">raw values</code> 或者 <code class="highlighter-rouge">associated values</code>，但是只能同时使用其中的一个。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum WithdrawalResult {
-  case success(newBalance: Int)
-  case error(message: String)
-}
-
-let result = WithdrawalResult.success(newBalance: 100)
-//let result = WithdrawalResult.error(message: "测试错误数据")
-
-switch result {
-case .success(let newBalance):
-    print("Your new balance is: \(newBalance)")
-case .error(let message):
-    print(message)
-}
-
-
-switch result {
-case .success(let newBalance):
-  print("Your new balance is: \(newBalance)")
-case .error(let message):
-  print(message)
-}
-
-//多个关联值
-enum WithdrawalResult {
-    case success(newBalance: Int,parameters: Int)
-    case error(message: String)
-}
-</code></pre>
-</div>
-
-<p>特殊的条件判断</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>enum HTTPMethod {
-  case get
-  case post(body: String)
-}
-
-let request = HTTPMethod.post(body: "Hi there")
-/* 
- In this code, guard case checks to see 
- if request contains the post enumeration case and if so,
- reads and binds the associated value.
- guard case 判断 request 是否是post ，如果是post，读取并且关联值到body
- */
-guard case .post(let body) = request else {
-  fatalError("No message was posted")
-}
-print(body)
-
-//与上面语句判断等同
-if case .post(let body) = request  {
-    print(body)
-
-}
-
-</code></pre>
-</div>
-<h4 id="optionals"><strong>Optionals</strong></h4>
-<p>Optionals 的底层实现就是枚举，只是编译器隐藏了实现细节，包括可选值绑定 ？ 和 ！ 操作符，以及nil的实现。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>var age: Int?
-age = 17
-age = nil
-
-switch age {
-case .none:
-  print("No value")
-case .some(let value):
-  print("Got a value: \(value)")
-}
-
-if let age = age {
-    print("\(age)")//17
-
-}
-
-if (age != nil)  {
-    print("\(age)")//Optional(17)
-
-}
-
-error
-//Optional type 'Int?' cannot be used as a boolean; test for '!= nil' instead
-if age {
-    print("\(age)")
-
-}
-
-</code></pre>
-</div>
-
-<h4 id="key-points"><strong>Key points</strong></h4>
-
-<ul>
-  <li>
-    <p>An enumeration is a list of related values that define a common type. 枚举是定义公共类型的相关值的列表。</p>
-  </li>
-  <li>
-    <p>Enumerations provide an alternative to old-fashioned integer values.枚举提供了一种替代老式整数值的方法</p>
-  </li>
-  <li>
-    <p>You can use enumerations to handle responses, store state and encapsulate values.您可以使用枚举来处理响应，存储状态和封装值。</p>
-  </li>
-  <li>
-    <p>Case-less enumerations prevent the creation of instances.枚举里枚举值为空不允许创建实例。</p>
-  </li>
-</ul>
 
 
 
@@ -446,19 +284,12 @@ if age {
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2017/03/01/swift08-Class/" data-toggle="tooltip" data-placement="top" title="swift 学习（8）Class">
+                        <a href="/2017/10/12/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/" data-toggle="tooltip" data-placement="top" title="Python编程快速上手 — 让繁琐工作自动化">
                         Previous<br>
-                        <span>swift 学习（8）Class</span>
+                        <span>Python编程快速上手 — 让繁琐工作自动化</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2017/03/01/swift10-Protocols/" data-toggle="tooltip" data-placement="top" title="swift 学习（10）Protocols">
-                        Next<br>
-                        <span>swift 学习（10）Protocols</span>
-                        </a>
-                    </li>
                     
                 </ul>
 

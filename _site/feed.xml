@@ -5,9 +5,88 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 26 Oct 2017 15:33:43 +0800</pubDate>
-    <lastBuildDate>Thu, 26 Oct 2017 15:33:43 +0800</lastBuildDate>
+    <pubDate>Thu, 26 Oct 2017 17:47:15 +0800</pubDate>
+    <lastBuildDate>Thu, 26 Oct 2017 17:47:15 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
+    
+      <item>
+        <title>Python小工具-根据输入关键字自动打开百度搜索结果的第一页</title>
+        <description>&lt;h1 id=&quot;python小工具-根据输入关键字自动打开百度搜索结果的第一页&quot;&gt;Python小工具-根据输入关键字自动打开百度搜索结果的第一页&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/234403-493ea52f7309279f.gif?imageMogr2/auto-orient/strip&quot; alt=&quot;PythonBaidu.gif&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/PythonBaidu.gif&quot; alt=&quot;PythonBaidu.gif&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;步骤分析:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 伪装浏览器的 User-Agent
+2. 读取输入参数并组装为请求参数
+3. 使用 `requests` 模块请求数据
+4. 使用 `bs4` 查找需要的链接数据
+5. 使用`webbrowser`模块 打开链接。 代码如下：
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import requests, sys, webbrowser, bs4
+
+#伪装浏览器头
+def camouflageWrowser():
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0'}
+    return headers
+
+# 读取输入参数并组装为搜索用的参数
+def readInputParameterAndFormat():
+    searchWorld =  ' '.join(sys.argv[1:])
+    payload = {'wd':u'%s'%searchWorld}
+    print(&quot;searchWorld = &quot; + searchWorld)
+    return  payload
+
+# 搜索关键字
+def requestsWithParameter(headers,parameter):
+    url = 'http://www.baidu.com/s'
+    r = requests.get(url, params=parameter, headers=headers, timeout=5)
+    return r
+
+# 查找需要的内容
+def findNeedResult(request):
+    # 查找需要的内容
+    soup = bs4.BeautifulSoup(request.text,&quot;html.parser&quot;)
+    linkElems = soup.select('.result &amp;gt; .t &amp;gt; a[href]')
+    topLinkElems = soup.select('.result-op &amp;gt; .t &amp;gt; a[href]')
+    return linkElems + topLinkElems
+
+# 打开全部搜索结果
+def openElement(el):
+    webbrowser.open(el.get('href'))
+
+
+#伪装浏览器头
+headers = camouflageWrowser()
+# 读取输入参数
+payload = readInputParameterAndFormat()
+# 请求关键字数据
+r = requestsWithParameter(headers,payload)
+# 解析返回的结果
+linkElems =  findNeedResult(r)
+
+for el in linkElems:
+    openElement(el)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 26 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/</guid>
+        
+        <category>Python</category>
+        
+        
+      </item>
     
       <item>
         <title>Python编程快速上手 — 让繁琐工作自动化</title>
@@ -652,7 +731,9 @@ elems = exampleSoup.select('#author')
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;im-feeling-lucky-google-查找&quot;&gt;“I’m Feeling Lucky” Google 查找&lt;/h4&gt;
+&lt;h4 id=&quot;im-feeling-lucky-百度-查找&quot;&gt;“I’m Feeling Lucky” 百度 查找&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://yunissong.github.io/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/&quot;&gt;Python小工具-根据输入关键字自动打开百度搜索结果的第一页&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 12 Oct 2017 00:00:00 +0800</pubDate>
@@ -1571,81 +1652,6 @@ irb(main):018:0&amp;gt; aniamls[-2]
         <category>iOS</category>
         
         <category>内功</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>如果做一个展示进度的刻度盘</title>
-        <description>&lt;h1 id=&quot;如果做一个展示进度的刻度盘&quot;&gt;如果做一个展示进度的刻度盘&lt;/h1&gt;
-
-&lt;p&gt;先上效果图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Pane/Pane0.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/img/in-post/Pane/Pane17.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/img/in-post/Pane/PaneAngle.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/img/in-post/Pane/PaneAngle70.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1如何绘制弧形间隔的刻度线&quot;&gt;1，如何绘制弧形间隔的刻度线。&lt;/h3&gt;
-&lt;p&gt;首先是如何绘制一个连续的弧形的线条，这个很简单：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    UIBezierPath *tickPath = [UIBezierPath bezierPathWithArcCenter:cneter radius:radius - 12 startAngle:startAngle endAngle:endAngle clockwise:YES];
-    CAShapeLayer *perLayer = [CAShapeLayer layer];
-    perLayer.strokeColor = strokeColor.CGColor;;
-    perLayer.fillColor = [UIColor clearColor].CGColor;
-    perLayer.allowsEdgeAntialiasing=YES;
-    perLayer.contentsScale = [UIScreen mainScreen].scale;
-    perLayer.lineWidth   = 0.6;
-    perLayer.path = tickPath.CGPath;
-    [self.layer addSublayer:perLayer];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;其实带有间隔的刻度线原理是跟这个一致的，我们只需要想着每个分割的刻度是一个连续的圆弧线，只不过它的 &lt;code class=&quot;highlighter-rouge&quot;&gt;startAngle&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;endAngle&lt;/code&gt; 差值很小。然后外面其实的一段段的绘制一个个 &lt;code class=&quot;highlighter-rouge&quot;&gt;CAShapeLayer&lt;/code&gt; 的弧线。&lt;/p&gt;
-
-&lt;p&gt;具体的代码就是：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    CGPoint cneter = self.center;
-    CGFloat radius = self.radius;
-    CGFloat perAngle = (endAngle - startAngle)/scaleLineCount;
-    UIColor *strokeColor = self.normalColor;
-    //绘制最外围刻度列表
-    for (NSInteger i = 0; i&amp;lt;= scaleLineCount; i++) {
-        CGFloat startAngel = (startAngle+ perAngle * i);
-        CGFloat endAngel   = startAngel + perAngle/5;
-        UIBezierPath *tickPath = [UIBezierPath bezierPathWithArcCenter:cneter radius:radius startAngle:startAngel endAngle:endAngel clockwise:YES];
-        CAShapeLayer *perLayer = [CAShapeLayer layer];
-        perLayer.strokeColor = strokeColor.CGColor;;
-        perLayer.allowsEdgeAntialiasing=YES;
-        perLayer.contentsScale = [UIScreen mainScreen].scale;
-        perLayer.lineWidth   = scaleLineWidth;
-        perLayer.path = tickPath.CGPath;
-        [self.layer addSublayer:perLayer];
-        [self.layerViewsArray addObject:perLayer];
-
-    }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;其中 &lt;code class=&quot;highlighter-rouge&quot;&gt;scaleLineCount&lt;/code&gt; 是要分成多少刻度。&lt;/p&gt;
-
-&lt;h3 id=&quot;2如何给进度加上动画&quot;&gt;2，如何给进度加上动画&lt;/h3&gt;
-&lt;p&gt;动画就简单粗暴了，一个个修改 &lt;code class=&quot;highlighter-rouge&quot;&gt;CAShapeLayer&lt;/code&gt; 的背景色。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CAShapeLayer *perLayer = self.layerViewsArray[self.index];
-perLayer.strokeColor = self.hightColor.CGColor;;
-[self.layerHeightViewsArray addObject:perLayer];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;demo  已上传 &lt;a href=&quot;https://github.com/yunisSong/SYPanView/tree/master&quot;&gt;SYPanView&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 18 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/18/%E5%A6%82%E6%9E%9C%E5%81%9A%E4%B8%80%E4%B8%AA%E5%B1%95%E7%A4%BA%E8%BF%9B%E5%BA%A6%E7%9A%84%E5%88%BB%E5%BA%A6%E7%9B%98/</guid>
-        
-        <category>iOS</category>
         
         
       </item>

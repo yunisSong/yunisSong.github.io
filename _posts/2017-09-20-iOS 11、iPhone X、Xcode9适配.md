@@ -86,7 +86,19 @@ tags:
 ```
 或者也可以使用最新版的 `MJRefresh` 也许作者已经适配了 `iOS 11`。
 
+### 4 保存图片到本地闪退
 
+iOS 11 如果需要保存图片到相片库中，需要在 info.plist 中增加新的参数 ：`NSPhotoLibraryAddUsageDescription`,否则保存图片时会闪退。苹果对用户的隐私权限要求越来越严格了。
+
+```
+This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSPhotoLibraryAddUsageDescription key with a string value explaining to the user how the app uses this data.
+```
+
+
+```
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>是否允许此App为您添加图片？</string>
+```
 ### Xcode 9
 
 目前使用 `Xcode 9` 没有发现有特殊需要修改的地方。
