@@ -281,6 +281,18 @@
 </div>
 <p>或者也可以使用最新版的 <code class="highlighter-rouge">MJRefresh</code> 也许作者已经适配了 <code class="highlighter-rouge">iOS 11</code>。</p>
 
+<h3 id="4-保存图片到本地闪退">4 保存图片到本地闪退</h3>
+
+<p>iOS 11 如果需要保存图片到相片库中，需要在 info.plist 中增加新的参数 ：<code class="highlighter-rouge">NSPhotoLibraryAddUsageDescription</code>,否则保存图片时会闪退。苹果对用户的隐私权限要求越来越严格了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSPhotoLibraryAddUsageDescription key with a string value explaining to the user how the app uses this data.
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    &lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;
+    &lt;string&gt;是否允许此App为您添加图片？&lt;/string&gt;
+</code></pre>
+</div>
 <h3 id="xcode-9">Xcode 9</h3>
 
 <p>目前使用 <code class="highlighter-rouge">Xcode 9</code> 没有发现有特殊需要修改的地方。</p>
@@ -396,6 +408,10 @@
                             
         				
                             
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
         				
                             
                 				<a href="/tags/#轮子" title="轮子" rel="2">
@@ -412,7 +428,7 @@
                             
         				
                             
-                				<a href="/tags/#内功" title="内功" rel="11">
+                				<a href="/tags/#内功" title="内功" rel="13">
                                     内功
                                 </a>
                             
@@ -430,7 +446,7 @@
                             
         				
                             
-                				<a href="/tags/#Python" title="Python" rel="2">
+                				<a href="/tags/#Python" title="Python" rel="5">
                                     Python
                                 </a>
                             
@@ -546,7 +562,7 @@
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 三十一 2017
+                    Copyright &copy; 三十一 2018
                     <br>
                     Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
                     <iframe

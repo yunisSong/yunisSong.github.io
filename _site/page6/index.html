@@ -184,6 +184,257 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2017/04/11/%E4%BD%BF%E7%94%A8Swift%E5%81%9A%E4%B8%80%E4%BA%9B%E9%87%8D%E5%A4%8D%E6%80%A7%E7%9A%84%E5%B7%A5%E4%BD%9C/">
+        <h2 class="post-title">
+            使用Swift做一些重复性的工作
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            使用Swift做一些重复性的工作
+
+之前已经使用Shell 实现了这个工作 使用脚本做一些重复的事情 ,想到正在学习Swift，并且前端时间看看喵神直播编写 FengNiao 的过程，就按照喵神的步骤用swift 实现了一遍，用起来是真心爽。附上动图。
+
+
+
+
+安装方式
+
+  $ git clone https://github.com/yunisSong/YunisTool.git
+  s...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 11, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/10/%E8%84%9A%E6%9C%AC/">
+        <h2 class="post-title">
+            使用脚本做一些重复的事情
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            使用脚本做一些重复的事情
+使用的这个模板建立了这个博客以后，发现每篇文章前面都需要加入默认的文件头，每次都需要从其他的文件复制过来，就想着能不能使用脚本来完成。于是就边搜索边捣鼓出来了这样一个脚本，请勿见笑。
+
+#!bin/sh
+
+#进入当前目录
+basepath=$(cd `dirname $0`; pwd)
+
+#读取当前时间
+DATE=$(date +%Y-%m-%d)" "$(date...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 10, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/05/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAiOS%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/">
+        <h2 class="post-title">
+            深入浅出iOS事件机制
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            深入浅出iOS事件机制
+
+什么是响应链
+响应链是一堆可以处理事件的对象构成的具有先后循序的链条。
+iOS 中有一个类叫做 UIResponder ,它的头文件如下图：
+
+
+UIResponder 是可以响应事件的的类的基类，只有继承自 UIResponder的类才可以响应用户的操作。包括最常见的 UIView、 UIWindow和UIViewController等。
+
+在我们的app中，所有...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 5, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/05/%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84UIButton%E6%89%A9%E5%B1%95/">
+        <h2 class="post-title">
+            一个好用的UIButton扩展
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            一个好用的UIButton扩展
+
+UIButton+ExtendTouchRect.h
+
+#import &lt;UIKit/UIKit.h&gt;
+
+@interface UIButton (ExtendTouchRect)
+@property(nonatomic)UIEdgeInsets touchExtendInset;
+
+@end
+
+
+UIButton+ExtendTouchRect...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 5, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/29/CallKit/">
+        <h2 class="post-title">
+            利用CallKit 实现来电识别
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            利用CallKit 实现来电识别
+
+
+  最近项目中新增了一个需求，需要使用 iOS 10 中新增的 CallKit 来实现一个来电识别的功能。按照惯例，先在网上搜索了一下，看了几篇文章，觉得实现起来很简单嘛。于是就愉快的开始了，然后就开始遇见一个个坑，网上目前存在的文章都避重就轻的简单的实现了号码识别，但是关于号码规则、大数量的数据如何处理等都没有提及。这篇文字就记录下我个人在实现这个功能...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on March 29, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/29/%E5%A4%A7%E6%96%87%E4%BB%B6%E5%8E%BB%E9%87%8D/">
+        <h2 class="post-title">
+            大文件内容使用shell 排序、去重
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            最近做一个基于iOS 10 来电拦截的东西，需要向系统中添加数据，数据要求必须排序，且不能有重复的号码。
+刚开始试了用oc 写了个排序去重的算法，麻蛋开着电脑吃完饭回来还没有跑完，就去网上搜了下shell ，搞起来那叫一个酸爽。有了下面3行命令，速度杠杠的，三十几M的东西，几秒钟搞定。
+sort -u simple.json         
+删除完全相同的行 并排序 
+
+例：
+
+
+1111...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hux on March 29, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/01/swift12-Access-Control-and-Code-Organization/">
+        <h2 class="post-title">
+            swift 学习（12）Access Control and Code Organization
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            #swift 学习（12） Access Control and Code Organization
+
+
+  private: Accessible only to the defining type, which includes any and all nested types.
+  fileprivate: Accessible from anywhere within the sou...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on March 1, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/01/swift11-Generics-%E6%B3%9B%E5%9E%8B/">
+        <h2 class="post-title">
+            swift 学习（11）Generics
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            #swift 学习（11）Generics 泛型
+
+[TOc]
+
+
+  generics are a way to systematically define sets of types.
+
+
+let animalAges: [Int] = [2,5,7,9]
+let animalAges: Array&lt;Int&gt; = [2,5,7,9]
+
+let intNames: Dictio...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on March 1, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/03/01/swift10-Protocols/">
+        <h2 class="post-title">
+            swift 学习（10）Protocols
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            #swift 学习（10）Protocols
+[TOC]
+
+
+  There’s one final type that can bridge common behaviors between structs, classes and enums. In fact, it is itself a user-defined named type: the protocol.
+A protoco...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on March 1, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2017/03/01/swift09-Enumerations/">
         <h2 class="post-title">
             swift 学习（9）Enumerations
@@ -212,195 +463,6 @@ en...
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2017/03/01/swift08-Class/">
-        <h2 class="post-title">
-            swift 学习（8）Class
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（8）Class
-
-Reference types
-Struts 是值类型  class 是引用类型
-类不会提供自动自动初始化方法，需要自己实现。
-类里面的存储类型必须在初始化方法结束之前完成赋值。
-
-  In Swift, a structure is an immutable value. A class, on the other hand, is a mutable...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift07-Methods/">
-        <h2 class="post-title">
-            swift 学习（7）Methods
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（7）Methods
-
-  Methods, as you’ve already seen, are merely functions that reside inside a structure.
-
-
-Comparing methods to computed properties
-使用计算属性还是使用方法，可以使用下面的逻辑进行判断。
-
-
-mutating method...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift06-Properties/">
-        <h2 class="post-title">
-            swift 学习（6）Properties
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（6）Properties
-
-
-  [x] 实在无法用自己的语言表示出来，以后就当是读书摘录吧。
-
-
-
-  • Properties are variables and constants that are part of a named type.
-• Stored properties allocate memory to store a value.
-• Comput...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift05-Structures/">
-        <h2 class="post-title">
-            swift 学习（5）Structures
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（5）Structures
-
-
-  Structures, or structs, are one of the named types in Swift that allow you to encapsulate related properties and behaviors. You can declare a new type, give it a name and...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift04/">
-        <h2 class="post-title">
-            swift 学习（4）Closure
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            #swift 学习（4）
-
-1，闭包 （Closure）
-
-
-  Closures are so named because they have the ability to “close over” the variables and constants within the closure’s own scope. This simply means that a closure can...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift03/">
-        <h2 class="post-title">
-            swift 学习（3）基础
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            swift 学习（3）
-
-1，Optionals
-
-
-  Swift introduces a whole new type, optional, that handles the possibility a value could be nil. If you’re handling a non-optional type, then you’re guaranteed to have a...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2017/03/01/swift02/">
-        <h2 class="post-title">
-            swift 3 学习 （2）基础
-        </h2>
-        
-        <h3 class="post-subtitle">
-            在不断填坑中前进。。
-        </h3>
-        
-        <div class="post-content-preview">
-            swift 3 学习 （2）
-1，当多个不同类型的数据进行操作时，需要转化为形同的数据类型。
-
-let num1 = 1
-let num2 = 2.3
-var count  = num1 + num2
-
-error :
-Binary operator '+' cannot be applied to operands of type 'Int' and 'Double'
-
-//正确做法
-va...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by 三十一 on March 1, 2017
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -410,6 +472,10 @@ va...
         <a href="/page5">&larr; Newer Posts</a>
     </li>
     
+    
+    <li class="next">
+        <a href="/page7">Older Posts &rarr;</a>
+    </li>
     
 </ul>
 
@@ -467,6 +533,10 @@ va...
                             
                         
                             
+                                <a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
                         
                             
                                 <a href="/tags/#轮子" title="轮子" rel="2">
@@ -483,7 +553,7 @@ va...
                             
                         
                             
-                                <a href="/tags/#内功" title="内功" rel="11">
+                                <a href="/tags/#内功" title="内功" rel="13">
                                     内功
                                 </a>
                             
@@ -501,7 +571,7 @@ va...
                             
                         
                             
-                                <a href="/tags/#Python" title="Python" rel="2">
+                                <a href="/tags/#Python" title="Python" rel="5">
                                     Python
                                 </a>
                             
@@ -615,7 +685,7 @@ va...
                     
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 三十一 2017
+                    Copyright &copy; 三十一 2018
                     <br>
                     Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
                     <iframe

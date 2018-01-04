@@ -5,83 +5,23 @@
     <description>潜心修行中。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 26 Oct 2017 17:47:15 +0800</pubDate>
-    <lastBuildDate>Thu, 26 Oct 2017 17:47:15 +0800</lastBuildDate>
+    <pubDate>Thu, 04 Jan 2018 13:57:00 +0800</pubDate>
+    <lastBuildDate>Thu, 04 Jan 2018 13:57:00 +0800</lastBuildDate>
     <generator>Jekyll v3.4.1</generator>
     
       <item>
-        <title>Python小工具-根据输入关键字自动打开百度搜索结果的第一页</title>
-        <description>&lt;h1 id=&quot;python小工具-根据输入关键字自动打开百度搜索结果的第一页&quot;&gt;Python小工具-根据输入关键字自动打开百度搜索结果的第一页&lt;/h1&gt;
+        <title>使用Python自动玩微信小游戏跳一跳</title>
+        <description>&lt;h1 id=&quot;使用python自动玩微信小游戏跳一跳&quot;&gt;使用Python自动玩微信小游戏跳一跳&lt;/h1&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/234403-493ea52f7309279f.gif?imageMogr2/auto-orient/strip&quot; alt=&quot;PythonBaidu.gif&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;使用 &lt;a href=&quot;https://github.com/wangshub/wechat_jump_game&quot;&gt;wechat_jump_game&lt;/a&gt;提供的脚本，但是其实安装还是有一些步骤的，记录下安装的步骤。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/PythonBaidu.gif&quot; alt=&quot;PythonBaidu.gif&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;步骤分析:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 伪装浏览器的 User-Agent
-2. 读取输入参数并组装为请求参数
-3. 使用 `requests` 模块请求数据
-4. 使用 `bs4` 查找需要的链接数据
-5. 使用`webbrowser`模块 打开链接。 代码如下：
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
-import requests, sys, webbrowser, bs4
-
-#伪装浏览器头
-def camouflageWrowser():
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
-    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0'}
-    return headers
-
-# 读取输入参数并组装为搜索用的参数
-def readInputParameterAndFormat():
-    searchWorld =  ' '.join(sys.argv[1:])
-    payload = {'wd':u'%s'%searchWorld}
-    print(&quot;searchWorld = &quot; + searchWorld)
-    return  payload
-
-# 搜索关键字
-def requestsWithParameter(headers,parameter):
-    url = 'http://www.baidu.com/s'
-    r = requests.get(url, params=parameter, headers=headers, timeout=5)
-    return r
-
-# 查找需要的内容
-def findNeedResult(request):
-    # 查找需要的内容
-    soup = bs4.BeautifulSoup(request.text,&quot;html.parser&quot;)
-    linkElems = soup.select('.result &amp;gt; .t &amp;gt; a[href]')
-    topLinkElems = soup.select('.result-op &amp;gt; .t &amp;gt; a[href]')
-    return linkElems + topLinkElems
-
-# 打开全部搜索结果
-def openElement(el):
-    webbrowser.open(el.get('href'))
-
-
-#伪装浏览器头
-headers = camouflageWrowser()
-# 读取输入参数
-payload = readInputParameterAndFormat()
-# 请求关键字数据
-r = requestsWithParameter(headers,payload)
-# 解析返回的结果
-linkElems =  findNeedResult(r)
-
-for el in linkElems:
-    openElement(el)
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;我是 iPhone 和 mac 的环境，就只试了这个环境的配置。&lt;/p&gt;
+&lt;h3 id=&quot;1安装&quot;&gt;1，安装&lt;/h3&gt;
 
 </description>
-        <pubDate>Thu, 26 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/</guid>
+        <pubDate>Wed, 03 Jan 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/01/03/%E4%BD%BF%E7%94%A8Python%E8%87%AA%E5%8A%A8%E7%8E%A9%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E8%B7%B3%E4%B8%80%E8%B7%B3/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/01/03/%E4%BD%BF%E7%94%A8Python%E8%87%AA%E5%8A%A8%E7%8E%A9%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E8%B7%B3%E4%B8%80%E8%B7%B3/</guid>
         
         <category>Python</category>
         
@@ -89,7 +29,1595 @@ for el in linkElems:
       </item>
     
       <item>
-        <title>Python编程快速上手 — 让繁琐工作自动化</title>
+        <title>Linux基础</title>
+        <description>&lt;h1 id=&quot;linux基础&quot;&gt;Linux基础&lt;/h1&gt;
+&lt;h4 id=&quot;shell-命令&quot;&gt;shell 命令&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ls&lt;/code&gt; 显示当前路径下的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cd&lt;/code&gt; 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;clear&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;touch&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;mkdir&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pwd&lt;/code&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt; 查看文本内容
+&lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt; 之前执行的命令
+&lt;code class=&quot;highlighter-rouge&quot;&gt;rm&lt;/code&gt; 删除
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ls &amp;gt;1.txt&lt;/code&gt;  显示的文件存储到1.txt 文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cat 1.txt &amp;gt;2.txt&lt;/code&gt; 查看 1.txt 内容 并存储到 2.txt 并覆盖原内容 ，如果2.txt 文件不存在，先创建文件，再存储内容。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cat 1.txt &amp;gt;&amp;gt;2.txt&lt;/code&gt; 两个 » 代表在原内容的基础上追加内容&lt;/p&gt;
+
+&lt;p&gt;more 分页查看大文件 按键 q 退出
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ls; ls -a&lt;/code&gt; 可以用 ; 执行两条命令&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;管道：一个命令的输出可以通过管道做为另一个命令的输入。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cd -&lt;/code&gt; 回到上次用户所处在的路径
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cd ~&lt;/code&gt; 回到根目录&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mv 1.txt 11.txt&lt;/code&gt; 重命名 1.txt 为 11.txt
+&lt;code class=&quot;highlighter-rouge&quot;&gt;mv 1.txt ../11.txt&lt;/code&gt; 移动1.txt 到上层目录并重命名为11.txt
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cp 2.txt ../&lt;/code&gt; copy 2.txt 一份到上层目录&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ln -s 11.txt 100.txt&lt;/code&gt; 为 11.txt 创建 100.txt 的快捷方式
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ln 11.txt 100.txt&lt;/code&gt; 相当于复制了一份相同的内容&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;grep -n '^a' 1.txt&lt;/code&gt;   搜寻以a开头的行
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep -n 'a$' 1.txt&lt;/code&gt;   搜寻以a结尾的行&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -name &quot;^SY*.m&quot;&lt;/code&gt; 查找当前目录下名字为 &lt;code class=&quot;highlighter-rouge&quot;&gt;SY&lt;/code&gt; 开头的 &lt;code class=&quot;highlighter-rouge&quot;&gt;.m&lt;/code&gt; 结尾的文件。
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -name test.sh&lt;/code&gt; 查找当前目录下所有名为test.sh的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -name '*.sh'	&lt;/code&gt;	 查找当前目录下所有后缀为.sh的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -name &quot;[A-Z]*&quot;	&lt;/code&gt; 查找当前目录下所有以大写字母开头的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find /tmp -size 2M	&lt;/code&gt; 查找在/tmp 目录下等于2M的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find /tmp -size +2M	&lt;/code&gt;查找在/tmp 目录下大于2M的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find /tmp -size -2M	&lt;/code&gt; 查找在/tmp 目录下小于2M的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -size +4k -size -5M&lt;/code&gt; 查找当前目录下大于4k，小于5M的文件
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -perm 0777	&lt;/code&gt;  查找当前目录下权限为 777 的文件或目录&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh UserName@192.168.XX.XX&lt;/code&gt; 远程连接 &lt;code class=&quot;highlighter-rouge&quot;&gt;UserName&lt;/code&gt;：用户名  &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.XX.XX&lt;/code&gt; ip地址。&lt;/p&gt;
+
+&lt;h4 id=&quot;linux-文件权限&quot;&gt;Linux 文件权限&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;/media/15126318765585/Linux用户权限.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;r&lt;/code&gt; ：可读&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; ：可写&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; ：可执行
+    &lt;h5 id=&quot;更改文件权限&quot;&gt;更改文件权限&lt;/h5&gt;
+  &lt;/li&gt;
+  &lt;li&gt;u 文件的拥有者&lt;/li&gt;
+  &lt;li&gt;g 文件的用户组&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;o 其他&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; chmod u=rwx 1.txt&lt;/code&gt; 修改用户的权限
+&lt;img src=&quot;/media/15126318765585/修改文件权限.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod g=rw- 1.txt&lt;/code&gt; 修改用户用户组的权限
+&lt;img src=&quot;/media/15126318765585/修改文件用户组权限.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod o=rw- 1.txt&lt;/code&gt; 修改其他用户的权限&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;同时修改 用户、用户组、其他用户的权限：
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod o=r,g=r,o=r 1.txt&lt;/code&gt; 用户、用户组、其他用户的权限均为可读的权限&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod o=,g=,o= 1.txt&lt;/code&gt; 用户、用户组、其他用户的权限均没有任何权限&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;使用数字法修改权限：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r --------- 4
+w --------- 2
+x --------- 1
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;所以&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* 数字 1，代表可执行
+* 数字 2，带包可写
+* 数字 4，代表可读
+* 数字 5，代表可读、可执行
+* 数字 6，代表可读、可写
+* 数字 7，代表可读、可写、可执行
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15126318765585/数字法修改用户权限.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod 777 1.txt&lt;/code&gt; 的意思就是把 &lt;code class=&quot;highlighter-rouge&quot;&gt;1.txt&lt;/code&gt; 这个文件修改为&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;拥有文件的用户 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可写&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可执行&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;文件所属的组 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可写&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可执行&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;其他用户 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可写&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可执行&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;同理 &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod 644  1.txt&lt;/code&gt;的意思是把 &lt;code class=&quot;highlighter-rouge&quot;&gt;1.txt&lt;/code&gt; 这个文件修改为&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;拥有文件的用户 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;可写&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;文件所属的组 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;其他用户 &lt;code class=&quot;highlighter-rouge&quot;&gt;可读&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;vim-命令&quot;&gt;vim 命令&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15126318765585/201607-vim-keymap.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;进入插入模式&quot;&gt;进入插入模式:&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;i: 插入光标前一个字符 
+
+I: 插入行首 
+
+a: 插入光标后一个字符 
+
+A: 插入行未 
+
+o: 向下新开一行,插入行首 
+
+O: 向上新开一行,插入行首
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;进入命令模式&quot;&gt;进入命令模式:&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ESC:从插入模式或末行模式进入命令模式
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;移动光标&quot;&gt;移动光标:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;h: 左移 
+
+j: 下移 
+
+k: 上移 
+
+l: 右移
+
+M: 光标移动到中间行 
+
+L: 光标移动到屏幕最后一行行首 
+
+G: 移动到指定行,行号 -G
+
+w: 向后一次移动一个字 
+
+b: 向前一次移动一个字
+
+{: 按段移动,上移 
+
+}: 按段移动,下移
+
+Ctr-d: 向下翻半屏 
+
+Ctr-u: 向上翻半屏
+
+Ctr-f: 向下翻一屏 
+
+Ctr-b: 向上翻一屏
+
+gg: 光标移动文件开头 
+
+G: 光标移动到文件末尾
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;删除命令&quot;&gt;删除命令:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x: 删除光标后一个字符,相当于 Del 
+
+X: 删除光标前一个字符,相当于 Backspace
+
+dd: 删除光标所在行,n dd 删除指定的行数 D: 删除光标后本行所有内容,包含光标所在字符 
+
+d0: 删除光标前本行所有内容,不包含光标所在字符
+
+dw: 删除光标开始位置的字,包含光标所在字符
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;撤销命令&quot;&gt;撤销命令:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;u: 一步一步撤销 
+
+
+Ctr-r: 反撤销
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;重复命令&quot;&gt;重复命令:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.: 重复上一次操作的命令
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;文本行移动&quot;&gt;文本行移动:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;: 文本行右移 
+
+&amp;lt;&amp;lt;: 文本行左移
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;复制粘贴&quot;&gt;复制粘贴:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yy: 复制当前行,n yy 复制 n 行 
+
+p: 在光标所在位置向下新开辟一行,粘贴
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;可视模式&quot;&gt;可视模式:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;v: 按字符移动,选中文本 
+
+V: 按行移动,选中文本可视模式可以配合 d, y, &amp;gt;&amp;gt;, &amp;lt;&amp;lt; 实现对文本块的删除,复制,左右移动
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;替换操作&quot;&gt;替换操作:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;r: 替换当前字符 
+
+R: 替换当前行光标后的字符
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;查找命令&quot;&gt;查找命令:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/: str查找
+n: 下一个
+N：上一个
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;替换命令&quot;&gt;替换命令：&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;把abc全部替换成123&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;末行模式下，将光标所在行的abc替换成123
+:%s/abc/123/g
+
+末行模式下，将第一行至第10行之间的abc替换成123
+:1, 10s/abc/123/g
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;vim里执行-shell-下命令&quot;&gt;vim里执行 shell 下命令:&lt;/h5&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;末行模式里输入!,后面跟命令
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 08 Dec 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/12/08/Linux%E5%9F%BA%E7%A1%80/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/12/08/Linux%E5%9F%BA%E7%A1%80/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>(转载)简单几条命令，轻松开启 macOS 系统隐藏功能</title>
+        <description>&lt;h1 id=&quot;转载简单几条命令轻松开启-macos-系统隐藏功能&quot;&gt;(转载)简单几条命令，轻松开启 macOS 系统隐藏功能&lt;/h1&gt;
+
+&lt;p&gt;原文地址：&lt;a href=&quot;https://sspai.com/post/41695&quot;&gt;简单几条命令，轻松开启 macOS 系统隐藏功能 新手问号&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.sspai.com/article/f9454695-bfc7-f1f2-5b36-6cf46c7c0209.jpg?imageMogr2/quality/95/thumbnail/!700x233r/gravity/Center/crop/700x233&quot; alt=&quot;简单几条命令，轻松开启 macOS 系统隐藏功能&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://sspai.com/user/719707&quot;&gt;&lt;img src=&quot;https://cdn.sspai.com/2017/08/31/45f498dc0e9a6b1caf7a1f2146682c0b.jpg?imageMogr2/quality/95/thumbnail/!60x60r/gravity/Center/crop/60x60&quot; alt=&quot;WATERS&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;waters&quot;&gt;&lt;a href=&quot;https://sspai.com/user/719707&quot;&gt;WATERS&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;编注：「新手问号」是少数派的一个全新栏目。它面向完全「零基础」的新手用户，通过最简单易懂的方式，帮助你快速掌握关于系统和软硬件的入门知识。&lt;/p&gt;
+
+&lt;p&gt;栏目文章回顾：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://sspai.com/post/41411&quot;&gt;向 Windows 高级用户进阶，这 10 款效率工具帮你开路&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://sspai.com/post/41477&quot;&gt;macOS 上都有哪些既免费、又实用的工具？&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://sspai.com/post/41371&quot;&gt;刚从 Windows 转到 macOS，如何快速上手操作？&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://sspai.com/post/41363&quot;&gt;做好这四种方法，让你的 Mac 远离数据被盗和丢失&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Mac 中有一个图标是「黑色的窗口」名为「终端 Terminal」的应用，对于一个普通人用户来说，它就好像有一层神秘的面纱，时常让人觉得只有技术流、程序员才能驾驭。而命令行这种东西似乎也都是存在想象里的，一个人对着空白的窗口噼里啪啦的打下一行代码，然后电脑便自动给你执行相应的任务。其实作为新手的我们一样也可以让它发挥出一定的作用，今天的这一篇文章就带你了解一些你可能也能用到的命令行，让你轻松开启系统的隐藏功能。&lt;/p&gt;
+
+&lt;h2 id=&quot;配置-launchpad&quot;&gt;配置 Launchpad&lt;/h2&gt;
+
+&lt;p&gt;在大家安装好应用去 Launchpad 里寻找的时候，时常会发现原生的配置让 Launchpad 看的稍许拥挤，但是在系统偏好设置里我们是无法修改的。为了让我们的 Launchpad 识别度更高并且更加美观，可以通过终端对排列方式进行修改，复制以下代码至终端即可：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.dock springboard-columns -int 8; defaults write com.apple.dock springboard-rows -int 7; defaults write com.apple.dock ResetLaunchPad -bool TRUE; killall Dock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;命令中有两个数字 8 和 7，它们分别代表的是布局中的列数和行数，如果想更清除的了解该段命令，可以参考《&lt;a href=&quot;https://sspai.com/post/33299&quot;&gt;通过终端命令改变 Launchpad 中应用图标的大小&lt;/a&gt;》。
+&lt;img src=&quot;https://cdn.sspai.com/2017/11/09/4b53845799f46d7aba1eb7d58fe9b846.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1&quot; alt=&quot;&quot; /&gt;
+除了可以对 Launchpad 的布局进行更改，还可以根据自己的喜好对北背景的模糊程度进行更改，复制以下代码至终端即可：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.dock springboard-blur-radius -int 100; killall Dock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;命令中有一个数字 100，它代表的背景模糊的程度，你可以在 0 ~ 255 的范围内选择。&lt;/p&gt;
+
+&lt;h2 id=&quot;修改截图属性&quot;&gt;修改截图属性&lt;/h2&gt;
+
+&lt;p&gt;Mac 上自带的截图非常的还用，可以区域、窗口、延时截图。但是截图会默认保存在你的桌面上，时间一长，你的桌面就会被五花八门的截图堆满。对此，我们可以新建一个文件夹专门来存放截图，新建一个 screenshots 的文件夹在桌面或者任意一个你希望它待在的地方，将下述代码复制进终端即可：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.screencapture location ~/Desktop/screenshots; killall SystemUIServer
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;~ 之后填写你相应的文件夹路径即可，如果不清楚路径的写法，可以打开该文件夹右键点击任何一个文件「显示简介」，复制「位置」之后的内容即可，也可以直接将文件夹拖拽至终端以此显示路径。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.sspai.com/2017/11/09/05c353239dec51329c19169daef951a6.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;除此之外，你也可以使用以下命令修改截图保存的类型，例如你想保存 JPG 格式的截图：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;efaults write com.apple.screencapture type jpg &amp;amp;&amp;amp; killall SystemUIServe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;显示隐藏文件夹&quot;&gt;显示隐藏文件夹&lt;/h2&gt;
+
+&lt;p&gt;在 Windows 上隐藏文件夹大家应该都是老手了，转到 Mac 后，却发现隐藏文件夹和自己想象有那么一些不一样。为了更好的把大家的「小秘密」藏到内心最深处的地方，也可以使用两段命令来完成操作。跟前文一样，我们需要获取文件夹的路径，然后在终端中输入以下代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chflags hidden ~/Desktop/Hidden
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;你也可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;nohidden&lt;/code&gt; 重新让该文件夹显示。如果你要显示全部文件，推荐大家直接使用快捷键「Shift + Command + .」即可显示全部隐藏文件。
+&lt;img src=&quot;https://cdn.sspai.com/2017/11/09/52ea8991101b5a04c7f5d3a59aea7731.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1&quot; alt=&quot;&quot; /&gt;
+除此之外，如果你觉得自己桌面太乱了，但是这会又有人来看你的电脑，你可以使用一段命令行将桌面的文件全部隐藏起来，让桌面回归清爽，文件也依旧可以通过 Finder 中的桌面中找到：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.finder CreateDesktop -bool false; killall Finder
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果想重新看到桌面的图标，将 false 替换为 true 输入终端即可。&lt;/p&gt;
+
+&lt;h2 id=&quot;dock-栏属性修改&quot;&gt;Dock 栏属性修改&lt;/h2&gt;
+
+&lt;p&gt;Mac 中为了获得更大的可视空间，在不使用 Dock 时我们可以隐藏它。若要查看隐藏的 Dock，可以将指针移到 Dock 所在屏幕的边缘。但是这个显示速度存在了一定的延迟，为了加速这个过程，我们可以使用一段命令行，让你的隐藏 Dock 弹出的时候更加的顺滑流畅：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults write com.apple.Dock autohide-delay -float 0 &amp;amp;&amp;amp; killall Dock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用后的效果，可以说是非常明显了，再也不会有在「挤牙膏」的感觉。
+&lt;img src=&quot;https://cdn.sspai.com/2017/11/09/938e520e64d816a59123861e24efda34.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1&quot; alt=&quot;&quot; /&gt;
+如果在你的使用下，Dock 栏上摆满了各类 App，却发现这不是自己想要的结果。你可以通过终端来重置你的 Dock 栏，让它回到最开始的状态：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults delete com.apple.dock; killall Dock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;让屏幕亮的更久&quot;&gt;让屏幕亮的更久&lt;/h2&gt;
+
+&lt;p&gt;Mac 在运行一段时间后，会自动进入睡眠。如果大家不想 Mac 那么快的进入书面，可以采用一些第三方软件来达到此目的。其实与其下载一个软件占用 Mac 上精贵的储存，不如使用一段命令行就可以解决这些问题了。下方命令行中的 3600 单位是秒，即你希望多长时间内你的 Mac 不会进入睡眠：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;caffeinate -t 3600
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;应用安装与更新&quot;&gt;应用安装与更新&lt;/h2&gt;
+
+&lt;p&gt;MAS 的连接情况大家也很清楚，时常会因为情绪不稳定导致你无法获得最完美的下载体验，况且还有很多应用并不在商店上架，或是非商店版本有更多的功能。原来的时候，我们需要查找一个又一个的官网，然后下载安装，其实这么多繁琐操作，在终端里可以更快的完成。你只需要输入：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew cask install App
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将 App 替换为你需要安装的软件的名字即可。但是使用前，需要你在电脑中安装 Homebrew Cask ，具体可以参考《&lt;a href=&quot;https://sspai.com/post/40321&quot;&gt;再谈 Homebrew Cask 在 macOS 上安装应用的轻松感&lt;/a&gt;》。大多数通过 Cask 安装的软件都自带更新选项，如果没有该选项，用户依旧可以通过终端进行更新，在终端中输入&lt;code class=&quot;highlighter-rouge&quot;&gt;brew tap buo/cask-upgrade&lt;/code&gt;，然后再输入下段命令即可更新全部应用：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew cu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn.sspai.com/2017/11/10/0a289482f9790f047468edf2d0c89996.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1&quot; alt=&quot;&quot; /&gt;
+如果你希望安装 MAS 上的应用，也可以绕过原生的商店应用，直接采用终端进行安装。你可以先通过刚才安装的 Homebrew 安装一个我们需要的 mas ，即在终端输入：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install mas 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后，可以在终端中搜索需要的软件，或者直接输入关键字段加上应用的识别码进行安装：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mas install AppID
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;友情提示-️&quot;&gt;友情提示 ⚠️&lt;/h2&gt;
+
+&lt;p&gt;终端操作虽然说很快捷，可能你也觉得很高端。但是，在网络上经常会有人拿终端命令开玩笑，比如前面带有 &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo&lt;/code&gt; 或者 &lt;code class=&quot;highlighter-rouge&quot;&gt;rm -rf&lt;/code&gt; 类型字段的，一定要谨慎使用。可能就是这一步操作，电脑就会「爆炸」，也希望大家也不要开这一类玩笑，给大家一个美好的环境！&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://sspai.com/tag/%e6%96%b0%e6%89%8b&quot;&gt;新手&lt;/a&gt;&lt;a href=&quot;https://sspai.com/tag/%e6%8a%80%e5%b7%a7&quot;&gt;技巧&lt;/a&gt;&lt;a href=&quot;https://sspai.com/tag/macOS&quot;&gt;macOS&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 14 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11/14/(%E8%BD%AC%E8%BD%BD)%E7%AE%80%E5%8D%95%E5%87%A0%E6%9D%A1%E5%91%BD%E4%BB%A4-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%90%AF-macOS-%E7%B3%BB%E7%BB%9F%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD-%E6%96%B0%E6%89%8B%E9%97%AE%E5%8F%B7/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/14/(%E8%BD%AC%E8%BD%BD)%E7%AE%80%E5%8D%95%E5%87%A0%E6%9D%A1%E5%91%BD%E4%BB%A4-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%90%AF-macOS-%E7%B3%BB%E7%BB%9F%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD-%E6%96%B0%E6%89%8B%E9%97%AE%E5%8F%B7/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>算法图解</title>
+        <description>&lt;h1 id=&quot;算法图解&quot;&gt;算法图解&lt;/h1&gt;
+&lt;h3 id=&quot;算法简介&quot;&gt;算法简介&lt;/h3&gt;
+&lt;h4 id=&quot;对数&quot;&gt;对数&lt;/h4&gt;
+&lt;p&gt;对数运算是幂运算的逆运算。
+&lt;img src=&quot;/media/15105545936376/15105546056701.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;二分查找如何实现&quot;&gt;二分查找如何实现&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def binary_search(array,item):
+    low = 0
+    high = len(array) - 1
+    print(&quot;large index is %d&quot;%high)
+
+    while low &amp;lt;= high:
+        mid = int((low + high)/2)
+        guess = array[mid]
+        print(&quot;Mid is %d&quot;%mid)
+        print(&quot;guess is %d&quot;%guess)
+        if  guess == item:
+            return mid
+        elif guess &amp;lt; item:
+            low = mid + 1
+            print(&quot;+++++++low is %d&quot;%low)
+        elif guess &amp;gt; item:
+            high = mid - 1
+            print(&quot;-------high is %d&quot;%high)
+        else:
+            return None
+myList = [1,3,7,9,12,23,45,67,89,123,244,345,456,1234]
+print(binary_search(myList,23))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;运行时间&quot;&gt;运行时间&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;每次介绍算法时，我都将讨论其运行时间。一般而言，应选择效率最高的算 法，以最大限度地减少运行时间或占用空间。
+简单查找逐个地检查数 字，如果列表包含100个数字，最多需要猜100次。如果列表包含40亿个数字，最 多需要猜40亿次。换言之，最多需要猜测的次数与列表长度相同，这被称为线性 时间(linear time)。
+二分查找则不同。如果列表包含100个元素，最多要猜7次;如果列表包含40亿个数字，最多 需猜32次。厉害吧?二分查找的运行时间为对数时间(或log时间)。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15105591801136.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;大-o-表示法&quot;&gt;大 O 表示法&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;大O表示法是一种特殊的表示法，指出了算法的速度有多快。&lt;/li&gt;
+  &lt;li&gt;大O表示法 让你能够比较操作数，它指出了算法运行时间的增速。&lt;/li&gt;
+  &lt;li&gt;大O表示法指出了最糟情况下的运行时间。&lt;/li&gt;
+  &lt;li&gt;算法的速度指的并非时间，而是操作数的增速。&lt;/li&gt;
+  &lt;li&gt;谈论算法的速度时，我们说的是随着输入的增加，其运行时间将以什么样的速度增加。&lt;/li&gt;
+  &lt;li&gt;算法的运行时间用大O表示法表示。&lt;/li&gt;
+  &lt;li&gt;O(log n)比O(n)快，当需要搜索的元素越多时，前者比后者快得越多&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;下面按从快到慢的顺序列出了经常会遇到的5种大O运行时间。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[ ]  &lt;strong&gt;O(log n)&lt;/strong&gt;，也叫对数时间，这样的算法包括二分查找。&lt;/li&gt;
+  &lt;li&gt;[ ]  &lt;strong&gt;O(n)&lt;/strong&gt;，也叫线性时间，这样的算法包括简单查找。&lt;/li&gt;
+  &lt;li&gt;[ ]  &lt;strong&gt;O(n * log n)&lt;/strong&gt;，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。&lt;/li&gt;
+  &lt;li&gt;[ ]  &lt;strong&gt;O(n2)&lt;/strong&gt;，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。&lt;/li&gt;
+  &lt;li&gt;[ ]  &lt;strong&gt;O(n!)&lt;/strong&gt;，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15106259079062.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;选择排序&quot;&gt;选择排序&lt;/h3&gt;
+&lt;h4 id=&quot;内存的工作原理&quot;&gt;内存的工作原理&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;假设你去看演出，需要将东西寄存。寄存处有一个柜子，柜子有很多抽屉。
+每个抽屉可放一样东西，你有两样东西要寄存，因此要了两个抽屉。
+你将两样东西存放在这里。
+现在你可以去看演出了!这大致就是计算机内存的工作原理。计算机就像是很多抽屉的集合体，每个抽屉都有地址。
+需要将数据存储到内存时，你请求计算机提供存储空间，计算机给你一个存储地址。需要存储多项数据时，有两种基本方式——数组和链表。但它们并非都适用于所有的情形，因此知道它们的差别很重要。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;数组和链表&quot;&gt;数组和链表&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;数组 ：所有元素在内存中都是相连的，添加需要重新申请内存。&lt;/li&gt;
+  &lt;li&gt;链表 ：链表中的元素可存储在内存的任何地方。链表的每个元素都存储了下一个元素的地址，从而使一系列随机的内存地址串在一起。使用链表时，根本就不需要移动元素。链表的优势在插入元素方面。&lt;/li&gt;
+  &lt;li&gt;插入元素：使用链表时，只需要修改前面那个元素指向的地址就可以插入元素，数组的话，就需要把元素后面的元素全部向后移动，如果没有足够的时间的话，还得将数组复制到其他地方。&lt;/li&gt;
+  &lt;li&gt;删除元素：使用链表时，只需要修改前一个元素指向的地址就行了，使用数组的话，删除元素后面的元素都需要向前移。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;优点&lt;/th&gt;
+      &lt;th&gt;缺点&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;数组&lt;/td&gt;
+      &lt;td&gt;查找方便&lt;/td&gt;
+      &lt;td&gt;必须使用连续的存储空间，添加元素需要从新分配内存&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;链表&lt;/td&gt;
+      &lt;td&gt;可以使用分割开的内存，添加元素方便&lt;/td&gt;
+      &lt;td&gt;查找慢，必须重头开始一个个地址的查。&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;常见的数组和链表操作的运行时间&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15106419508468.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;选择排序-1&quot;&gt;选择排序&lt;/h4&gt;
+
+&lt;p&gt;时间：O(n²)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+# 找出当前数组最小的数字的index
+def findSmallest(arr):
+    smallest = arr[0]
+    smallest_index = 0
+    for i in range(1,len(arr)):
+        if arr[i] &amp;lt; smallest:
+            smallest = arr[i]
+            smallest_index = i
+    return smallest_index
+
+# 选择排序  O(n²)
+def selectionSort(arr):
+    newArr = []
+    for i in range(len(arr)):
+        smallest_index = findSmallest(arr)
+        # arr.pop(smallest_index) 移除指定位置的元素，并返回这个元素
+        newArr.append(arr.pop(smallest_index))
+    return newArr
+
+
+print (selectionSort([5, 3, 6, 2, 10]))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;小结&quot;&gt;小结&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;计算机内存犹如一大堆抽屉。&lt;/li&gt;
+  &lt;li&gt;需要存储多个元素时，可使用数组或链表。&lt;/li&gt;
+  &lt;li&gt;数组的元素都在一起。&lt;/li&gt;
+  &lt;li&gt;链表的元素是分开的，其中每个元素都存储了下一个元素的地址。&lt;/li&gt;
+  &lt;li&gt;数组的读取速度很快。&lt;/li&gt;
+  &lt;li&gt;链表的插入和删除速度很快。&lt;/li&gt;
+  &lt;li&gt;在同一个数组中，所有元素的类型都必须相同(都为int、double等)。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;递归&quot;&gt;递归&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;编写递归函数时，必须告诉它何时停止递归。正因为如此，每个递归函数都有两部分:基线 条件(base case)和递归条件(recursive case)。递归条件指的是函数调用自己，而基线条件则 指的是函数不再调用自己，从而避免形成无限循环。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15106447680191.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/media/15105545936376/15106447757742.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;栈&quot;&gt;栈&lt;/h4&gt;
+
+&lt;h5 id=&quot;调用栈&quot;&gt;调用栈&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;计算机在内部使用被称为调用栈的栈。
+ 下面是一个 简单的函数。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def greet(name):
+    print &quot;hello, &quot; + name + &quot;!&quot; 
+    greet2(name)
+    print &quot;getting ready to say bye...&quot;
+    bye()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这个函数问候用户，再调用另外两个函数。这两个函数的代码如下。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def greet2(name):
+    print &quot;how are you, &quot; + name + &quot;?&quot;
+def bye():
+    print &quot;ok bye!&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;假设你调用greet(“maggie”)，计算机将首先为该函数调用分配一块内存。
+&lt;img src=&quot;/media/15105545936376/15106457934088.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;我们来使用这些内存。变量name被设置为maggie，这需要存储到内存中。
+&lt;img src=&quot;/media/15105545936376/15106458376828.jpg&quot; alt=&quot;&quot; /&gt;
+每当你调用函数时，计算机都像这样将函数调用涉及的所有变量的值存储到内存中。接下来， 你打印hello, maggie!，再调用greet2(“maggie”)。同样，计算机也为这个函数调用分配一 块内存。
+&lt;img src=&quot;/media/15105545936376/15106458571552.jpg&quot; alt=&quot;&quot; /&gt;
+计算机使用一个栈来表示这些内存块，其中第二个内存块位于第一个内存块上面。你打印 how are you, maggie?，然后从函数调用返回。此时，栈顶的内存块被弹出。
+&lt;img src=&quot;/media/15105545936376/15106458854545.jpg&quot; alt=&quot;&quot; /&gt;
+现在，栈顶的内存块是函数greet的，这意味着你返回到了函数greet。当你调用函数greet2 时，函数greet只执行了一部分。这是本节的一个重要概念:调用另一个函数时，当前函数暂停 并处于未完成状态。该函数的所有变量的值都还在内存中。执行完函数greet2后，你回到函数 greet，并从离开的地方开始接着往下执行:首先打印getting ready to say bye…，再调用 函数bye。
+&lt;img src=&quot;/media/15105545936376/15106459042795.jpg&quot; alt=&quot;&quot; /&gt;
+在栈顶添加了函数bye的内存块。然后，你打印ok bye!，并从这个函数返回。
+&lt;img src=&quot;/media/15105545936376/15106459176341.jpg&quot; alt=&quot;&quot; /&gt;
+现在你又回到了函数greet。由于没有别的事情要做，你就从函数greet返回。这个栈用于
+存储多个函数的变量，被称为调用栈。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;这一段讲的真好，之前一直理不清楚这个概念&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;小结-1&quot;&gt;小结&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;递归指的是调用自己的函数。&lt;/li&gt;
+  &lt;li&gt;每个递归函数都有两个条件:基线条件和递归条件。 * 栈有两种操作:压入和弹出。&lt;/li&gt;
+  &lt;li&gt;所有函数调用都进入调用栈。&lt;/li&gt;
+  &lt;li&gt;调用栈可能很长，这将占用大量的内存。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;快速排序&quot;&gt;快速排序&lt;/h3&gt;
+
+&lt;h4 id=&quot;分而治之divide划分-and-conquer征服&quot;&gt;分而治之(divide(划分) and conquer(征服))&lt;/h4&gt;
+
+&lt;p&gt;D&amp;amp;C的工作原理:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;找出简单的&lt;strong&gt;基线条件&lt;/strong&gt;;&lt;/li&gt;
+  &lt;li&gt;确定如何&lt;strong&gt;缩小问题的规模&lt;/strong&gt;，使其符合基线条件。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;快速排序-1&quot;&gt;快速排序&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;快速排序是一种常用的排序算法，比选择排序快得多。&lt;/li&gt;
+  &lt;li&gt;例如，C语言标准库中的函数qsort 实现的就是快速排序。&lt;/li&gt;
+  &lt;li&gt;快速排序也使用了D&amp;amp;C。
+    &lt;ul&gt;
+      &lt;li&gt;基线条件
+        &lt;ul&gt;
+          &lt;li&gt;基线条件为数组为空或只包含一个元素。在这种情况下，只需原样返回数组——根本就不用排序。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;缩小问题规模
+        &lt;ul&gt;
+          &lt;li&gt;首先，从数组中选择一个元素，这个元素被称为基准值(pivot)。&lt;/li&gt;
+          &lt;li&gt;接下来，找出比基准值小的元素以及比基准值大的元素。&lt;/li&gt;
+          &lt;li&gt;这被称为分区(partitioning)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;代码实现如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 这样写更好理解一点
+
+def quickSort(array):
+    # 判断数组是否满足基线条件，如果满足基线条件直接返回
+    # 如果不满足基线条件，继续减小问题规模
+    if len(array) &amp;gt; 1:
+        mid = array[0]
+        largeArray = []
+        smallArray = []
+        print(&quot;---------------mid = &quot; + str(mid))
+        for index in range(1,len(array)):
+            value = array[index]
+            if  value &amp;gt; mid :
+                largeArray = largeArray +[value]
+            else :
+                smallArray = smallArray +[value]
+        print(&quot;smallArrar = &quot; + str(smallArray))
+        print(&quot;largeArray = &quot; + str(largeArray))
+        return quickSort(smallArray) + [mid] + quickSort(largeArray)
+    else:
+        return array
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#更符合 Python 的写法
+
+def quicksort(array):
+  if len(array) &amp;lt; 2:
+    # base case, arrays with 0 or 1 element are already &quot;sorted&quot;
+    return array
+  else:
+    # recursive case
+    pivot = array[0]
+    # sub-array of all the elements less than the pivot
+    less = [i for i in array[1:] if i &amp;lt;= pivot]
+    # sub-array of all the elements greater than the pivot
+    greater = [i for i in array[1:] if i &amp;gt; pivot]
+    return quicksort(less) + [pivot] + quicksort(greater)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这行代码的意思：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;less = [i for i in array[1:] if i &amp;lt;= pivot]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;寻找 array 中 index 1 到末尾的元素，当这个元素小于等于 pivot 时，返回这个元素 i，存储在数组中；&lt;/p&gt;
+
+&lt;p&gt;图形演示更直观一点：
+&lt;img src=&quot;/img/in-post/GIF/quickSort.gif&quot; alt=&quot;快排&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;推荐一个网站&lt;a href=&quot;https://visualgo.net/en&quot;&gt;visualgo&lt;/a&gt;,可以直观的演示算法的执行过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;为什么快速排序的复杂度为-nlog-n&quot;&gt;为什么快速排序的复杂度为 n*log n&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15111703521218.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在这个示例中，层数为O(log n)(用技术术语说，调用栈的高度为O(log n))，而每层需要的 时间O(n)。因此整个算法需要的时间为O(n) * O(log n) = O(n log n)。这就是最佳情况。
+在最糟情况下，有O(n)层，因此该算法的运行时间为O(n) * O(n) = O(n²)。
+只要你每次都随机地选择一个数组元素作为基准值，快速排序的平均运行时间就将为O(n log n)。快速排序是最快的排序算法之一，也是D&amp;amp;C典范.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;散列表&quot;&gt;散列表&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;散列表 哈希表 字典 区别与共同点&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;散列表查找速度是 O(1)。&lt;/p&gt;
+
+&lt;h4 id=&quot;散列函数&quot;&gt;散列函数&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;散列函数必须满足一些要求:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;它必须是一致的。输入相同的内容时，得到是数字是一样的。&lt;/li&gt;
+  &lt;li&gt;它应将不同的输入映射到不同的数字。例如，如果一个散列函数不管输入是什么都返回1， 它就不是好的散列函数。最理想的情况是，将不同的输入映射到不同的数字。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;散列函数为什么可以迅速查找到结果：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;散列函数总是将同样的输入映射到相同的索引。每次你输入avocado，得到的都是同一个 数字。因此，你可首先使用它来确定将鳄梨的价格存储在什么地方，并在以后使用它来 确定鳄梨的价格存储在什么地方。&lt;/li&gt;
+  &lt;li&gt;散列函数将不同的输入映射到不同的索引。。avocado映射到索引4，milk映射到索引0。每 种商品都映射到数组的不同位置，让你能够将其价格存储到这里。&lt;/li&gt;
+  &lt;li&gt;散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会 返回无效索引100。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;散列表应用&quot;&gt;散列表应用&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用于查找
+    &lt;ul&gt;
+      &lt;li&gt;无论你访问哪个网站，其网址都必须转换为IP地址。这个过程被称为DNS解析 (DNS resolution)，散列表是提供这种功能的方式之一。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;防止重复&lt;/li&gt;
+  &lt;li&gt;用作缓存
+    &lt;ul&gt;
+      &lt;li&gt;缓存是一种常用的加速方式，所有大型网站都使用缓存，而缓存的数据则存储在散列表中!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;小结-2&quot;&gt;小结&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可以结合散列函数和数组来创建散列表。&lt;/li&gt;
+  &lt;li&gt;冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。&lt;/li&gt;
+  &lt;li&gt;散列表的查找、插入和删除速度都非常快。&lt;/li&gt;
+  &lt;li&gt;散列表适合用于模拟映射关系。&lt;/li&gt;
+  &lt;li&gt;一旦填装因子超过0.7，就该调整散列表的长度。&lt;/li&gt;
+  &lt;li&gt;散列表可用于缓存数据(例如，在Web服务器上)。&lt;/li&gt;
+  &lt;li&gt;散列表非常适合用于防止重复。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;广度优先搜索&quot;&gt;广度优先搜索&lt;/h3&gt;
+
+&lt;p&gt;广度优先搜索让你能够找出两样东西之间的最短距离，不过最短距离的含义有很多!使用广 度优先搜索可以:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;编写国际跳棋AI，计算最少走多少步就可获胜;&lt;/li&gt;
+  &lt;li&gt;编写拼写检查器，计算最少编辑多少个地方就可将错拼的单词改成正确的单词，如将
+READED改为READER需要编辑一个地方;&lt;/li&gt;
+  &lt;li&gt;根据你的人际关系网络找到关系最近的医生。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;解决最短路径问题&lt;/code&gt;的算法被称为&lt;code class=&quot;highlighter-rouge&quot;&gt;广度优先搜索&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;图简介&quot;&gt;图简介&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;图由节点和边组成。一个节点可能与众多节点直接相连，这些节点被称为邻居。&lt;/code&gt;
+图模拟一组连接。
+图用于模拟不同的东西是如何相连的。&lt;/p&gt;
+
+&lt;h4 id=&quot;广度优先搜索-1&quot;&gt;广度优先搜索&lt;/h4&gt;
+
+&lt;p&gt;广度优先搜索可回答两类问题：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;第一类问题:从节点A出发，有前往节点B的路径吗?&lt;/li&gt;
+  &lt;li&gt;第二类问题:从节点A出发，前往节点B的哪条路径最短?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;假设 需要查找 你认识的人中，以及你认识的人所认识的人中，是否有名字末尾为 M 的人。
+&lt;img src=&quot;/media/15105545936376/15117489027923.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;搜索的步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;先查看 你 认识的人中是否有符合条件的人；
+    &lt;ul&gt;
+      &lt;li&gt;找到 alice、bob、claire 三个人&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;如果有直接返回这个人，如果没有，就继续查找你认识的人中的社交关系是否有需要查找的人。
+    &lt;ul&gt;
+      &lt;li&gt;这三个人没有一个符合条件的人，把他们加入到队列中&lt;/li&gt;
+      &lt;li&gt;从队列中取出候选人查看，如果候选人不符合，就把候选人的联系人继续添加到队列中，同时标识这个候选人已经排查过了。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;知道找到需要的人，或者整个社交圈搜索完毕。
+    &lt;ul&gt;
+      &lt;li&gt;重复上面的操作。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;具体实现如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from collections import deque
+
+
+graph = {}
+graph[&quot;you&quot;] = [&quot;alice&quot;, &quot;bob&quot;, &quot;claire&quot;]
+graph[&quot;bob&quot;] = [&quot;anuj&quot;, &quot;peggy&quot;]
+graph[&quot;alice&quot;] = [&quot;peggy&quot;]
+graph[&quot;claire&quot;] = [&quot;thom&quot;, &quot;jonny&quot;]
+graph[&quot;anuj&quot;] = []
+graph[&quot;peggy&quot;] = []
+graph[&quot;thom&quot;] = []
+graph[&quot;jonny&quot;] = []
+
+# 判断是不是需要找到的人
+def person_is_seller(name):
+    if name[-1] == 'm':
+        return True
+    else:
+        return False
+
+# 查找与 name 关系最近的符合条件的人
+def searchName(name):
+    # 创建一个队列 用于存储要查找的人
+    searchQueue = deque()
+    # 先在 name 的第一层级去找是否有符合条件的人
+    searchQueue += graph[name]
+    # 用于记录 已经查找过的人 放置重复查找
+    searched = []
+    # 当队列不为空时，循环执行
+    while searchQueue:
+        # 取出队列的第一个人
+        person = searchQueue.popleft()
+        # 当前  person 没有被查找过
+        if not person  in searched:
+            print(&quot;searching &quot; + person)
+            # 判断 person 是否我们需要的人。
+            if person_is_seller(person):
+                print(person + &quot; is you  need person&quot;)
+                return True
+            else:
+                # 如果 person 不是符合条件的人
+                # 把与  person 关联的人加入到队列中
+                searchQueue += graph[person]
+                # 把 person 标记为已经查找过
+                searched.append(person)
+    return False
+
+# 查找跟 “you” 关系最近发符合条件的人。
+searchName(&quot;you&quot;)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;狄克斯特拉算法&quot;&gt;狄克斯特拉算法&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;狄克斯特拉算法 找出最快路径。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15105545936376/15117652304241.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;狄克斯特拉算法用于每条边都有关联数字的图，这些数字称为&lt;code class=&quot;highlighter-rouge&quot;&gt;权重(weight)&lt;/code&gt;。
+狄克斯特拉算法只适用于&lt;code class=&quot;highlighter-rouge&quot;&gt;有向无环图(directed acyclic graph，DAG)&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;带权重的图称为 &lt;code class=&quot;highlighter-rouge&quot;&gt;加权图(weighted graph)&lt;/code&gt;，不带权重的图称为 &lt;code class=&quot;highlighter-rouge&quot;&gt;非加权图(unweighted graph)&lt;/code&gt;。
+&lt;img src=&quot;/media/15105545936376/15117653278009.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;要计算非加权图中的最短路径，可使用&lt;code class=&quot;highlighter-rouge&quot;&gt;广度优先搜索&lt;/code&gt;。要计算加权图中的最短路径，可使用&lt;code class=&quot;highlighter-rouge&quot;&gt;狄克斯特拉算法&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;狄克斯特拉算法包含4个步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;找出“最便宜”的节点，即可在最短时间内到达的节点。&lt;/li&gt;
+  &lt;li&gt;更新该节点的邻居的开销，其含义将稍后介绍。&lt;/li&gt;
+  &lt;li&gt;重复这个过程，直到对图中的每个节点都这样做了。&lt;/li&gt;
+  &lt;li&gt;计算最终路径。&lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Mon, 13 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11/13/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/13/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/</guid>
+        
+        <category>内功</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>（转载）程序员技术练级攻略</title>
+        <description>&lt;h1 id=&quot;转载程序员技术练级攻略&quot;&gt;（转载）程序员技术练级攻略&lt;/h1&gt;
+
+&lt;p&gt;原文地址：&lt;a href=&quot;https://coolshell.cn/articles/4990.html&quot;&gt;程序员技术练级攻略&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/uploads/2011/07/programmer.png&quot; alt=&quot;程序员技术练级入略&quot; /&gt;月光博客6月12日发表了《&lt;a href=&quot;http://www.williamlong.info/archives/2700.html&quot;&gt;写给新手程序员的一封信&lt;/a&gt;》，翻译自《&lt;a href=&quot;http://blog.akash.im/an-open-letter-to-those-who-want-to-start&quot;&gt;An open letter to those who want to start programming&lt;/a&gt;》，我的朋友（他在本站的id是&lt;a href=&quot;https://coolshell.cn/?author=3&quot;&gt;Mailper&lt;/a&gt;）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和Web编程的一些点滴总结一下。于是他给我发来了一些他的心得和经历，我在把他的心得做了不多的增改，并根据我的经历增加了“进阶”一节。&lt;strong&gt;这是一篇由新手和我这个老家伙根据我们的经历完成的文章&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;我的这个朋友把这篇文章取名叫Build Your Programming Technical Skills，我实在不知道用中文怎么翻译，但我在写的过程中，&lt;strong&gt;我觉得这很像一个打网游做任务升级的一个过程，所以取名叫“技术练级攻略”，题目有点大，呵呵，这个标题纯粹是为了好玩&lt;/strong&gt;。&lt;strong&gt;这里仅仅是在分享Mailper和我个人的学习经历。&lt;/strong&gt;（注：省去了我作为一个初学者曾经学习过的一些技术(今天明显过时了)，如：Delphi/Power builder，也省去了我学过的一些我觉得没意思的技术Lotus Notes/ActiveX/COM/ADO/ATL/.NET ……）&lt;/p&gt;
+
+&lt;h4 id=&quot;前言&quot;&gt;前言&lt;/h4&gt;
+
+&lt;p&gt;你是否觉得自己从学校毕业的时候只做过小玩具一样的程序？走入职场后哪怕没有什么经验也可以把以下这些课外练习走一遍（朋友的抱怨：学校课程总是从理论出发，作业项目都看不出有什么实际作用，不如从工作中的需求出发）&lt;/p&gt;
+
+&lt;p&gt;建议：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不要乱买书，不要乱追新技术新名词，基础的东西经过很长时间积累而且还会在未来至少10年通用。&lt;/li&gt;
+  &lt;li&gt;回顾一下历史，看看历史上时间线上技术的发展，你才能明白明天会是什么样。&lt;/li&gt;
+  &lt;li&gt;一定要动手，例子不管多么简单，建议至少自己手敲一遍看看是否理解了里头的细枝末节。&lt;/li&gt;
+  &lt;li&gt;一定要学会思考，思考为什么要这样，而不是那样。还要举一反三地思考。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;注&lt;/strong&gt;：你也许会很奇怪为什么下面的东西很偏Unix/Linux，这是因为我觉得Windows下的编程可能会在未来很没有前途，原因如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;现在的用户界面几乎被两个东西主宰了，1）Web，2）移动设备iOS或Android。Windows的图形界面不吃香了。&lt;/li&gt;
+  &lt;li&gt;越来越多的企业在用成本低性能高的Linux和各种开源技术来构架其系统，Windows的成本太高了。&lt;/li&gt;
+  &lt;li&gt;微软的东西变得太快了，很不持久，他们完全是在玩弄程序员。详情参见《&lt;a href=&quot;https://coolshell.cn/articles/3008.html&quot;&gt;Windows编程革命史&lt;/a&gt;》&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以，我个人认为以后的趋势是前端是Web+移动，后端是Linux+开源。开发这边基本上没Windows什么事。&lt;/p&gt;
+
+&lt;h4 id=&quot;启蒙入门&quot;&gt;启蒙入门&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;1、 学习一门脚本语言，例如Python/Ruby&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;可以让你摆脱对底层语言的恐惧感，脚本语言可以让你很快开发出能用得上的小程序。实践项目:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;处理文本文件，或者csv (关键词 python csv, python open, python sys) 读一个本地文件，逐行处理（例如 word count，或者处理log）&lt;/li&gt;
+  &lt;li&gt;遍历本地文件系统 (sys, os, path)，例如写一个程序统计一个目录下所有文件大小并按各种条件排序并保存结果&lt;/li&gt;
+  &lt;li&gt;跟数据库打交道 (python sqlite)，写一个小脚本统计数据库里条目数量&lt;/li&gt;
+  &lt;li&gt;学会用各种print之类简单粗暴的方式进行调试&lt;/li&gt;
+  &lt;li&gt;学会用Google (phrase, domain, use reader to follow tech blogs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;为什么要学脚本语言，因为他们实在是太方便了，很多时候我们需要写点小工具或是脚本来帮我们解决问题，你就会发现正规的编程语言太难用了。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2、 用熟一种程序员的编辑器(不是IDE) 和一些基本工具&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Vim / Emacs / Notepad++，学会如何配置代码补全，外观，外部命令等。&lt;/li&gt;
+  &lt;li&gt;Source Insight (或 ctag)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;使用这些东西不是为了Cool，而是这些编辑器在查看、修改代码/配置文章/日志会更快更有效率。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3、 熟悉Unix/Linux Shell和常见的命令行&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如果你用windows，至少学会用虚拟机里的linux， vmware player是免费的，装个Ubuntu吧&lt;/li&gt;
+  &lt;li&gt;一定要少用少用图形界面。&lt;/li&gt;
+  &lt;li&gt;学会使用man来查看帮助&lt;/li&gt;
+  &lt;li&gt;文件系统结构和基本操作 ls/chmod/chown/rm/find/ln/cat/mount/mkdir/tar/gzip …&lt;/li&gt;
+  &lt;li&gt;学会使用一些文本操作命令 sed/awk/grep/tail/less/more …&lt;/li&gt;
+  &lt;li&gt;学会使用一些管理命令 ps/top/lsof/netstat/kill/tcpdump/iptables/dd…&lt;/li&gt;
+  &lt;li&gt;了解/etc目录下的各种配置文章，学会查看/var/log下的系统日志，以及/proc下的系统运行信息&lt;/li&gt;
+  &lt;li&gt;了解正则表达式，使用正则表达式来查找文件。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;对于程序员来说Unix/Linux比Windows简单多了。（参看我四年前CSDN的博文《&lt;a href=&quot;http://blog.csdn.net/haoel/article/details/1533720&quot;&gt;其实Unix很简单&lt;/a&gt;》）学会使用Unix/Linux你会发现图形界面在某些时候实在是太难用了，相当地相当地降低工作效率。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4、 学习Web基础（HTML/CSS/JS) + 服务器端技术 (LAMP)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;未来必然是Web的世界，学习WEB基础的最佳网站是&lt;a href=&quot;http://www.w3school.com.cn/&quot;&gt;W3School&lt;/a&gt;。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;学习HTML基本语法&lt;/li&gt;
+  &lt;li&gt;学习CSS如何选中HTML元素并应用一些基本样式（关键词：box model）&lt;/li&gt;
+  &lt;li&gt;学会用  Firefox + Firebug 或 chrome 查看你觉得很炫的网页结构，并动态修改。&lt;/li&gt;
+  &lt;li&gt;学习使用Javascript操纵HTML元件。理解DOM和动态网页（&lt;a href=&quot;http://oreilly.com/catalog/9780596527402&quot;&gt;http://oreilly.com/catalog/9780596527402&lt;/a&gt;) 网上有免费的章节，足够用了。或参看 &lt;a href=&quot;http://www.w3school.com.cn/htmldom/index.asp&quot;&gt;DOM&lt;/a&gt; 。&lt;/li&gt;
+  &lt;li&gt;学会用  Firefox + Firebug 或 chrome 调试Javascript代码（设置断点，查看变量，性能，控制台等）&lt;/li&gt;
+  &lt;li&gt;在一台机器上配置&lt;a href=&quot;www.apache.org&quot;&gt;Apache &lt;/a&gt;或 &lt;a href=&quot;nginx.net&quot;&gt;Nginx&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;学习&lt;a href=&quot;www.php.net&quot;&gt;PHP&lt;/a&gt;，让后台PHP和前台HTML进行数据交互，对服务器相应浏览器请求形成初步认识。实现一个表单提交和反显的功能。&lt;/li&gt;
+  &lt;li&gt;把PHP连接本地或者远程数据库 MySQL（MySQL 和 SQL现学现用够了）&lt;/li&gt;
+  &lt;li&gt;跟完一个名校的网络编程课程（例如：&lt;a href=&quot;http://www.stanford.edu/~ouster/cgi-bin/cs142-fall10/index.php&quot;&gt;http://www.stanford.edu/~ouster/cgi-bin/cs142-fall10/index.php&lt;/a&gt; ) 不要觉得需要多于一学期时间，大学生是全职一学期选3-5门课，你业余时间一定可以跟上&lt;/li&gt;
+  &lt;li&gt;学习一个javascript库（例如jQuery 或 ExtJS）+  Ajax (异步读入一个服务器端图片或者数据库内容）+JSON数据格式。&lt;/li&gt;
+  &lt;li&gt;HTTP: The Definitive Guide 读完前4章你就明白你每天上网用浏览器的时候发生的事情了(proxy, gateway, browsers)&lt;/li&gt;
+  &lt;li&gt;做个小网站（例如：一个小的留言板，支持用户登录，Cookie/Session，增、删、改、查，上传图片附件，分页显示）&lt;/li&gt;
+  &lt;li&gt;买个域名，租个空间，做个自己的网站。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;进阶加深&quot;&gt;进阶加深&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;1、 C语言和操作系统调用&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;重新学C语言，理解指针和内存模型，用C语言实现一下各种经典的算法和数据结构。推荐《&lt;a href=&quot;http://product.china-pub.com/197050&quot;&gt;计算机程序设计艺术&lt;/a&gt;》、《&lt;a href=&quot;http://product.china-pub.com/31701&quot;&gt;算法导论&lt;/a&gt;》和《&lt;a href=&quot;http://product.china-pub.com/209243&quot;&gt;编程珠玑&lt;/a&gt;》。&lt;/li&gt;
+  &lt;li&gt;学习&lt;a href=&quot;https://coolshell.cn/articles/3723.html&quot;&gt;（麻省理工免费课程）计算机科学和编程导论&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;学习&lt;a href=&quot;https://coolshell.cn/articles/2474.html&quot;&gt;（麻省理工免费课程）C语言内存管理&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;学习Unix/Linux系统调用（&lt;a href=&quot;http://product.china-pub.com/30181&quot;&gt;Unix高级环境编程&lt;/a&gt;），，了解系统层面的东西。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;用这些系统知识操作一下文件系统，用户（实现一个可以拷贝目录树的小程序）&lt;/li&gt;
+  &lt;li&gt;用fork/wait/waitpid写一个多进程的程序，用pthread写一个多线程带同步或互斥的程序。多进程多进程购票的程序。&lt;/li&gt;
+  &lt;li&gt;用signal/kill/raise/alarm/pause/sigprocmask实现一个多进程间的信号量通信的程序。&lt;/li&gt;
+  &lt;li&gt;学会使用gcc和gdb来编程和调试程序（参看我的《&lt;a href=&quot;blog.csdn.net/haoel/article/details/2879&quot;&gt;用gdb调试程序&lt;/a&gt;》）&lt;/li&gt;
+  &lt;li&gt;学会使用makefile来编译程序。（参看我的《&lt;a href=&quot;blog.csdn.net/haoel/article/details/2886&quot;&gt;跟我一起写makefile&lt;/a&gt;》）&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;IPC和Socket的东西可以放到高级中来实践。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;学习Windows SDK编程（&lt;a href=&quot;http://product.china-pub.com/52880&quot;&gt;Windows 程序设计 &lt;/a&gt;，&lt;a href=&quot;http://product.china-pub.com/3804&quot;&gt;MFC程序设计&lt;/a&gt;）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;写一个窗口，了解WinMain/WinProcedure，以及Windows的消息机制。&lt;/li&gt;
+  &lt;li&gt;写一些程序来操作Windows SDK中的资源文件或是各种图形控件，以及作图的编程。&lt;/li&gt;
+  &lt;li&gt;学习如何使用MSDN查看相关的SDK函数，各种WM_消息以及一些例程。&lt;/li&gt;
+  &lt;li&gt;这本书中有很多例程，在实践中请不要照抄，试着自己写一个自己的例程。&lt;/li&gt;
+  &lt;li&gt;不用太多于精通这些东西，因为GUI正在被Web取代，主要是了解一下Windows 图形界面的编程。@&lt;a href=&quot;http://twitter.com/#!/virushuo&quot;&gt;virushuo&lt;/a&gt; 说：“ 我觉得GUI确实不那么热门了，但充分理解GUI工作原理是很重要的。包括移动设备开发，如果没有基础知识仍然很吃力。或者说移动设备开发必须理解GUI工作，或者在win那边学，或者在mac/iOS上学”。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;2、学习Java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Java 的学习主要是看经典的Core Java 《&lt;a href=&quot;http://product.china-pub.com/208978&quot;&gt;Java 核心技术编程&lt;/a&gt;》和《&lt;a href=&quot;http://product.china-pub.com/34838&quot;&gt;Java编程思想&lt;/a&gt;》（有两卷，我仅链了第一卷，足够了，因为Java的图形界面了解就可以了）&lt;/li&gt;
+  &lt;li&gt;学习JDK，学会查阅Java API Doc &lt;a href=&quot;http://download.oracle.com/javase/6/docs/api/&quot;&gt;http://download.oracle.com/javase/6/docs/api/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;了解一下Java这种虚拟机语言和C和Python语言在编译和执行上的差别。从C、Java、Python思考一下“跨平台”这种技术。&lt;/li&gt;
+  &lt;li&gt;学会使用IDE Eclipse，使用Eclipse 编译，调试和开发Java程序。&lt;/li&gt;
+  &lt;li&gt;建一个Tomcat的网站，尝试一下JSP/Servlet/JDBC/MySQL的Web开发。把前面所说的那个PHP的小项目试着用JSP和Servlet实现一下。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;3、Web的安全与架构&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;学习HTML5，网上有很多很多教程，以前&lt;a href=&quot;https://coolshell.cn&quot;&gt;酷壳&lt;/a&gt;也介绍过很多，我在这里就不罗列了。&lt;/li&gt;
+  &lt;li&gt;学习Web开发的安全问题（参考&lt;a href=&quot;https://coolshell.cn/articles/4914.html&quot;&gt;新浪微博被攻击的这个事&lt;/a&gt;，以及&lt;a href=&quot;http://guides.rubyonrails.org/security.html&quot;&gt;Ruby的这篇文章&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;学习HTTP Server的rewrite机制，Nginx的反向代理机制，&lt;a href=&quot;http://en.wikipedia.org/wiki/Fast_CGI&quot;&gt;fast-cgi&lt;/a&gt;（如：&lt;a href=&quot;http://php-fpm.org/&quot;&gt;PHP-FPM&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;学习Web的静态页面缓存技术。&lt;/li&gt;
+  &lt;li&gt;学习Web的异步工作流处理，数据Cache，数据分区，负载均衡，水平扩展的构架。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;使用HTML5的canvas 制作一些Web动画。&lt;/li&gt;
+  &lt;li&gt;尝试在前面开发过的那个Web应用中进行SQL注入，JS注入，以及XSS攻击。&lt;/li&gt;
+  &lt;li&gt;把前面开发过的那个Web应用改成构造在Nginx + PHP-FPM + 静态页面缓存的网站&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;4、学习关系型数据库&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;你可以安装MSSQLServer或MySQL来学习数据库。&lt;/li&gt;
+  &lt;li&gt;学习教科书里数据库设计的那几个范式，1NF，2NF，3NF，……&lt;/li&gt;
+  &lt;li&gt;学习数据库的存过，触发器，视图，建索引，游标等。&lt;/li&gt;
+  &lt;li&gt;学习SQL语句，明白表连接的各种概念（参看《&lt;a href=&quot;https://coolshell.cn/articles/3463.html&quot;&gt;SQL  Join的图示&lt;/a&gt;》）&lt;/li&gt;
+  &lt;li&gt;学习如何优化数据库查询（参看《&lt;a href=&quot;https://coolshell.cn/articles/1846.html&quot;&gt;MySQL的优化&lt;/a&gt;》）&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务&lt;/strong&gt;：设计一个论坛的数据库，至少满足3NF，使用SQL语句查询本周，本月的最新文章，评论最多的文章，最活跃用户。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;5、一些开发工具&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;学会使用SVN或Git来管理程序版本。&lt;/li&gt;
+  &lt;li&gt;学会使用JUnit来对Java进行单元测试。&lt;/li&gt;
+  &lt;li&gt;学习C语言和Java语言的coding standard 或 coding guideline。（我N年前写过一篇关C语言非常简单的文章——《&lt;a href=&quot;http://blog.csdn.net/haoel/article/category/9200/2&quot;&gt;编程修养&lt;/a&gt;》，这样的东西你可以上网查一下，一大堆）。&lt;/li&gt;
+  &lt;li&gt;推荐阅读《&lt;a href=&quot;http://product.china-pub.com/28351&quot;&gt;代码大全&lt;/a&gt;》《&lt;a href=&quot;http://product.china-pub.com/196374&quot;&gt;重构&lt;/a&gt;》《&lt;a href=&quot;http://product.china-pub.com/196266&quot;&gt;代码整洁之道&lt;/a&gt;》&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;高级深入&quot;&gt;高级深入&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;1、C++ / Java 和面向对象&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;我个人以为学好C++，Java也就是举手之劳。但是C++的学习曲线相当的陡。不过，我觉得C++是最需要学好的语言了。参看两篇趣文“&lt;a href=&quot;https://coolshell.cn/articles/2287.html&quot;&gt;C++学习信心图&lt;/a&gt;” 和“&lt;a href=&quot;https://coolshell.cn/articles/2250.html&quot;&gt;21天学好C++&lt;/a&gt;”&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;学习&lt;a href=&quot;https://coolshell.cn/articles/2474.html&quot;&gt;（麻省理工免费课程）C++面向对象编程&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;读我的 “&lt;a href=&quot;https://coolshell.cn/articles/4119.html&quot;&gt;如何学好C++&lt;/a&gt;”中所推荐的那些书至少两遍以上（如果你对C++的理解能够深入到像我所写的《&lt;a href=&quot;https://coolshell.cn/articles/12165.html&quot;&gt;C++虚函数表解析&lt;/a&gt;》或是《&lt;a href=&quot;https://coolshell.cn/articles/12176.html&quot;&gt;C++对象内存存局&lt;/a&gt;》，或是《&lt;a href=&quot;https://coolshell.cn/articles/12192.html&quot;&gt;C/C++返回内部静态成员的陷阱&lt;/a&gt;》那就非常不错了）&lt;/li&gt;
+  &lt;li&gt;然后反思为什么C++要干成这样，Java则不是？你一定要学会对比C++和Java的不同。比如，Java中的初始化，垃圾回收，接口，异常，虚函数，等等。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;用C++实现一个BigInt，支持128位的整形的加减乘除的操作。&lt;/li&gt;
+  &lt;li&gt;用C++封装一个数据结构的容量，比如hash table。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用C++封装并实现一个智能指针（一定要使用模板）。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;《&lt;a href=&quot;http://product.china-pub.com/25961&quot;&gt;设计模式&lt;/a&gt;》必需一读，两遍以上，思考一下，这23个模式的应用场景。主要是两点：1）钟爱组合而不是继承，2）钟爱接口而不是实现。（也推荐《&lt;a href=&quot;http://product.china-pub.com/27862&quot;&gt;深入浅出设计模式&lt;/a&gt;》）&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;使用工厂模式实现一个内存池。&lt;/li&gt;
+  &lt;li&gt;使用策略模式制做一个类其可以把文本文件进行左对齐，右对齐和中对齐。&lt;/li&gt;
+  &lt;li&gt;使用命令模式实现一个命令行计算器，并支持undo和redo。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;使用修饰模式实现一个酒店的房间价格订价策略——旺季，服务，VIP、旅行团、等影响价格的因素。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;学习STL的用法和其设计概念  – 容器，算法，迭代器，函数子。如果可能，请读一下其源码。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;尝试使用面向对象、STL，设计模式、和WindowsSDK图形编程的各种技能&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;做一个贪吃蛇或是俄罗斯方块的游戏。支持不同的级别和难度。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;做一个文件浏览器，可以浏览目录下的文件，并可以对不同的文件有不同的操作，文本文件可以打开编辑，执行文件则执行之，mp3或avi文件可以播放，图片文件可以展示图片。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;学习C++的一些类库的设计，如： MFC（看看候捷老师的《&lt;a href=&quot;http://product.china-pub.com/3565&quot;&gt;深入浅出MFC&lt;/a&gt;》） ，Boost, ACE,  CPPUnit，STL （STL可能会太难了，但是如果你能了解其中的设计模式和设计那就太好了，如果你能深入到我写的《&lt;a href=&quot;http://blog.csdn.net/haoel/article/details/24058&quot;&gt;STL string类的写时拷贝技术&lt;/a&gt;》那就非常不错了，ACE需要很强在的系统知识，参见后面的“加强对系统的了解”）&lt;/li&gt;
+  &lt;li&gt;Java是真正的面向对象的语言，Java的设计模式多得不能再多，也是用来学习面向对象的设计模式的最佳语言了（参看&lt;a href=&quot;https://coolshell.cn/articles/3320.html&quot;&gt;Java中的设计模式&lt;/a&gt;）。&lt;/li&gt;
+  &lt;li&gt;推荐阅读《&lt;a href=&quot;http://product.china-pub.com/195040&quot;&gt;Effective Java&lt;/a&gt;》 and 《&lt;a href=&quot;http://product.china-pub.com/197212&quot;&gt;Java解惑&lt;/a&gt;》&lt;/li&gt;
+  &lt;li&gt;学习Java的框架，Java的框架也是多，如Spring, Hibernate，Struts 等等，主要是学习Java的设计，如IoC等。&lt;/li&gt;
+  &lt;li&gt;Java的技术也是烂多，重点学习J2EE架构以及JMS， RMI, 等消息传递和远程调用的技术。&lt;/li&gt;
+  &lt;li&gt;学习使用Java做Web Service （&lt;a href=&quot;http://download.oracle.com/docs/cd/E17802_01/webservices/webservices/docs/2.0/tutorial/doc/&quot;&gt;官方教程在这里&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;**实践任务： **尝试在Spring或Hibernate框架下构建一个有网络的Web Service的远程调用程序，并可以在两个Service中通过JMS传递消息。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;C++和Java都不是能在短时间内能学好的，C++玩是的深，Java玩的是广，我建议两者选一个。我个人的学习经历是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;深究C++（我深究C/C++了十来年了）&lt;/li&gt;
+  &lt;li&gt;学习Java的各种设计模式。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;2、加强系统了解&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;重要阅读下面的几本书：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;《&lt;a href=&quot;http://product.china-pub.com/197413&quot;&gt;Unix编程艺术&lt;/a&gt;》了解Unix系统领域中的设计和开发哲学、思想文化体系、原则与经验。你一定会有一种醍醐灌顶的感觉。&lt;/li&gt;
+  &lt;li&gt;《&lt;a href=&quot;http://product.china-pub.com/196770&quot;&gt;Unix网络编程卷1，套接字&lt;/a&gt;》这是一本看完你就明白网络编程的书。重要注意TCP、UDP，以及多路复用的系统调用select/poll/epoll的差别。&lt;/li&gt;
+  &lt;li&gt;《&lt;a href=&quot;http://product.china-pub.com/35&quot;&gt;TCP/IP详解 卷1:协议&lt;/a&gt;》- 这是一本看完后你就可以当网络黑客的书。了解以太网的的运作原理，了解TCP/IP的协议，运作原理以及如何TCP的调优。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;理解什么是阻塞（同步IO），非阻塞（异步IO），多路复用（select, poll, epoll）的IO技术。&lt;/li&gt;
+  &lt;li&gt;写一个网络聊天程序，有聊天服务器和多个聊天客户端（服务端用UDP对部分或所有的的聊天客户端进Multicast或Broadcast）。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;写一个简易的HTTP服务器。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;《&lt;a href=&quot;http://product.china-pub.com/196859&quot;&gt;Unix网络编程卷2，进程间通信&lt;/a&gt;》信号量，管道，共享内存，消息等各种IPC…… 这些技术好像有点老掉牙了，不过还是值得了解。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;主要实践各种IPC进程序通信的方法。&lt;/li&gt;
+  &lt;li&gt;尝试写一个管道程序，父子进程通过管道交换数据。&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;尝试写一个共享内存的程序，两个进程通过共享内存交换一个C的结构体数组。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;学习《&lt;a href=&quot;http://product.china-pub.com/209058&quot;&gt;Windows核心编程&lt;/a&gt;》一书。把CreateProcess，Windows线程、线程调度、线程同步（Event,  信号量，互斥量）、异步I/O，内存管理，DLL，这几大块搞精通。&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;使用CreateProcess启动一个记事本或IE，并监控该程序的运行。把前面写过的那个简易的HTTP服务用线程池实现一下。写一个DLL的钩子程序监控指定窗口的关闭事件，或是记录某个窗口的按键。&lt;/li&gt;
+  &lt;li&gt;有了多线程、多进程通信，TCP/IP，套接字，C++和设计模式的基本，你可以研究一下ACE了。使用ACE重写上述的聊天程序和HTTP服务器（带线程池）&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;实践任务：&lt;/strong&gt;通过以上的所有知识，尝试&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;写一个服务端给客户端传大文件，要求把100M的带宽用到80%以上。（注意，磁盘I/O和网络I/O可能会很有问题，想一想怎么解决，另外，请注意网络传输最大单元MTU）&lt;/li&gt;
+  &lt;li&gt;了解BT下载的工作原理，用多进程的方式模拟BT下载的原理。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;3、系统架构&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;负载均衡。HASH式的，纯动态式的。（可以到Google学术里搜一些&lt;a href=&quot;http://scholar.google.com.hk/scholar?q=%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1&amp;amp;hl=zh-CN&amp;amp;as_sdt=0&amp;amp;as_vis=1&amp;amp;oi=scholart&quot;&gt;关于负载均衡的文章&lt;/a&gt;读读）&lt;/li&gt;
+  &lt;li&gt;多层分布式系统 – 客户端服务结点层、计算结点层、数据cache层，数据层。J2EE是经典的多层结构。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Content_delivery_network&quot;&gt;CDN系统&lt;/a&gt; – 就近访问，内容边缘化。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Peer-to-peer&quot;&gt;P2P式系统&lt;/a&gt;，研究一下BT和电驴的算法。比如：&lt;a href=&quot;http://en.wikipedia.org/wiki/Distributed_hash_table&quot;&gt;DHT算法&lt;/a&gt;。&lt;/li&gt;
+  &lt;li&gt;服务器备份，双机备份系统（Live-Standby和Live-Live系统），两台机器如何通过心跳监测对方？集群主结点备份。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Virtualization&quot;&gt;虚拟化技术&lt;/a&gt;，使用这个技术，可以把操作系统当应用程序一下切换或重新配置和部署。&lt;/li&gt;
+  &lt;li&gt;学习&lt;a href=&quot;http://thrift.apache.org/&quot;&gt;Thrift&lt;/a&gt;，二进制的高性能的通讯中间件，支持数据(对象)序列化和多种类型的RPC服务。&lt;/li&gt;
+  &lt;li&gt;学习&lt;a href=&quot;http://hadoop.apache.org/&quot;&gt;Hadoop&lt;/a&gt;。Hadoop框架中最核心的设计就是：MapReduce和HDFS。MapReduce的思想是由Google的一篇论文所提及而被广为流传的，简单的一句话解释MapReduce就是“任务的分解与结果的汇总”。HDFS是Hadoop分布式文件系统（Hadoop Distributed File System）的缩写，为分布式计算存储提供了底层支持。&lt;/li&gt;
+  &lt;li&gt;了解&lt;a href=&quot;http://en.wikipedia.org/wiki/NoSQL&quot;&gt;NoSQL数据库&lt;/a&gt;（有人说可能是一个&lt;a href=&quot;https://coolshell.cn/articles/3609.html&quot;&gt;过渡炒作的技术&lt;/a&gt;），不过因为超大规模以及高并发的纯动态型网站日渐成为主流，而SNS类网站在数据存取过程中有着实时性等刚性需求，这使得目前NoSQL数据库慢慢成了人们所关注的焦点，并大有成为取代关系型数据库而成为未来主流数据存储模式的趋势。当前NoSQL数据库很多，大部分都是开源的，其中比较知名的有：MemcacheDB、Redis、Tokyo Cabinet(升级版为Kyoto Cabinet)、Flare、MongoDB、CouchDB、Cassandra、Voldemort等。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;写了那么多，回顾一下，觉得自己相当的有成就感。希望大家不要吓着，我自己这十来年也在不断地学习，今天我也在学习中，人生本来就是一个不断学习和练级的过程。&lt;strong&gt;不过，一定有漏的，也有不对的，还希望大家补充和更正&lt;/strong&gt;。（&lt;strong&gt;我会根据大家的反馈随时更新此文&lt;/strong&gt;）欢迎大家通过我的微博（&lt;a href=&quot;http://weibo.com/haoel&quot;&gt;@左耳朵耗子&lt;/a&gt;）和twitter（@&lt;a href=&quot;http://twitter.com/haoel&quot;&gt;haoel&lt;/a&gt;）和我交流。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;—– 更新  2011/07/19 —–&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;1）有朋友奇怪为什么我在这篇文章开头说了web+移动，却没有在后面提到iOS/Android的前端开发。因为我心里有一种感觉，移动设备上的UI最终也会被Javascript取代。大家可以用iPhone或Android看看google+，你就会明白了。&lt;/p&gt;
+
+&lt;p&gt;2）有朋友说我这里的东西太多了，不能为了学习而学习，我非常同意。我在文章的前面也说了要思考。另外，千万不要以为我说的这些东西是一些新的技术，这份攻略里95%以上的全是基础。而且都是久经考验的基础技术。即是可以让你一通百通的技术，也是可以让你找到一份不错工作的技术。&lt;/p&gt;
+
+&lt;p&gt;3）有朋友说学这些东西学完都40了，还不如想想怎么去挣钱。我想告诉大家，一是我今年还没有40岁，二是学无止境啊，三是我不觉得挣钱有多难，难的是怎么让你值那么多钱？无论是打工还是创业，是什么东西让你自己的价值，让你公司的价值更值钱？别的地方我不敢说，对于互联网或IT公司来说，技术实力绝对是其中之一。&lt;/p&gt;
+
+&lt;p&gt;4）有朋友说技术都是工具，不应该如此痴迷这句话没有错，有时候我们需要更多的是抬起头来看看技术以外的事情，或者是说我们在作技术的时候不去思考为什么会有这个技术，为什么不是别的，问题不在于技术，问题在于我们死读书，读死书，成了技术的书呆子。&lt;/p&gt;
+
+&lt;p&gt;5） 对于NoSQL，最近比较火，但我对其有点保守，所以，我只是说了解就可以。对于Hadoop，我觉得其在分布式系统上有巨大的潜力，所以需要学习。 对于关系型数据库，的确是很重要的东西，这点是我的疏忽，在原文里补充。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（全文完，转载时请注明作者和出处）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://cn.100offer.com/how-it-works/?utm_source=coolshell_cn&amp;amp;utm_medium=display&amp;amp;utm_campaign=coolshell_cn_20170918&amp;amp;utm_content=find_new_job&amp;amp;campaign_code=coolshell_cn&quot;&gt;&lt;img src=&quot;https://coolshell.cn/imgs/100offer_600_200.png&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://coolshell.cn//wp-content/uploads/2009/04/qrcode_for_gh_dd9d8c843f20_860-300x300.jpg&quot; alt=&quot;&quot; /&gt;
+关注CoolShell微信公众账号可以在手机端搜索文章&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（转载本站文章请注明作者和出处 &lt;a href=&quot;https://coolshell.cn/&quot;&gt;酷 壳 – CoolShell&lt;/a&gt; ，请勿用于任何商业用途）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;——=== 访问 &lt;a href=&quot;http://coolshell.cn/404/&quot;&gt;酷壳404页面&lt;/a&gt; 寻找遗失儿童。 ===——&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.jiathis.com/share?uid=1541368&quot;&gt;http://www.jiathis.com/share?uid=1541368&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;var jiathis_config={
+	data_track_clickback:true,
+	summary:””,
+	hideMore:false
+}&lt;/p&gt;
+
+&lt;h3 id=&quot;相关文章&quot;&gt;相关文章&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/8088.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/plugins/wordpress-23-related-posts-plugin/static/thumbs/1.jpg&quot; alt=&quot;对技术的态度&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/8088.html&quot;&gt;对技术的态度&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/4102.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/plugins/wordpress-23-related-posts-plugin/static/thumbs/17.jpg&quot; alt=&quot;如何学好C语言&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/4102.html&quot;&gt;如何学好C语言&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/17497.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/uploads/2016/09/engineer-150x150.jpg&quot; alt=&quot;什么是工程师文化？&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/17497.html&quot;&gt;什么是工程师文化？&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/17583.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/uploads/2016/12/people-150x150.jpg&quot; alt=&quot;技术人员的发展之路&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/17583.html&quot;&gt;技术人员的发展之路&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/12052.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/plugins/wordpress-23-related-posts-plugin/static/thumbs/5.jpg&quot; alt=&quot;Leetcode 编程训练&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/12052.html&quot;&gt;Leetcode 编程训练&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://coolshell.cn/articles/11847.html&quot;&gt;&lt;img src=&quot;https://coolshell.cn/wp-content/uploads/2014/08/puzzle-150x150.png&quot; alt=&quot;谜题的答案和活动的心得体会&quot; /&gt;&lt;/a&gt;&lt;a href=&quot;https://coolshell.cn/articles/11847.html&quot;&gt;谜题的答案和活动的心得体会&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 13 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11/13/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E7%BB%83%E7%BA%A7%E6%94%BB%E7%95%A5/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/13/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E7%BB%83%E7%BA%A7%E6%94%BB%E7%95%A5/</guid>
+        
+        <category>内功</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>DKNightVersion 源码学习</title>
+        <description>&lt;h1 id=&quot;dknightversion-源码学习&quot;&gt;DKNightVersion 源码学习&lt;/h1&gt;
+
+&lt;h3 id=&quot;实现原理&quot;&gt;实现原理&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;建立一个单利存储类，存储颜色值，取颜色是根据主题取。&lt;/li&gt;
+  &lt;li&gt;需要切换颜色的视图，设置颜色时，使用单例类存储视图和设置方法。&lt;/li&gt;
+  &lt;li&gt;当切换颜色模板时，发出通知，遍历单利存储类的内容，修改颜色。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;学习的细节&quot;&gt;学习的细节&lt;/h3&gt;
+
+&lt;p&gt;原理大概都是这样，关键是细节的处理。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 08 Nov 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/11/08/DKNightVersion-SourceReading/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/08/DKNightVersion-SourceReading/</guid>
+        
+        <category>iOS</category>
+        
+        <category>源码</category>
+        
+        <category>内功</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Python编程快速上手 — 让繁琐工作自动化&lt;二&gt;</title>
+        <description>&lt;h1 id=&quot;python编程快速上手--让繁琐工作自动化&quot;&gt;Python编程快速上手 — 让繁琐工作自动化&lt;/h1&gt;
+
+&lt;h3 id=&quot;处理excel表格&quot;&gt;处理&lt;code class=&quot;highlighter-rouge&quot;&gt;Excel&lt;/code&gt;表格&lt;/h3&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;openpyxl.load_workbook()&lt;/code&gt; 打开文件。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wb = openpyxl.load_workbook('python.xlsx')
+
+# 获取所有表名的列表
+wb.get_sheet_names()
+# 根据名字获取列表
+sheet = wb.get_sheet_by_name('Yunis000')
+
+# A1 单元格
+c = sheet['A1']
+
+# B10 单元格
+c2 = sheet.cell(row=10, column=2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;从表中取得行和列&quot;&gt;从表中取得行和列&lt;/h4&gt;
+
+&lt;p&gt;可以将 Worksheet 对象切片，取得电子表格中一行、一列或一个矩形区域中的所有 Cell 对象。然后可以循环遍历这个切片中的所有单元格&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;print(tuple(sheet['A1':'C3'])) #((&amp;lt;Cell 'Yunis000'.A1&amp;gt;, &amp;lt;Cell 'Yunis000'.B1&amp;gt;, &amp;lt;Cell 'Yunis000'.C1&amp;gt;), (&amp;lt;Cell 'Yunis000'.A2&amp;gt;, &amp;lt;Cell 'Yunis000'.B2&amp;gt;, &amp;lt;Cell 'Yunis000'.C2&amp;gt;), (&amp;lt;Cell 'Yunis000'.A3&amp;gt;, &amp;lt;Cell 'Yunis000'.B3&amp;gt;, &amp;lt;Cell 'Yunis000'.C3&amp;gt;))
+
+
+
+for rowOfCellObjects in sheet['A1':'C3']:
+    for cellObj in rowOfCellObjects:
+        print(cellObj.coordinate, cellObj.value)
+    print('--- END OF ROW ---')
+
+# A1 111111111
+# B1 None
+# C1 None
+# --- END OF ROW ---
+# A2 None
+# B2 None
+# C2 None
+# --- END OF ROW ---
+# A3 None
+# B3 None
+# C3 None
+# --- END OF ROW ---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cellObj.coordinate&lt;/code&gt; cell 坐标
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cellObj.value&lt;/code&gt; cell 值&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1.导入 openpyxl 模块。
+2.调用 openpyxl.load_workbook()函数。
+3.取得 Workbook 对象。
+4.调用 get_active_sheet()或 get_sheet_by_name()工作簿方法。 
+5.取得 Wor ksheet 对象。
+6.使用索引或工作表的 cell()方法，带上 row 和 column 关键字参数。 
+7.取得 Cell 对象。
+8.读取 Cell 对象的 value 属性。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;保持时间计划任务和启动程序&quot;&gt;保持时间、计划任务和启动程序&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;time.time()函数
+    &lt;ul&gt;
+      &lt;li&gt;Unix 纪元是编程中经常参考的时间:1970 年 1 月 1 日 0 点，即协调世界时(UTC) ，time.time()函数返回自那一刻以来的秒数，是一个浮点值(回想一下，浮 点值只是一个带小数点的数)。这个数字称为 UNIX 纪元时间戳。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;time.sleep()函数
+    &lt;ul&gt;
+      &lt;li&gt;如果需要让程序暂停一下，就调用 time.sleep()函数，并传入希望程序暂停的秒数.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;round()函数
+    &lt;ul&gt;
+      &lt;li&gt;在处理时间时，你会经常遇到小数点后有许多数字的浮点值。为了让这些值更 易于处理，可以用 Python 内置的 round()函数将它们缩短，该函数按照指定的精度 四舍五入到一个浮点数。只要传入要舍入的数字，再加上可选的第二个参数，指明 需要传入到小数点后多少位。如果省略第二个参数，round()将数字四舍五入到最接 近的整数。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;time.sleep(seconds)函数让程序暂停 seconds 参数指定的秒数。&lt;/li&gt;
+  &lt;li&gt;datetime.datetime(year, month, day, hour, minute, second)函数返回参数指定的时刻的 datetime 对象。如果没有提供 hour、minute 或 second 参数，它们默认为 0。&lt;/li&gt;
+  &lt;li&gt;datetime.datetime.now()函数返回当前时刻的 datetime 对象。&lt;/li&gt;
+  &lt;li&gt;datetime.datetime.fromtimestamp(epoch)函数返回 epoch 时间戳参数表示的时刻的 datetime 对象&lt;/li&gt;
+  &lt;li&gt;datetime.timedelta(weeks,days,hours,minutes,seconds,milliseconds, microseconds)函数返回一个表示一段时间的 timedelta 对象。该函数的关键字参数都是可选的，不包括 month 或 year。&lt;/li&gt;
+  &lt;li&gt;total_seconds()方法用于 timedelta 对象，返回 timedelta 对象表示的秒数。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import time
+
+def calcProd():
+    product = 1
+    for i in range(1,100000):
+        product = product * i
+    return product
+
+startTime = time.time()
+prod = calcProd()
+endTime = time.time()
+print('The result is %s digits long.' % (len(str(prod))))
+print('Took %s seconds to calculate.' % (endTime - startTime))
+time.sleep(5)
+
+now = time.time()
+print(now) #1509609194.070355
+print(round(now,2)) #1509609194.07
+print(round(now,4)) #1509609194.0704
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;超级秒表&quot;&gt;超级秒表&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import time
+
+print('Press ENTER to begin. Afterwards, press ENTER to &quot;click&quot; the stopwatch. Press Ctrl-C to quit.')
+
+input()
+print('Started.')
+# 开始时间
+startTime = time.time()
+# 结束时间
+lastTime = startTime
+lapNum = 1
+
+try:
+    while True:
+        # 开始输入  当敲击回车键时  输入结束
+        input()
+        # 计算本次输入最后的时间
+        lapTime = round(time.time() - lastTime, 2)
+        # 计算总时间
+        totalTime = round(time.time() - startTime, 2)
+        print('Lap #%s: %s (%s)' % (lapNum, totalTime, lapTime), end='')
+        lapNum += 1
+        # 从新设置下次计时的时间
+        lastTime = time.time() # reset the last lap time
+except KeyboardInterrupt:
+    # Handle the Ctrl-C exception to keep its error message from displaying.
+    print('\nDone.')
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;多线程&quot;&gt;多线程&lt;/h4&gt;
+
+&lt;p&gt;创建一个线程&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import threading, time
+
+print('Start of program.')
+
+def takeANap():
+    time.sleep(2)
+    print('Wake up!')
+
+def threadArgs(arg,arg1):
+    time.sleep(3)
+    print(str(arg) + '  ' + str(arg1))
+
+threadObj = threading.Thread(target=takeANap)
+threadObj.start()
+
+threadArgs = threading.Thread(target=threadArgs,args=['Yunis','三十一'])
+threadArgs.start()
+
+print('End of program.')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;项目多线程-xkcd-下载程序&quot;&gt;项目:多线程 XKCD 下载程序&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import requests, sys, webbrowser, bs4,os,threading
+
+# 进入同级目录下
+currentFilePath = sys.path[0]
+os.chdir(currentFilePath)
+os.makedirs('xkcd', exist_ok=True)
+
+def downloadXkcd(startComic, endComic):
+    for urlNumber in range(startComic, endComic):
+        # Download the page.
+        print('Downloading page http://xkcd.com/%s...' % (urlNumber))
+        res = requests.get('http://xkcd.com/%s' % (urlNumber))
+        res.raise_for_status()
+        soup = bs4.BeautifulSoup(res.text)
+        # Find the URL of the comic image.
+        comicElem = soup.select('#comic img')
+        if comicElem == []:
+            print('Could not find comic image.')
+        else:
+            comicUrl = comicElem[0].get('src')
+            comicUrl = 'http:' + comicUrl
+            # Download the image.
+            print('Downloading image %s...' % (comicUrl))
+            res = requests.get(comicUrl)
+            res.raise_for_status()
+            # Save the image to ./xkcd.
+            imageFile = open(os.path.join('xkcd',os.path.basename(comicUrl)), 'wb')
+            for chunk in res.iter_content(100000):
+                imageFile.write(chunk)
+            imageFile.close()
+
+
+# a list of all the Thread objects
+downloadThreads = []
+# loops 14 times, creates 14 threads
+for i in range(0, 1400, 100):
+     downloadThread = threading.Thread(target=downloadXkcd, args=(i, i + 99))
+     downloadThreads.append(downloadThread)
+     downloadThread.start()
+for downloadThread in downloadThreads:
+    downloadThread.join()
+print('Done.')
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;从-python-启动其他程序&quot;&gt;从 Python 启动其他程序&lt;/h3&gt;
+
+&lt;p&gt;利用内建的 subprocess 模块中的 Popen()函数，Python 程序可以启动计算机中的 其他程序(Popen()函数名中的 P 表示 process，进程)。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;subprocess.Popen(['open', '/Applications/Firefox.app/'])&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import time, subprocess
+print('Start')
+timeLeft = 5
+while timeLeft &amp;gt; 0:
+    print('Left')
+    print(timeLeft, end='')
+    time.sleep(1)
+    timeLeft = timeLeft - 1
+
+print('Play')
+subprocess.Popen(['open', '/Users/Yunis/Documents/Github/LearnPython/Python/Time/01.mp3'])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;发送电子邮件&quot;&gt;发送电子邮件&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#coding: utf-8
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+
+
+
+sender = 'xxx@163.com'
+receiver = 'xxx@qq.com'
+subject = '大家好'
+smtpserver = 'smtp.163.com'
+username = 'xxx'
+password = 'xxxx'
+
+msg = MIMEText('你这是什么情况','plain','utf-8')#中文需参数‘utf-8'，单字节字符不需要
+msg['Subject'] = Header(subject, 'utf-8')
+msg['From'] = 'Yunis&amp;lt;yunis_song@163.com&amp;gt;'
+msg['To'] = &quot;Yunis&amp;lt;332963965@qq.com&amp;gt;&quot;
+
+
+try:
+    smtp = smtplib.SMTP()
+    smtp.connect('smtp.163.com',25)
+    smtp.login(username, password)
+    smtp.sendmail(sender, receiver, msg.as_string())
+
+    print (&quot;邮件发送成功&quot;)
+    smtp.quit()
+except smtplib.SMTPException:
+    print (&quot;Error: 无法发送邮件&quot;)
+    print (smtplib.SMTPException.message)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Mon, 30 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/30/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%BA%8C/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/30/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%BA%8C/</guid>
+        
+        <category>Python</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Python编程快速上手 — 让繁琐工作自动化&lt;一&gt;</title>
         <description>&lt;h1 id=&quot;python编程快速上手--让繁琐工作自动化&quot;&gt;Python编程快速上手 — 让繁琐工作自动化&lt;/h1&gt;
 &lt;h3 id=&quot;基础概念&quot;&gt;基础概念&lt;/h3&gt;
 &lt;h4 id=&quot;导入模块&quot;&gt;导入模块&lt;/h4&gt;
@@ -735,10 +2263,14 @@ elems = exampleSoup.select('#author')
 
 &lt;p&gt;&lt;a href=&quot;https://yunissong.github.io/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/&quot;&gt;Python小工具-根据输入关键字自动打开百度搜索结果的第一页&lt;/a&gt;&lt;/p&gt;
 
+&lt;h4 id=&quot;项目下载所有-xkcd-漫画&quot;&gt;项目:下载所有 XKCD 漫画&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://yunissong.github.io/2017/10/27/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89XKCD%E6%BC%AB%E7%94%BB/&quot;&gt;下载所有 XKCD 漫画&lt;/a&gt;&lt;/p&gt;
+
 </description>
-        <pubDate>Thu, 12 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/10/12/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/10/12/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96/</guid>
+        <pubDate>Sun, 29 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/29/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%80/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/29/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%80/</guid>
         
         <category>Python</category>
         
@@ -746,912 +2278,101 @@ elems = exampleSoup.select('#author')
       </item>
     
       <item>
-        <title>七周七语言：理解多种编程范型--Ruby</title>
-        <description>&lt;h1 id=&quot;七周七语言理解多种编程范型ruby&quot;&gt;七周七语言：理解多种编程范型–Ruby&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;无论用哪一类语言，都必须全面、透彻地理解集合。&lt;/li&gt;
-  &lt;li&gt;当你新接触一门语言的时候，有些问题是需要首先去思考的，“这门语言的编程模型是什么”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;ruby&quot;&gt;Ruby&lt;/h3&gt;
-&lt;h4 id=&quot;基本语法&quot;&gt;基本语法&lt;/h4&gt;
-&lt;p&gt;解释型， 意味着Ruby代码由解释器而非编译器执行。
-动态类型，意味着类型在运行时而非编译时绑定。
-尽管从执行速度上说，Ruby 谈不上有多高效，但它却能让程序员的编程效率大幅提高。
-在Ruby中，一切皆 为对象，就连每个单独的数字也不例外。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):009:0&amp;gt; 4.class
-=&amp;gt; Integer
-irb(main):011:0&amp;gt; 4.methods
-=&amp;gt; [:%, :&amp;amp;, :*, :+, :-, :/, :&amp;lt;, :&amp;gt;, :^, :|, :~, :-@, :**, :&amp;lt;=&amp;gt;, :&amp;lt;&amp;lt;, :&amp;gt;&amp;gt;, :&amp;lt;=, :&amp;gt;=, :==, :===, :[], :inspect, :size, :succ, :to_int, :to_s, :to_i, :to_f, :next, :div, :upto, :chr, :ord, :coerce, :divmod, :fdiv, :modulo, :remainder, :abs, :magnitude, :integer?, :floor, :ceil, :round, :truncate, :odd?, :even?, :downto, :times, :pred, :bit_length, :digits, :to_r, :numerator, :denominator, :rationalize, :gcd, :lcm, :gcdlcm, :+@, :eql?, :singleton_method_added, :i, :real?, :zero?, :nonzero?, :finite?, :infinite?, :step, :positive?, :negative?, :quo, :arg, :rectangular, :rect, :polar, :real, :imaginary, :imag, :abs2, :angle, :phase, :conjugate, :conj, :to_c, :between?, :clamp, :instance_of?, :kind_of?, :is_a?, :tap, :public_send, :remove_instance_variable, :singleton_method, :instance_variable_set, :define_singleton_method, :method, :public_method, :extend, :to_enum, :enum_for, :=~, :!~, :respond_to?, :freeze, :object_id, :send, :display, :nil?, :hash, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :frozen?, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variable_get, :instance_variables, :instance_variable_defined?, :!, :!=, :__send__, :equal?, :instance_eval, :instance_exec, :__id__]
-irb(main):018:0&amp;gt; 4.to_f
-=&amp;gt; 4.0
-irb(main):027:0&amp;gt; false.class
-=&amp;gt; FalseClass
-irb(main):028:0&amp;gt; true.class
-=&amp;gt; TrueClass
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):002:0&amp;gt; x = 4
-=&amp;gt; 4
-irb(main):003:0&amp;gt; puts &quot;判断语句&quot; if x == 4
-判断语句
-=&amp;gt; nil
-irb(main):004:0&amp;gt; puts &quot;判断语句&quot; unless x == 4
-=&amp;gt; nil
-irb(main):005:0&amp;gt; puts &quot;判断语句&quot; unless x == 5
-判断语句
-=&amp;gt; nil
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):006:0&amp;gt; x = x + 2 while x &amp;lt; 10
-=&amp;gt; nil
-irb(main):007:0&amp;gt; x
-=&amp;gt; 10
-
-
-irb(main):008:0&amp;gt; x = x - 1 until x == 1
-=&amp;gt; nil
-irb(main):009:0&amp;gt; x
-=&amp;gt; 1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
- 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
- 除了 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;false&lt;/code&gt; 之外，其他的都代表 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 。&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt; 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; 也是 &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;and&lt;/code&gt; 等同于 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;or&lt;/code&gt; 等同于 &lt;code class=&quot;highlighter-rouge&quot;&gt;||&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;直到真正尝试执代码时，&lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby&lt;/code&gt; 才进行类型检查。这一概念叫做 &lt;code class=&quot;highlighter-rouge&quot;&gt;动态类型&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;在面向对象设计思想中，有这样一个重要原则:对&lt;code class=&quot;highlighter-rouge&quot;&gt;接口&lt;/code&gt;编码，不对实现编码。&lt;/p&gt;
-
-&lt;h4 id=&quot;ruby-与-正则表达式&quot;&gt;Ruby 与 正则表达式&lt;/h4&gt;
-&lt;h5 id=&quot;创建正则表达式&quot;&gt;创建正则表达式&lt;/h5&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;将模式的定义放在两个正斜杠之间,返回一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Regexp&lt;/code&gt;对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;reg1 = /^[a-z]*$/&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;创建一个&lt;code class=&quot;highlighter-rouge&quot;&gt;Regexp&lt;/code&gt;对象 &lt;code class=&quot;highlighter-rouge&quot;&gt;reg2 = Regexp.new(‘^[a-z]*$’) &lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;使用前置的&lt;code class=&quot;highlighter-rouge&quot;&gt;%r&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;reg3 = %r{^[a-z]*$}  &lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&quot;匹配&quot;&gt;匹配&lt;/h5&gt;
-&lt;p&gt;匹配正则式: String和Regexp都支持以下两个方法&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;match&lt;/code&gt;方法: 匹配成功时返回&lt;code class=&quot;highlighter-rouge&quot;&gt;MatchData&lt;/code&gt;类的一个实例；否则返回nil；&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;=~&lt;/code&gt; 操作符: 匹配成功,返回一个索引(integer)；否则,返回nil；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;    puts( /abc/ =~ 'abc' )              #=&amp;gt;return 0
-    puts( /abc/ =~ 'cdg' )              #=&amp;gt;return nil
-    puts( /abc/.match('abc') )          #=&amp;gt;return abc
-    puts( /abc/.match('cdg') )          #=&amp;gt;return nil
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&quot;联系1&quot;&gt;联系1&lt;/h4&gt;
-
-&lt;h5 id=&quot;ruby-替换字符串的方法&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby&lt;/code&gt; 替换字符串的方法。&lt;/h5&gt;
-&lt;p&gt;1，通过 正则&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):005:0&amp;gt; string = &quot;Hello Ruby.&quot;
-=&amp;gt; &quot;Hello Ruby.&quot;
-irb(main):006:0&amp;gt; string.gsub(/Ruby/,'world')
-=&amp;gt; &quot;Hello world.&quot;
-
-
-irb(main):025:0&amp;gt; string = &quot;Hello Ruby.&quot;
-=&amp;gt; &quot;Hello Ruby.&quot;
-irb(main):026:0&amp;gt; string.gsub(/(.)/,'&amp;lt;\1&amp;gt;')
-=&amp;gt; &quot;&amp;lt;H&amp;gt;&amp;lt;e&amp;gt;&amp;lt;l&amp;gt;&amp;lt;l&amp;gt;&amp;lt;o&amp;gt;&amp;lt; &amp;gt;&amp;lt;R&amp;gt;&amp;lt;u&amp;gt;&amp;lt;b&amp;gt;&amp;lt;y&amp;gt;&amp;lt;.&amp;gt;&quot;
-
-
-irb(main):001:0&amp;gt; string = &quot;Hello Ruby.&quot;
-=&amp;gt; &quot;Hello Ruby.&quot;
-irb(main):002:0&amp;gt;  string.gsub(/(\w)/,'&amp;lt;\1&amp;gt;')
-=&amp;gt; &quot;&amp;lt;H&amp;gt;&amp;lt;e&amp;gt;&amp;lt;l&amp;gt;&amp;lt;l&amp;gt;&amp;lt;o&amp;gt; &amp;lt;R&amp;gt;&amp;lt;u&amp;gt;&amp;lt;b&amp;gt;&amp;lt;y&amp;gt;.&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;2,&lt;code class=&quot;highlighter-rouge&quot;&gt;replace&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):027:0&amp;gt; string = &quot;Hello Ruby.&quot;
-=&amp;gt; &quot;Hello Ruby.&quot;
-irb(main):028:0&amp;gt; string.replace(&quot;Yunis.&quot;)
-=&amp;gt; &quot;Yunis.&quot;
-irb(main):029:0&amp;gt; puts string
-Yunis.
-=&amp;gt; nil
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h5 id=&quot;range&quot;&gt;range&lt;/h5&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;irb(main):030:0&amp;gt; rang1 = (1..10).to_a
-=&amp;gt; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-irb(main):031:0&amp;gt; range2 = ('bar'..'bat').to_a
-=&amp;gt; [&quot;bar&quot;, &quot;bas&quot;, &quot;bat&quot;]
-
-
-
-
-irb(main):046:0&amp;gt; (1..10).each{puts &quot;Yunis&quot;}
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-Yunis
-=&amp;gt; 1..10
-
-
-
-irb(main):047:0&amp;gt; (1..10).each{|index| puts &quot;Yunis #{index}&quot;}
-Yunis 1
-Yunis 2
-Yunis 3
-Yunis 4
-Yunis 5
-Yunis 6
-Yunis 7
-Yunis 8
-Yunis 9
-Yunis 10
-=&amp;gt; 1..10
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h5 id=&quot;执行-ruby-文件&quot;&gt;执行 Ruby 文件&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$-&amp;gt; ruby /Users/Yunis/Desktop/First.rb
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;正则匹配规则&quot;&gt;正则匹配规则&lt;/h5&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;规则&lt;/th&gt;
-      &lt;th&gt;说明&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/a/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配字符 a&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/\?/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配特殊字符?。特殊字符包括^, $, ? , ., /, \, [, ], {, }, (, ), +, *.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配任意字符，例如/a./匹配ab和ac。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[ab]c/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配ac和bc,[]之间代表范围,例如：/[a-z]/ , /[a-zA-Z0-9]/。&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[^a-zA-Z0-9]/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配不在该范围内的字符串&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\d]/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表任意数字&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\w]/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表任意字母，数字或者_&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\s]/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表空白字符，包括空格，TAB和换行&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/[\D]/,/[\W]/,/[\S]/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;均为上述的否定情况&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表0或1个字符&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表0或多个字符&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;代表1或多个字符&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/d{3}/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配3个数字&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/d{1,10}/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配1-10个数字&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d{3,}/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配3个数字以上&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;/([A-Z]\d){5}/&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;匹配首位是大写字母，后面4个是数字的字符串&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h5 id=&quot;猜数字的程序&quot;&gt;猜数字的程序。&lt;/h5&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-Ruby&quot;&gt;number = rand(10)
-
-
-def testRuby(number1,number2)
-    
-    if (number1 &amp;gt; number2)
-        puts &quot;你输入的数字#{number1}大于随机数&quot;
-        inputNumber = gets().to_i
-        testRuby(inputNumber,number2)
-        
-        elsif (number1 &amp;lt; number2)
-        puts &quot;你输入的数字#{number1}小于随机数&quot;
-        inputNumber = gets().to_i
-        testRuby(inputNumber,number2)
-        
-        else
-        puts &quot;恭喜你猜对了。&quot;
-    end
-    
-end
-
-
-puts &quot;猜猜数字是多少？&quot;
-inputNumber = gets().to_i
-testRuby(inputNumber,number)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&quot;函数&quot;&gt;函数&lt;/h4&gt;
-&lt;h5 id=&quot;定义函数&quot;&gt;定义函数&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;irb(main):001:0&amp;gt; def rubyTest
-irb(main):002:1&amp;gt; true
-irb(main):003:1&amp;gt; end
-=&amp;gt; :rubyTest
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h5 id=&quot;数组&quot;&gt;数组&lt;/h5&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;irb(main):015:0&amp;gt; aniamls = [&quot;lions&quot;,&quot;tigers&quot;,&quot;bears&quot;]
-=&amp;gt; [&quot;lions&quot;, &quot;tigers&quot;, &quot;bears&quot;]
-irb(main):016:0&amp;gt; aniamls[0]
-=&amp;gt; &quot;lions&quot;
-irb(main):017:0&amp;gt; aniamls[0..2]
-=&amp;gt; [&quot;lions&quot;, &quot;tigers&quot;, &quot;bears&quot;]
-irb(main):018:0&amp;gt; aniamls[-2]
-=&amp;gt; &quot;tigers&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Ruby 中数组 可以塞不同是数据类型。&lt;/p&gt;
-&lt;h5 id=&quot;散列表&quot;&gt;散列表&lt;/h5&gt;
-&lt;p&gt;集合里面就是一个个用来存储对象的桶。在 散列表的桶里，每个对象上都贴着一张标识。这标识就是键，而对象就是键所对应的值。散列表就是一串这样的键值对。&lt;/p&gt;
-&lt;h5 id=&quot;代码块和-yield&quot;&gt;代码块和 yield&lt;/h5&gt;
-&lt;h5 id=&quot;定义类&quot;&gt;定义类&lt;/h5&gt;
-&lt;h5 id=&quot;编写-mixin&quot;&gt;编写 Mixin&lt;/h5&gt;
-&lt;h5 id=&quot;模块可枚举和集合&quot;&gt;模块、可枚举和集合&lt;/h5&gt;
-
-</description>
-        <pubDate>Thu, 21 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/21/%E4%B8%83%E5%91%A8%E4%B8%83%E8%AF%AD%E8%A8%80-%E7%90%86%E8%A7%A3%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B-Ruby/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/21/%E4%B8%83%E5%91%A8%E4%B8%83%E8%AF%AD%E8%A8%80-%E7%90%86%E8%A7%A3%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B-Ruby/</guid>
-        
-        <category>内功</category>
-        
-        <category>七周七语言</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS 11、iPhone X、Xcode9适配</title>
-        <description>&lt;h1 id=&quot;ios-11iphone-xxcode9适配&quot;&gt;iOS 11、iPhone X、Xcode9适配&lt;/h1&gt;
-
-&lt;p&gt;遇到的问题&lt;/p&gt;
-
-&lt;h3 id=&quot;1-启动图变形&quot;&gt;1 启动图变形。&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/media/15059019605960/%E5%90%AF%E5%8A%A8%E5%9B%BE%E5%8F%98%E5%BD%A2.png&quot; alt=&quot;启动图变形&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;项目采用的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt; 当启动视图，&lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt;里面加载一个图片填充了整个视图，由于之前的 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone&lt;/code&gt; 宽高比例差别不到，也就没有注意到图片的变形，今天 在 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone X&lt;/code&gt; 上图片变形严重。
-解决方案：&lt;/p&gt;
+        <title>Python小工具-下载所有XKCD漫画</title>
+        <description>&lt;h1 id=&quot;python小工具-下载所有xkcd漫画&quot;&gt;Python小工具-下载所有XKCD漫画&lt;/h1&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchImage&lt;/code&gt;，但是美工需要切各个不同 &lt;code class=&quot;highlighter-rouge&quot;&gt;iPhone&lt;/code&gt; 的图片。&lt;/li&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;LaunchScreen.storyboard&lt;/code&gt;，重新设置 图片的约束。设置left、right、top与视图相同，比例设置为原图片比例。然后视图背景设置为与图片边框相同的背景。&lt;/li&gt;
+  &lt;li&gt;利用 requests 模块下载页面。&lt;/li&gt;
+  &lt;li&gt;利用 Beautiful Soup 找到页面中漫画图像的 URL。&lt;/li&gt;
+  &lt;li&gt;利用 iter_content()下载漫画图像，并保存到硬盘。&lt;/li&gt;
+  &lt;li&gt;找到前一张漫画的链接 URL，然后重复。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&quot;2-导航视图上移被-刘海遮挡&quot;&gt;2 导航视图上移，被 刘海遮挡&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# -*- coding: UTF-8 -*-
+import requests, sys, webbrowser, bs4,os
 
-&lt;p&gt;&lt;img src=&quot;/media/15059019605960/15059020743807.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/media/15059019605960/15059020905209.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/media/15059019605960/15059021153942.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+# 进入同级目录下的file文件夹
+currentFilePath = sys.path[0]
+webFilePath = os.path.join(currentFilePath, &quot;file&quot;)
+os.chdir(webFilePath)
 
-&lt;p&gt;我们项目中的导航视图都是自定义的导航视图，所以会出现这样的问题。
-这个解决起来就简单粗暴了。
-判断 手机型号，然后重新设置视图高度。&lt;/p&gt;
+url = 'http://xkcd.com' # starting url
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#import &quot;UIDevice+SYHelp.h&quot;
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@implementation&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UIDevice&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;SYHelp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isiPhoneX&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIScreen&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mainScreen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;812&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOOL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isiOS11&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;NSString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIDevice&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;currentDevice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;systemVersion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;floatValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;YES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+while not url.endswith('#'):
+    print('Downloading page %s...' % url)
+    # 下载 网页
+    res = requests.get(url)
+    res.raise_for_status()
+    # 解析查找需要的内容
+    soup = bs4.BeautifulSoup(res.text,&quot;html.parser&quot;)
+    comicElem = soup.select('#comic img')
+
+    if comicElem == []:
+        print('Could not find comic image.')
+    else:
+        # 拼接真实的图片下载地址
+        comicUrl = 'http:' + comicElem[0].get('src')
+        # Download the image.
+        print('Downloading image %s...' % (comicUrl))
+        res = requests.get(comicUrl)
+        res.raise_for_status()
+        # 保存图片到本地
+        playFile = open(os.path.basename(comicUrl), 'wb')
+        for chunk in res.iter_content(100000):
+            playFile.write(chunk)
+        playFile.close()
+        # 设置下一个加载的 链接
+        prevLink = soup.select('a[rel=&quot;prev&quot;]')[0]
+        url = 'http://xkcd.com' + prevLink.get('href')
+
+print('Done.')
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;h3 id=&quot;3-mjrefresh-视图不隐藏&quot;&gt;3 MJRefresh 视图不隐藏&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/media/15059019605960/15059023075980.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这个解决方法就是判断手机型号和系统版本号，然后让视图上移。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    BOOL isIphoneX = [UIDevice isiPhoneX];
-    BOOL isiOS11 = [UIDevice isiOS11];
-    [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (isiOS11) {
-            make.left.right.bottom.equalTo(self);
-            if (isIphoneX) {
-                make.top.equalTo(self).offset(- 44);//兼容mj bug
-            }else{
-                make.top.equalTo(self).offset(- 20);//兼容mj bug
-            }
-        }else
-        {
-            make.edges.equalTo(self);
-
-        }
-  
-    }];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;或者也可以使用最新版的 &lt;code class=&quot;highlighter-rouge&quot;&gt;MJRefresh&lt;/code&gt; 也许作者已经适配了 &lt;code class=&quot;highlighter-rouge&quot;&gt;iOS 11&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h3 id=&quot;xcode-9&quot;&gt;Xcode 9&lt;/h3&gt;
-
-&lt;p&gt;目前使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Xcode 9&lt;/code&gt; 没有发现有特殊需要修改的地方。&lt;/p&gt;
-
-&lt;p&gt;使用半天的感受：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;代码提示更烂了，感觉还不如 8，有时候输入回车键不会自动填充大括号了。&lt;/li&gt;
-  &lt;li&gt;使用起来略卡。&lt;/li&gt;
-  &lt;li&gt;支持多开模拟器，安装app 也很方便，直接把 &lt;code class=&quot;highlighter-rouge&quot;&gt;.app&lt;/code&gt; 文件拖拽就可以安装。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;–&lt;/h3&gt;
-&lt;p&gt;总体来说，我们的项目适配的工作量还是很小的，我用了一个下午把两个工程的适配都做好了，主要是我们工程中大量的采用 &lt;code class=&quot;highlighter-rouge&quot;&gt;H5&lt;/code&gt; 页面，适配的工作没有那么大。&lt;/p&gt;
 
 </description>
-        <pubDate>Wed, 20 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/20/iOS-11-iPhone-X-Xcode9%E9%80%82%E9%85%8D/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/20/iOS-11-iPhone-X-Xcode9%E9%80%82%E9%85%8D/</guid>
+        <pubDate>Fri, 27 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/27/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89XKCD%E6%BC%AB%E7%94%BB/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/27/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89XKCD%E6%BC%AB%E7%94%BB/</guid>
         
-        <category>iOS</category>
+        <category>Python</category>
         
         
       </item>
     
       <item>
-        <title>Swift30Projects</title>
-        <description>&lt;h1 id=&quot;swift30projects&quot;&gt;Swift30Projects&lt;/h1&gt;
-&lt;p&gt;[toc]&lt;/p&gt;
-&lt;h2 id=&quot;0-goodasoldphones&quot;&gt;0 GoodAsOldPhones&lt;/h2&gt;
+        <title>MAC切换默认的Python版本</title>
+        <description>&lt;h1 id=&quot;mac切换默认的python版本&quot;&gt;MAC切换默认的Python版本&lt;/h1&gt;
 
-&lt;h3 id=&quot;使用-storyboard-默认加载-tabbar&quot;&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;storyboard&lt;/code&gt; 默认加载 &lt;code class=&quot;highlighter-rouge&quot;&gt;tabbar&lt;/code&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;storyboard&lt;/code&gt; 加载 &lt;code class=&quot;highlighter-rouge&quot;&gt;tabbar&lt;/code&gt; 时，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Editor&lt;/code&gt; -&amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Embed In&lt;/code&gt; -&amp;gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Tab Bar Controller&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15048621506323/15048622289028.jpg&quot; alt=&quot;tabbar&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;为-tabbar-添加控制器&quot;&gt;为 &lt;code class=&quot;highlighter-rouge&quot;&gt;tabbar&lt;/code&gt; 添加控制器&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;把 &lt;code class=&quot;highlighter-rouge&quot;&gt;Controller&lt;/code&gt; 加入到 &lt;code class=&quot;highlighter-rouge&quot;&gt;tabbar&lt;/code&gt; 控制器，需要先选择  &lt;code class=&quot;highlighter-rouge&quot;&gt;tabbar&lt;/code&gt; 控制器，然后 按着 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl&lt;/code&gt; 键 拖线到  &lt;code class=&quot;highlighter-rouge&quot;&gt;Controller&lt;/code&gt;,选择 &lt;code class=&quot;highlighter-rouge&quot;&gt;View controllers&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15048621506323/q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;类-和-结构-的区别&quot;&gt;类 和 结构 的区别&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;类 和 结构 的区别
-    &lt;ol&gt;
-      &lt;li&gt;Structures
-        &lt;ol&gt;
-          &lt;li&gt;Useful for representing values
-            &lt;ul&gt;
-              &lt;li&gt;Implicit copying of values&lt;/li&gt;
-              &lt;li&gt;Data is immutable&lt;/li&gt;
-              &lt;li&gt;Fast memory allocation (stack)
-    * Classes&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-          &lt;li&gt;Useful for representing objects
-            &lt;ul&gt;
-              &lt;li&gt;Implicit sharing of objects&lt;/li&gt;
-              &lt;li&gt;Data is mutable&lt;/li&gt;
-              &lt;li&gt;Slower memory allocation (heap)&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ol&gt;
-      &lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;guard-语句&quot;&gt;guard 语句&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;与if语句相同的是，guard也是基于一个表达式的布尔值去判断一段代码是否该被执行。与if语句不同的是，guard只有在条件不满足的时候才会执行这段代码。你可以把guard近似的看做是Assert，但是你可以优雅的退出而非崩溃。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;func fooGuard(x: Int?) {
-    guard let x = x where x &amp;gt; 0 else {
-        // 变量不符合条件判断时，执行下面代码
-        return
-    }
-
-    // 使用x
-    x.description
-}
+&lt;h3 id=&quot;使用-系统默认的-bash&quot;&gt;使用 系统默认的 bash&lt;/h3&gt;
+&lt;p&gt;参见 这个链接：http://blog.csdn.net/a704901117/article/details/69262428?locationNum=15&amp;amp;fps=1&lt;/p&gt;
+&lt;h3 id=&quot;使用-iterm&quot;&gt;使用 iTerm&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ cd ~
+➜  ~ ls -a
+➜  ~ open .zshrc
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-</description>
-        <pubDate>Fri, 08 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/08/Swift30Projects/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/08/Swift30Projects/</guid>
-        
-        <category>Swift</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>命令行软件</title>
-        <description>&lt;h1 id=&quot;命令行软件&quot;&gt;命令行软件&lt;/h1&gt;
+&lt;p&gt;然后添加 &lt;code class=&quot;highlighter-rouge&quot;&gt;if which pyenv &amp;gt; /dev/null; then eval &quot;$(pyenv init -)&quot;; fi&lt;/code&gt; 到打开的文本。&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mac&lt;/code&gt; 下安装命令行软件 使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install&lt;/code&gt;，譬如 安装 &lt;code class=&quot;highlighter-rouge&quot;&gt;tree&lt;/code&gt; ，就是 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew install tree&lt;/code&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;tree&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tree&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;列出文件层级&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15046854241597/shell_tree.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;shellcheck&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;shellcheck&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;检查脚本的错误&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15046854241597/15046866221935.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;thefuck&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;thefuck&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;安装后，记得替换别名&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;alias fuck='eval $(thefuck $(fc -ln -1)); history -r'&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15046854241597/15046870856588.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;cloc&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cloc&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;代码统计神器&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15046854241597/15046872073389.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;cowsay&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cowsay&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;额，其实就是个恶趣味，挺有趣的。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/media/15046854241597/15046872820303.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;figlet&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;figlet&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;将输入字符转换成艺术字体。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;figlet &quot;Y u n i s&quot;&lt;/code&gt;
-&lt;img src=&quot;/media/15046854241597/WX20171023-150731@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;bwm-ng&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bwm-ng&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;实时网速查看
-&lt;code class=&quot;highlighter-rouge&quot;&gt;bwm-ng  -d&lt;/code&gt;
-&lt;img src=&quot;/media/15046854241597/WX20171023-150816@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;htop&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;htop&lt;/code&gt;&lt;/h4&gt;
-
-&lt;p&gt;进程管理软件
-&lt;code class=&quot;highlighter-rouge&quot;&gt;htop&lt;/code&gt;
-&lt;img src=&quot;/media/15046854241597/WX20171023-150840@2x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 06 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/09/06/%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BD%AF%E4%BB%B6/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/09/06/%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BD%AF%E4%BB%B6/</guid>
-        
-        <category>内功</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>单元测试</title>
-        <description>&lt;h1 id=&quot;单元测试&quot;&gt;单元测试&lt;/h1&gt;
-&lt;h3 id=&quot;为什么要写单元测试&quot;&gt;为什么要写单元测试&lt;/h3&gt;
-&lt;h3 id=&quot;如何写单元测试&quot;&gt;如何写单元测试&lt;/h3&gt;
-&lt;h4 id=&quot;那些应该写单元测试那些不应该&quot;&gt;那些应该写单元测试。那些不应该&lt;/h4&gt;
-
-&lt;p&gt;为了更方便地进行单元测试，业务代码应避免以下情况：&lt;/p&gt;
-
-&lt;p&gt;存在太多条件逻辑
-构造函数中做的事情太多
-存在太多全局状态
-混杂了太多无关的逻辑
-存在太多静态方法
-存在过多外部依赖&lt;/p&gt;
-
-&lt;p&gt;http://liuyanwei.jumppo.com/2016/03/10/iOS-unit-test.html&lt;/p&gt;
-
-&lt;p&gt;http://www.hollischuang.com/archives/972&lt;/p&gt;
-
-&lt;p&gt;单元测试在实际工作无法推进的原因，无外乎以下两点：缺乏实施动力和缺少实战经验。&lt;/p&gt;
-
-&lt;p&gt;http://xiangwangfeng.com/2016/10/17/%E8%B5%B0%E5%87%BA-iOS-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%9A%84%E5%9B%B0%E5%A2%83/&lt;/p&gt;
-
-&lt;p&gt;SDWeb 如何写单元测试&lt;/p&gt;
-
-&lt;p&gt;http://www.uml.org.cn/Test/201306072.asp&lt;/p&gt;
-
-&lt;p&gt;https://www.wangjiawen.com/ios/ios-unit-testing-of-kiwi&lt;/p&gt;
-
-&lt;p&gt;http://tmq.qq.com/2017/07/ios/&lt;/p&gt;
-
-&lt;p&gt;http://draveness.me/ios-kai-fa-zhong-de-zhong-gou.html&lt;/p&gt;
-
-&lt;p&gt;https://doc.yonyoucloud.com/doc/FunctionalReactiveProgrammingOniOS/chapter6/testing_viewModels.html&lt;/p&gt;
-
-&lt;p&gt;https://charminglee1973.wordpress.com/2015/06/02/ios%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B9%8Bviewcontroller%E7%AF%87/&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 31 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/31/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/31/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
-        
-        <category>内功</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>NSAssert简单使用</title>
-        <description>&lt;h1 id=&quot;nsassert简单使用&quot;&gt;NSAssert简单使用&lt;/h1&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NSAssert&lt;/code&gt; 的定义如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#define NSAssert(condition, desc, ...)	\
-    do {				\
-	__PRAGMA_PUSH_NO_EXTRA_ARG_WARNINGS \
-	if (!(condition)) {		\
-        NSString *__assert_file__ = [NSString stringWithUTF8String:__FILE__]; \
-            __assert_file__ = __assert_file__ ? __assert_file__ : @&quot;&amp;lt;Unknown File&amp;gt;&quot;; \
-	    [[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd \
-		object:self file:__assert_file__ \
-	    	lineNumber:__LINE__ description:(desc), ##__VA_ARGS__]; \
-	}				\
-        __PRAGMA_POP_NO_EXTRA_ARG_WARNINGS \
-    } while(0)
-#endif
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  ~ source  .zshrc
+➜  ~ python
+Python 3.5.2 (default, Oct 29 2016, 22:48:09)
+[GCC 4.2.1 Compatible Apple LLVM 7.0.2 (clang-700.1.81)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&amp;gt;&amp;gt;&amp;gt; exit()
+KeyboardInterrupt
+&amp;gt;&amp;gt;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;condition&lt;/code&gt; 判断条件为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt; 的时候，程序终止，提示错误，提示语为 &lt;code class=&quot;highlighter-rouge&quot;&gt;desc&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;condition&lt;/code&gt; 判断条件为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt; 的时候，程序继续运行。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; NSAssert(self.umPushAppKey != nil, @&quot;请设置友盟key&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey != nil&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt;，程序终止，提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;请设置友盟key&lt;/code&gt;。
-    &lt;ul&gt;
-      &lt;li&gt;提示语为： &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 不为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey != nil&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt;，程序继续运行。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; NSAssert(self.umPushAppKey, @&quot;请设置友盟key&quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;假&lt;/code&gt;，程序终止，提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;请设置友盟key&lt;/code&gt;。
-    &lt;ul&gt;
-      &lt;li&gt;提示语为： &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: '请设置友盟key'&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;当 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 不为 &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;，判断条件 &lt;code class=&quot;highlighter-rouge&quot;&gt;self.umPushAppKey&lt;/code&gt; 为 &lt;code class=&quot;highlighter-rouge&quot;&gt;真&lt;/code&gt;，程序继续运行。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;就切换到 3.5版本了。&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 28 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/28/NSAssert%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/28/NSAssert%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS应用架构谈学习笔记</title>
-        <description>&lt;h1 id=&quot;ios应用架构谈学习笔记&quot;&gt;iOS应用架构谈学习笔记&lt;/h1&gt;
-
-&lt;p&gt;本文是学习 &lt;a href=&quot;https://casatwy.com/&quot;&gt;反革命工程师&lt;/a&gt; 关于架构的的一系列博文的笔记。&lt;/p&gt;
-
-&lt;p&gt;原博文链接：
-&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html&quot;&gt;iOS应用架构谈 开篇&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html&quot;&gt;iOS应用架构谈 view层的组织和调用方案&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html&quot;&gt;iOS应用架构谈 网络层设计方案&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iosying-yong-jia-gou-tan-ben-di-chi-jiu-hua-fang-an-ji-dong-tai-bu-shu.html&quot;&gt;iOS应用架构谈 本地持久化方案及动态部署&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://casatwy.com/iOS-Modulization.html&quot;&gt;iOS应用架构谈 组件化方案&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;view层的组织和调用方案&quot;&gt;view层的组织和调用方案&lt;/h2&gt;
-
-&lt;h3 id=&quot;代码布局&quot;&gt;代码布局&lt;/h3&gt;
-&lt;p&gt;代码布局的大概样式。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#pragma mark - Life Cycle
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    //加载页面
-}
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //布局
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    //监听事件
-}
-- (void)dealloc
-{
-    
-}
-#pragma mark - Intial Methods
-//初始化数据
-- (void)assignDate
-{
-    
-}
-- (void)settingAppearance
-{
-    
-}
-- (void)loadSubViews
-{
-    
-}
-#pragma mark - Target Methods
-//点击事件或通知事件
-
-#pragma mark - Network Methods
-//网络请求
-
-#pragma mark - Public Method
-//外部方法
-
-#pragma mark - Private Method
-//本类方法
-
-#pragma mark - Delegate
-//代理方法
-
-
-#pragma mark - Lazy Loads
-//懒加载 Getter方法
-
-#pragma mark - set
-//Setter方法
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;每一个delegate都把对应的protocol名字带上，delegate方法不要到处乱写，写到一块区域里面去&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;在ios开发领域中怎样才算是mvc划分的正确姿势&quot;&gt;在iOS开发领域中，怎样才算是MVC划分的正确姿势？&lt;/h3&gt;
-
-&lt;p&gt;M应该做的事：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;给ViewController提供数据&lt;/li&gt;
-  &lt;li&gt;给ViewController存储数据提供接口&lt;/li&gt;
-  &lt;li&gt;提供经过抽象的业务基本组件，供Controller调度&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;C应该做的事：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;管理View Container的生命周期&lt;/li&gt;
-  &lt;li&gt;负责生成所有的View实例，并放入View Container&lt;/li&gt;
-  &lt;li&gt;监听来自View与业务有关的事件，通过与Model的合作，来完成对应事件的业务。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;V应该做的事：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;响应与业务无关的事件，并因此引发动画效果，点击反馈（如果合适的话，尽量还是放在View去做）等。&lt;/li&gt;
-  &lt;li&gt;界面元素表达&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;拆分的心法&quot;&gt;拆分的心法&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;第一心法：保留最重要的任务，拆分其它不重要的任务&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;在iOS开发领域内，UIViewController承载了非常多的事情，比如View的初始化，业务逻辑，事件响应，数据加工等等，当然还有更多我现在也列举不出来，但是我们知道有一件事情Controller肯定逃不掉要做：协调V和M。也就是说，不管怎么拆，协调工作是拆不掉的。那么剩下的事情我们就可以拆了，比如    UITableView的DataSource。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;第二心法：拆分后的模块要尽可能提高可复用性，尽量做到DRY&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;根据第一心法拆开来的东西，很有可能还是强业务相关的，这种情况有的时候无法避免。但我们拆也要拆得好看，拆出来的部分最好能够归成某一类对象，然后最好能够抽象出一个通用逻辑出来，使他能够复用。即使不能抽出通用逻辑，那也尽量抽象出一个protocol，来实现IOP。这里有篇关于&lt;a href=&quot;https://casatwy.com/tiao-chu-mian-xiang-dui-xiang-si-xiang-er-duo-tai.html&quot;&gt;IOP的文章&lt;/a&gt;，大家看了就明白优越性了。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;第三心法：要尽可能提高拆分模块后的抽象度&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;尽量高层级的抽象。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;设计心法&quot;&gt;设计心法&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;第一心法：尽可能减少继承层级，涉及苹果原生对象的尽量不要继承
-    &lt;ul&gt;
-      &lt;li&gt;继承是罪恶，尽量不要继承。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;第二心法：做好代码规范，规定好代码在文件中的布局，尤其是ViewController
-    &lt;ul&gt;
-      &lt;li&gt;这主要是为了提高可维护性。在一个文件非常大的对象中，尤其要限制好不同类型的代码在文件中的布局。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;第三心法：能不放在Controller做的事情就尽量不要放在Controller里面去做&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;小总结&quot;&gt;小总结&lt;/h4&gt;
-
-&lt;p&gt;其实针对View层的架构设计，还是要做好三点：&lt;code class=&quot;highlighter-rouge&quot;&gt;代码规范&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;架构模式&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;工具集&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;代码规范对于View层来说意义重大，毕竟View层非常重业务，如果代码布局混乱，后来者很难接手，也很难维护。&lt;/p&gt;
-
-&lt;p&gt;架构模式具体如何选择，完全取决于业务复杂度。如果业务相当相当复杂，那就可以使用VIPER，如果相对简单，那就直接MVC稍微改改就好了。每一种已经成为定式的架构模式不见得都适合各自公司对应的业务，所以需要各位架构师根据情况去做一些拆分或者改变。拆分一般都不会出现问题，改变的时候，只要别把MVC三个角色搞混就好了，M该做啥做啥，C该做啥做啥，V该做啥做啥，不要乱来。关于大部分的架构模式应该是什么样子，这篇文章里都已经说过了，不过我认为最重要的还是后面的心法，模式只是招术，熟悉了心法才能大巧不工。&lt;/p&gt;
-
-&lt;p&gt;View层的工具集主要还是集中在如何对View进行布局，以及一些特定的View，比如带搜索提示的搜索框这种。这篇文章只提到了View布局的工具集，其它的工具集相对而言是更加取决于各自公司的业务的，各自实现或者使用CocoaPods里现成的都不是很难。&lt;/p&gt;
-
-&lt;p&gt;对于小规模或者中等规模iOS开发团队来说，做好以上三点就足够了。在大规模团队中，有一个额外问题要考虑，就是跨业务页面调用方案的设计。&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 23 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/23/iOS%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%B0%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/23/iOS%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E8%B0%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-        
-        <category>内功</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>runtime 可以做什么</title>
-        <description>&lt;h1 id=&quot;runtime-可以做什么&quot;&gt;runtime 可以做什么&lt;/h1&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;这篇文字不扯淡，不讲runtime是什么，只总结下runtime 可以用来干什么。
-这几篇文章写的很好：
-&lt;a href=&quot;http://tech.glowing.com/cn/objective-c-runtime/&quot;&gt;Objective-C Runtime&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;http://tech.glowing.com/cn/method-swizzling-aop/&quot;&gt;Method Swizzling 和 AOP 实践&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://southpeak.github.io/categories/objectivec/&quot;&gt;南大(南锋子)的一系列文章&lt;/a&gt;（打开稍慢）&lt;/p&gt;
-
-  &lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/sps900608/article/details/51863147&quot;&gt;精通Objective-C进阶技巧：使用运行时系统API&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;然后饶神总结的也不错,里面好多干货
-&lt;a href=&quot;http://www.jianshu.com/p/64a7c9f7f6b2&quot;&gt;iOS 基础知识点网址&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;美团技术团队
-&lt;a href=&quot;http://tech.meituan.com/DiveIntoCategory.html&quot;&gt;深入理解Objective-C：Category&lt;/a&gt;
-&lt;a href=&quot;http://tech.meituan.com/DiveIntoMethodCache.html&quot;&gt;深入理解Objective-C：方法缓存&lt;/a&gt;
-&lt;a href=&quot;http://www.mulle-kybernetik.com/artikel/Optimization/opti-3-imp-deluxe.html&quot;&gt;Obj-C Optimization: IMP Cacheing Deluxe&lt;/a&gt;&lt;/p&gt;
-
-  &lt;p&gt;杨小鱼（玉令天下）
-&lt;a href=&quot;http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/&quot;&gt;Objective-C Runtime&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;1获取类属性列表值方法&quot;&gt;1，获取类属性列表、值、方法&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2BProperty.m&quot;&gt;获取model的属性、属性值、方法列表 demo地址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;2替换已有函数包括系统方法&quot;&gt;2，替换已有函数(包括系统方法)&lt;/h4&gt;
-&lt;p&gt;可以把系统方法替换为我们自己的方法。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIAlertController%2BexchangeMethod.m&quot;&gt;替换系统弹框方法，统一修改弹框标题  demo地址&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;3动态挂载对象&quot;&gt;3，动态挂载对象&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIView%2BredDot.m&quot;&gt;为View 加一个小红点的公用方法  demo地址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;4动态创建类-kvo-底层实现原理&quot;&gt;4,动态创建类 KVO 底层实现原理&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.jianshu.com/p/6305af232100&quot;&gt;KVO的底层实现原理&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;5自动归档归档解档&quot;&gt;5，自动归档、归档解档&lt;/h4&gt;
-
-&lt;p&gt;           &lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[coder encodeObject:value forKey:propertyName];
-
-[self setValue:value forKey:propertyName];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2Bencode.m&quot;&gt;统一为property添加方法 不用一个个的写 demo地址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;6给分类添加属性&quot;&gt;6，给分类添加属性&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/UIView%2BredDot.m&quot;&gt;为View 加一个小红点的公用方法  demo地址&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&quot;7字典转模型&quot;&gt;7，字典转模型&lt;/h4&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/yunisSong/RunTimeDemo/blob/master/RunTimeDemo/NSObject%2BdicToModel.m&quot;&gt;同样是获取类的属性，然后调用 &lt;code class=&quot;highlighter-rouge&quot;&gt;[instance setValue:value forKey:key]&lt;/code&gt; 赋值  demo地址&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 21 Aug 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2017/08/21/runtime-%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/</link>
-        <guid isPermaLink="true">http://localhost:4000/2017/08/21/runtime-%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88/</guid>
-        
-        <category>iOS</category>
-        
-        <category>内功</category>
+        <pubDate>Fri, 27 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/10/27/MAC%E5%88%87%E6%8D%A2%E9%BB%98%E8%AE%A4%E7%9A%84Python%E7%89%88%E6%9C%AC/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/10/27/MAC%E5%88%87%E6%8D%A2%E9%BB%98%E8%AE%A4%E7%9A%84Python%E7%89%88%E6%9C%AC/</guid>
         
         
       </item>
