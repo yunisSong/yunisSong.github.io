@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>算法图解 - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2017/11/13/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#内功" title="内功">内功</a>
+                        
+                    </div>
+                    <h1>算法图解</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on November 13, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="算法图解">算法图解</h1>
+<h3 id="算法简介">算法简介</h3>
+<h4 id="对数">对数</h4>
+<p>对数运算是幂运算的逆运算。
+<img src="/media/15105545936376/15105546056701.jpg" alt="" /></p>
+
+<h4 id="二分查找如何实现">二分查找如何实现</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def binary_search(array,item):
+    low = 0
+    high = len(array) - 1
+    print("large index is %d"%high)
+
+    while low &lt;= high:
+        mid = int((low + high)/2)
+        guess = array[mid]
+        print("Mid is %d"%mid)
+        print("guess is %d"%guess)
+        if  guess == item:
+            return mid
+        elif guess &lt; item:
+            low = mid + 1
+            print("+++++++low is %d"%low)
+        elif guess &gt; item:
+            high = mid - 1
+            print("-------high is %d"%high)
+        else:
+            return None
+myList = [1,3,7,9,12,23,45,67,89,123,244,345,456,1234]
+print(binary_search(myList,23))
+</code></pre>
+</div>
+
+<h4 id="运行时间">运行时间</h4>
+<blockquote>
+  <p>每次介绍算法时，我都将讨论其运行时间。一般而言，应选择效率最高的算 法，以最大限度地减少运行时间或占用空间。
+简单查找逐个地检查数 字，如果列表包含100个数字，最多需要猜100次。如果列表包含40亿个数字，最 多需要猜40亿次。换言之，最多需要猜测的次数与列表长度相同，这被称为线性 时间(linear time)。
+二分查找则不同。如果列表包含100个元素，最多要猜7次;如果列表包含40亿个数字，最多 需猜32次。厉害吧?二分查找的运行时间为对数时间(或log时间)。</p>
+</blockquote>
+
+<p><img src="/media/15105545936376/15105591801136.jpg" alt="" /></p>
+
+<h4 id="大-o-表示法">大 O 表示法</h4>
+
+<ol>
+  <li>大O表示法是一种特殊的表示法，指出了算法的速度有多快。</li>
+  <li>大O表示法 让你能够比较操作数，它指出了算法运行时间的增速。</li>
+  <li>大O表示法指出了最糟情况下的运行时间。</li>
+  <li>算法的速度指的并非时间，而是操作数的增速。</li>
+  <li>谈论算法的速度时，我们说的是随着输入的增加，其运行时间将以什么样的速度增加。</li>
+  <li>算法的运行时间用大O表示法表示。</li>
+  <li>O(log n)比O(n)快，当需要搜索的元素越多时，前者比后者快得越多</li>
+</ol>
+
+<p>下面按从快到慢的顺序列出了经常会遇到的5种大O运行时间。</p>
+
+<ul>
+  <li>[ ]  <strong>O(log n)</strong>，也叫对数时间，这样的算法包括二分查找。</li>
+  <li>[ ]  <strong>O(n)</strong>，也叫线性时间，这样的算法包括简单查找。</li>
+  <li>[ ]  <strong>O(n * log n)</strong>，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法。</li>
+  <li>[ ]  <strong>O(n2)</strong>，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。</li>
+  <li>[ ]  <strong>O(n!)</strong>，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。</li>
+</ul>
+
+<p><img src="/media/15105545936376/15106259079062.jpg" alt="" /></p>
+
+<h3 id="选择排序">选择排序</h3>
+<h4 id="内存的工作原理">内存的工作原理</h4>
+
+<blockquote>
+  <p>假设你去看演出，需要将东西寄存。寄存处有一个柜子，柜子有很多抽屉。
+每个抽屉可放一样东西，你有两样东西要寄存，因此要了两个抽屉。
+你将两样东西存放在这里。
+现在你可以去看演出了!这大致就是计算机内存的工作原理。计算机就像是很多抽屉的集合体，每个抽屉都有地址。
+需要将数据存储到内存时，你请求计算机提供存储空间，计算机给你一个存储地址。需要存储多项数据时，有两种基本方式——数组和链表。但它们并非都适用于所有的情形，因此知道它们的差别很重要。</p>
+</blockquote>
+
+<h4 id="数组和链表">数组和链表</h4>
+<ul>
+  <li>数组 ：所有元素在内存中都是相连的，添加需要重新申请内存。</li>
+  <li>链表 ：链表中的元素可存储在内存的任何地方。链表的每个元素都存储了下一个元素的地址，从而使一系列随机的内存地址串在一起。使用链表时，根本就不需要移动元素。链表的优势在插入元素方面。</li>
+  <li>插入元素：使用链表时，只需要修改前面那个元素指向的地址就可以插入元素，数组的话，就需要把元素后面的元素全部向后移动，如果没有足够的时间的话，还得将数组复制到其他地方。</li>
+  <li>删除元素：使用链表时，只需要修改前一个元素指向的地址就行了，使用数组的话，删除元素后面的元素都需要向前移。</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>优点</th>
+      <th>缺点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>数组</td>
+      <td>查找方便</td>
+      <td>必须使用连续的存储空间，添加元素需要从新分配内存</td>
+    </tr>
+    <tr>
+      <td>链表</td>
+      <td>可以使用分割开的内存，添加元素方便</td>
+      <td>查找慢，必须重头开始一个个地址的查。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>常见的数组和链表操作的运行时间</p>
+
+<p><img src="/media/15105545936376/15106419508468.jpg" alt="" /></p>
+
+<h4 id="选择排序-1">选择排序</h4>
+
+<p>时间：O(n²)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+# 找出当前数组最小的数字的index
+def findSmallest(arr):
+    smallest = arr[0]
+    smallest_index = 0
+    for i in range(1,len(arr)):
+        if arr[i] &lt; smallest:
+            smallest = arr[i]
+            smallest_index = i
+    return smallest_index
+
+# 选择排序  O(n²)
+def selectionSort(arr):
+    newArr = []
+    for i in range(len(arr)):
+        smallest_index = findSmallest(arr)
+        # arr.pop(smallest_index) 移除指定位置的元素，并返回这个元素
+        newArr.append(arr.pop(smallest_index))
+    return newArr
+
+
+print (selectionSort([5, 3, 6, 2, 10]))
+
+</code></pre>
+</div>
+
+<h4 id="小结">小结</h4>
+
+<ul>
+  <li>计算机内存犹如一大堆抽屉。</li>
+  <li>需要存储多个元素时，可使用数组或链表。</li>
+  <li>数组的元素都在一起。</li>
+  <li>链表的元素是分开的，其中每个元素都存储了下一个元素的地址。</li>
+  <li>数组的读取速度很快。</li>
+  <li>链表的插入和删除速度很快。</li>
+  <li>在同一个数组中，所有元素的类型都必须相同(都为int、double等)。</li>
+</ul>
+
+<h3 id="递归">递归</h3>
+
+<blockquote>
+  <p>编写递归函数时，必须告诉它何时停止递归。正因为如此，每个递归函数都有两部分:基线 条件(base case)和递归条件(recursive case)。递归条件指的是函数调用自己，而基线条件则 指的是函数不再调用自己，从而避免形成无限循环。</p>
+</blockquote>
+
+<p><img src="/media/15105545936376/15106447680191.jpg" alt="" />
+<img src="/media/15105545936376/15106447757742.jpg" alt="" /></p>
+
+<h4 id="栈">栈</h4>
+
+<h5 id="调用栈">调用栈</h5>
+
+<blockquote>
+  <p>计算机在内部使用被称为调用栈的栈。
+ 下面是一个 简单的函数。</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def greet(name):
+    print "hello, " + name + "!" 
+    greet2(name)
+    print "getting ready to say bye..."
+    bye()
+</code></pre>
+</div>
+
+<p>这个函数问候用户，再调用另外两个函数。这两个函数的代码如下。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def greet2(name):
+    print "how are you, " + name + "?"
+def bye():
+    print "ok bye!"
+</code></pre>
+</div>
+
+<blockquote>
+  <p>假设你调用greet(“maggie”)，计算机将首先为该函数调用分配一块内存。
+<img src="/media/15105545936376/15106457934088.jpg" alt="" /></p>
+</blockquote>
+
+<blockquote>
+  <p>我们来使用这些内存。变量name被设置为maggie，这需要存储到内存中。
+<img src="/media/15105545936376/15106458376828.jpg" alt="" />
+每当你调用函数时，计算机都像这样将函数调用涉及的所有变量的值存储到内存中。接下来， 你打印hello, maggie!，再调用greet2(“maggie”)。同样，计算机也为这个函数调用分配一 块内存。
+<img src="/media/15105545936376/15106458571552.jpg" alt="" />
+计算机使用一个栈来表示这些内存块，其中第二个内存块位于第一个内存块上面。你打印 how are you, maggie?，然后从函数调用返回。此时，栈顶的内存块被弹出。
+<img src="/media/15105545936376/15106458854545.jpg" alt="" />
+现在，栈顶的内存块是函数greet的，这意味着你返回到了函数greet。当你调用函数greet2 时，函数greet只执行了一部分。这是本节的一个重要概念:调用另一个函数时，当前函数暂停 并处于未完成状态。该函数的所有变量的值都还在内存中。执行完函数greet2后，你回到函数 greet，并从离开的地方开始接着往下执行:首先打印getting ready to say bye…，再调用 函数bye。
+<img src="/media/15105545936376/15106459042795.jpg" alt="" />
+在栈顶添加了函数bye的内存块。然后，你打印ok bye!，并从这个函数返回。
+<img src="/media/15105545936376/15106459176341.jpg" alt="" />
+现在你又回到了函数greet。由于没有别的事情要做，你就从函数greet返回。这个栈用于
+存储多个函数的变量，被称为调用栈。</p>
+</blockquote>
+
+<p><strong>这一段讲的真好，之前一直理不清楚这个概念</strong></p>
+
+<h4 id="小结-1">小结</h4>
+
+<ul>
+  <li>递归指的是调用自己的函数。</li>
+  <li>每个递归函数都有两个条件:基线条件和递归条件。 * 栈有两种操作:压入和弹出。</li>
+  <li>所有函数调用都进入调用栈。</li>
+  <li>调用栈可能很长，这将占用大量的内存。</li>
+</ul>
+
+<h3 id="快速排序">快速排序</h3>
+
+<h4 id="分而治之divide划分-and-conquer征服">分而治之(divide(划分) and conquer(征服))</h4>
+
+<p>D&amp;C的工作原理:</p>
+
+<ol>
+  <li>找出简单的<strong>基线条件</strong>;</li>
+  <li>确定如何<strong>缩小问题的规模</strong>，使其符合基线条件。</li>
+</ol>
+
+<h4 id="快速排序-1">快速排序</h4>
+<ul>
+  <li>快速排序是一种常用的排序算法，比选择排序快得多。</li>
+  <li>例如，C语言标准库中的函数qsort 实现的就是快速排序。</li>
+  <li>快速排序也使用了D&amp;C。
+    <ul>
+      <li>基线条件
+        <ul>
+          <li>基线条件为数组为空或只包含一个元素。在这种情况下，只需原样返回数组——根本就不用排序。</li>
+        </ul>
+      </li>
+      <li>缩小问题规模
+        <ul>
+          <li>首先，从数组中选择一个元素，这个元素被称为基准值(pivot)。</li>
+          <li>接下来，找出比基准值小的元素以及比基准值大的元素。</li>
+          <li>这被称为分区(partitioning)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>代码实现如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 这样写更好理解一点
+
+def quickSort(array):
+    # 判断数组是否满足基线条件，如果满足基线条件直接返回
+    # 如果不满足基线条件，继续减小问题规模
+    if len(array) &gt; 1:
+        mid = array[0]
+        largeArray = []
+        smallArray = []
+        print("---------------mid = " + str(mid))
+        for index in range(1,len(array)):
+            value = array[index]
+            if  value &gt; mid :
+                largeArray = largeArray +[value]
+            else :
+                smallArray = smallArray +[value]
+        print("smallArrar = " + str(smallArray))
+        print("largeArray = " + str(largeArray))
+        return quickSort(smallArray) + [mid] + quickSort(largeArray)
+    else:
+        return array
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#更符合 Python 的写法
+
+def quicksort(array):
+  if len(array) &lt; 2:
+    # base case, arrays with 0 or 1 element are already "sorted"
+    return array
+  else:
+    # recursive case
+    pivot = array[0]
+    # sub-array of all the elements less than the pivot
+    less = [i for i in array[1:] if i &lt;= pivot]
+    # sub-array of all the elements greater than the pivot
+    greater = [i for i in array[1:] if i &gt; pivot]
+    return quicksort(less) + [pivot] + quicksort(greater)
+</code></pre>
+</div>
+
+<p>这行代码的意思：
+<code class="highlighter-rouge">less = [i for i in array[1:] if i &lt;= pivot]</code></p>
+
+<p>寻找 array 中 index 1 到末尾的元素，当这个元素小于等于 pivot 时，返回这个元素 i，存储在数组中；</p>
+
+<p>图形演示更直观一点：
+<img src="/img/in-post/GIF/quickSort.gif" alt="快排" /></p>
+
+<blockquote>
+  <p>推荐一个网站<a href="https://visualgo.net/en">visualgo</a>,可以直观的演示算法的执行过程。</p>
+</blockquote>
+
+<h4 id="为什么快速排序的复杂度为-nlog-n">为什么快速排序的复杂度为 n*log n</h4>
+
+<p><img src="/media/15105545936376/15111703521218.jpg" alt="" /></p>
+
+<blockquote>
+  <p>在这个示例中，层数为O(log n)(用技术术语说，调用栈的高度为O(log n))，而每层需要的 时间O(n)。因此整个算法需要的时间为O(n) * O(log n) = O(n log n)。这就是最佳情况。
+在最糟情况下，有O(n)层，因此该算法的运行时间为O(n) * O(n) = O(n²)。
+只要你每次都随机地选择一个数组元素作为基准值，快速排序的平均运行时间就将为O(n log n)。快速排序是最快的排序算法之一，也是D&amp;C典范.</p>
+</blockquote>
+
+<h3 id="散列表">散列表</h3>
+
+<p><code class="highlighter-rouge">散列表 哈希表 字典 区别与共同点</code></p>
+
+<p>散列表查找速度是 O(1)。</p>
+
+<h4 id="散列函数">散列函数</h4>
+
+<blockquote>
+  <p>散列函数是这样的函数，即无论你给它什么数据，它都还你一个数字.</p>
+</blockquote>
+
+<p>散列函数必须满足一些要求:</p>
+
+<ul>
+  <li>它必须是一致的。输入相同的内容时，得到是数字是一样的。</li>
+  <li>它应将不同的输入映射到不同的数字。例如，如果一个散列函数不管输入是什么都返回1， 它就不是好的散列函数。最理想的情况是，将不同的输入映射到不同的数字。</li>
+</ul>
+
+<p>散列函数为什么可以迅速查找到结果：</p>
+
+<ul>
+  <li>散列函数总是将同样的输入映射到相同的索引。每次你输入avocado，得到的都是同一个 数字。因此，你可首先使用它来确定将鳄梨的价格存储在什么地方，并在以后使用它来 确定鳄梨的价格存储在什么地方。</li>
+  <li>散列函数将不同的输入映射到不同的索引。。avocado映射到索引4，milk映射到索引0。每 种商品都映射到数组的不同位置，让你能够将其价格存储到这里。</li>
+  <li>散列函数知道数组有多大，只返回有效的索引。如果数组包含5个元素，散列函数就不会 返回无效索引100。</li>
+</ul>
+
+<h4 id="散列表应用">散列表应用</h4>
+
+<ul>
+  <li>用于查找
+    <ul>
+      <li>无论你访问哪个网站，其网址都必须转换为IP地址。这个过程被称为DNS解析 (DNS resolution)，散列表是提供这种功能的方式之一。</li>
+    </ul>
+  </li>
+  <li>防止重复</li>
+  <li>用作缓存
+    <ul>
+      <li>缓存是一种常用的加速方式，所有大型网站都使用缓存，而缓存的数据则存储在散列表中!</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="小结-2">小结</h4>
+
+<ul>
+  <li>可以结合散列函数和数组来创建散列表。</li>
+  <li>冲突很糟糕，你应使用可以最大限度减少冲突的散列函数。</li>
+  <li>散列表的查找、插入和删除速度都非常快。</li>
+  <li>散列表适合用于模拟映射关系。</li>
+  <li>一旦填装因子超过0.7，就该调整散列表的长度。</li>
+  <li>散列表可用于缓存数据(例如，在Web服务器上)。</li>
+  <li>散列表非常适合用于防止重复。</li>
+</ul>
+
+<h3 id="广度优先搜索">广度优先搜索</h3>
+
+<p>广度优先搜索让你能够找出两样东西之间的最短距离，不过最短距离的含义有很多!使用广 度优先搜索可以:</p>
+
+<ul>
+  <li>编写国际跳棋AI，计算最少走多少步就可获胜;</li>
+  <li>编写拼写检查器，计算最少编辑多少个地方就可将错拼的单词改成正确的单词，如将
+READED改为READER需要编辑一个地方;</li>
+  <li>根据你的人际关系网络找到关系最近的医生。</li>
+</ul>
+
+<p><code class="highlighter-rouge">解决最短路径问题</code>的算法被称为<code class="highlighter-rouge">广度优先搜索</code>。</p>
+
+<h4 id="图简介">图简介</h4>
+
+<p><code class="highlighter-rouge">图由节点和边组成。一个节点可能与众多节点直接相连，这些节点被称为邻居。</code>
+图模拟一组连接。
+图用于模拟不同的东西是如何相连的。</p>
+
+<h4 id="广度优先搜索-1">广度优先搜索</h4>
+
+<p>广度优先搜索可回答两类问题：</p>
+
+<ul>
+  <li>第一类问题:从节点A出发，有前往节点B的路径吗?</li>
+  <li>第二类问题:从节点A出发，前往节点B的哪条路径最短?</li>
+</ul>
+
+<hr />
+
+<p>假设 需要查找 你认识的人中，以及你认识的人所认识的人中，是否有名字末尾为 M 的人。
+<img src="/media/15105545936376/15117489027923.jpg" alt="" /></p>
+
+<p>搜索的步骤：</p>
+
+<ol>
+  <li>先查看 你 认识的人中是否有符合条件的人；
+    <ul>
+      <li>找到 alice、bob、claire 三个人</li>
+    </ul>
+  </li>
+  <li>如果有直接返回这个人，如果没有，就继续查找你认识的人中的社交关系是否有需要查找的人。
+    <ul>
+      <li>这三个人没有一个符合条件的人，把他们加入到队列中</li>
+      <li>从队列中取出候选人查看，如果候选人不符合，就把候选人的联系人继续添加到队列中，同时标识这个候选人已经排查过了。</li>
+    </ul>
+  </li>
+  <li>知道找到需要的人，或者整个社交圈搜索完毕。
+    <ul>
+      <li>重复上面的操作。</li>
+    </ul>
+  </li>
+</ol>
+
+<p>具体实现如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from collections import deque
+
+
+graph = {}
+graph["you"] = ["alice", "bob", "claire"]
+graph["bob"] = ["anuj", "peggy"]
+graph["alice"] = ["peggy"]
+graph["claire"] = ["thom", "jonny"]
+graph["anuj"] = []
+graph["peggy"] = []
+graph["thom"] = []
+graph["jonny"] = []
+
+# 判断是不是需要找到的人
+def person_is_seller(name):
+    if name[-1] == 'm':
+        return True
+    else:
+        return False
+
+# 查找与 name 关系最近的符合条件的人
+def searchName(name):
+    # 创建一个队列 用于存储要查找的人
+    searchQueue = deque()
+    # 先在 name 的第一层级去找是否有符合条件的人
+    searchQueue += graph[name]
+    # 用于记录 已经查找过的人 放置重复查找
+    searched = []
+    # 当队列不为空时，循环执行
+    while searchQueue:
+        # 取出队列的第一个人
+        person = searchQueue.popleft()
+        # 当前  person 没有被查找过
+        if not person  in searched:
+            print("searching " + person)
+            # 判断 person 是否我们需要的人。
+            if person_is_seller(person):
+                print(person + " is you  need person")
+                return True
+            else:
+                # 如果 person 不是符合条件的人
+                # 把与  person 关联的人加入到队列中
+                searchQueue += graph[person]
+                # 把 person 标记为已经查找过
+                searched.append(person)
+    return False
+
+# 查找跟 “you” 关系最近发符合条件的人。
+searchName("you")
+
+</code></pre>
+</div>
+
+<h3 id="狄克斯特拉算法">狄克斯特拉算法</h3>
+
+<p><strong>狄克斯特拉算法 找出最快路径。</strong></p>
+
+<p><img src="/media/15105545936376/15117652304241.jpg" alt="" /></p>
+
+<p>狄克斯特拉算法用于每条边都有关联数字的图，这些数字称为<code class="highlighter-rouge">权重(weight)</code>。
+狄克斯特拉算法只适用于<code class="highlighter-rouge">有向无环图(directed acyclic graph，DAG)</code>。</p>
+
+<p>带权重的图称为 <code class="highlighter-rouge">加权图(weighted graph)</code>，不带权重的图称为 <code class="highlighter-rouge">非加权图(unweighted graph)</code>。
+<img src="/media/15105545936376/15117653278009.jpg" alt="" /></p>
+
+<p>要计算非加权图中的最短路径，可使用<code class="highlighter-rouge">广度优先搜索</code>。要计算加权图中的最短路径，可使用<code class="highlighter-rouge">狄克斯特拉算法</code>。</p>
+
+<p>狄克斯特拉算法包含4个步骤：</p>
+
+<ol>
+  <li>找出“最便宜”的节点，即可在最短时间内到达的节点。</li>
+  <li>更新该节点的邻居的开销，其含义将稍后介绍。</li>
+  <li>重复这个过程，直到对图中的每个节点都这样做了。</li>
+  <li>计算最终路径。</li>
+</ol>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/11/13/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E7%BB%83%E7%BA%A7%E6%94%BB%E7%95%A5/" data-toggle="tooltip" data-placement="top" title="（转载）程序员技术练级攻略">
+                        Previous<br>
+                        <span>（转载）程序员技术练级攻略</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/11/14/(%E8%BD%AC%E8%BD%BD)%E7%AE%80%E5%8D%95%E5%87%A0%E6%9D%A1%E5%91%BD%E4%BB%A4-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%90%AF-macOS-%E7%B3%BB%E7%BB%9F%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD-%E6%96%B0%E6%89%8B%E9%97%AE%E5%8F%B7/" data-toggle="tooltip" data-placement="top" title="(转载)简单几条命令，轻松开启 macOS 系统隐藏功能">
+                        Next<br>
+                        <span>(转载)简单几条命令，轻松开启 macOS 系统隐藏功能</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="13">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#轮子" title="轮子" rel="2">
+                                    轮子
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                                    JavaScript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#内功" title="内功" rel="13">
+                                    内功
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="5">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2018
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>七周七语言：理解多种编程范型--Ruby - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2017/09/21/%E4%B8%83%E5%91%A8%E4%B8%83%E8%AF%AD%E8%A8%80-%E7%90%86%E8%A7%A3%E5%A4%9A%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%8C%83%E5%9E%8B-Ruby/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#内功" title="内功">内功</a>
+                        
+                        <a class="tag" href="/tags/#七周七语言" title="七周七语言">七周七语言</a>
+                        
+                    </div>
+                    <h1>七周七语言：理解多种编程范型--Ruby</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on September 21, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="七周七语言理解多种编程范型ruby">七周七语言：理解多种编程范型–Ruby</h1>
+
+<ul>
+  <li>无论用哪一类语言，都必须全面、透彻地理解集合。</li>
+  <li>当你新接触一门语言的时候，有些问题是需要首先去思考的，“这门语言的编程模型是什么”</li>
+</ul>
+
+<h3 id="ruby">Ruby</h3>
+<h4 id="基本语法">基本语法</h4>
+<p>解释型， 意味着Ruby代码由解释器而非编译器执行。
+动态类型，意味着类型在运行时而非编译时绑定。
+尽管从执行速度上说，Ruby 谈不上有多高效，但它却能让程序员的编程效率大幅提高。
+在Ruby中，一切皆 为对象，就连每个单独的数字也不例外。</p>
+
+<pre><code class="language-Ruby">irb(main):009:0&gt; 4.class
+=&gt; Integer
+irb(main):011:0&gt; 4.methods
+=&gt; [:%, :&amp;, :*, :+, :-, :/, :&lt;, :&gt;, :^, :|, :~, :-@, :**, :&lt;=&gt;, :&lt;&lt;, :&gt;&gt;, :&lt;=, :&gt;=, :==, :===, :[], :inspect, :size, :succ, :to_int, :to_s, :to_i, :to_f, :next, :div, :upto, :chr, :ord, :coerce, :divmod, :fdiv, :modulo, :remainder, :abs, :magnitude, :integer?, :floor, :ceil, :round, :truncate, :odd?, :even?, :downto, :times, :pred, :bit_length, :digits, :to_r, :numerator, :denominator, :rationalize, :gcd, :lcm, :gcdlcm, :+@, :eql?, :singleton_method_added, :i, :real?, :zero?, :nonzero?, :finite?, :infinite?, :step, :positive?, :negative?, :quo, :arg, :rectangular, :rect, :polar, :real, :imaginary, :imag, :abs2, :angle, :phase, :conjugate, :conj, :to_c, :between?, :clamp, :instance_of?, :kind_of?, :is_a?, :tap, :public_send, :remove_instance_variable, :singleton_method, :instance_variable_set, :define_singleton_method, :method, :public_method, :extend, :to_enum, :enum_for, :=~, :!~, :respond_to?, :freeze, :object_id, :send, :display, :nil?, :hash, :class, :singleton_class, :clone, :dup, :itself, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :frozen?, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variable_get, :instance_variables, :instance_variable_defined?, :!, :!=, :__send__, :equal?, :instance_eval, :instance_exec, :__id__]
+irb(main):018:0&gt; 4.to_f
+=&gt; 4.0
+irb(main):027:0&gt; false.class
+=&gt; FalseClass
+irb(main):028:0&gt; true.class
+=&gt; TrueClass
+</code></pre>
+
+<pre><code class="language-Ruby">irb(main):002:0&gt; x = 4
+=&gt; 4
+irb(main):003:0&gt; puts "判断语句" if x == 4
+判断语句
+=&gt; nil
+irb(main):004:0&gt; puts "判断语句" unless x == 4
+=&gt; nil
+irb(main):005:0&gt; puts "判断语句" unless x == 5
+判断语句
+=&gt; nil
+</code></pre>
+
+<pre><code class="language-Ruby">irb(main):006:0&gt; x = x + 2 while x &lt; 10
+=&gt; nil
+irb(main):007:0&gt; x
+=&gt; 10
+
+
+irb(main):008:0&gt; x = x - 1 until x == 1
+=&gt; nil
+irb(main):009:0&gt; x
+=&gt; 1
+</code></pre>
+
+<p>除了 <code class="highlighter-rouge">nil</code> 和 <code class="highlighter-rouge">false</code> 之外，其他的都代表 <code class="highlighter-rouge">true</code> 。<code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code> 
+ 除了 <code class="highlighter-rouge">nil</code> 和 <code class="highlighter-rouge">false</code> 之外，其他的都代表 <code class="highlighter-rouge">true</code> 。<code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code> 
+ 除了 <code class="highlighter-rouge">nil</code> 和 <code class="highlighter-rouge">false</code> 之外，其他的都代表 <code class="highlighter-rouge">true</code> 。<code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code></p>
+
+<p><code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code> 
+<code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code> 
+<code class="highlighter-rouge">0</code> 也是 <code class="highlighter-rouge">true</code></p>
+
+<p><code class="highlighter-rouge">and</code> 等同于 <code class="highlighter-rouge">&amp;&amp;</code>
+<code class="highlighter-rouge">or</code> 等同于 <code class="highlighter-rouge">||</code></p>
+
+<p>直到真正尝试执代码时，<code class="highlighter-rouge">Ruby</code> 才进行类型检查。这一概念叫做 <code class="highlighter-rouge">动态类型</code>。</p>
+
+<p>在面向对象设计思想中，有这样一个重要原则:对<code class="highlighter-rouge">接口</code>编码，不对实现编码。</p>
+
+<h4 id="ruby-与-正则表达式">Ruby 与 正则表达式</h4>
+<h5 id="创建正则表达式">创建正则表达式</h5>
+
+<ul>
+  <li>将模式的定义放在两个正斜杠之间,返回一个<code class="highlighter-rouge">Regexp</code>对象 <code class="highlighter-rouge">reg1 = /^[a-z]*$/</code></li>
+  <li>创建一个<code class="highlighter-rouge">Regexp</code>对象 <code class="highlighter-rouge">reg2 = Regexp.new(‘^[a-z]*$’) </code></li>
+  <li>使用前置的<code class="highlighter-rouge">%r</code> <code class="highlighter-rouge">reg3 = %r{^[a-z]*$}  </code></li>
+</ul>
+
+<h5 id="匹配">匹配</h5>
+<p>匹配正则式: String和Regexp都支持以下两个方法</p>
+<ul>
+  <li><code class="highlighter-rouge">match</code>方法: 匹配成功时返回<code class="highlighter-rouge">MatchData</code>类的一个实例；否则返回nil；</li>
+  <li><code class="highlighter-rouge">=~</code> 操作符: 匹配成功,返回一个索引(integer)；否则,返回nil；</li>
+</ul>
+
+<pre><code class="language-Ruby">    puts( /abc/ =~ 'abc' )              #=&gt;return 0
+    puts( /abc/ =~ 'cdg' )              #=&gt;return nil
+    puts( /abc/.match('abc') )          #=&gt;return abc
+    puts( /abc/.match('cdg') )          #=&gt;return nil
+</code></pre>
+
+<h4 id="联系1">联系1</h4>
+
+<h5 id="ruby-替换字符串的方法"><code class="highlighter-rouge">Ruby</code> 替换字符串的方法。</h5>
+<p>1，通过 正则</p>
+
+<pre><code class="language-Ruby">irb(main):005:0&gt; string = "Hello Ruby."
+=&gt; "Hello Ruby."
+irb(main):006:0&gt; string.gsub(/Ruby/,'world')
+=&gt; "Hello world."
+
+
+irb(main):025:0&gt; string = "Hello Ruby."
+=&gt; "Hello Ruby."
+irb(main):026:0&gt; string.gsub(/(.)/,'&lt;\1&gt;')
+=&gt; "&lt;H&gt;&lt;e&gt;&lt;l&gt;&lt;l&gt;&lt;o&gt;&lt; &gt;&lt;R&gt;&lt;u&gt;&lt;b&gt;&lt;y&gt;&lt;.&gt;"
+
+
+irb(main):001:0&gt; string = "Hello Ruby."
+=&gt; "Hello Ruby."
+irb(main):002:0&gt;  string.gsub(/(\w)/,'&lt;\1&gt;')
+=&gt; "&lt;H&gt;&lt;e&gt;&lt;l&gt;&lt;l&gt;&lt;o&gt; &lt;R&gt;&lt;u&gt;&lt;b&gt;&lt;y&gt;."
+</code></pre>
+
+<p>2,<code class="highlighter-rouge">replace</code></p>
+
+<pre><code class="language-Ruby">irb(main):027:0&gt; string = "Hello Ruby."
+=&gt; "Hello Ruby."
+irb(main):028:0&gt; string.replace("Yunis.")
+=&gt; "Yunis."
+irb(main):029:0&gt; puts string
+Yunis.
+=&gt; nil
+</code></pre>
+
+<h5 id="range">range</h5>
+
+<pre><code class="language-Ruby">irb(main):030:0&gt; rang1 = (1..10).to_a
+=&gt; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+irb(main):031:0&gt; range2 = ('bar'..'bat').to_a
+=&gt; ["bar", "bas", "bat"]
+
+
+
+
+irb(main):046:0&gt; (1..10).each{puts "Yunis"}
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+Yunis
+=&gt; 1..10
+
+
+
+irb(main):047:0&gt; (1..10).each{|index| puts "Yunis #{index}"}
+Yunis 1
+Yunis 2
+Yunis 3
+Yunis 4
+Yunis 5
+Yunis 6
+Yunis 7
+Yunis 8
+Yunis 9
+Yunis 10
+=&gt; 1..10
+</code></pre>
+
+<h5 id="执行-ruby-文件">执行 Ruby 文件</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$-&gt; ruby /Users/Yunis/Desktop/First.rb
+</code></pre>
+</div>
+
+<h5 id="正则匹配规则">正则匹配规则</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>规则</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">/a/</code></td>
+      <td>匹配字符 a</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/\?/</code></td>
+      <td>匹配特殊字符?。特殊字符包括^, $, ? , ., /, \, [, ], {, }, (, ), +, *.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.</code></td>
+      <td>匹配任意字符，例如/a./匹配ab和ac。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[ab]c/</code></td>
+      <td>匹配ac和bc,[]之间代表范围,例如：/[a-z]/ , /[a-zA-Z0-9]/。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[^a-zA-Z0-9]/</code></td>
+      <td>匹配不在该范围内的字符串</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[\d]/</code></td>
+      <td>代表任意数字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[\w]/</code></td>
+      <td>代表任意字母，数字或者_</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[\s]/</code></td>
+      <td>代表空白字符，包括空格，TAB和换行</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/[\D]/,/[\W]/,/[\S]/</code></td>
+      <td>均为上述的否定情况</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">?</code></td>
+      <td>代表0或1个字符</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">*</code></td>
+      <td>代表0或多个字符</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">+</code></td>
+      <td>代表1或多个字符</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/d{3}/</code></td>
+      <td>匹配3个数字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/d{1,10}/</code></td>
+      <td>匹配1-10个数字</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">d{3,}/</code></td>
+      <td>匹配3个数字以上</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">/([A-Z]\d){5}/</code></td>
+      <td>匹配首位是大写字母，后面4个是数字的字符串</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="猜数字的程序">猜数字的程序。</h5>
+
+<pre><code class="language-Ruby">number = rand(10)
+
+
+def testRuby(number1,number2)
+    
+    if (number1 &gt; number2)
+        puts "你输入的数字#{number1}大于随机数"
+        inputNumber = gets().to_i
+        testRuby(inputNumber,number2)
+        
+        elsif (number1 &lt; number2)
+        puts "你输入的数字#{number1}小于随机数"
+        inputNumber = gets().to_i
+        testRuby(inputNumber,number2)
+        
+        else
+        puts "恭喜你猜对了。"
+    end
+    
+end
+
+
+puts "猜猜数字是多少？"
+inputNumber = gets().to_i
+testRuby(inputNumber,number)
+</code></pre>
+
+<h4 id="函数">函数</h4>
+<h5 id="定义函数">定义函数</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>irb(main):001:0&gt; def rubyTest
+irb(main):002:1&gt; true
+irb(main):003:1&gt; end
+=&gt; :rubyTest
+</code></pre>
+</div>
+<h5 id="数组">数组</h5>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>irb(main):015:0&gt; aniamls = ["lions","tigers","bears"]
+=&gt; ["lions", "tigers", "bears"]
+irb(main):016:0&gt; aniamls[0]
+=&gt; "lions"
+irb(main):017:0&gt; aniamls[0..2]
+=&gt; ["lions", "tigers", "bears"]
+irb(main):018:0&gt; aniamls[-2]
+=&gt; "tigers"
+</code></pre>
+</div>
+
+<p>Ruby 中数组 可以塞不同是数据类型。</p>
+<h5 id="散列表">散列表</h5>
+<p>集合里面就是一个个用来存储对象的桶。在 散列表的桶里，每个对象上都贴着一张标识。这标识就是键，而对象就是键所对应的值。散列表就是一串这样的键值对。</p>
+<h5 id="代码块和-yield">代码块和 yield</h5>
+<h5 id="定义类">定义类</h5>
+<h5 id="编写-mixin">编写 Mixin</h5>
+<h5 id="模块可枚举和集合">模块、可枚举和集合</h5>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/09/20/iOS-11-iPhone-X-Xcode9%E9%80%82%E9%85%8D/" data-toggle="tooltip" data-placement="top" title="iOS 11、iPhone X、Xcode9适配">
+                        Previous<br>
+                        <span>iOS 11、iPhone X、Xcode9适配</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-toggle="tooltip" data-placement="top" title="Python小工具-根据输入关键字自动打开百度搜索结果的第一页">
+                        Next<br>
+                        <span>Python小工具-根据输入关键字自动打开百度搜索结果的第一页</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="13">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#轮子" title="轮子" rel="2">
+                                    轮子
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                                    JavaScript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#内功" title="内功" rel="13">
+                                    内功
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="5">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2018
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

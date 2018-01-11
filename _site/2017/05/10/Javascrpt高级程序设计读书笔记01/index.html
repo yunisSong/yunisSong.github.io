@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>Javascrpt高级程序设计读书笔记01 - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-js-version.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-js-version.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+                        
+                    </div>
+                    <h1>Javascrpt高级程序设计读书笔记01</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on May 10, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="javascrpt高级程序设计读书笔记01">Javascrpt高级程序设计读书笔记01</h1>
+
+<h3 id="script-元素"><code class="highlighter-rouge">script</code> 元素</h3>
+<p>向 <code class="highlighter-rouge">HTML</code> 页面加入 <code class="highlighter-rouge">JavaScript</code> 的主要方法，就是使用 <code class="highlighter-rouge">script</code> 。
+包括6个属性：</p>
+
+<ol>
+  <li><code class="highlighter-rouge">async</code> 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。</li>
+  <li><code class="highlighter-rouge">charset</code> 可选。 表示通过 <code class="highlighter-rouge">src</code> 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个属性很少有人用。</li>
+  <li><code class="highlighter-rouge">defer</code> 可选。表示脚本可以延迟到文档完全被解析和显示之后再执行。只对外部脚本有效。IE7 级更早的版本对嵌入脚本也支持这个属性。</li>
+  <li><code class="highlighter-rouge">language</code> 已废弃。用来表示编写代码使用的脚本语言。（如JavaScript、VBScript）。</li>
+  <li><code class="highlighter-rouge">src</code> 可选。表示包含要执行代码的外部文件。</li>
+  <li><code class="highlighter-rouge">type</code> 可选。可以看成是 language 的替代属性。 表示编写代码使用脚本语言的类型（也称为MIME类型）。虽然 <code class="highlighter-rouge">text/javascript</code> 和 <code class="highlighter-rouge">text/ecmascript</code> 都已经不被推荐使用,但人们一直以来使用个还是 <code class="highlighter-rouge">text/javascript</code>。</li>
+</ol>
+
+<p>使用 <code class="highlighter-rouge">script</code> 的方式有两种在：直接在页面中嵌入 <code class="highlighter-rouge">JavaScript</code> 代码和包含外部 <code class="highlighter-rouge">JavaScript</code> 文件。</p>
+
+<p>包含在 <code class="highlighter-rouge">script</code> 内部的 <code class="highlighter-rouge">JavaScript</code> 的代码会被从上到下依次解释。浏览器会先解析完不使用 <code class="highlighter-rouge">defer</code> 的属性的 <code class="highlighter-rouge">script</code> 元素中的代码，然后再解析后面的内容，所以一般应该把 <code class="highlighter-rouge">script</code> 元素放在页面最后，即主要内容后面，<code class="highlighter-rouge">&lt;/body&gt;</code>标签前面。
+带有 <code class="highlighter-rouge">src</code> 属性的 <code class="highlighter-rouge">script</code> 标签会忽略 <code class="highlighter-rouge">script</code> 标签之间包含的 <code class="highlighter-rouge">JavaScript</code> 代码。</p>
+
+<h4 id="应当尽量使用外部文件">应当尽量使用外部文件</h4>
+<p>虽然直接在 <code class="highlighter-rouge">script</code> 元素 中直接嵌入 <code class="highlighter-rouge">JavaScript</code> 代码没什么问题，但是一般认为最好的做法还是尽可能的使用外部文件来包含 <code class="highlighter-rouge">JavaScript</code> 代码，好处包括：</p>
+
+<ul>
+  <li>可维护性 避免 <code class="highlighter-rouge">HTML</code> 页面过于臃肿，同时把 <code class="highlighter-rouge">JavaScript</code> 文件放在一个文件夹下面，利于维护。</li>
+  <li>可缓存 浏览器能够根据具体的设置 缓存链接的所有外部 <code class="highlighter-rouge">JavaScript</code> 文件。也就是如果两个页面使用同一个文件，就无需再次下载。加快了页面的加载速度。</li>
+  <li>适应未来 通过外部文件来包含 <code class="highlighter-rouge">JavaScript</code> 无需使用 XHTML 或注释hack。</li>
+</ul>
+
+<h3 id="noscript-元素"><code class="highlighter-rouge">noscript</code> 元素</h3>
+<p>兼容早期不支持 <code class="highlighter-rouge">JavaScript</code> 的浏览器，这个元素可以包含能够出现在 <code class="highlighter-rouge">body</code> 的任何 <code class="highlighter-rouge">HTML</code> 元素 （<code class="highlighter-rouge">script</code> 除外），包含在 <code class="highlighter-rouge">noscript</code> 元素的内容会在下面两张情况显示：</p>
+<ul>
+  <li>浏览器不支持脚本；</li>
+  <li>浏览器支持脚本，但是脚本被禁止。</li>
+</ul>
+
+<h3 id="基本概念">基本概念</h3>
+<h4 id="语法">语法</h4>
+<h5 id="区分大小写">区分大小写</h5>
+<p>变量、函数名、操作符、语言中的一切，都区分大小写。</p>
+<h5 id="标识符">标识符</h5>
+<p>标识符指的是变量、函数、属性的名字，或者函数的参数。有以下规则：</p>
+<ul>
+  <li>第一个字符必须是一个字母、下划线（_）或者一个美元符号（$）；</li>
+  <li>其他字符可以是字母、下划线、美元符号或者数字；</li>
+  <li>惯例是采用驼峰命名法。</li>
+</ul>
+
+<h5 id="注释">注释</h5>
+<p>// 单行注释
+/* */ 多行注释</p>
+
+<h5 id="严格模式">严格模式</h5>
+<p>目前来说就是对一些不确定的行为进行处理、对某些不安全的操作抛出错误。 还不是很理解。启用的话 需要在函数体前面加入 <code class="highlighter-rouge">"use strict"</code>.</p>
+<h5 id="语句">语句</h5>
+<p>语句已一个分号结尾，如果没有分号，由编译器决定什么时间结尾。</p>
+
+<h5 id="变量">变量</h5>
+<p><code class="highlighter-rouge">JavaScript</code> 中的变量是松散类型，就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是一个用于保存值的占位符。未初始化的变量，会保存一个特殊值 <code class="highlighter-rouge">undefined</code>。变量在初始化后，可以改变变量的类型，虽然并不推荐，但是这样做是可以的。</p>
+
+<h4 id="数据类型">数据类型</h4>
+<p><code class="highlighter-rouge">JavaScript</code> 中包括5种简单的数据类型 <code class="highlighter-rouge">Undefined</code>、<code class="highlighter-rouge">Null</code>、<code class="highlighter-rouge">Boolean</code>、<code class="highlighter-rouge">Number</code>、<code class="highlighter-rouge">String</code>。简单数据类型值无法被改变，每次赋值的时候，都是赋值一份新的值。还有一种复杂的数据类型 <code class="highlighter-rouge">Object</code>，<code class="highlighter-rouge">Object</code> 本质是有一组无序的键值对组成的。<code class="highlighter-rouge">JavaScript</code> 不支持任何创建自定义类型的机制，所有值的最终都将是上述6种数据类型之一。好像只有6种数据类型不能表示所有的数据，但是，由于 <code class="highlighter-rouge">JavaScript</code> 数据类型具有动态性，因此的确没有再定义其他数据类型的必要了。</p>
+
+<h5 id="typeof-操作符">typeof 操作符</h5>
+<p>typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
+它返回值是一个字符串，该字符串说明运算数的类型。</p>
+
+<ol>
+  <li>对于数字类型的操作数而言， typeof 返回的值是 number。</li>
+  <li>对于字符串类型， typeof 返回的值是 string。</li>
+  <li>对于布尔类型， typeof 返回的值是 boolean 。</li>
+  <li>对于对象、数组、null 返回的值是 object 。</li>
+  <li>对于函数类型，返回的值是 function。</li>
+  <li>如果运算数是没有定义的（比如说不存在的变量、函数或者undefined），将返回undefined。</li>
+</ol>
+
+<h5 id="undefined-类型">Undefined 类型</h5>
+<p><code class="highlighter-rouge">Undefined</code> 类型只有一个值，即特殊的 <code class="highlighter-rouge">undefined</code>， 一个没有被赋值的变量会有个默认值 <code class="highlighter-rouge">undefined</code>。</p>
+
+<h5 id="null-类型">Null 类型</h5>
+<p><code class="highlighter-rouge">Null</code> 是第二个只有一个值的数据类型，这个特殊的值是 <code class="highlighter-rouge">null</code>。从逻辑角度来看， <code class="highlighter-rouge">null</code> 值表示一个空对象的指针，而这也正是使用 <code class="highlighter-rouge">typeof</code> 操作符检查 <code class="highlighter-rouge">null</code> 值时会返回 <code class="highlighter-rouge">object</code> 的原因。
+如果一个变量准备保存对象，那么最好将该变量初始化为 null 而不是其他值。这样一来只需要检查 null 值就可以判断变量是否已经保存了一个对象的引用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (car != null){
+    //   car         
+}
+</code></pre>
+</div>
+<p>undefined 值是派生自 null。因此比较 null 和 undefined 是返回值是 true。</p>
+<h5 id="boolean-类型">Boolean 类型</h5>
+
+<p><code class="highlighter-rouge">Boolean</code> 类型 只有两个字面值： <code class="highlighter-rouge">true</code> 和 <code class="highlighter-rouge">false</code>。</p>
+
+<h5 id="number-类型">Number 类型</h5>
+<h6 id="浮点数值">浮点数值</h6>
+<p>浮点数值，就是数值中必须包含一个小数点，且小数点后面必须至少有以为数字。如果浮点数本身表示是一个整数（如1.0或者1.），会被转换为整数（1）。
+对于那些极大或者极小的数，可以使用科学计数法表示：</p>
+<blockquote>
+  <p>3.125e7 表示31250000  计算方法为：3.125 * 10^7</p>
+</blockquote>
+
+<h6 id="数值范围">数值范围</h6>
+<p>Number.MIN_VALUE 表示最小数，一般为 5e-324，Number.MAX_VALUE 表示最大数,一般为1.7976931348623157e+308。如果超出这个范围，会被转换为 <code class="highlighter-rouge">Infinity</code>，将无法再参与计算。判断一个数值是个超出范围，可以使用 <code class="highlighter-rouge">isFinite()</code> 函数。</p>
+
+<h6 id="nan">NaN</h6>
+
+<p>NaN,非数值的一个特殊的数值。这个数值用来表示本来要返回数值的操作数未返回数值的情况（这样做的好处是不会抛出错误）。
+NaN 本身有两个特点：</p>
+
+<ul>
+  <li>任何涉及 NaN 的操作，都会返回 NaN，</li>
+  <li>NaN 与任何值都不等，包括 NaN本身。判断是否是 NaN 需要使用 <code class="highlighter-rouge">isNaN()</code> 函数。</li>
+</ul>
+
+<h6 id="数值转换">数值转换</h6>
+
+<p>有3个函数可以把非数值转换为数值：<code class="highlighter-rouge">Number() parseInt()  parseFloat()</code>。</p>
+
+<p><code class="highlighter-rouge">Number()</code> 转换有如下规则：</p>
+
+<ul>
+  <li>如果是 Boolean 值，true 和 false 分别转换为 1 和 0；</li>
+  <li>如果是数字值，只是简单的传入传出；</li>
+  <li>如果是 null，返回 0；</li>
+  <li>如果是 undefined ，返回 NaN；</li>
+  <li>如果是字符串，有以下规则：
+    <ol>
+      <li>如果字符串只包含数字，转换为十进制的数值。（”1” -&gt; 1,”011”-&gt; 11）</li>
+      <li>如果字符串中包含有效的浮点格式，转换为对应的浮点数值。</li>
+      <li>如果对象包含有效的十六进制格式，转换为相同大小的十进制整数值。(“1.1” -&gt; 1.1)</li>
+      <li>如果字符串是空的（不包含任何字符），转为 0；(“”-&gt;0)</li>
+      <li>如果字符串中包含上述格式之外的字符，转换为 NaN。</li>
+    </ol>
+  </li>
+  <li>如果是对象，调用对象的 valueOf()，然后依据前面的规则转换返回值。如果转换的结果是NaN，调用对象的 toString()方法，然后在依次调用前面的规则转换返回的字符串值。</li>
+</ul>
+
+<p><code class="highlighter-rouge">parseInt()</code> 函数：</p>
+
+<ul>
+  <li>忽略字符串前面的空格，直到找到第一非空格的字符。</li>
+  <li>如果第一个字符不是数字或者负号，返回NaN；</li>
+  <li>空字符串返回NaN</li>
+  <li>如果第一个字符就是数字，继续解析下面的字符，直到完全解析完或者遇到了非数字字符。</li>
+</ul>
+
+<p>例子：</p>
+
+<p>``` parseInt(“1234blue”); //1234
+parseInt(“”); //NaN
+parseInt(“0xA”); //10 (16进制)
+parseInt(22.5); //22
+parseInt(“070”) //56(8进制)
+parseInt(“70”); //70
+parseInt(“0xf”); //15(16进制)</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+
+`parseFloat()` 函数：
+
+
+```parseFloat("1234blue"); //1234
+parseFloat("0xA"); //0
+parseFloat("22.5"); //22.5
+parseFloat("22.34.5"); //22.34
+parseFloat("0908.5"); 908.5
+parseFloat("3.125e7"); //31250000
+</code></pre>
+</div>
+
+<h5 id="string-类型">String 类型</h5>
+
+<p>可以使用单引号和双引号来表示字符串，”hello” 和 ‘hello’都是正确的，但是不能使用一个单引号和一个双引号。</p>
+
+<h6 id="字符字面量">字符字面量</h6>
+<p>String 数据类型包含一些特殊的字符字面量，也就转义序列，用于表示非打印字符，或者具有其他用途的字符。</p>
+
+<p>```\n 换行
+\t 制表
+\b 空格
+\r 回车
+\f 换页 
+\ 斜杠
+' 单引号
+" 双引号
+\xnn 16进制 n 为 （0 -F）例： \x41 表示为 A
+\unnn 以16进制代码 nnnn 表示的 Unicode 字符，其中n 为 0 - F ，例如\u03a3 表示希腊字符Σ。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>###### 字符串的特点
+字符串的值类型，是不可变的。要改变某个变量保存的值，必须先销毁原来的字符串，然后创建新的字符串填充给变量。
+###### 转换为字符串
+要把一个值转换为字符串有两种方法：
+
+* 第一种是几乎每个值都有的 `toString()` 方法。
+* 在不知道要转换的值是不是 `null` 或 `undefined` 的情况下，还可以使用 `String()` ，这个函数可以将任何类型转换为字符串。`String()` 函数遵循以下规则：
+    1. 如果值有 `toString()` 方法，使用 `toString()` 方法并返回响应结果；
+    2. 如果值是 `null` ，则返回 "null";
+    3. 如果值是 `undefined` ，则返回 "undefined"
+
+
+
+例子：
+
+```JavaScript
+var age = 11;
+var ageAsString = age.toString(); //    "11" var found = true;
+var foundAsString = found.toString(); //    "true"
+
+
+var num = 10;
+alert(num.toString());// "10"
+alert(num.toString(2));// "1010"
+alert(num.toString(8));// "12"
+alert(num.toString(10));// "10"
+alert(num.toString(16));// "a"
+
+
+var value1 = 10;
+var value2 = true;
+var value3 = null;
+var value4;
+alert(String(value1));// "10"
+alert(String(value2));// "true"
+alert(String(value3));// "null"
+alert(String(value4));// "undefined"
+
+</code></pre>
+</div>
+
+<h5 id="object-类型">Object 类型</h5>
+
+<p><code class="highlighter-rouge">ECMAScript</code> 中对象其实就是一组数据和功能的集合。对象可以通过执行 <code class="highlighter-rouge">new</code> 操作符后跟要创建的对象类型名称来创建。
+<code class="highlighter-rouge">object</code> 的每一个实例都有如下方法。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">constructor</code> 保存着用于创建当前对象的函数</li>
+  <li><code class="highlighter-rouge">hasOwnProperty(propertyName)</code> 用于检测 <code class="highlighter-rouge">propertyName</code> 是否在当前实例的属性中。</li>
+  <li><code class="highlighter-rouge">isPrototypeOf(object)</code> 用于检测传入的对象 <code class="highlighter-rouge">object</code> 是否是当前本对象的原型，表示指定的对象是否在本对象的原型链中。</li>
+  <li><code class="highlighter-rouge">propertyIsEnumerable(propertyName)</code> 判断指定属性是否可枚举，内部属性设置参见 ECMAScript DontEnum attribute</li>
+  <li><code class="highlighter-rouge">toLocaleString()</code> 返回对象的字符串表示，该字符串与执行环境的地区对应。</li>
+  <li><code class="highlighter-rouge">toString()</code> 返回对象的字符串表示</li>
+  <li><code class="highlighter-rouge">valueOf()</code> 返回对象的字符串、数值、布尔值表示 。通常与 <code class="highlighter-rouge">toString()</code> 方法的返回值一致。</li>
+</ul>
+
+<h4 id="函数">函数</h4>
+<h5 id="理解参数">理解参数</h5>
+<p><code class="highlighter-rouge">JavaScript</code> 中函数的参数与其他大多数语言不同，<code class="highlighter-rouge">JavaScript</code> 函数不介意传递的参数有多少个，也不在乎传递过来的是什么类型。出现这样的原因是，<code class="highlighter-rouge">JavaScript</code> 中参数在内部通过数组来表示的。函数接收到的始终是一个数组，而不关心数组的个数、以及数组里面的数据类型。在函数体内部，可以使用 <code class="highlighter-rouge">arguments</code> 对象来访问参数数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function howManyArgs() {
+    alert(arguments.length);
+}
+howManyArgs("string", 45);  //2
+howManyArgs();              //0
+howManyArgs(12);            //1
+</code></pre>
+</div>
+<h5 id="没有重载">没有重载</h5>
+<p><code class="highlighter-rouge">JavaScript</code> 没有传统意义的那样实现重载。
+如果在 <code class="highlighter-rouge">JavaScript</code> 定义两个名字完全相同的函数，则改名字只属于后定义的函数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function addSomeNumber(num){
+    return num + 100;
+}
+function addSomeNumber(num) {
+    return num + 200;
+}
+var result = addSomeNumber(100);//300
+</code></pre>
+</div>
+
+<h4 id="小结">小结</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">JavaScript</code> 中基本的数据类型包括 <code class="highlighter-rouge">Undefined</code>、<code class="highlighter-rouge">Null</code>、<code class="highlighter-rouge">Boolean</code>、<code class="highlighter-rouge">Number</code>、<code class="highlighter-rouge">String</code>。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 中没有区分 整数和浮点数，Number 用于表示所有数值。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 中的复杂数据类型 <code class="highlighter-rouge">Object</code> 类型，是这门语言中所有对象的基础类型。</li>
+  <li>严格模式为这门语言容易出错的地方加了限制。</li>
+  <li>无需指定函数的返回值，<code class="highlighter-rouge">JavaScript</code> 的函数可以在任何时间返回任何值。实际上未指定返回值的函数返回的是一个特殊的 <code class="highlighter-rouge">undefined</code> 值。</li>
+  <li><code class="highlighter-rouge">JavaScript</code> 也没有函数签名的概念，因为其函数参数是一个包含零个过多个值的数组形式传递的。</li>
+  <li>可以向 <code class="highlighter-rouge">JavaScript</code> 的函数传递任意数量的参数，可以通过 <code class="highlighter-rouge">arguments</code> 对象来访问参数。</li>
+  <li>由于不存在函数签名的特性，<code class="highlighter-rouge">JavaScript</code> 函数不能重载。</li>
+</ul>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/" data-toggle="tooltip" data-placement="top" title="JavaScript学习01">
+                        Previous<br>
+                        <span>JavaScript学习01</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/" data-toggle="tooltip" data-placement="top" title="Javascrpt高级程序设计读书笔记02">
+                        Next<br>
+                        <span>Javascrpt高级程序设计读书笔记02</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Swift" title="Swift" rel="13">
+                                    Swift
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#轮子" title="轮子" rel="2">
+                                    轮子
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                                    JavaScript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#内功" title="内功" rel="13">
+                                    内功
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="5">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2018
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

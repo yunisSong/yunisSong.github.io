@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/tag-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>三十一</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">潜心修行。。。</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2018/01/09/%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E7%BB%9F%E8%AE%A1SVN%E4%BB%A3%E7%A0%81%E4%BF%AE%E6%94%B9%E6%95%B0/">
+        <h2 class="post-title">
+            使用脚本统计SVN代码修改数
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            使用脚本统计SVN代码修改数
+
+今天老大让统计自己这一段写的代码量，之前因为是写的新功能，所有的文件都是新增的比较好统计，使用了 cloc 来统计了代码的总量，最近的修改都是修补一些bug，没怎么大模块的提交代码，都是小小的修修补补，不可能每一次提交都去看下修改的代码行数的，作为一个程序员，还是习惯性的在网上看看前辈们是怎么统计代码的，最后找到了一个工具来统计自己修改的代码数量。脚本如下：
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on January 9, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/06/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%89/">
+        <h2 class="post-title">
+            Python编程快速上手 — 让繁琐工作自动化<三>
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Python编程快速上手 — 让繁琐工作自动化
+
+
+  Pillow 是一个第三方 Python 模块，用于 处理图像文件。该模块包含一些函数，可以很容易地裁剪图像、调整图像大小，
+以及编辑图像的内容。
+
+
+获取颜色值
+
+from PIL import ImageColor
+ImageColor.getcolor('red', 'RGBA')
+
+
+
+用 Pillow 操作图像
+
+加载一张图片...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on January 6, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/01/04/Excel%E6%8A%80%E5%B7%A7/">
+        <h2 class="post-title">
+            Excel 技巧
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Excel 技巧
+
+不同的文字等于不同的数值
+
+IF(B4="跑步",1,IF(B4="打球",1,IF(B4="休息",0,"")))
+上面这句话的意思是，如果 单元格 B4 的文字是 跑步 或者 打球，值就是1，休息值是0
+COUNTIF(C4,"*页*")
+上面这句话的意思是，如果文字中包含页，条件为真。值为1，其他情况条件为假，值为0
+
+为不同的文字配置不同的颜色
+
+选择条件格式，
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on January 4, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/12/08/Linux%E5%9F%BA%E7%A1%80/">
+        <h2 class="post-title">
+            Linux基础
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Linux基础
+shell 命令
+
+ls 显示当前路径下的文件
+cd 
+clear
+touch
+mkdir
+pwd
+cat 查看文本内容
+history 之前执行的命令
+rm 删除
+ls &gt;1.txt  显示的文件存储到1.txt 文件
+cat 1.txt &gt;2.txt 查看 1.txt 内容 并存储到 2.txt 并覆盖原内容 ，如果2.txt 文件不存在，先创建文件，再存储内...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on December 8, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/11/14/(%E8%BD%AC%E8%BD%BD)%E7%AE%80%E5%8D%95%E5%87%A0%E6%9D%A1%E5%91%BD%E4%BB%A4-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%90%AF-macOS-%E7%B3%BB%E7%BB%9F%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD-%E6%96%B0%E6%89%8B%E9%97%AE%E5%8F%B7/">
+        <h2 class="post-title">
+            (转载)简单几条命令，轻松开启 macOS 系统隐藏功能
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            (转载)简单几条命令，轻松开启 macOS 系统隐藏功能
+
+原文地址：简单几条命令，轻松开启 macOS 系统隐藏功能 新手问号
+
+
+
+
+WATERS
+
+编注：「新手问号」是少数派的一个全新栏目。它面向完全「零基础」的新手用户，通过最简单易懂的方式，帮助你快速掌握关于系统和软硬件的入门知识。
+
+栏目文章回顾：
+
+
+  
+    向 Windows 高级用户进阶，这 10 款效率工具帮你开路
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on November 14, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/11/13/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3/">
+        <h2 class="post-title">
+            算法图解
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            算法图解
+算法简介
+对数
+对数运算是幂运算的逆运算。
+
+
+二分查找如何实现
+
+def binary_search(array,item):
+    low = 0
+    high = len(array) - 1
+    print("large index is %d"%high)
+
+    while low &lt;= high:
+        mid = int((low + h...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on November 13, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/11/13/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E7%BB%83%E7%BA%A7%E6%94%BB%E7%95%A5/">
+        <h2 class="post-title">
+            （转载）程序员技术练级攻略
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            （转载）程序员技术练级攻略
+
+原文地址：程序员技术练级攻略
+
+月光博客6月12日发表了《写给新手程序员的一封信》，翻译自《An open letter to those who want to start programming》，我的朋友（他在本站的id是Mailper）告诉我，他希望在酷壳上看到一篇更具操作性的文章。因为他也是喜欢编程和技术的家伙，于是，我让他把他的一些学习Python和...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on November 13, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/11/08/DKNightVersion-SourceReading/">
+        <h2 class="post-title">
+            DKNightVersion 源码学习
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            DKNightVersion 源码学习
+
+实现原理
+
+
+  建立一个单利存储类，存储颜色值，取颜色是根据主题取。
+  需要切换颜色的视图，设置颜色时，使用单例类存储视图和设置方法。
+  当切换颜色模板时，发出通知，遍历单利存储类的内容，修改颜色。
+
+
+学习的细节
+
+原理大概都是这样，关键是细节的处理。
+
+
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on November 8, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/10/30/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%BA%8C/">
+        <h2 class="post-title">
+            Python编程快速上手 — 让繁琐工作自动化<二>
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Python编程快速上手 — 让繁琐工作自动化
+
+处理Excel表格
+
+使用 openpyxl.load_workbook() 打开文件。
+
+wb = openpyxl.load_workbook('python.xlsx')
+
+# 获取所有表名的列表
+wb.get_sheet_names()
+# 根据名字获取列表
+sheet = wb.get_sheet_by_name('Yunis000...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on October 30, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/10/29/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%80/">
+        <h2 class="post-title">
+            Python编程快速上手 — 让繁琐工作自动化<一>
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Python编程快速上手 — 让繁琐工作自动化
+基础概念
+导入模块
+
+import string
+import random,sys,os
+
+
+
+
+from random import *
+
+
+使用这种形式的 import 语句，调用 random 模块中的函数时不需要 random.前缀。 但是，使用完整的名称会让代码更可读，所以最好是使用普通形式的 import 语句。
+
+声明函数
+不带...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on October 29, 2017
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+    <li class="next">
+        <a href="/page2">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            
+                                <a href="/tags/#Swift" title="Swift" rel="13">
+                                    Swift
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#轮子" title="轮子" rel="2">
+                                    轮子
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                                    JavaScript
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#内功" title="内功" rel="13">
+                                    内功
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#Python" title="Python" rel="5">
+                                    Python
+                                </a>
+                            
+                        
+                            
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/gg.jpeg" />
+                        
+                        
+                            <p>大龄码农的进修之路。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="http://weibo.com/iOSSurf">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/yunisSong">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>大神博客</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+    		</div>
+        
+	</div>
+</div>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2018
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

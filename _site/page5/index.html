@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS，Python，swift 初学者">
+    <meta name="theme-color" content="#000000">
+    
+    <title>三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/page5/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/tag-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>三十一</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">潜心修行。。。</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2017/05/11/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B002/">
+        <h2 class="post-title">
+            Javascrpt高级程序设计读书笔记02
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Javascrpt高级程序设计读书笔记02
+
+变量、作用域和内存问题
+基本类型和引用类型的值
+JavaScript 存在两种不同的数据类型的值：基本类型值 和 引用类型值。
+基本类型值 指的是简单的数据段，为 引用类型值 指那些可能由多个值构成的对象。
+引用类型的值是保存在内存中的对象，JavaScript 不允许直接访问内存中的位置，也就是不能直接操作对象的内存空间。操作对象时，实际是操作...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 11, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/05/10/Javascrpt%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B001/">
+        <h2 class="post-title">
+            Javascrpt高级程序设计读书笔记01
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            Javascrpt高级程序设计读书笔记01
+
+script 元素
+向 HTML 页面加入 JavaScript 的主要方法，就是使用 script 。
+包括6个属性：
+
+
+  async 可选。表示立即下载脚本，但不妨碍页面的其他操作，比如下载其他资源或者脚本。只对外部脚本文件有效。
+  charset 可选。 表示通过 src 属性指定的代码的字符集。由于大多数浏览器会忽略它的值，因此这个...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 10, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/05/10/JavaScript%E5%AD%A6%E4%B9%A0/">
+        <h2 class="post-title">
+            JavaScript学习01
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            JavaScript学习01
+
+
+  开始观看这系列文章 
+  从零开始学_JavaScript_系列（一）初步概念、工具选择、简单内容输出、加载js文件
+
+
+script 标签
+HTML的脚本必须位于 &lt;script&gt; 和 &lt;/script&gt; 之中。
+
+&lt;script&gt;
+
+JS脚本
+
+&lt;/script&gt;
+
+
+
+标签
+成对出现的&lt;&gt;...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 10, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/05/09/Tips-%E5%8F%96%E6%B6%88UICollectionView%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8A%A8%E7%94%BB/">
+        <h2 class="post-title">
+            (转)Tips:取消UICollectionView的隐式动画
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            (转)Tips:取消UICollectionView的隐式动画
+
+  原文地址在串哥的博客 Tips:取消UICollectionView的隐式动画
+
+
+UICollectionView在 reloadItems 的时候 默认会附加一个隐式的fade动画 有时候很讨厌 尤其是当你的cell是复合cell的情况下 (比如cell使用到了UIStackView)
+
+下面几种方法都可以帮你去除这些...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 9, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/05/08/%E5%85%B3%E4%BA%8E-App-Store-%E5%AE%A1%E6%A0%B8%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">
+        <h2 class="post-title">
+            关于 App Store 审核的一些事
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            关于 App Store 审核的一些事
+
+事情经过
+因为一个功能应不应该使用内购，跟苹果爸爸来回周旋了一个月，其间又是邮件又是电话，直到最后申诉，苹果爸爸才正视我的述求，最终通过了审核。
+当我几次 态度明确的 通过邮件、视频回复审核人员，我们基于付费的功能是与 app 的使用没有关系的，对方打来电话，告诉我：您这个 app 我们也是几次商讨后才认为是需要使用内购的，巴拉巴拉一堆话。我就说根据...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 8, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/05/05/%E8%AE%A9%E4%BD%A0%E7%9C%BC%E5%89%8D%E4%B8%80%E4%BA%AE%E7%9A%84%E4%BB%A3%E7%A0%81/">
+        <h2 class="post-title">
+            让你眼前一亮的代码
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            让你眼前一亮的代码
+
+本文记录一下，我见到的让我觉得眼前一亮的代码，闭门造车了好久，一直在吃老本，没有提升，突然见到这样的代码，真的觉得受益匪浅，就自己重写并记录下，水平有限，请看到的列位大神不要见笑。
+
+  所有的代码都已经上传 ，地址为：MagicCode
+
+
+UITableView
+UITableView 代理封装
+传统的 UITableView 使用，会有一大堆代理方法，看起来比较乱...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on May 5, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/25/%E9%93%BE%E5%BC%8F%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">
+        <h2 class="post-title">
+            链式语法学习
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            链式语法学习
+
+为什么要写一个链式语法的库
+最近看了 JHChainableAnimations 和 Masonry 觉得链式语法写起来用的好爽，就萌生了使用 链式 编写最近使用的一个库，然后又看到了 sindri的小巢 的这篇文章 iOS开发-链式实现数据源。
+
+在文章的最后，作者展示了这样的一段代码：
+
+Get(Component(@"user/getUserInfo", nil)).t...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 25, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/18/%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E8%8B%A6%E5%8A%9B/">
+        <h2 class="post-title">
+            （转）制作一个苦力
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            （转）制作一个苦力
+
+创造一个工具，为自己，也为他人。
+
+作者：@nixzhu
+
+
+
+现今，几乎所有的 API 都返回 JSON，但 JSON 是一种文本数据，为了使访问更加安全和自然，传递更加方便，我们通常会将它转换为客户端模型，而不仅仅将其当作一个字典来使用。
+
+通常，我们会有服务器端所提供的 API 的文档，里面会描述每个 API 可能返回的数据。据此，作为客户端开发者，根据这些信息，...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 18, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/15/JHChainableAnimations%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">
+        <h2 class="post-title">
+            JHChainableAnimations源码学习
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            JHChainableAnimations源码学习
+
+JHChainableAnimations是什么
+JHChainableAnimations 是一个多系统动画封装的链式语法库。
+
+原有的OC代码如果我们想写一个动画，需要这样写。
+
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+      ...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 15, 2017
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2017/04/13/%E8%BD%ACGCD%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/">
+        <h2 class="post-title">
+            (转)GCD深入理解:第二部分
+        </h2>
+        
+        <h3 class="post-subtitle">
+            在不断填坑中前进。。
+        </h3>
+        
+        <div class="post-content-preview">
+            (转)GCD深入理解:第二部分
+
+本文翻译自 http://www.raywenderlich.com/63338/grand-central-dispatch-in-depth-part-2
+
+原作者：Derek Selander
+
+译者：Riven、@nixzhu
+
+前半部分由 Riven 翻译，但他由于太忙而搁置，后由 NIX 整理校对并翻译后半部分。
+
+===============...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by 三十一 on April 13, 2017
+    </p>
+</div>
+<hr>
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/page4">&larr; Newer Posts</a>
+    </li>
+    
+    
+    <li class="next">
+        <a href="/page6">Older Posts &rarr;</a>
+    </li>
+    
+</ul>
+
+
+    		</div>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                            
+                                <a href="/tags/#Swift" title="Swift" rel="13">
+                                    Swift
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#iOS" title="iOS" rel="18">
+                                    iOS
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#转载" title="转载" rel="2">
+                                    转载
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#轮子" title="轮子" rel="2">
+                                    轮子
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#JavaScript" title="JavaScript" rel="6">
+                                    JavaScript
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#内功" title="内功" rel="13">
+                                    内功
+                                </a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                <a href="/tags/#Python" title="Python" rel="5">
+                                    Python
+                                </a>
+                            
+                        
+                            
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/gg.jpeg" />
+                        
+                        
+                            <p>大龄码农的进修之路。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="http://weibo.com/iOSSurf">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/yunisSong">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </div>
+                </section>
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>大神博客</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+    		</div>
+        
+	</div>
+</div>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2018
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
