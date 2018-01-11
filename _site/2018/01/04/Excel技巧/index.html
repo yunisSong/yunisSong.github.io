@@ -10,7 +10,7 @@
     <meta name="keywords"  content="iOS，Python，swift 初学者">
     <meta name="theme-color" content="#000000">
     
-    <title>使用Python自动玩微信小游戏跳一跳 - 三十一的博客 | Yunis Blog</title>
+    <title>Excel 技巧 - 三十一的博客 | Yunis Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2018/01/03/%E4%BD%BF%E7%94%A8Python%E8%87%AA%E5%8A%A8%E7%8E%A9%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F%E8%B7%B3%E4%B8%80%E8%B7%B3/">
+    <link rel="canonical" href="http://localhost:4000/2018/01/04/Excel%E6%8A%80%E5%B7%A7/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -181,15 +181,15 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        <a class="tag" href="/tags/#Excel" title="Excel">Excel</a>
                         
                     </div>
-                    <h1>使用Python自动玩微信小游戏跳一跳</h1>
+                    <h1>Excel 技巧</h1>
                     
                     
                     <h2 class="subheading">在不断填坑中前进。。</h2>
                     
-                    <span class="meta">Posted by 三十一 on January 3, 2018</span>
+                    <span class="meta">Posted by 三十一 on January 4, 2018</span>
                 </div>
             </div>
         </div>
@@ -207,12 +207,69 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<h1 id="使用python自动玩微信小游戏跳一跳">使用Python自动玩微信小游戏跳一跳</h1>
+				<h1 id="excel-技巧">Excel 技巧</h1>
 
-<p>使用 <a href="https://github.com/wangshub/wechat_jump_game">wechat_jump_game</a>提供的脚本，但是其实安装还是有一些步骤的，记录下安装的步骤。</p>
+<h3 id="不同的文字等于不同的数值">不同的文字等于不同的数值</h3>
 
-<p>我是 iPhone 和 mac 的环境，就只试了这个环境的配置。</p>
-<h3 id="1安装">1，安装</h3>
+<p><code class="highlighter-rouge">IF(B4="跑步",1,IF(B4="打球",1,IF(B4="休息",0,"")))</code>
+上面这句话的意思是，如果 单元格 B4 的文字是 跑步 或者 打球，值就是1，休息值是0
+<code class="highlighter-rouge">COUNTIF(C4,"*页*")</code>
+上面这句话的意思是，如果文字中包含页，条件为真。值为1，其他情况条件为假，值为0</p>
+
+<h3 id="为不同的文字配置不同的颜色">为不同的文字配置不同的颜色</h3>
+
+<p>选择条件格式，
+<img src="/media/15150510388028/15150513177157.jpg" alt="" />
+然后选择突出显示单元格规则，
+<img src="/media/15150510388028/15150512941005.jpg" alt="" /></p>
+
+<p>然后选择文本包含。。。
+写入希望那些文本变为什么颜色，这个时候点击确定，跑步就变成黄色了。
+<img src="/media/15150510388028/15150514775612.jpg" alt="" /></p>
+
+<h3 id="为不同的数值配置不同的颜色">为不同的数值配置不同的颜色</h3>
+
+<p>选中单元格
+然后，开始 - 条件选择
+<img src="/media/15150510388028/15150515834148.jpg" alt="" />
+选择新建规则
+<img src="/media/15150510388028/15150516051464.jpg" alt="" /></p>
+
+<p>选择三色阶，确定，这个时候 0 就会变成白色，最大值4就会变成深绿色，中间值为浅绿色。
+<img src="/media/15150510388028/15150516669169.jpg" alt="" /></p>
+
+<h4 id="不同的数值显示不同的进度条">不同的数值显示不同的进度条</h4>
+<p>选中单元格
+开始 - 条件格式
+<img src="/media/15150510388028/15150544932486.jpg" alt="" /></p>
+
+<p>新建规则
+<img src="/media/15150510388028/15150545206149.jpg" alt="" /></p>
+
+<p>设置数据要求。
+<img src="/media/15150510388028/15150545664900.jpg" alt="" /></p>
+
+<p>显示格式如下：</p>
+
+<p><img src="/media/15150510388028/15150545967482.jpg" alt="" /></p>
+
+<h3 id="求结果单元格的和">求结果单元格的和</h3>
+<p>选择单元格，输入公式：
+<img src="/media/15150510388028/15150518554180.jpg" alt="" /></p>
+
+<p><code class="highlighter-rouge">=SUM(IF(B4="跑步",1,IF(B4="打球",1,IF(B4="休息",0,""))),COUNTIF(C4,"*页*"),IF(D4="打卡",1,IF(D4="未打卡",0)),IF(E4="编程",1,IF(E4="未编程",0)))</code></p>
+
+<p>上面这个公式的意思是：求B4，C4，D4，E4单元格的和，其中
+<code class="highlighter-rouge">IF(B4="跑步",1,IF(B4="打球",1,IF(B4="休息",0,"")))</code>
+的意思是 如果 B4 单元格的文字是 跑步 或者 打球，值就是1，休息值是0。
+<code class="highlighter-rouge">IF(D4="打卡",1,IF(D4="未打卡",0))</code> 和 <code class="highlighter-rouge">IF(E4="编程",1,IF(E4="未编程",0)))</code> 同理。</p>
+
+<p><code class="highlighter-rouge">=SUM(G2:G32)</code>
+这个的意思就是求 G2到G32的数值和</p>
+
+<h3 id="文字只适应-行宽或者行高">文字只适应 行宽或者行高</h3>
+
+<p><img src="/media/15150510388028/15150521947905.jpg" alt="" /></p>
 
 
 
@@ -230,6 +287,13 @@
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2018/01/06/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%89/" data-toggle="tooltip" data-placement="top" title="Python编程快速上手 — 让繁琐工作自动化<三>">
+                        Next<br>
+                        <span>Python编程快速上手 — 让繁琐工作自动化<三></span>
+                        </a>
+                    </li>
                     
                 </ul>
 
@@ -277,7 +341,7 @@
                             
         				
                             
-                				<a href="/tags/#Shell" title="Shell" rel="3">
+                				<a href="/tags/#Shell" title="Shell" rel="4">
                                     Shell
                                 </a>
                             
@@ -348,6 +412,8 @@
                 				<a href="/tags/#Python" title="Python" rel="5">
                                     Python
                                 </a>
+                            
+        				
                             
         				
         			</div>
