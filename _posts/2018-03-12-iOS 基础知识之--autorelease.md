@@ -63,7 +63,6 @@ tags:
     2. demo3
     ![](/media/15208165720124/15208194888044.jpg)
 
-`ARC` 和 `MRC` 下这段代码有什么区别呢？
 
 
 在 `ARC` 下，内存差别是不大的，但是在 `MRC` 的情况下，`demo3` 的代码会导致内存疯狂增长。为什么呢？
@@ -103,7 +102,7 @@ tags:
 ```
 ![](/media/15208165720124/15208204179320.jpg)
 
-这时我们发现，内存才回到一个正常的状态？
+这时我们发现，内存回到一个正常的状态。
 
 那么问题来了？为什么 `autorelease` 没用使内存降下来，而 `release` 可以呢？
 
@@ -132,23 +131,70 @@ tags:
 
 握草！！！ 我都加了  `autorelease` 和 `@autoreleasepool`了，为什么内存还是没有降下去？？
 
-然后我去读了经典书籍：《Objective-C高级编程：iOS与OS X多线程和内存管理》。
+然后我去读了经典书籍：`《Objective-C高级编程：iOS与OS X多线程和内存管理》`。
 
 ----
+
 ![人丑就要多读书](/media/15208165720124/rc.jpg)
 
-好了  我读书回来了。
-好了  我读书回来了。
-好了  我读书回来了。
-好了  我读书回来了。
+我读书回来了。
 
 ![我回来装逼了](/media/15208165720124/zb.jpg)
 
 
 ####  `autorelease` 对象什么时候释放？
 
+在 `《Objective-C高级编程：iOS与OS X多线程和内存管理》` 是这样说的：
+> `NSAutoreleasePool` 对象的生存周期相当于 C 语言变量的作用域。对于调用 `autorelease` 实例方法的对象，在废弃 `NSAutoreleasePool` 对象时，都将调用 `release` 实例方法。
 
-#### `release` 的流程
+
+那么现在来看为什么我们的 demo3 加了 `NSAutoreleasePool` 和  `autorelease` 后内存依然没有降低的原因就清晰明了了。修改代码：
 
 
+```
+- (void)demo3 {
+    for (int i = 0; i < 100000000; i++)
+    {
+        @autoreleasepool {
+            NSString *yunisAlloc = [[NSString alloc] initWithFormat:@"YunisAlloc"];
+            [yunisAlloc autorelease];
+        }
+    }
+
+}
+
+```
+![](media/15208165720124/15209243952932.jpg)
+
+
+内存回到一个正常的状态。
+
+
+OK ，让我们来理一下思路。
+
+对于 demo2 中的代码，因为返回的是一个使用 `_autorelease` 修饰的对象，已经自动加入释放池了，所以内存没有显著的增长。
+
+但是对于一个 `alloc init` 生成的实例变量，在 `MRC` 下需要用户手动的管理引用计数，同时对于短时间大量生成的局部变量，应及时的释放其内存。对于调用 `autorelease` 实例方法的实例对象，会在自动释放池 `drain` 后，才调用实例对象的 `release` 实例方法。
+那么，在 `ARC` 下，系统对 `demo3` 为我们做了什么？跟我们自己在 `MRC` 编写的代码逻辑一致吗？
+
+同时，返回 `_autorelease` 修饰的实例是加入了那个自动释放池？这个自动释放池的生存周期又是什么样的？它为什么没有造成大量的内存增长？
+
+![](/media/15208165720124/15209960318680.jpg)
+
+
+
+**这个结论对 `UIView` 好像不成立！！！！！**
+**这个结论对 `UIView` 好像不成立！！！！！**
+**这个结论对 `UIView` 好像不成立！！！！！**
+**这个结论对 `UIView` 好像不成立！！！！！**
+**这个结论对 `UIView` 好像不成立！！！！！**
+**这个结论对 `UIView` 好像不成立！！！！！**
+
+
+
+**挖槽 这个问题挖下去 好像 还得看看 runLoop ！！！**
+
+
+1. 为什么 uiview 在 autoreleasepool 不生效？
+2. _autorelease 修饰的实例 是存在于那个 autoreleasepool？
 
