@@ -198,3 +198,5 @@ OK ，让我们来理一下思路。
 1. 为什么 uiview 在 autoreleasepool 不生效？
 2. _autorelease 修饰的实例 是存在于那个 autoreleasepool？
 
+**我TM好像给自己挖了一个深坑！！！！！！**
+
