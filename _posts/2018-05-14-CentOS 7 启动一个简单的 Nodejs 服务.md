@@ -17,8 +17,6 @@ tags:
 ```
 $ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 $ sudo yum -y install nodejs
-
-
 ```
 #### 2. 开启一个 http server
 
@@ -35,12 +33,13 @@ var server = http.createServer(function (req, res) {
 
 server.listen(2888,ip);
 ```
+
 > ip 为你本机的公网 IP。
+
 启动服务：
 
 ```
 $ node index.js
-
 ```
 
 这个时候一般情况下，会出现 `无法访问此网站 xx.xx.xx.xxx 拒绝了我们的连接请求。`问题，需要开启一个端口号。
