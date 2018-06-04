@@ -200,3 +200,8 @@ OK ，让我们来理一下思路。
 
 **我TM好像给自己挖了一个深坑！！！！！！**
 
+
+去 孙源大神的博客研究下：
+
+https://blog.sunnyxx.com/2014/10/15/behind-autorelease/
+
