@@ -33,7 +33,7 @@ tags:
  
 #### `大数量是数据如何添加`
  大数据不能一下读取到内存中，否则会导致打开失败。解决办法：从文件中一行行读取数据，使用后释放。我的号码库文件，大概这样的形式：
- ```json
+ ```objective_c
  [
  {"86196852102": "骚扰电话"},
  {"86196852201": "诈骗电话"},
@@ -48,8 +48,8 @@ tags:
  ```
  具体代码如下：
  
+```objective_c
 
- {% highlight  objective_c %}
   NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupIdentifierExtension];
     //文件路径
     containerURL = [containerURL URLByAppendingPathComponent:LocalstorageName];
@@ -85,7 +85,7 @@ tags:
         }
         
     }
-    {% endhighlight %}
+```
 
  
  

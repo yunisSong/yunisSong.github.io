@@ -1917,7 +1917,7 @@ code {
    padding: .4em;
    padding-top: .2em;
    padding-bottom: .1em;
-   background: #042028;
+   background: #4fb582;
    /* border: 1px solid #c9e1f6; */
    border-radius: 3px;
    font-family: Consolas,
@@ -1963,7 +1963,7 @@ pre {
     color: #333;
     word-break: break-all;
     word-wrap: break-word;
-    background-color: #012029;
+    background-color: #002b36;
     border: 1px solid #ccc;
     border-radius: 4px;
 
@@ -1995,9 +1995,10 @@ pre code {
     color: inherit;
     white-space: pre-wrap;
     /* background-color: transparent; */
-    background-color: #042028;
+    background-color: #002b36;
     border-radius: 0;
 
+    color:#fff;
 
         /* margin-bottom: 1.3em;
     padding: 1em 2.5%;
