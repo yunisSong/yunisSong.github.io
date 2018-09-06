@@ -48,7 +48,8 @@ tags:
  ```
  具体代码如下：
  
- ```ruby
+
+ {% highlight  objective_c %}
   NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:groupIdentifierExtension];
     //文件路径
     containerURL = [containerURL URLByAppendingPathComponent:LocalstorageName];
@@ -84,7 +85,8 @@ tags:
         }
         
     }
- ```
+    {% endhighlight %}
+
  
  
  实际测试，将近100万的数据在 6S Plus 30S内可以完成加载。

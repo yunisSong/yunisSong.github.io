@@ -226,6 +226,7 @@ pre code {
   width: auto;
   white-space: pre;
   word-wrap: normal;
+  background-color: #0085a1;
 }
 .postlist-container {
   margin-bottom: 15px;
