@@ -16,7 +16,7 @@ tags:
 ### 使用 系统默认的 bash
 参见 这个链接：http://blog.csdn.net/a704901117/article/details/69262428?locationNum=15&fps=1
 ### 使用 iTerm
-```
+```shell
 ➜  ~ cd ~
 ➜  ~ ls -a
 ➜  ~ open .zshrc

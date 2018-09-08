@@ -20,7 +20,7 @@ tags:
 ### 3，编辑 HTML 样式
 使用 `sublime text` 打开 `HTML` 文件我这边主要修改了宽度、代码背景色、字体大小和粗体字体颜色。
 
-```
+```css
 .markdown-body {
   min-width: 200px;
   max-width: none;/* 修改 */
@@ -38,7 +38,7 @@ tags:
 }
 ```
 
-```
+```css
 .markdown-body code {
   padding: 0;
   padding-top: 0.2em;
@@ -51,7 +51,7 @@ tags:
 ```
 
 
-```
+```css
 .markdown-body pre {
   padding: 16px;
   overflow: auto;
@@ -63,7 +63,7 @@ tags:
 ```
 
 
-```
+```css
 .markdown-body strong {
   font-weight: bold;
   color: #0a366f;/* 修改 */

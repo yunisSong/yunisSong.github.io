@@ -48,7 +48,7 @@ $-> pod spec create CommonWebTools
 
 ### 1.3 编辑 `podspec` 文件内容
 
-```
+```ruby
 Pod::Spec.new do |s|
 
     s.name         = "CommonWebTools"
@@ -97,7 +97,7 @@ Pod::Spec.new do |s|
 
 设置 pod 工程的 pch 文件内容：
 
-```
+```ruby
 s.prefix_header_contents = "// 注释下行则不打印日志\n//#define __SHOW__DEBUGLog__\n\n#ifdef __SHOW__DEBUGLog__\n#define DEBUGLog( s, ... ) NSLog( @\"<%@:(%d)> %@\", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )\n#else\n#define DEBUGLog( s, ... ) {}\n#endif"
 
 ---
@@ -108,7 +108,7 @@ spec.prefix_header_contents = '#import "SomeClass.h"'
 
 建立子文件夹：
 
-```
+```ruby
 
 s.subspec 'IflyMsc' do |ss|
 
@@ -130,7 +130,7 @@ end
 
 ### 1.4 千言万语 不如一个demo
 #### 1.4.1 `IflyMsc`
-```
+```ruby
 Pod::Spec.new do |s|
 
 	s.name         = "IflyMsc"
@@ -179,7 +179,7 @@ end
 
 #### 1.4.2 `AlipaySDK`
 
-```
+```ruby
 Pod::Spec.new do |s|
 
 	s.name         = "AlipaySDK"
@@ -233,7 +233,7 @@ end
 ![](/media/15039102892405/15046890957785.jpg)
 
 #### 1.4.3 `PushNotification`
-```
+```ruby
 Pod::Spec.new do |s|
 
 	s.name         = "PushNotification"
@@ -283,7 +283,7 @@ $-> touch Podfile
 
 编辑内容：
 
-```
+```ruby
 target 'TestSVNCocoaPods' do
 
 	pod 'CommonWebTools', :svn => "http://xxxxxxxx/svn/DIC-TS-eBOSS/SourceCode/50-COPMO2O/1_Develop/00-IOS/ComponentTestDemo"

@@ -19,7 +19,7 @@ tags:
 4. 找到前一张漫画的链接 URL，然后重复。
 
 
-```
+```python
 # -*- coding: UTF-8 -*-
 import requests, sys, webbrowser, bs4,os
 

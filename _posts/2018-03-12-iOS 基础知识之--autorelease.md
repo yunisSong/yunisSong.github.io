@@ -18,7 +18,7 @@ tags:
 
 分别在在 `MRC` 和 `ARC` 情况下，下面的两段代码，会不会会引起内存的暴涨？
 
-```
+```objective_c
 
 - (void)demo2{
     for (int i = 0; i < 100000000; i++) {
@@ -75,7 +75,7 @@ tags:
 接着上一个问题，在 `MRC` 下，我们小小的修改下 `demo3` 代码，变为：
 
 
-```
+```objective_c
 - (void)demo3{
     for (int i = 0; i < 100000000; i++) {
         NSString *yunisAlloc = [[NSString alloc] initWithFormat:@"YunisAlloc"];
@@ -92,7 +92,7 @@ tags:
 额，内存依然在疯狂的增长，如果我们把 `autorelease` 换为 `release` 呢？
 
 
-```
+```objective_c
 - (void)demo3 {
     for (int i = 0; i < 100000000; i++) {
         NSString *yunisAlloc = [[NSString alloc] initWithFormat:@"YunisAlloc"];
@@ -110,7 +110,7 @@ tags:
 
 进一步的，我们再次修改下 `demo3` 代码：
 
-```
+```objective_c
 - (void)demo3 {
     
     @autoreleasepool{
@@ -151,7 +151,7 @@ tags:
 那么现在来看为什么我们的 demo3 加了 `NSAutoreleasePool` 和  `autorelease` 后内存依然没有降低的原因就清晰明了了。修改代码：
 
 
-```
+```objective_c
 - (void)demo3 {
     for (int i = 0; i < 100000000; i++)
     {

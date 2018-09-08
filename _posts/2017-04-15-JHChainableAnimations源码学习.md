@@ -19,7 +19,7 @@ tags:
 
 原有的OC代码如果我们想写一个动画，需要这样写。
 
-```swift
+```objective_c
     [UIView animateWithDuration:1.0
                           delay:0.0
          usingSpringWithDamping:0.8
@@ -41,7 +41,7 @@ tags:
 
 使用 `JHChainableAnimations` 可以这样写：
 
-```swift
+```objective_c
 JHChainableAnimator *animator = [[JHChainableAnimator alloc] initWithView:self.myView];
 animator.moveX(50).spring.thenAfter(1.0).makeBackground([UIColor purpleColor]).easeIn.animate(0.5);
 ```
@@ -54,7 +54,7 @@ animator.moveX(50).spring.thenAfter(1.0).makeBackground([UIColor purpleColor]).e
 
 首先看一段代码
 
-```swift
+```objective_c
 JHChainableAnimator *animator = [[JHChainableAnimator alloc] initWithView:self.myView];
 animator.moveX(100).animate(2);
 
@@ -68,7 +68,7 @@ animator.moveX(100).animate(2);
 首先是 `animator` 调用 `moveX` 方法生成动画样式，这个方法从字面上面看 就是 移动视图的X轴，然后调用 `animate` 执行动画，设置动画时间。具体看先 它是如何实现的。
 
 
-```swift
+```objective_c
 - (JHChainableFloat)moveX
 {
     JHChainableFloat chainable = JHChainableFloat(f) {
@@ -108,7 +108,7 @@ animator.moveX(100).animate(2);
 #####  `block chainable` 都做了什么
 
 1. 生成一个可执行的动画
-```swift
+```objective_c
      [self addAnimationCalculationAction:^(__weak UIView *view, __weak JHChainableAnimator *weakSelf) {
             JHKeyframeAnimation *positionAnimation = [weakSelf basicAnimationForKeyPath:@"position.x"];
             positionAnimation.fromValue = @(view.layer.position.x);
@@ -132,7 +132,7 @@ animator.moveX(100).animate(2);
 
 #### animate 具体实现
 
-```swift
+```objective_c
 - (JHChainableAnimation)animate
 {
     JHChainableAnimation chainable = JHChainableAnimation(t) {
@@ -151,7 +151,7 @@ animator.moveX(100).animate(2);
 > 重新描述下：
 
 > 首先是像
-> ```swift
+> ```objective_c
 > - (JHChainableFloat)moveX;
 > - (JHChainableFloat)moveY;
 > - (JHChainablePoint)moveXY;

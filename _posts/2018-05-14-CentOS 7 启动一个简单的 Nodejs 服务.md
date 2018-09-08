@@ -14,7 +14,7 @@ tags:
 # CentOS 7 启动一个简单的 Nodejs 服务
 #### 1. 安装 nodejs
 
-```
+```shell
 $ curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 $ sudo yum -y install nodejs
 ```
@@ -23,7 +23,7 @@ $ sudo yum -y install nodejs
 新建一个文件 index.js
 
 
-```
+```python
 var http = require('http');
 var ip = "xx.xx.xx.xxx";
 var server = http.createServer(function (req, res) {
@@ -38,7 +38,7 @@ server.listen(2888,ip);
 
 启动服务：
 
-```
+```shell
 $ node index.js
 ```
 
@@ -50,7 +50,7 @@ $ node index.js
 
 
 
-```
+```shell
 $ firewall-cmd --get-active-zones
 $ firewall-cmd --zone=public --add-port=2888/tcp --permanent
 $ firewall-cmd --reload

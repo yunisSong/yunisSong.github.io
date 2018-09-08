@@ -37,7 +37,7 @@ tags:
 这个解决起来就简单粗暴了。
 判断 手机型号，然后重新设置视图高度。
 
-```
+```objective_c
 #import "UIDevice+SYHelp.h"
 
 @implementation UIDevice (SYHelp)
@@ -65,7 +65,7 @@ tags:
 
 这个解决方法就是判断手机型号和系统版本号，然后让视图上移。
 
-```
+```objective_c
     BOOL isIphoneX = [UIDevice isiPhoneX];
     BOOL isiOS11 = [UIDevice isiOS11];
     [mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
