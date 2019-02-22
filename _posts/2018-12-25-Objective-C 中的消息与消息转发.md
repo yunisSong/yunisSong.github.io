@@ -12,3 +12,15 @@ tags:
 ---
 
 # Objective-C 中的消息与消息转发
+
+消息转发流程梳理
+
+![消息发送](/media/messageSend/msg_send.jpeg)
+
+![解析](/media/messageSend/resolve.jpeg)
+![转发](/media/messageSend/resolve_code.jpeg)
+
+![转发](/media/messageSend/forward.jpeg)
+![转发](/media/messageSend/forward_code1.jpeg)
+![转发](/media/messageSend/forward_code2.jpeg)
+
