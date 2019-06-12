@@ -36,12 +36,15 @@ NSString *argument1 = @"string";
 *  `signatureWithObjCTypes`
 
 `[xxx methodSignatureForSelector:@select];`
-在 `xxx` 的 isa 指向的地方的方法列表里面找方法；
+
+在 `xxx` 的 `isa` 指向的地方的方法列表里面找方法；
 
 `[xxx instanceMethodSignatureForSelector:@select];` 
-直接在 xxx 的 方法列表里面找方法。
+
+直接在 `xxx` 的 方法列表里面找方法。
 
 `signatureWithObjCTypes`
+
 根据字符创建签名。
 
 >具体规则可以查看苹果的官方文档:[Type Encodings](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100%EF%BC%89)
@@ -69,7 +72,7 @@ NSString *argument1 = @"string";
 这是因为 `getReturnValue` 接收的参数为 `void *` 类型，在 `ARC` 模式下，强转类型导致了内存管理的混乱。下面这张写法就不会有问题。
 
 
-```
+```objective_c
 void *returnValue = NULL;
 NSLog(@"1 returnValue == %@",returnValue);
 [invocation getReturnValue:&returnValue];
@@ -80,7 +83,8 @@ NSLog(@"t %p",t);
 
 ### NSInvocation 如何调用 block
 #### 如何获取一个 block 的方法签名
-这一段来自于 [用 Block 实现委托方法](https://triplecc.github.io/2017/07/28/2017-07-28-blockhe-nsmethodsignature/)
+>这一段来自于 [用 Block 实现委托方法](https://triplecc.github.io/2017/07/28/2017-07-28-blockhe-nsmethodsignature/)
+
 通过种种渠道我们可以得知 block，最终的结果是一个结构体。形式如下
 
 
