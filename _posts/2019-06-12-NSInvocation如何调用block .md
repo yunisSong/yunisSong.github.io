@@ -37,10 +37,14 @@ NSString *argument1 = @"string";
 
 `[xxx methodSignatureForSelector:@select];`
 在 `xxx` 的 isa 指向的地方的方法列表里面找方法；
+
 `[xxx instanceMethodSignatureForSelector:@select];` 
 直接在 xxx 的 方法列表里面找方法。
+
 `signatureWithObjCTypes`
-根据字符创建签名。具体规则可以查看苹果的官方文档，[Type Encodings](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100%EF%BC%89)
+根据字符创建签名。
+
+>具体规则可以查看苹果的官方文档:[Type Encodings](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100%EF%BC%89)
 
 
 `[invocation setArgument:&argument1 atIndex:2];`
