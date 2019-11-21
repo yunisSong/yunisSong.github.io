@@ -39,11 +39,11 @@ tags:
 
 在 `OrderDetailsIntentionTableViewCell` 里面这样设置 `collectionView`。
 
-```objective_c
+    ```objective_c
     UICollectionViewLeftAlignedLayout *flowLayout = [[UICollectionViewLeftAlignedLayout alloc] init];
-               flowLayout.minimumLineSpacing = 10;
-               flowLayout.minimumInteritemSpacing = 10;
-               flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);//top, left, bottom, right
+    flowLayout.minimumLineSpacing = 10;
+    flowLayout.minimumInteritemSpacing = 10;
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);//top, left, bottom, right
     
     self.collectionView.collectionViewLayout = flowLayout;
     self.collectionView.backgroundColor = [UIColor clearColor];
