@@ -15,7 +15,7 @@ tags:
 
 开发中经常遇到 cell 嵌套九宫格展示图片之类的需求，类似于下面的情况。
 
-![Simulator Screen Shot - iPhone 11 Pro Max - 2019-11-21 at 16.39.36](./media/15743256429556/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-21%20at%2016.39.36.png)
+![Simulator Screen Shot - iPhone 11 Pro Max - 2019-11-21 at 16.39.36](/media/15743256429556/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-21%20at%2016.39.36.png)
 
 
 最简单的办法就是 cell 里面嵌套 collectionView，具体的做法是：
