@@ -46,7 +46,7 @@ tags:
                flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);//top, left, bottom, right
     
     self.collectionView.collectionViewLayout = flowLayout;
-    self.collectionView.backgroundColor = [UIColor cle™arColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.collectionView.scrollEnabled = NO;
