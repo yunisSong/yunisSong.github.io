@@ -39,7 +39,9 @@ tags:
 
 在 `OrderDetailsIntentionTableViewCell` 里面这样设置 `collectionView`。
 
-    ```objective_c
+
+```objective_c
+    
     UICollectionViewLeftAlignedLayout *flowLayout = [[UICollectionViewLeftAlignedLayout alloc] init];
     flowLayout.minimumLineSpacing = 10;
     flowLayout.minimumInteritemSpacing = 10;
@@ -50,4 +52,5 @@ tags:
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.collectionView.scrollEnabled = NO;
+    
 ```
