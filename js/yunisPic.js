@@ -6,17 +6,17 @@ $(function() {
              $("#YunisTestImage").removeClass('SYYImageDiss');
              $("#YunisTestImage").addClass('SYYImageShow');
              $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
-             var mo=function(e){passive: false };
-             document.body.style.overflow='';//出现滚动条
-             document.removeEventListener("touchmove",mo,false);
+             //恢复响应鼠标滚动事件
+             $(document).unbind('mousewheel');
+
        }else {
             $("#YunisTestImage").removeClass('SYYImageShow');
             $("#YunisTestImage").addClass('SYYImageDiss');
             $("#SSYLargeImage").attr({ "src": "" });
 
-            var mo=function(e){passive: false ;};
-            document.body.style.overflow='hidden';
-            document.addEventListener("touchmove",mo,false);//禁止页面滑动
+            //禁止响应鼠标滚动事件
+            $(document).bind('mousewheel', function(event, delta) {return false;});
+
        }
         });
 
@@ -24,9 +24,9 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
         $("#SSYLargeImage").attr({ "src": "" });
-        var mo=function(e){passive: false };
-        document.body.style.overflow='';//出现滚动条
-        document.removeEventListener("touchmove",mo,false);
+        //恢复响应鼠标滚动事件
+        $(document).unbind('mousewheel');
+
     });
    
 });
