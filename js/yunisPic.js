@@ -6,10 +6,17 @@ $(function() {
              $("#YunisTestImage").removeClass('SYYImageDiss');
              $("#YunisTestImage").addClass('SYYImageShow');
              $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
+             var mo=function(e){passive: false };
+             document.body.style.overflow='';//出现滚动条
+             document.removeEventListener("touchmove",mo,false);
        }else {
             $("#YunisTestImage").removeClass('SYYImageShow');
             $("#YunisTestImage").addClass('SYYImageDiss');
             $("#SSYLargeImage").attr({ "src": "" });
+
+            var mo=function(e){passive: false ;};
+            document.body.style.overflow='hidden';
+            document.addEventListener("touchmove",mo,false);//禁止页面滑动
        }
         });
 
@@ -17,5 +24,9 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
         $("#SSYLargeImage").attr({ "src": "" });
+        var mo=function(e){passive: false };
+        document.body.style.overflow='';//出现滚动条
+        document.removeEventListener("touchmove",mo,false);
     });
+   
 });
