@@ -21,6 +21,9 @@ $(function() {
             $("html,body").removeClass("none-scroll");
 
        }
+       
+       $(document).bind('mousewheel', function(event, delta) {return false;});
+
         });
 
     $('#YunisTestImage').click(function () {
