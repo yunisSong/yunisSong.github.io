@@ -148,4 +148,4 @@ int add(int a) {
   }
 ```
 
-![](media/Lambda_Java/Lambda.png)
+![](/media/Lambda_Java/Lambda.png)
