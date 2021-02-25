@@ -54,3 +54,26 @@ tags:
     self.collectionView.scrollEnabled = NO;
     
 ```
+
+
+这样写也行
+
+```Swift
+	DispatchQueue.main.async(execute: {
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(MAXFLOAT).priority(666)
+			}
+			self.collectionView.reloadData()
+			self.collectionView.layoutIfNeeded()
+
+			let height = self.collectionView.collectionViewLayout.collectionViewContentSize.height
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(height).priority(666)
+			}
+			self.collectionView.SSY.parentTableView()?.beginUpdates()
+			self.collectionView.SSY.parentTableView()?.endUpdates()
+
+		})
+```
