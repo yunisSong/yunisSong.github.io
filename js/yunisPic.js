@@ -24,7 +24,7 @@ $(function() {
     
         $(document).bind('mousewheel', function(event, delta) {return false;});
 
-        });
+    });
 
     function removeBigPic () {
         $("#YunisTestImage").removeClass('SYYImageShow');
