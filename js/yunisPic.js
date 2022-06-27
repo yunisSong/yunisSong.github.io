@@ -2,6 +2,7 @@ $(function() {
     $('p img').click(function () {
         let imageStr = document.querySelector("#YunisTestImage").getAttribute("class");
         console.log(`${imageStr}`);
+        $("#SSYLargeImage").attr({ "src": "" });
         if (`${imageStr}` == "SYYImageDiss") {
             showBigImage($(this).attr("src"))
         }else {
@@ -15,21 +16,15 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageDiss');
         $("#YunisTestImage").addClass('SYYImageShow');
         $("#SSYLargeImage").attr({ "src": imgPath });
-        $("#SSYLargeImage").addClass('d-block');
+        $("#SSYLargeImage").addClass('animate');
+
         $("html,body").addClass("none-scroll");//下层不可滑动
     }
 
     function removeBigPic () {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
-
-        setTimeout(() => {
-            $("#SSYLargeImage").attr({ "src": "" });
-            $("#SSYLargeImage").addClass('d-none');
-
-        }, 600);
-        //恢复响应鼠标滚动事件
-        // $(document).unbind('mousewheel');
+        $("#SSYLargeImage").removeClass('animate');
         $("html,body").removeClass("none-scroll");
     }
 
