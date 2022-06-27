@@ -3,7 +3,7 @@ $(function() {
         let imageStr = document.querySelector("#YunisTestImage").getAttribute("class");
         console.log(`${imageStr}`);
         if (`${imageStr}` == "SYYImageDiss") {
-            showBigImage()
+            showBigImage($(this).attr("src"))
         }else {
             removeBigPic ()
         }
@@ -11,11 +11,11 @@ $(function() {
         $(document).bind('mousewheel', () => {return false;});
 
     });
-    function  showBigImage() {
+    function  showBigImage(imgPath) {
         $("#YunisTestImage").removeClass('SYYImageDiss');
         $("#YunisTestImage").addClass('SYYImageShow');
-        $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
-        $("#SSYLargeImage").css("display", "block");
+        $("#SSYLargeImage").attr({ "src": imgPath });
+        $("#SSYLargeImage").addClass('d-block');
         $("html,body").addClass("none-scroll");//下层不可滑动
     }
 
@@ -25,7 +25,8 @@ $(function() {
 
         setTimeout(() => {
             $("#SSYLargeImage").attr({ "src": "" });
-            $("#SSYLargeImage").css("display", "none");
+            $("#SSYLargeImage").addClass('d-none');
+
         }, 600);
         //恢复响应鼠标滚动事件
         // $(document).unbind('mousewheel');

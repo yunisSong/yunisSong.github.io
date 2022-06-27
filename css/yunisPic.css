@@ -49,5 +49,11 @@
     /* visibility: hidden; */
     animation-name: diss;
     animation-duration: 0.6s;
+}
 
+.d-none {
+    display: none;
+}
+.d-block {
+    display: block;
 }
