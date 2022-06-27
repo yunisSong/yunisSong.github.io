@@ -30,6 +30,10 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
         $("#SSYLargeImage").attr({ "src": "" });
+
+        setTimeout(() => {
+            $("#SSYLargeImage").css("display", "none");
+        }, 600);
         //恢复响应鼠标滚动事件
         // $(document).unbind('mousewheel');
         $("html,body").removeClass("none-scroll");
@@ -37,13 +41,6 @@ $(function() {
 
     $('#YunisTestImage').click(function () {
         removeBigPic();
-        // $("#YunisTestImage").removeClass('SYYImageShow');
-        // $("#YunisTestImage").addClass('SYYImageDiss');
-        // $("#SSYLargeImage").attr({ "src": "" });
-        // //恢复响应鼠标滚动事件
-        // // $(document).unbind('mousewheel');
-        // $("html,body").removeClass("none-scroll");
-
     });
     $(document).keydown(function(event){
         //判断当event.keyCode 为37时（即左方面键），执行函数to_left();
