@@ -5,10 +5,6 @@
 @keyframes diss {
     from {transform: scale(1)}
     to {transform: scale(0.1)}
-
-    from {transform: translateY(100%)}
-    to {transform: translateY(0)}
-
 }
 @keyframes opacity-css {
     from {transform: opacity(0)}
