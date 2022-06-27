@@ -3,38 +3,31 @@ $(function() {
         let imageStr = document.querySelector("#YunisTestImage").getAttribute("class");
         console.log(`${imageStr}`);
         if (`${imageStr}` == "SYYImageDiss") {
-            $("#YunisTestImage").removeClass('SYYImageDiss');
-            $("#YunisTestImage").addClass('SYYImageShow');
-            $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
-
-            //禁止响应鼠标滚动事件
-            // $(document).bind('mousewheel', function(event, delta) {return false;});
-            $("html,body").addClass("none-scroll");//下层不可滑动
-
+            showBigImage()
         }else {
-                $("#YunisTestImage").removeClass('SYYImageShow');
-                $("#YunisTestImage").addClass('SYYImageDiss');
-                $("#SSYLargeImage").attr({ "src": "" });
-
-                //恢复响应鼠标滚动事件
-                // $(document).unbind('mousewheel');
-                $("html,body").removeClass("none-scroll");
-
+            removeBigPic ()
         }
     
-        $(document).bind('mousewheel', function(event, delta) {return false;});
+        $(document).bind('mousewheel', () => {return false;});
 
     });
+    function  showBigImage() {
+        $("#YunisTestImage").removeClass('SYYImageDiss');
+        $("#YunisTestImage").addClass('SYYImageShow');
+        $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
+        $("html,body").addClass("none-scroll");//下层不可滑动
+        $("#SSYLargeImage").css("display", "block");
+    }
 
     function removeBigPic () {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
         $("#SSYLargeImage").attr({ "src": "" });
 
-        // setTimeout(() => {
-        //     $("#SSYLargeImage").css("display", "none");
-        // }, 600);
-        //恢复响应鼠标滚动事件
+        setTimeout(() => {
+            $("#SSYLargeImage").css("display", "none");
+        }, 600);
+        恢复响应鼠标滚动事件
         // $(document).unbind('mousewheel');
         $("html,body").removeClass("none-scroll");
     }
