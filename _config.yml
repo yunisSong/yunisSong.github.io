@@ -4,7 +4,7 @@ SEOTitle: 三十一的博客 | Yunis Blog
 header-img: img/tag-bg.jpg
 email: 32963965@qq.com
 description: "潜心修行中。"
-keyword: "iOS，Python，swift 初学者"
+keyword: "iOS,Python,swift 初学者"
 url: "https://yunissong.github.io/"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -44,8 +44,8 @@ gems: [jekyll-paginate]
 markdown: kramdown
 
 kramdown:
-	input: GFM                            # use Github Flavored Markdown !important
-	syntax_highlighter: rouge
+    input: GFM                            # use Github Flavored Markdown !important
+    syntax_highlighter: rouge
 
 
 
