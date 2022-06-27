@@ -27,13 +27,11 @@
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.55);
-
-    animation-name: opacity-css;
-    animation-duration: 0.6s;
 }
 
 
 #SSYLargeImage {
+    transform: scale(0);
     transition: all 0.6s;
     width: 100%;
     height: auto;
@@ -43,7 +41,9 @@
 }
 .animate-scale0 {
     transform: scale(0);
+    height: 0
 }
 .animate-scale1 {
     transform: scale(1);
+    height: auto
 }
