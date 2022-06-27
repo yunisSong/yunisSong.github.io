@@ -16,7 +16,8 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageDiss');
         $("#YunisTestImage").addClass('SYYImageShow');
         $("#SSYLargeImage").attr({ "src": imgPath });
-        $("#SSYLargeImage").addClass('animate');
+        $("#SSYLargeImage").removeClass('animate-scale0');
+        $("#SSYLargeImage").addClass('animate-scale1');
 
         $("html,body").addClass("none-scroll");//下层不可滑动
     }
@@ -24,7 +25,8 @@ $(function() {
     function removeBigPic () {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
-        $("#SSYLargeImage").removeClass('animate');
+        $("#SSYLargeImage").removeClass('animate-scale1');
+        $("#SSYLargeImage").addClass('animate-scale0');
         $("html,body").removeClass("none-scroll");
     }
 
