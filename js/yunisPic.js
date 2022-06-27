@@ -31,9 +31,9 @@ $(function() {
         $("#YunisTestImage").addClass('SYYImageDiss');
         $("#SSYLargeImage").attr({ "src": "" });
 
-        setTimeout(() => {
-            $("#SSYLargeImage").css("display", "none");
-        }, 600);
+        // setTimeout(() => {
+        //     $("#SSYLargeImage").css("display", "none");
+        // }, 600);
         //恢复响应鼠标滚动事件
         // $(document).unbind('mousewheel');
         $("html,body").removeClass("none-scroll");
