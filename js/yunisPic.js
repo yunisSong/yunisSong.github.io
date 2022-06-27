@@ -15,19 +15,19 @@ $(function() {
         $("#YunisTestImage").removeClass('SYYImageDiss');
         $("#YunisTestImage").addClass('SYYImageShow');
         $("#SSYLargeImage").attr({ "src": $(this).attr("src") });
-        $("html,body").addClass("none-scroll");//下层不可滑动
         $("#SSYLargeImage").css("display", "block");
+        $("html,body").addClass("none-scroll");//下层不可滑动
     }
 
     function removeBigPic () {
         $("#YunisTestImage").removeClass('SYYImageShow');
         $("#YunisTestImage").addClass('SYYImageDiss');
-        $("#SSYLargeImage").attr({ "src": "" });
 
         setTimeout(() => {
+            $("#SSYLargeImage").attr({ "src": "" });
             $("#SSYLargeImage").css("display", "none");
         }, 600);
-        恢复响应鼠标滚动事件
+        //恢复响应鼠标滚动事件
         // $(document).unbind('mousewheel');
         $("html,body").removeClass("none-scroll");
     }
