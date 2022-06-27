@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS,Python,swift 初学者">
+    <meta name="theme-color" content="#000000">
+
+    <title>Python编程快速上手 — 让繁琐工作自动化<三> - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2017/10/31/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%89/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/yunisPic.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<div id="YunisTestImage" class="SYYImageDiss">
+    <img id="SSYLargeImage" class="animate-scale0" src=""></div>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                    </div>
+                    <h1>Python编程快速上手 — 让繁琐工作自动化<三></h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on October 31, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="python编程快速上手--让繁琐工作自动化">Python编程快速上手 — 让繁琐工作自动化<三></三></h1>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">Pillow</code> 是一个第三方 <code class="language-plaintext highlighter-rouge">Python</code> 模块，用于 处理图像文件。该模块包含一些函数，可以很容易地裁剪图像、调整图像大小，
+以及编辑图像的内容。</p>
+</blockquote>
+
+<h4 id="获取颜色值">获取颜色值</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">ImageColor</span>
+<span class="n">ImageColor</span><span class="p">.</span><span class="n">getcolor</span><span class="p">(</span><span class="s">'red'</span><span class="p">,</span> <span class="s">'RGBA'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="用-pillow-操作图像">用 Pillow 操作图像</h3>
+
+<p>加载一张图片到 Python 环境中</p>
+
+<p><img src="/media/15152393132842/zophie.png" alt="zophie" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">catIm</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'zophie.png'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">catIm.size</code> 获取图片尺寸
+<code class="language-plaintext highlighter-rouge">width, height = catIm.size</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">catIm.filename</code> 图片在本地的名称
+<code class="language-plaintext highlighter-rouge">catIm.format</code> 和 <code class="language-plaintext highlighter-rouge">catIm.format_description</code> 是获取图片格式的字符串 <code class="language-plaintext highlighter-rouge">'PNG' 'Portable network graphics'</code> <code class="language-plaintext highlighter-rouge">format_description</code> 比较详细。</p>
+
+<p><code class="language-plaintext highlighter-rouge">im = Image.new("RGBA",(100,200),"purple")</code> 创建一个尺寸为 100*200、背景色为 purple 的图片。</p>
+
+<p><code class="language-plaintext highlighter-rouge">im2 = Image.new('RGBA', (20, 20))</code> 创建一个尺寸为 20*20、背景透明 的图片。</p>
+
+<h4 id="裁剪图片">裁剪图片</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">croppedIm</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">335</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">565</span><span class="p">,</span> <span class="mi">560</span><span class="p">))</span>
+<span class="n">croppedIm</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'cropped.png'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/media/15152393132842/cropped.png" alt="cropped" /></p>
+
+<p>Image 对 象的 crop()方法接受一个矩形元组，返回一个 Image 对象，表示裁剪后的图像。裁剪 不是在原图上发生的，也就是说，原始的 Image 对象原封不动，crop()方法返回一 个新的 Image 对象。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">//</span><span class="n">读取本地图片建立一个</span> <span class="n">Image对象</span>
+<span class="n">catIm</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'zophie.png'</span><span class="p">)</span>
+<span class="o">//</span><span class="n">拷贝一份</span>
+<span class="n">catCopyIm</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="o">//</span><span class="n">剪裁出一份</span>
+<span class="n">faceIm</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">335</span><span class="p">,</span> <span class="mi">345</span><span class="p">,</span> <span class="mi">565</span><span class="p">,</span> <span class="mi">560</span><span class="p">))</span>
+<span class="o">//</span><span class="n">把剪裁出来的图片粘贴到拷贝出来的图片上</span><span class="err">，</span><span class="n">位置为</span><span class="err">（</span><span class="mi">0</span><span class="err">，</span><span class="mi">0</span><span class="err">）</span>
+<span class="n">catCopyIm</span><span class="p">.</span><span class="n">paste</span><span class="p">(</span><span class="n">faceIm</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="o">//</span><span class="n">保存图片</span>
+<span class="n">catCopyIm</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'pasted.png'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/media/15152393132842/pasted.png" alt="pasted" /></p>
+
+<h4 id="平铺图片">平铺图片</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ <span class="n">catImWidth</span><span class="p">,</span> <span class="n">catImHeight</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">size</span>
+ <span class="n">faceImWidth</span><span class="p">,</span> <span class="n">faceImHeight</span> <span class="o">=</span> <span class="n">faceIm</span><span class="p">.</span><span class="n">size</span>
+ <span class="n">catCopyTwo</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="o">//</span><span class="n">平铺</span>
+<span class="o">//</span><span class="mi">0</span><span class="p">,</span> <span class="n">catImWidth</span> <span class="n">范围内</span><span class="err">，</span><span class="n">faceImWidth为步长</span>
+ <span class="k">for</span> <span class="n">left</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">catImWidth</span><span class="p">,</span> <span class="n">faceImWidth</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">top</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">catImHeight</span><span class="p">,</span> <span class="n">faceImHeight</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span>
+        <span class="n">catCopyTwo</span><span class="p">.</span><span class="n">paste</span><span class="p">(</span><span class="n">faceIm</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">))</span>
+        
+ <span class="n">catCopyTwo</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'tiled.png'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/media/15152393132842/tiled.png" alt="tiled" /></p>
+
+<h4 id="调整图片大小">调整图片大小</h4>
+
+<p>resize()方法在 Image 对象上调用，返回指定宽度和高度的一个新 Image 对象</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">size</span>
+<span class="n">quartersizedIm</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">resize</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">quartersizedIm</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'quartersized.png'</span><span class="p">)</span>
+<span class="n">svelteIm</span> <span class="o">=</span> <span class="n">catIm</span><span class="p">.</span><span class="n">resize</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">300</span><span class="p">))</span>
+<span class="n">svelteIm</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'svelte.png'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/media/15152393132842/quartersized.png" alt="quartersized" /></p>
+
+<h4 id="旋转图片">旋转图片</h4>
+
+<p>图像可以用 rotate()方法旋转，该方法返回旋转后的新 Image 对象，并保持原始 Image 对象不变。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">catIm</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">).</span><span class="n">save</span><span class="p">(</span><span class="s">'rotated90.png'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/media/15152393132842/rotated90.png" alt="rotated90" /></p>
+
+<p>注意，当图像旋转 90 度或 270 度时，宽度和高度会变化。如果旋转其他角度， 图像的原始尺寸会保持。在 Windows 上，使用黑色的背景来填补旋转造成的缝隙， 如图 17-8 所示。在 OS X 上，使用透明的像素来填补缝隙。rotate()方法有一个可选 的 expand 关键字参数，如果设置为 True，就会放大图像的尺寸，以适应整个旋转 后的新图像。</p>
+
+<p>利用 transpose()方法，还可以得到图像的“镜像翻转”。必须向 transpose()方法 传入 Image.FLIP_LEFT_RIGHT 或 Image.FLIP_TOP_BOTTOM。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">catIm</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="n">FLIP_LEFT_RIGHT</span><span class="p">).</span><span class="n">save</span><span class="p">(</span><span class="s">'horizontal_flip.png'</span><span class="p">)</span>
+<span class="n">catIm</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="n">FLIP_TOP_BOTTOM</span><span class="p">).</span><span class="n">save</span><span class="p">(</span><span class="s">'vertical_flip.png'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/media/15152393132842/horizontal_flip.png" alt="horizontal_flip" /><img src="/media/15152393132842/vertical_flip.png" alt="vertical_flip" /></p>
+
+<h4 id="更改单个像素">更改单个像素</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">//</span><span class="n">创建一个透明图片</span> <span class="n">大小为</span> <span class="mi">100</span> <span class="o">*</span><span class="mi">100</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="s">'RGBA'</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+<span class="o">//</span><span class="n">填充颜色</span> <span class="n">为x轴</span>  <span class="mi">0</span> <span class="o">-</span> <span class="mi">99</span> <span class="n">y轴</span> <span class="mi">0</span><span class="o">-</span><span class="mi">49</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">im</span><span class="p">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">210</span><span class="p">))</span>
+
+<span class="o">//</span><span class="n">填充颜色</span> <span class="n">为x轴</span>  <span class="mi">0</span> <span class="o">-</span> <span class="mi">99</span> <span class="n">y轴</span> <span class="mi">50</span><span class="o">-</span><span class="mi">99</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">im</span><span class="p">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">ImageColor</span><span class="p">.</span><span class="n">getcolor</span><span class="p">(</span><span class="s">'darkgray'</span><span class="p">,</span> <span class="s">'RGBA'</span><span class="p">))</span>
+
+<span class="n">im</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'putPixel.png'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/media/15152393132842/putPixel.png" alt="putPixe" /></p>
+
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/10/30/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%BA%8C/" data-toggle="tooltip" data-placement="top" title="Python编程快速上手 — 让繁琐工作自动化<二>">
+                        Previous<br>
+                        <span>Python编程快速上手 — 让繁琐工作自动化<二></span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/11/13/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E7%BB%83%E7%BA%A7%E6%94%BB%E7%95%A5/" data-toggle="tooltip" data-placement="top" title="（转载）程序员技术练级攻略">
+                        Next<br>
+                        <span>（转载）程序员技术练级攻略</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="24">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#内功" title="内功" rel="8">
+                                    内功
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="6">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#工具" title="工具" rel="2">
+                                    工具
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#SQL" title="SQL" rel="2">
+                                    SQL
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yunissong";
+    var disqus_identifier = "/2017/10/31/Python编程快速上手 — 让繁琐工作自动化<三>";
+    var disqus_url = "http://localhost:4000/2017/10/31/Python%E7%BC%96%E7%A8%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-%E8%AE%A9%E7%B9%81%E7%90%90%E5%B7%A5%E4%BD%9C%E8%87%AA%E5%8A%A8%E5%8C%96-%E4%B8%89/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2022
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+<script src="/js/yunisPic.js "></script>
+
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

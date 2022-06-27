@@ -1,0 +1,100 @@
+I"\0<h1 id="利用callkit-实现来电识别">利用CallKit 实现来电识别</h1>
+
+<blockquote>
+  <p>最近项目中新增了一个需求，需要使用 <code class="language-plaintext highlighter-rouge">iOS 10</code> 中新增的 <code class="language-plaintext highlighter-rouge">CallKit</code> 来实现一个来电识别的功能。按照惯例，先在网上搜索了一下，看了几篇文章，觉得实现起来很简单嘛。于是就愉快的开始了，然后就开始遇见一个个坑，网上目前存在的文章都避重就轻的简单的实现了号码识别，但是关于号码规则、大数量的数据如何处理等都没有提及。这篇文字就记录下我个人在实现这个功能时遇到的坑以及如何解决的。</p>
+</blockquote>
+
+<h3 id="一简单实现">一，简单实现</h3>
+
+<p>如何实现就不在详细描写了，网上已经有很多的文章写了。</p>
+
+<h3 id="二具体功能实现遇到的各种坑">二，具体功能实现遇到的各种坑</h3>
+
+<h4 id="号码规则"><code class="language-plaintext highlighter-rouge">号码规则</code></h4>
+
+<ol>
+  <li>号码必须进行排列，添加顺序为优先添加小的号码。譬如：123和132两个号码要先添加123，然后添加132.</li>
+  <li>号码的格式化，手机号码前面需要添加国家码，固话需要带有区号，然后区号去零，然后前面添加国家码。譬如手机号：185XXXXX8497  需要格式化为86185XXXXX8497；固话 0755-12345678 需要格式化为：8675512345678.</li>
+  <li>号码去重，一个手机号码只能添加一次，添加多次会开启失败。</li>
+</ol>
+
+<h4 id="大数量是数据如何添加"><code class="language-plaintext highlighter-rouge">大数量是数据如何添加</code></h4>
+<p>大数据不能一下读取到内存中，否则会导致打开失败。解决办法：从文件中一行行读取数据，使用后释放。我的号码库文件，大概这样的形式：</p>
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[</span>
+ <span class="p">{</span><span class="s">"86196852102"</span><span class="o">:</span> <span class="s">"骚扰电话"</span><span class="err">}</span><span class="p">,</span>
+ <span class="p">{</span><span class="s">"86196852201"</span><span class="o">:</span> <span class="s">"诈骗电话"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86196852202"</span><span class="o">:</span> <span class="s">"骚扰电话"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86196852213"</span><span class="o">:</span> <span class="s">"诈骗电话"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86201008613"</span><span class="o">:</span> <span class="s">"广告推销"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86202096585"</span><span class="o">:</span> <span class="s">"诈骗电话"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86211008611"</span><span class="o">:</span> <span class="s">"广告推销"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86216618834"</span><span class="o">:</span> <span class="s">"广告推销"</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">"86219506524"</span><span class="o">:</span> <span class="s">"骚扰电话"</span><span class="p">},</span>
+ <span class="p">]</span>
+</code></pre></div></div>
+<p>具体代码如下：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+  <span class="n">NSURL</span> <span class="o">*</span><span class="n">containerURL</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSFileManager</span> <span class="nf">defaultManager</span><span class="p">]</span> <span class="nf">containerURLForSecurityApplicationGroupIdentifier</span><span class="p">:</span><span class="n">groupIdentifierExtension</span><span class="p">];</span>
+    <span class="c1">//文件路径</span>
+    <span class="n">containerURL</span> <span class="o">=</span> <span class="p">[</span><span class="n">containerURL</span> <span class="nf">URLByAppendingPathComponent</span><span class="p">:</span><span class="n">LocalstorageName</span><span class="p">];</span>
+    <span class="n">NSString</span><span class="o">*</span> <span class="n">fileRoot</span> <span class="o">=</span> <span class="n">containerURL</span><span class="p">.</span><span class="n">path</span><span class="p">;</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">file</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">([</span><span class="n">fileRoot</span> <span class="nf">UTF8String</span><span class="p">],</span> <span class="s">"r"</span><span class="p">);</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+        <span class="k">@autoreleasepool</span> <span class="p">{</span>
+            <span class="n">NSString</span><span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithUTF8String</span><span class="p">:</span><span class="n">buffer</span><span class="p">];</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="nf">stringByReplacingOccurrencesOfString</span><span class="p">:</span><span class="s">@","</span> <span class="nf">withString</span><span class="p">:</span><span class="s">@""</span><span class="p">];</span>
+            <span class="n">NSData</span> <span class="o">*</span><span class="n">jsonData</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="nf">dataUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="n">NSError</span> <span class="o">*</span><span class="n">err</span><span class="p">;</span>
+            <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dic</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">jsonData</span>
+                                                                <span class="nl">options:</span><span class="n">NSJSONReadingAllowFragments</span>
+                                                                  <span class="nl">error:</span><span class="o">&amp;</span><span class="n">err</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="p">{</span>
+            <span class="p">}</span><span class="k">else</span>
+            <span class="p">{</span>
+                <span class="n">NSString</span> <span class="o">*</span><span class="n">number</span> <span class="o">=</span> <span class="n">dic</span><span class="p">.</span><span class="n">allKeys</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+                <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="nf">number</span><span class="p">];</span>
+                
+                <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">==</span> <span class="nb">nil</span> <span class="o">||</span> <span class="n">name</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span>
+                <span class="p">{</span>
+                <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+<span class="c1">//                    number = [self fixPhone:number];</span>
+                    <span class="n">CXCallDirectoryPhoneNumber</span> <span class="n">phoneNumber</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="nf">longLongValue</span><span class="p">];</span>
+                    <span class="p">[</span><span class="n">context</span> <span class="nf">addIdentificationEntryWithNextSequentialPhoneNumber</span><span class="p">:</span><span class="n">phoneNumber</span> <span class="nf">label</span><span class="p">:</span><span class="n">name</span><span class="p">];</span>
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+            <span class="n">dic</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>实际测试，将近100万的数据在 6S Plus 30S内可以完成加载。</p>
+
+<h4 id="如何更新数据"><code class="language-plaintext highlighter-rouge">如何更新数据</code></h4>
+
+<p>号码库可以通过下载进行更新，一般下载的是压缩包，解压缩后，把数据写进共享文件内，更新数据后，需要通知系统去刷新数据库，是数据生效。具体解压缩可以搜索： <code class="language-plaintext highlighter-rouge">SSZipArchive</code> ,扩展和主APP数据扩展可以看这篇文章：<a href="http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/">WWDC2014之App Extensions学习笔记</a> 通知系统刷新号码数据库的具体代码：</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="sr">//</span><span class="no">IdentifierExtension</span> <span class="err">为扩展的</span> <span class="no">Bundle</span> <span class="no">Identifier</span>
+   <span class="no">CXCallDirectoryManager</span> <span class="o">*</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="no">CXCallDirectoryManager</span> <span class="n">sharedInstance</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">manager</span> <span class="n">reloadExtensionWithIdentifier</span><span class="ss">:IdentifierExtension</span> <span class="n">completionHandler</span><span class="ss">:^</span><span class="p">(</span><span class="no">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}];</span>
+</code></pre></div></div>
+
+<h4 id="数据可以分开写"><code class="language-plaintext highlighter-rouge">数据可以分开写</code></h4>
+<blockquote>
+  <p>这句话的意思是先写入少量的数据，让用户打开权限时，感觉不到延时，当权限打开后，在写入大量的数据，刷新数据源，用户感觉不到等待的时间。</p>
+</blockquote>
+
+<p>因为之前说了写入几十万的 数据需要大概十几秒的时间，在我的思维里面觉得是很正常的，但是在产品眼里这是不可接受的。巴拉巴拉说了一堆，说腾讯啊、360啊人家都打开的很快的。你娘啊！！好吧算你赢。
+最后想到一个办法，先写入很少量的数据，然后在写入大量的数据。这样就完美的解决了第一次加载时间慢的问题。
+具体的来说就是，第一次请求用户打开权限的时间，先写入很少量的数据，当判断用户已经打开了权限，就写入大量的数据，然后刷新下数据源，这样就是在用户完全没有感知的情况下刷新了数据源。</p>
+
+<h4 id="最好提供一个演示视频"><code class="language-plaintext highlighter-rouge">最好提供一个演示视频</code></h4>
+
+<p>审核的苹果爸爸使用的 iPad 测试，然后把我们拒了，说不知道如何使用  <code class="language-plaintext highlighter-rouge">CallKit</code> 。</p>
+
+:ET

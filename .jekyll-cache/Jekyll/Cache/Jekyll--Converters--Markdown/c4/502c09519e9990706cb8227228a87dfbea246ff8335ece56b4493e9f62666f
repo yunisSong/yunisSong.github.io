@@ -1,0 +1,187 @@
+I"<h1 id="mysql练习">mysql练习</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE DATABASE YunisDB1;
+use YunisDB1;
+
+-- position 职务
+-- department 部门
+-- salary 工资
+create table positionTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	name varchar(10),
+	namedesc varchar(100)
+);
+create table departmentTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	name varchar(10),
+	loc  varchar(20)
+);
+create table salaryTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	low_salary double(8,1),
+	high_salary double(8,1)
+);
+create table emp (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	leader int,
+	name varchar(10),
+	salary double(8,1),
+	department int,
+	position int,
+	CONSTRAINT emp_position foreign key (position) REFERENCES positionTab(id) ,
+	CONSTRAINT emp_department foreign key (department) REFERENCES departmentTab(id)
+);
+
+/* 
+drop table department;
+drop table salary;
+drop table position; 
+drop table salaryTab;
+*/
+INSERT into positionTab values (null,"客户端开发","负责iOS、安卓系统的软件开发");
+INSERT into positionTab values (null,"服务端开发","负责后台接口的软件开发");
+INSERT into positionTab values (null,"web客户端开发","负责浏览器的软件开发");
+INSERT into positionTab values (null,"项目经理","统筹管理项目进度");
+INSERT into positionTab values (null,"销售","销售软件");
+INSERT into positionTab values (null,"运维","维护软件的日常运行");
+INSERT into positionTab values (null,"boss","公司拥有者");
+
+select * from positionTab;
+
+/*
+1	客户端开发	负责iOS、安卓系统的软件开发
+2	服务端开发	负责后台接口的软件开发
+3	web客户端开发	负责浏览器的软件开发
+4	项目经理	统筹管理项目进度
+5	销售	销售软件
+6	运维	维护软件的日常运行
+7	boss	公司拥有者
+*/
+
+INSERT into departmentTab values (null,"研发部","南山");
+INSERT into departmentTab values (null,"市场部","前海");
+INSERT into departmentTab values (null,"运维部","后海");
+INSERT into departmentTab values (null,"战略部","深圳湾");
+
+select * from departmentTab;
+/* 
+1	研发部	南山
+2	市场部	前海
+3	运维部	后海 
+4  战略部 深圳湾
+*/
+
+INSERT into salaryTab values (null,0,5000);
+INSERT into salaryTab values (null,5001,10000);
+INSERT into salaryTab values (null,10001,20000);
+INSERT into salaryTab values (null,20001,30000);
+
+select * from salaryTab;
+
+/* 
+1	0.0	5000.0
+2	5001.0	10000.0
+3	10001.0	20000.0
+4	20001.0	30000.0 
+*/
+
+/* 	id int PRIMARY KEY AUTO_INCREMENT,
+	leader int,
+	name varchar(10),
+	salary double(8,1),
+	department int,
+	position int, */
+	
+INSERT into emp values (null,8,"李三",6000,1,1) ;
+
+INSERT into emp values 
+	(null,8,"王五",11000,1,1) ,
+	(null,8,"赵四",4890,1,1) ,
+	(null,8,"巨能改",14300,3,6) ,
+	(null,8,"聚能吹",9000,2,5) ,
+	(null,8,"java",22000,1,2) ,
+	(null,8,"vue",6990,1,3) ,
+	(null,10,"leader",28000,1,4) ,
+	(null,8,"iOSER",22000,1,1) ,
+	(null,null,"老板",3000,4,7) ,
+	(null,8,"AndroidER",15000,1,1) ;
+
+
+select * from emp;
+/* 
+1	8	李三	6000.0	1	1
+2	8	王五	11000.0	1	1
+3	8	赵四	4890.0	1	1
+4	8	巨能改	14300.0	3	6
+5	8	聚能吹	9000.0	2	5
+6	8	java	22000.0	1	2
+7	8	vue	6990.0	1	3
+8	10	leader	28000.0	1	4
+9	8	iOSER	22000.0	1	1
+10	NULL	老板	3000.0	4	7
+11	8	AndroidER	15000.0	1	1 
+*/
+
+-- 查询所有的员工信息，查询员工编号、姓名、工资、职位名称、职位描述
+
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`
+FROM 
+	emp t1,positionTab t2
+WHERE 
+	t1.`position`= t2.`id`;
+	
+	
+-- 查询员工编号、姓名、工资、职位名称、职位描述、 部门名称、部门位置；
+	
+	
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`, t3.`name`,t3.`loc`
+FROM 
+	emp t1,positionTab t2,`departmentTab` t3
+WHERE 
+	t1.`position`= t2.`id` AND t1.`department` = t3.`id`;
+	
+	
+-- 查询员工姓名、工资、工资等级
+	
+SELECT
+	t1.`name`,t1.`salary`,t2.`id`
+FROM 
+	emp t1,salaryTab t2
+WHERE 
+	t1.`salary` BETWEEN t2.`low_salary` AND t2.`high_salary`;
+	
+	
+	
+-- 查询员工编号、姓名、工资、职位名称、职位描述、 部门名称、部门位置、工资等级；
+
+
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`, t3.`name`,t3.`loc`,t4.`id`
+FROM 
+	emp t1,positionTab t2,`departmentTab` t3,salaryTab t4
+WHERE 
+	t1.`position`= t2.`id` 
+	AND t1.`department` = t3.`id` 
+	AND t1.`salary` BETWEEN t4.`low_salary` AND t4.`high_salary`;
+	
+-- 查询出部门标号、部门名称、部门位置、部门人数
+SELECT
+	t2.id,t2.`name`,t2.`loc`,count(t1.`id`)
+FROM 
+	emp t1,(SELECT * FROM departmentTab) t2
+WHERE 
+	t1.`department` = t2.`id`
+group by t1.`department`;
+
+-- 查询出所有员工的姓名已经直接上级的姓名，没有领导的员工也需要查询
+
+SELECT
+	t1.id,t1.`name`,t2.`id`,t2.`name`
+FROM 
+	emp t1 LEFT JOIN emp t2
+ON
+	t1.`leader` = t2.`id`;
+</code></pre></div></div>
+:ET

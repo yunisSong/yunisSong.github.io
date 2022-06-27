@@ -1,0 +1,21 @@
+I"<h1 id="ctframegetlines-获取数组为空">CTFrameGetLines 获取数组为空</h1>
+
+<p>最近在写一个可点击的 <code class="language-plaintext highlighter-rouge">UILabel</code> 控件，基于 <code class="language-plaintext highlighter-rouge">coretext</code> 排版，发现有时候使用  <code class="language-plaintext highlighter-rouge">CTFrameGetLines()</code> 函数获取的行数为空。这种情况是在使用 <code class="language-plaintext highlighter-rouge">autolayout</code> 时发现的，后面又手动设置 <code class="language-plaintext highlighter-rouge">frame</code> ，发现当 <code class="language-plaintext highlighter-rouge">frame</code> 高度设置的值比较小时，就会出现这个问题。最终发现是设置画板时，可绘制的区域高度过小导致无法绘制完成一行导致的。解决办法是，修改画布的大小。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    UIGraphicsBeginImageContextWithOptions(self.frame.size, ![self.backgroundColor isEqual:[UIColor clearColor]], 0);
+    
+    //获取上下文
+    context = UIGraphicsGetCurrentContext();
+    
+    //绘制区域
+    CGMutablePathRef path = CGPathCreateMutable();
+    //方形
+//    CGPathAddRect(path, NULL, rect);
+    CGPathAddRect(path, NULL, CGRectMake(0,0,rect.size.width,MAXFLOAT));
+
+    //根据 CTFramesetterRef range 区域 创建 CTFrameRef 对象
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, textRange, path, NULL);
+
+ 
+</code></pre></div></div>
+:ET

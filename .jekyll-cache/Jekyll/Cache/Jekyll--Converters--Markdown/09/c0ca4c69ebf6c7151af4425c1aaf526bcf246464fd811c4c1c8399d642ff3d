@@ -1,0 +1,142 @@
+I"�)<h1 id="自动化的一些实践">自动化的一些实践</h1>
+
+<h3 id="xcode版本更新后报错">Xcode版本更新后报错</h3>
+<h4 id="xcode9">Xcode9</h4>
+<p>更新到 Xcode 9 后报错</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error Domain=IDEProvisioningErrorDomain Code=9 ""XXXXXX.app" requires a provisioning profile." UserInfo={NSLocalizedDescription="XXXXXXX.app" requires a provisioning profile., NSLocalizedRecoverySuggestion=Select a provisioning profile for the "Default" build configuration in the project editor.}
+
+</code></pre></div></div>
+
+<p>参考链接：<a href="https://stackoverflow.com/a/45888412">stackoverflow</a> ,plist 文件内容修改如下</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+  &lt;dict&gt;
+      &lt;key&gt;provisioningProfiles&lt;/key&gt;
+      &lt;dict&gt;
+          &lt;key&gt;MY_APP_BUNDLE_ID&lt;/key&gt;
+          &lt;string&gt;MY_PROFILE_NAME_AS_SHOWN_BY_XCODE or UUID_FOUND_IN_MOBILEPROVISION_FILE&lt;/string&gt;
+      &lt;/dict&gt;
+      &lt;key&gt;method&lt;/key&gt;
+      &lt;string&gt;development&lt;/string&gt;
+      &lt;key&gt;uploadBitcode&lt;/key&gt;
+      &lt;false/&gt;
+      &lt;key&gt;uploadSymbols&lt;/key&gt;
+      &lt;true/&gt;
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre></div></div>
+<h4 id="xcode833">Xcode8.3.3</h4>
+<blockquote>
+  <p>更新 Xcode 升级到8.3.3 以后，原有打包脚本出错，需要在指定目录添加一个plist文件，现修改如下：</p>
+</blockquote>
+
+<p>plist 文件内容如下，参考链接 <a href="https://stackoverflow.com/a/43154970/7771598">stackoverflow</a>：</p>
+<blockquote>
+  <p>You’ll have to at least specifiy an entry for method (app-store, ad-hoc, enterprise etc. - defaults to development).</p>
+
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+    &lt;dict&gt;
+        &lt;key&gt;method&lt;/key&gt;
+        &lt;string&gt;development&lt;/string&gt;
+    &lt;/dict&gt;
+&lt;/plist&gt;
+
+</code></pre></div></div>
+
+<hr />
+<p><code class="language-plaintext highlighter-rouge">plist</code> 文件需要放在脚本里面 targerIPA_parth 路径下。</p>
+
+<h3 id="打包脚本">打包脚本</h3>
+<p>今天尝试了下使用脚本自动化打包并发布到蒲公英，现记录如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: utf-8 -*-
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1">#发布到蒲公英的说明文档
+</span><span class="n">updateDescription</span> <span class="o">=</span> <span class="s">""</span>
+<span class="c1"># 项目根目录
+</span><span class="n">project_path</span> <span class="o">=</span> <span class="s">""</span>
+
+<span class="c1">#打包证书名称
+</span><span class="n">cerName</span> <span class="o">=</span> <span class="s">""</span>
+<span class="c1">#发布证书
+#cerName = ""
+#工程名称
+</span><span class="n">projectName</span> <span class="o">=</span> <span class="s">""</span><span class="o">+</span><span class="s">".xcodeproj"</span>
+<span class="c1">#scheme
+</span><span class="n">scheme</span> <span class="o">=</span> <span class="s">""</span>
+<span class="c1"># 打包后ipa存储目录
+</span><span class="n">targerIPA_parth</span> <span class="o">=</span> <span class="s">""</span>
+
+
+
+<span class="c1">#时间戳
+</span><span class="n">timeStr</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d%H%M%S'</span><span class="p">,</span><span class="n">time</span><span class="p">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()))</span>
+<span class="c1">#activePath
+</span><span class="n">activePath</span> <span class="o">=</span> <span class="n">targerIPA_parth</span> <span class="o">+</span><span class="n">timeStr</span><span class="o">+</span><span class="s">".xcarchive"</span>
+<span class="c1">#蒲公英Key
+</span><span class="n">PGY_key</span><span class="o">=</span><span class="s">""</span>
+<span class="c1">#蒲公英APIKey
+</span><span class="n">PGY_APIkey</span><span class="o">=</span><span class="s">""</span>
+
+
+<span class="c1"># 清理项目 创建build目录
+</span><span class="k">def</span> <span class="nf">clean_project_mkdir_build</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"******clean******"</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="s">'cd %s;xcodebuild clean -project "%s" -scheme %s -configuration release'</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_path</span><span class="p">,</span><span class="n">projectName</span><span class="p">,</span><span class="n">scheme</span><span class="p">))</span> <span class="c1"># clean 项目
+</span>
+<span class="k">def</span> <span class="nf">build_project</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"build xcarchive start"</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'xcodebuild -list'</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'cd %s;xcodebuild archive -project "%s" -scheme %s -configuration release -sdk iphoneos10.3  IPHONEOS_DEPLOYMENT_TARGET=9.0 -archivePath %s;'</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_path</span><span class="p">,</span><span class="n">projectName</span><span class="p">,</span><span class="n">scheme</span><span class="p">,</span><span class="n">activePath</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"build xcarchive end"</span><span class="p">)</span>
+
+<span class="c1"># 打包ipa 并且保存在桌面
+</span><span class="k">def</span> <span class="nf">build_ipa</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"build IPA start"</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">targerIPA_parth</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'xcodebuild -exportArchive -archivePath %s -exportPath %s -exportOptionsPlist %sIPA.plist'</span><span class="o">%</span><span class="p">(</span><span class="n">activePath</span><span class="p">,</span><span class="n">targerIPA_parth</span><span class="p">,</span><span class="n">targerIPA_parth</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"build IPA end"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">updateIPAToPGY</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"开始上传蒲公英"</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'curl -F </span><span class="se">\"</span><span class="s">updateDescription=%s</span><span class="se">\"</span><span class="s"> -F </span><span class="se">\"</span><span class="s">file=@%scopm_cust.ipa</span><span class="se">\"</span><span class="s"> -F </span><span class="se">\"</span><span class="s">uKey=%s</span><span class="se">\"</span><span class="s"> -F </span><span class="se">\"</span><span class="s">_api_key=%s</span><span class="se">\"</span><span class="s"> https://qiniu-storage.pgyer.com/apiv1/app/upload'</span><span class="o">%</span><span class="p">(</span><span class="n">updateDescription</span><span class="p">,</span><span class="n">targerIPA_parth</span><span class="p">,</span><span class="n">PGY_key</span><span class="p">,</span><span class="n">PGY_APIkey</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"上传蒲公英完成"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">updateSVN</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"更新SVN数据"</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>    
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'svn upgrade '</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span> <span class="p">(</span><span class="s">'svn update '</span><span class="p">)</span>    
+    <span class="k">print</span><span class="p">(</span><span class="s">"更新SVN完成"</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    
+    <span class="c1">#更新SVN
+</span>    <span class="n">updateSVN</span><span class="p">()</span>
+    <span class="c1"># 清理并创建build目录
+</span>    <span class="n">clean_project_mkdir_build</span><span class="p">()</span>
+    <span class="c1"># 编译coocaPods项目文件并 执行编译目录
+</span>    <span class="n">build_project</span><span class="p">()</span>
+    <span class="c1"># 打包ipa 并制定到桌面
+</span>    <span class="n">build_ipa</span><span class="p">()</span>
+    <span class="c1">#上传到蒲公英
+</span>    <span class="n">updateIPAToPGY</span><span class="p">()</span>
+
+<span class="c1"># 执行
+</span><span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+:ET

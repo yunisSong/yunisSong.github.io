@@ -1,0 +1,50 @@
+I"�<h1 id="脚本小工具">脚本小工具</h1>
+
+<p>记录平时想到的可以使用脚本来完成的任务。</p>
+
+<h3 id="切换壁纸">切换壁纸</h3>
+
+<p><a href="https://www.cnblogs.com/feiqihang/p/5076573.html"></a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/sh
+#提取壁纸图片URL(支持重定向)
+
+url=$(expr "$(curl -L -e '; auto' https://www.bing.com/?mkt=zh-CN |grep g_img=)" : ".*g_img={url:\"\(.*\)\"};.*")
+
+#去除url中的斜杠“\”
+url="http://www.bing.com${url//\\/}"
+#替换&amp;符号
+url=${url/\u0026/&amp;}
+echo $url
+#提取图片名称
+filename=$(expr "$url" : ".*id=\(.*\)&amp;rf=.*")
+#本地图片地址-当前用户下缺省图片目录
+localpath="/Users/$USER/Desktop/shell/pic/$filename"
+#下载图片至本地
+curl -o $localpath $url
+#调用Finder应用切换桌面壁纸
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$localpath\""
+</code></pre></div></div>
+
+<p>学习到的新知识</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># expr 'STRING : REGEX'
+#      执行模式匹配。两端参数会转换为字符格式，且第二个参数被视为正则表达式(GNU基本正则)，它默认会隐含前缀"^"。随后将第一个参数和正则模式做匹配。
+#      如果匹配成功，且REGEX使用了'\('和'\)'，则此表达式返回匹配到的，如果未使用'\('和'\)'，则返回匹配的字符数。
+#      如果匹配失败，如果REGEX中使用了'\('和'\)'，则此表达式返回空字符串，否则返回为0。
+#      只有第一个'\(...\)'会引用返回的值；其余的'\(...\)'只在正则表达式分组时有意义。
+#      在正则表达式中，'\+'，'\?'和'\|'分表代表匹配一个或多个，0个或1个以及两端任选其一的意思。
+
+# url=$(expr Yunis123456789SSy : '.*Yunis\(.*\)SSy.*')
+# echo $url 123456789
+#
+# url2=$(expr abcde : 'ab\(.*\)')
+# echo $url2 cde
+
+
+# curl -L 跟随重定向 默认不跟随
+#   -e参数用来设置 HTTP 的标头Referer，表示请求的来源。
+#   -e ';auto' 告诉它在跟踪重定向响应时传送Referer头信息
+</code></pre></div></div>
+
+<h3 id="查找文件">查找文件</h3>
+:ET

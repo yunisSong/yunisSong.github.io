@@ -1,0 +1,131 @@
+I":,<h1 id="转载简单几条命令轻松开启-macos-系统隐藏功能">(转载)简单几条命令，轻松开启 macOS 系统隐藏功能</h1>
+
+<p>原文地址：<a href="https://sspai.com/post/41695">简单几条命令，轻松开启 macOS 系统隐藏功能 新手问号</a></p>
+
+<p><img src="https://cdn.sspai.com/article/f9454695-bfc7-f1f2-5b36-6cf46c7c0209.jpg?imageMogr2/quality/95/thumbnail/!700x233r/gravity/Center/crop/700x233" alt="简单几条命令，轻松开启 macOS 系统隐藏功能" /></p>
+
+<p><a href="https://sspai.com/user/719707"><img src="https://cdn.sspai.com/2017/08/31/45f498dc0e9a6b1caf7a1f2146682c0b.jpg?imageMogr2/quality/95/thumbnail/!60x60r/gravity/Center/crop/60x60" alt="WATERS" /></a></p>
+<h4 id="waters"><a href="https://sspai.com/user/719707">WATERS</a></h4>
+
+<p>编注：「新手问号」是少数派的一个全新栏目。它面向完全「零基础」的新手用户，通过最简单易懂的方式，帮助你快速掌握关于系统和软硬件的入门知识。</p>
+
+<p>栏目文章回顾：</p>
+
+<ul>
+  <li>
+    <p><a href="https://sspai.com/post/41411">向 Windows 高级用户进阶，这 10 款效率工具帮你开路</a></p>
+  </li>
+  <li>
+    <p><a href="https://sspai.com/post/41477">macOS 上都有哪些既免费、又实用的工具？</a></p>
+  </li>
+  <li>
+    <p><a href="https://sspai.com/post/41371">刚从 Windows 转到 macOS，如何快速上手操作？</a></p>
+  </li>
+  <li>
+    <p><a href="https://sspai.com/post/41363">做好这四种方法，让你的 Mac 远离数据被盗和丢失</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<p>Mac 中有一个图标是「黑色的窗口」名为「终端 Terminal」的应用，对于一个普通人用户来说，它就好像有一层神秘的面纱，时常让人觉得只有技术流、程序员才能驾驭。而命令行这种东西似乎也都是存在想象里的，一个人对着空白的窗口噼里啪啦的打下一行代码，然后电脑便自动给你执行相应的任务。其实作为新手的我们一样也可以让它发挥出一定的作用，今天的这一篇文章就带你了解一些你可能也能用到的命令行，让你轻松开启系统的隐藏功能。</p>
+
+<h2 id="配置-launchpad">配置 Launchpad</h2>
+
+<p>在大家安装好应用去 Launchpad 里寻找的时候，时常会发现原生的配置让 Launchpad 看的稍许拥挤，但是在系统偏好设置里我们是无法修改的。为了让我们的 Launchpad 识别度更高并且更加美观，可以通过终端对排列方式进行修改，复制以下代码至终端即可：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.dock springboard-columns -int 8; defaults write com.apple.dock springboard-rows -int 7; defaults write com.apple.dock ResetLaunchPad -bool TRUE; killall Dock
+</code></pre></div></div>
+
+<p>命令中有两个数字 8 和 7，它们分别代表的是布局中的列数和行数，如果想更清除的了解该段命令，可以参考《<a href="https://sspai.com/post/33299">通过终端命令改变 Launchpad 中应用图标的大小</a>》。
+<img src="https://cdn.sspai.com/2017/11/09/4b53845799f46d7aba1eb7d58fe9b846.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="" />
+除了可以对 Launchpad 的布局进行更改，还可以根据自己的喜好对北背景的模糊程度进行更改，复制以下代码至终端即可：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.dock springboard-blur-radius -int 100; killall Dock
+</code></pre></div></div>
+
+<p>命令中有一个数字 100，它代表的背景模糊的程度，你可以在 0 ~ 255 的范围内选择。</p>
+
+<h2 id="修改截图属性">修改截图属性</h2>
+
+<p>Mac 上自带的截图非常的还用，可以区域、窗口、延时截图。但是截图会默认保存在你的桌面上，时间一长，你的桌面就会被五花八门的截图堆满。对此，我们可以新建一个文件夹专门来存放截图，新建一个 screenshots 的文件夹在桌面或者任意一个你希望它待在的地方，将下述代码复制进终端即可：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.screencapture location ~/Desktop/screenshots; killall SystemUIServer
+</code></pre></div></div>
+
+<p>~ 之后填写你相应的文件夹路径即可，如果不清楚路径的写法，可以打开该文件夹右键点击任何一个文件「显示简介」，复制「位置」之后的内容即可，也可以直接将文件夹拖拽至终端以此显示路径。</p>
+
+<p><img src="https://cdn.sspai.com/2017/11/09/05c353239dec51329c19169daef951a6.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="" /></p>
+
+<p>除此之外，你也可以使用以下命令修改截图保存的类型，例如你想保存 JPG 格式的截图：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>efaults write com.apple.screencapture type jpg &amp;&amp; killall SystemUIServe
+</code></pre></div></div>
+
+<h2 id="显示隐藏文件夹">显示隐藏文件夹</h2>
+
+<p>在 Windows 上隐藏文件夹大家应该都是老手了，转到 Mac 后，却发现隐藏文件夹和自己想象有那么一些不一样。为了更好的把大家的「小秘密」藏到内心最深处的地方，也可以使用两段命令来完成操作。跟前文一样，我们需要获取文件夹的路径，然后在终端中输入以下代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chflags hidden ~/Desktop/Hidden
+</code></pre></div></div>
+
+<p>你也可以使用 <code class="language-plaintext highlighter-rouge">nohidden</code> 重新让该文件夹显示。如果你要显示全部文件，推荐大家直接使用快捷键「Shift + Command + .」即可显示全部隐藏文件。
+<img src="https://cdn.sspai.com/2017/11/09/52ea8991101b5a04c7f5d3a59aea7731.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="" />
+除此之外，如果你觉得自己桌面太乱了，但是这会又有人来看你的电脑，你可以使用一段命令行将桌面的文件全部隐藏起来，让桌面回归清爽，文件也依旧可以通过 Finder 中的桌面中找到：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.finder CreateDesktop -bool false; killall Finder
+</code></pre></div></div>
+
+<p>如果想重新看到桌面的图标，将 false 替换为 true 输入终端即可。</p>
+
+<h2 id="dock-栏属性修改">Dock 栏属性修改</h2>
+
+<p>Mac 中为了获得更大的可视空间，在不使用 Dock 时我们可以隐藏它。若要查看隐藏的 Dock，可以将指针移到 Dock 所在屏幕的边缘。但是这个显示速度存在了一定的延迟，为了加速这个过程，我们可以使用一段命令行，让你的隐藏 Dock 弹出的时候更加的顺滑流畅：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults write com.apple.Dock autohide-delay -float 0 &amp;&amp; killall Dock
+</code></pre></div></div>
+
+<p>使用后的效果，可以说是非常明显了，再也不会有在「挤牙膏」的感觉。
+<img src="https://cdn.sspai.com/2017/11/09/938e520e64d816a59123861e24efda34.gif?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="" />
+如果在你的使用下，Dock 栏上摆满了各类 App，却发现这不是自己想要的结果。你可以通过终端来重置你的 Dock 栏，让它回到最开始的状态：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defaults delete com.apple.dock; killall Dock
+</code></pre></div></div>
+
+<h2 id="让屏幕亮的更久">让屏幕亮的更久</h2>
+
+<p>Mac 在运行一段时间后，会自动进入睡眠。如果大家不想 Mac 那么快的进入书面，可以采用一些第三方软件来达到此目的。其实与其下载一个软件占用 Mac 上精贵的储存，不如使用一段命令行就可以解决这些问题了。下方命令行中的 3600 单位是秒，即你希望多长时间内你的 Mac 不会进入睡眠：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>caffeinate -t 3600
+</code></pre></div></div>
+
+<h2 id="应用安装与更新">应用安装与更新</h2>
+
+<p>MAS 的连接情况大家也很清楚，时常会因为情绪不稳定导致你无法获得最完美的下载体验，况且还有很多应用并不在商店上架，或是非商店版本有更多的功能。原来的时候，我们需要查找一个又一个的官网，然后下载安装，其实这么多繁琐操作，在终端里可以更快的完成。你只需要输入：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew cask install App
+</code></pre></div></div>
+
+<p>将 App 替换为你需要安装的软件的名字即可。但是使用前，需要你在电脑中安装 Homebrew Cask ，具体可以参考《<a href="https://sspai.com/post/40321">再谈 Homebrew Cask 在 macOS 上安装应用的轻松感</a>》。大多数通过 Cask 安装的软件都自带更新选项，如果没有该选项，用户依旧可以通过终端进行更新，在终端中输入<code class="language-plaintext highlighter-rouge">brew tap buo/cask-upgrade</code>，然后再输入下段命令即可更新全部应用：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew cu
+</code></pre></div></div>
+
+<p><img src="https://cdn.sspai.com/2017/11/10/0a289482f9790f047468edf2d0c89996.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1" alt="" />
+如果你希望安装 MAS 上的应用，也可以绕过原生的商店应用，直接采用终端进行安装。你可以先通过刚才安装的 Homebrew 安装一个我们需要的 mas ，即在终端输入：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install mas 
+</code></pre></div></div>
+
+<p>然后，可以在终端中搜索需要的软件，或者直接输入关键字段加上应用的识别码进行安装：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mas install AppID
+</code></pre></div></div>
+
+<h2 id="友情提示-️">友情提示 ⚠️</h2>
+
+<p>终端操作虽然说很快捷，可能你也觉得很高端。但是，在网络上经常会有人拿终端命令开玩笑，比如前面带有 <code class="language-plaintext highlighter-rouge">sudo</code> 或者 <code class="language-plaintext highlighter-rouge">rm -rf</code> 类型字段的，一定要谨慎使用。可能就是这一步操作，电脑就会「爆炸」，也希望大家也不要开这一类玩笑，给大家一个美好的环境！</p>
+
+<p><a href="https://sspai.com/tag/%e6%96%b0%e6%89%8b">新手</a><a href="https://sspai.com/tag/%e6%8a%80%e5%b7%a7">技巧</a><a href="https://sspai.com/tag/macOS">macOS</a></p>
+
+:ET

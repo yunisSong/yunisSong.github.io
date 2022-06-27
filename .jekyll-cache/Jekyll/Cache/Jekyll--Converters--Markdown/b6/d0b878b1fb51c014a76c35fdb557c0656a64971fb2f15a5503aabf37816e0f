@@ -1,0 +1,154 @@
+I"cG<h1 id="nsinvocation如何调用block">NSInvocation如何调用block</h1>
+
+<blockquote>
+  <p>NSInvocation是调用函数的另一种方式，它将调用者，函数名，参数封装到一个对象，然后通过一个invoke函数来执行被调用的函数，其思想就是命令者模式，将请求封装成对象。
+NSMethodSignature 用于描述 method 的类型信息：返回值类型，及每个参数的类型。</p>
+</blockquote>
+
+<h3 id="nsinvocation-简单实用">NSInvocation 简单实用</h3>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">NSMethodSignature</span> <span class="o">*</span><span class="n">signature</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSInvocationTestViewController</span> <span class="nf">instanceMethodSignatureForSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">testInstanceMethodArgument1</span><span class="p">:)];</span>
+<span class="n">NSInvocation</span> <span class="o">*</span><span class="n">invocation</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSInvocation</span> <span class="nf">invocationWithMethodSignature</span><span class="p">:</span><span class="n">signature</span><span class="p">];</span>
+<span class="n">invocation</span><span class="p">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+<span class="n">invocation</span><span class="p">.</span><span class="n">selector</span> <span class="o">=</span> <span class="k">@selector</span><span class="p">(</span><span class="n">testInstanceMethodArgument1</span><span class="o">:</span><span class="p">);</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">argument1</span> <span class="o">=</span> <span class="s">@"string"</span><span class="p">;</span>
+<span class="p">[</span><span class="n">invocation</span> <span class="nf">setArgument</span><span class="p">:</span><span class="o">&amp;</span><span class="n">argument1</span> <span class="nf">atIndex</span><span class="p">:</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">[</span><span class="n">invocation</span> <span class="nf">invoke</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>获取方法签名的方法</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">instanceMethodSignatureForSelector</code></li>
+  <li><code class="language-plaintext highlighter-rouge">methodSignatureForSelector</code></li>
+  <li><code class="language-plaintext highlighter-rouge">signatureWithObjCTypes</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">[xxx methodSignatureForSelector:@select];</code></p>
+
+<p>在 <code class="language-plaintext highlighter-rouge">xxx</code> 的 <code class="language-plaintext highlighter-rouge">isa</code> 指向的地方的方法列表里面找方法；</p>
+
+<p><code class="language-plaintext highlighter-rouge">[xxx instanceMethodSignatureForSelector:@select];</code></p>
+
+<p>直接在 <code class="language-plaintext highlighter-rouge">xxx</code> 的 方法列表里面找方法。</p>
+
+<p><code class="language-plaintext highlighter-rouge">signatureWithObjCTypes</code></p>
+
+<p>根据字符创建签名。</p>
+
+<blockquote>
+  <p>具体规则可以查看苹果的官方文档:<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100%EF%BC%89">Type Encodings</a></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">[invocation setArgument:&amp;argument1 atIndex:2];</code></p>
+
+<p>这里设置参数要从 2 开始，是因为默认方法有两个参数 0: <code class="language-plaintext highlighter-rouge">self</code> ，1: <code class="language-plaintext highlighter-rouge">SEL</code> 。</p>
+
+<p>还有一个点要注意，经常当我们通过 <code class="language-plaintext highlighter-rouge">getReturnValue</code> 获取返回值的时候，容易出现崩溃。</p>
+
+<p>譬如 返回值是 <code class="language-plaintext highlighter-rouge">NSString *</code></p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">NSString</span> <span class="o">*</span><span class="n">returnValue</span><span class="p">;</span>
+ <span class="n">NSLog</span><span class="p">(</span><span class="s">@"1 returnValue == %@"</span><span class="p">,</span><span class="n">returnValue</span><span class="p">);</span>
+ <span class="p">[</span><span class="n">invocation</span> <span class="nf">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">returnValue</span><span class="p">];</span>
+ <span class="n">NSLog</span><span class="p">(</span><span class="s">@"2 returnValue == %@"</span><span class="p">,</span><span class="n">returnValue</span><span class="p">);</span>
+ <span class="n">NSLog</span><span class="p">(</span><span class="s">@"returnValue %p"</span><span class="p">,</span><span class="n">returnValue</span><span class="p">);</span>
+ 
+ <span class="o">---</span>
+ <span class="o">***</span> <span class="o">-</span><span class="p">[</span><span class="n">CFString</span> <span class="nf">release</span><span class="p">]</span><span class="o">:</span> <span class="n">message</span> <span class="n">sent</span> <span class="n">to</span> <span class="n">deallocated</span> <span class="n">instance</span> <span class="mh">0x60000025db30</span>
+</code></pre></div></div>
+
+<p>这是因为 <code class="language-plaintext highlighter-rouge">getReturnValue</code> 接收的参数为 <code class="language-plaintext highlighter-rouge">void *</code> 类型，在 <code class="language-plaintext highlighter-rouge">ARC</code> 模式下，强转类型导致了内存管理的混乱。下面这张写法就不会有问题。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">returnValue</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@"1 returnValue == %@"</span><span class="p">,</span><span class="n">returnValue</span><span class="p">);</span>
+<span class="p">[</span><span class="n">invocation</span> <span class="nf">getReturnValue</span><span class="p">:</span><span class="o">&amp;</span><span class="n">returnValue</span><span class="p">];</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@"2 returnValue == %@"</span><span class="p">,</span><span class="n">returnValue</span><span class="p">);</span>
+<span class="n">NSString</span> <span class="o">*</span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">__bridge</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)(</span><span class="n">returnValue</span><span class="p">);</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@"t %p"</span><span class="p">,</span><span class="n">t</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="nsinvocation-如何调用-block">NSInvocation 如何调用 block</h3>
+<h4 id="如何获取一个-block-的方法签名">如何获取一个 block 的方法签名</h4>
+<blockquote>
+  <p>这一段来自于 <a href="https://triplecc.github.io/2017/07/28/2017-07-28-blockhe-nsmethodsignature/">用 Block 实现委托方法</a></p>
+</blockquote>
+
+<p>通过种种渠道我们可以得知 block，最终的结果是一个结构体。形式如下</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Block internals.</span>
+<span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">TBVBlockFlags</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">TBVBlockFlagsHasCopyDisposeHelpers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">25</span><span class="p">),</span>
+    <span class="n">TBVBlockFlagsHasSignature</span>          <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span><span class="p">)</span>
+<span class="p">};</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">tbv_block</span> <span class="p">{</span>
+    <span class="n">__unused</span> <span class="n">Class</span> <span class="n">isa</span><span class="p">;</span>
+    <span class="n">TBVBlockFlags</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="n">__unused</span> <span class="kt">int</span> <span class="n">reserved</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="n">__unused</span> <span class="o">*</span><span class="n">invoke</span><span class="p">)(</span><span class="k">struct</span> <span class="n">tbv_block</span> <span class="o">*</span><span class="n">block</span><span class="p">,</span> <span class="p">...);</span>
+    <span class="k">struct</span> <span class="p">{</span>
+        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span> <span class="n">reserved</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+        <span class="c1">// requires TBVBlockFlagsHasCopyDisposeHelpers</span>
+        <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">copy</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">src</span><span class="p">);</span>
+        <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">dispose</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
+        <span class="c1">// requires TBVBlockFlagsHasSignature</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">signature</span><span class="p">;</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">layout</span><span class="p">;</span>
+    <span class="p">}</span> <span class="o">*</span><span class="n">descriptor</span><span class="p">;</span>
+    <span class="c1">// imported variables</span>
+<span class="p">}</span> <span class="o">*</span><span class="n">TBVBlockRef</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>方法的签名就位于 <code class="language-plaintext highlighter-rouge">TBVBlockRef</code> -&gt; <code class="language-plaintext highlighter-rouge">descriptor</code> -&gt; <code class="language-plaintext highlighter-rouge">signature</code> 这个位置。
+获取的方法：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">NSMethodSignature</span> <span class="o">*</span><span class="nf">tbv_signatureForBlock</span><span class="p">(</span><span class="n">id</span> <span class="n">block</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">TBVBlockRef</span> <span class="n">layout</span> <span class="o">=</span> <span class="p">(</span><span class="n">__bridge</span> <span class="n">TBVBlockRef</span><span class="p">)(</span><span class="n">block</span><span class="p">);</span>
+    
+    <span class="c1">// 没有签名，直接返回空</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">layout</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">TBVBlockFlagsHasSignature</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 获取 descriptor 指针</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">desc</span> <span class="o">=</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">descriptor</span><span class="p">;</span>
+    
+    <span class="c1">// 跳过 reserved 和 size 成员</span>
+    <span class="n">desc</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span><span class="p">);</span>
+    
+    <span class="c1">// 如果有 Helpers 函数， 跳过 copy 和 dispose 成员</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">layout</span><span class="o">-&gt;</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="n">TBVBlockFlagsHasCopyDisposeHelpers</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">desc</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// desc 为 signature 指针的地址，转换下给 objcTypes</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">objcTypes</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="n">desc</span><span class="p">);</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">NSMethodSignature</span> <span class="nf">signatureWithObjCTypes</span><span class="p">:</span><span class="n">objcTypes</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>对比了发现和 Aspects 里面获取 block 签名的方法一致。</p>
+
+<h4 id="如何为-block-设置参数">如何为 block 设置参数</h4>
+
+<p><code class="language-plaintext highlighter-rouge">block</code> 的签名不像 <code class="language-plaintext highlighter-rouge">select</code>， 第一个参数是返回类型，第二个参数才是真正的参数，并不像 <code class="language-plaintext highlighter-rouge">select</code> 第二个参数是 <code class="language-plaintext highlighter-rouge">:</code> 代表 <code class="language-plaintext highlighter-rouge">SEL</code>.</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">methodSignature</span><span class="p">.</span><span class="n">numberOfArguments</span><span class="p">;</span> <span class="n">idx</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        
+        <span class="c1">// 获取参数类型</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">type</span> <span class="o">=</span> <span class="p">[</span><span class="n">methodSignature</span> <span class="nf">getArgumentTypeAtIndex</span><span class="p">:</span><span class="n">idx</span><span class="p">];</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"----%s"</span><span class="p">,</span><span class="n">type</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">([[</span><span class="n">NSString</span> <span class="nf">stringWithUTF8String</span><span class="p">:</span><span class="n">type</span><span class="p">]</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"\@</span><span class="se">\"</span><span class="s">NSString</span><span class="se">\"</span><span class="s">"</span><span class="p">]</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSString</span> <span class="o">*</span><span class="n">argument1</span> <span class="o">=</span> <span class="s">@"----123---"</span><span class="p">;</span>
+            <span class="p">[</span><span class="n">blockInvocation</span> <span class="nf">setArgument</span><span class="p">:</span><span class="o">&amp;</span><span class="n">argument1</span> <span class="nf">atIndex</span><span class="p">:</span><span class="n">idx</span><span class="p">];</span>
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="p">([[</span><span class="n">NSString</span> <span class="nf">stringWithUTF8String</span><span class="p">:</span><span class="n">type</span><span class="p">]</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"#"</span><span class="p">]</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Class</span> <span class="n">cls</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSet</span> <span class="nf">class</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">blockInvocation</span> <span class="nf">setArgument</span><span class="p">:</span><span class="o">&amp;</span><span class="n">cls</span> <span class="nf">atIndex</span><span class="p">:</span><span class="n">idx</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+:ET

@@ -1,0 +1,626 @@
+I"#�<h1 id="python编程快速上手--让繁琐工作自动化">Python编程快速上手 — 让繁琐工作自动化</h1>
+<h3 id="基础概念">基础概念</h3>
+<h4 id="导入模块">导入模块</h4>
+
+<pre><code class="language-Python">import string
+import random,sys,os
+
+
+</code></pre>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from random import *
+</code></pre></div></div>
+<p>使用这种形式的 import 语句，调用 random 模块中的函数时不需要 random.前缀。 但是，使用完整的名称会让代码更可读，所以最好是使用普通形式的 import 语句。</p>
+
+<h4 id="声明函数">声明函数</h4>
+<h5 id="不带参数">不带参数</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Hello</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"----hello world.----"</span><span class="p">)</span>
+
+<span class="n">Hello</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h5 id="带有参数">带有参数</h5>
+<blockquote>
+  <p>输出中文需要在开头加入<code class="language-plaintext highlighter-rouge"># -*- coding: UTF-8 -*-</code> 或者 <code class="language-plaintext highlighter-rouge">#coding=utf-8</code></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"----hello world.----"</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="n">Hello</span><span class="p">(</span><span class="s">"Yunis"</span><span class="p">)</span>
+<span class="n">Hello</span><span class="p">(</span><span class="s">"三十一"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="带有多个参数">带有多个参数</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Hello</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span> <span class="n">name</span> <span class="o">+</span> <span class="s">" is "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="o">+</span> <span class="s">" years old this year"</span><span class="p">)</span>
+
+<span class="n">Hello</span><span class="p">(</span><span class="s">"Yunis"</span><span class="p">,</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">Hello</span><span class="p">(</span><span class="s">"三十一"</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="关键字参数-和-print">关键字参数 和 <code class="language-plaintext highlighter-rouge">print()</code></h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">print</span><span class="p">(</span><span class="s">'Hello'</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'World'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>输出为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello 
+World
+</code></pre></div></div>
+
+<p>这是因为 <code class="language-plaintext highlighter-rouge">print()</code>函数自动在传入的字符串末尾 添加了换行符。
+可以通过 end 关键字参数，设置这个末尾。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print('Hello', end='')
+print('World')
+</code></pre></div></div>
+
+<p>输出为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HelloWorld
+</code></pre></div></div>
+
+<p>类似地，如果向 print()传入多个字符串值,该函数就会自动用一个空格分隔它们。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('cats', 'dogs', 'mice') 
+&gt;&gt;&gt; cats dogs mice
+</code></pre></div></div>
+
+<p>可以传入 <code class="language-plaintext highlighter-rouge">sep</code> 关键字参数，替换掉默认的分隔字符.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; print('cats', 'dogs', 'mice', sep=',')
+&gt;&gt;&gt; cats,dogs,mice
+</code></pre></div></div>
+
+<h4 id="作用域">作用域</h4>
+
+<ul>
+  <li>全局作用域中的代码不能使用任何局部变量;</li>
+  <li>但是，局部作用域可以访问全局变量;</li>
+  <li>一个函数的局部作用域中的代码，不能使用其他局部作用域中的变量。
+  ⁃	* 如果在不同的作用域中，你可以用相同的名字命名不同的变量。也就是说，可以有一个名为 spam 的局部变量，和一个名为 spam 的全局变量。</li>
+</ul>
+
+<p>如果需要在一个函数内修改全局变量，就使用 global 语句。</p>
+
+<pre><code class="language-Python">def spam():
+    global eggs
+    eggs = 'spam'
+      
+eggs = 'global'
+spam()
+print(eggs)//spam
+</code></pre>
+
+<ol>
+  <li>如果变量在全局作用域中使用(即在所有函数之外)，它就总是全局变量。</li>
+  <li>如果在一个函数中，有针对该变量的 global 语句，它就是全局变量。</li>
+  <li>否则，如果该变量用于函数中的赋值语句，它就是局部变量。</li>
+  <li>但是，如果该变量没有用在赋值语句中，它就是全局变量。</li>
+</ol>
+
+<h4 id="异常处理">异常处理</h4>
+<p>错误可以由 try 和 except 语句来处理。那些可能出错的语句被放在 try 子句中。 如果错误发生，程序执行就转到接下来的 except 子句开始处。</p>
+
+<pre><code class="language-Python">def spam(divideBy):
+    try:
+        return 42 / divideBy 
+    except ZeroDivisionError:
+        print('Error: Invalid argument.')
+        
+print(spam(2))
+print(spam(12))
+print(spam(1))
+
+#Error: Invalid argument. 
+#None
+print(spam(0))
+</code></pre>
+
+<h4 id="列表">列表</h4>
+
+<h5 id="下标取值">下标取值</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spam</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'bat'</span><span class="p">,</span><span class="s">'dog'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">#cat
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#dog
+</span></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>cat</th>
+      <th>bat</th>
+      <th>dog</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>正向</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>负向</td>
+      <td>-3</td>
+      <td>-2</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="切片获取子列表">切片获取子列表</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spam</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'bat'</span><span class="p">,</span><span class="s">'dog'</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">#['cat', 'bat']
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#['cat', 'bat']
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">#['cat']
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>   <span class="c1">#['cat']
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>  <span class="c1">#['cat', 'bat']
+</span><span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>  <span class="c1">#['cat', 'bat', 'dog']
+</span></code></pre></div></div>
+
+<h5 id="列表链接复制">列表链接、复制</h5>
+<p><code class="language-plaintext highlighter-rouge">+</code> 操作符可以连接两个列表，得到一个新列表。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spam</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'bat'</span><span class="p">,</span><span class="s">'dog'</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">spam</span><span class="p">)</span>  <span class="c1">#['cat', 'bat', 'dog', 1, 2, 3]
+</span></code></pre></div></div>
+<h5 id="多重赋值技巧">多重赋值技巧</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spam</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'bat'</span><span class="p">,</span><span class="s">'dog'</span><span class="p">]</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">spam</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1">#cat
+</span><span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1">#bat
+</span><span class="k">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>  <span class="c1">#dog
+</span></code></pre></div></div>
+
+<h5 id="元组-字符串-列表--转换">元组 、字符串 、列表  转换</h5>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; tuple(['cat', 'dog', 5]) 
+ ('cat', 'dog', 5)
+&gt;&gt;&gt; list(('cat', 'dog', 5)) 
+ ['cat', 'dog', 5]
+&gt;&gt;&gt; list('hello')
+['h', 'e', 'l', 'l', 'o']
+</code></pre></div></div>
+
+<h3 id="自动化任务">自动化任务</h3>
+
+<h4 id="正则表达式">正则表达式</h4>
+<p>Python 中所有正则表达式的函数都在 re 模块中。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">?</code> 匹配0次或者一次</li>
+  <li><code class="language-plaintext highlighter-rouge">*</code> 匹配0次或者多次</li>
+  <li><code class="language-plaintext highlighter-rouge">+</code> 匹配1次或者多次</li>
+  <li>{n}匹配 n 次前面的分组。</li>
+  <li>{n,}匹配 n 次或更多前面的分组。</li>
+  <li>{,m}匹配零次到 m 次前面的分组。</li>
+  <li>{n,m}匹配至少 n 次、至多 m 次前面的分组。</li>
+  <li><code class="language-plaintext highlighter-rouge">{n,m}?</code>或<code class="language-plaintext highlighter-rouge">*?</code>或<code class="language-plaintext highlighter-rouge">+?</code>对前面的分组进行非贪心匹配。</li>
+  <li><code class="language-plaintext highlighter-rouge">^spam</code> 意味着字符串必须以 spam 开始。</li>
+  <li><code class="language-plaintext highlighter-rouge">spam$</code>意味着字符串必须以 spam 结束。</li>
+  <li>.匹配所有字符，换行符除外。</li>
+  <li><code class="language-plaintext highlighter-rouge">\d</code>、<code class="language-plaintext highlighter-rouge">\w</code> 和<code class="language-plaintext highlighter-rouge">\s</code> 分别匹配数字、单词和空格。</li>
+  <li><code class="language-plaintext highlighter-rouge">\D</code>、<code class="language-plaintext highlighter-rouge">\W </code>和<code class="language-plaintext highlighter-rouge">\S</code> 分别匹配出数字、单词和空格外的所有字符。</li>
+  <li><code class="language-plaintext highlighter-rouge">[abc]</code>匹配方括号内的任意字符(诸如 a、b 或 c)。</li>
+  <li><code class="language-plaintext highlighter-rouge">[^abc]</code>匹配不在方括号内的任意字符。
+    <h5 id="用-sub方法替换字符串">用 <code class="language-plaintext highlighter-rouge">sub()</code>方法替换字符串</h5>
+  </li>
+</ul>
+
+<pre><code class="language-Python">&gt;&gt;&gt; namesRegex = re.compile(r'Agent \w+')
+&gt;&gt;&gt; namesRegex.sub('CENSORED', 'Agent Alice gave the secret documents to Agent Bob.') 
+
+'CENSORED gave the secret documents to CENSORED.'
+</code></pre>
+
+<p>有时候，你可能需要使用匹配的文本本身，作为替换的一部分。在 sub()的第一 个参数中，可以输入\1、\2、\3……。表示“在替换中输入分组 1、2、3……的文本”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; agentNamesRegex = re.compile(r'Agent (\w)\w*')
+&gt;&gt;&gt; agentNamesRegex.sub(r'\1****', 'Agent Alice told Agent Carol that Agent Eve knew Agent Bob was a double agent.')
+
+A**** told C**** that E**** knew B**** was a double agent.'
+</code></pre></div></div>
+
+<h4 id="读写文件">读写文件</h4>
+<h5 id="文件及文件路径">文件及文件路径</h5>
+<ul>
+  <li>相对路径：相对于程序的当前工作目录。</li>
+  <li>绝对路径：总是从根文件开始。</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">os.makedirs()</code> 创建文件夹</p>
+
+<ul>
+  <li>调用 os.path.abspath(path)将返回参数的绝对路径的字符串。这是将相对路径转 换为绝对路径的简便方法。</li>
+  <li>调用 os.path.isabs(path)，如果参数是一个绝对路径，就返回 True，如果参数是 一个相对路径，就返回 False。</li>
+  <li>调用 os.path.relpath(path, start)将返回从 start 路径到 path 的相对路径的字符串。 如果没有提供 start，就使用当前工作目录作为开始路径。</li>
+  <li>调用 os.path.getsize(path)将返回 path 参数中文件的字节数。</li>
+  <li>调用 os.listdir(path)将返回文件名字符串的列表，包含 path 参数中的每个文件 (请注意，这个函数在 os 模块中，而不是 os.path)。</li>
+  <li>检查路径有效性
+    <ul>
+      <li>如果 path 参数所指的文件或文件夹存在，调用 os.path.exists(path)将返回 True， 否则返回 False</li>
+      <li>如果 path 参数存在，并且是一个文件，调用 os.path.isfile(path)将返回 True，否 则返回 False</li>
+      <li>如果 path 参数存在，并且是一个文件夹，调用 os.path.isdir(path)将返回 True， 否则返回 False。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>===
+在 Python 中，读写文件有 3 个步骤:</p>
+
+<ol>
+  <li>调用 <code class="language-plaintext highlighter-rouge">open()</code> 函数，返回一个 File 对象。</li>
+  <li>调用 File 对象的 <code class="language-plaintext highlighter-rouge">read()</code>或 <code class="language-plaintext highlighter-rouge">write()</code>方法。</li>
+  <li>调用 File 对象的<code class="language-plaintext highlighter-rouge"> close()</code>方法，关闭该文件。</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helloFile = open('/Users/your_home_folder/hello.txt')
+
+读文件
+helloContent = helloFile.read()
+
+写文件
+baconFile = open('bacon.txt', 'w')
+baconFile.write('Hello world!\n')
+baconFile.close()
+
+
+
+
+</code></pre></div></div>
+
+<h4 id="项目-生成随机试卷及答案">项目： 生成随机试卷及答案</h4>
+
+<ol>
+  <li>创建35个试卷文件及对应的答案文件。</li>
+  <li>为每一个试卷随机生成50道题目，次序随机。</li>
+  <li>为每一个问题提供一个正确答案和三个错误答案，次序随机。</li>
+  <li>将测试题目写入试卷文件，将对应的答案写入相应的答案文件中。</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># 进入工作目录
+</span><span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python/random'</span><span class="p">)</span>
+<span class="c1"># 打印当前工作目录
+</span><span class="k">print</span><span class="p">(</span><span class="s">"当前工作目录为 %s"</span><span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()))</span>
+
+<span class="c1"># 首都以及首都集合字典 习题集及答案
+</span><span class="n">capitals</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Alabama'</span><span class="p">:</span> <span class="s">'Montgomery'</span><span class="p">,</span> <span class="s">'Alaska'</span><span class="p">:</span> <span class="s">'Juneau'</span><span class="p">,</span> <span class="s">'Arizona'</span><span class="p">:</span> <span class="s">'Phoenix'</span><span class="p">,</span><span class="s">'Arkansas'</span><span class="p">:</span> <span class="s">'Little Rock'</span><span class="p">,</span> <span class="s">'California'</span><span class="p">:</span> <span class="s">'Sacramento'</span><span class="p">,</span> <span class="s">'Colorado'</span><span class="p">:</span> <span class="s">'Denver'</span><span class="p">,</span> <span class="s">'Connecticut'</span><span class="p">:</span> <span class="s">'Hartford'</span><span class="p">,</span> <span class="s">'Delaware'</span><span class="p">:</span> <span class="s">'Dover'</span><span class="p">,</span> <span class="s">'Florida'</span><span class="p">:</span> <span class="s">'Tallahassee'</span><span class="p">,</span> <span class="s">'Georgia'</span><span class="p">:</span> <span class="s">'Atlanta'</span><span class="p">,</span> <span class="s">'Hawaii'</span><span class="p">:</span> <span class="s">'Honolulu'</span><span class="p">,</span> <span class="s">'Idaho'</span><span class="p">:</span> <span class="s">'Boise'</span><span class="p">,</span> <span class="s">'Illinois'</span><span class="p">:</span> <span class="s">'Springfield'</span><span class="p">,</span> <span class="s">'Indiana'</span><span class="p">:</span> <span class="s">'Indianapolis'</span><span class="p">,</span> <span class="s">'Iowa'</span><span class="p">:</span> <span class="s">'Des Moines'</span><span class="p">,</span> <span class="s">'Kansas'</span><span class="p">:</span> <span class="s">'Topeka'</span><span class="p">,</span> <span class="s">'Kentucky'</span><span class="p">:</span> <span class="s">'Frankfort'</span><span class="p">,</span> <span class="s">'Louisiana'</span><span class="p">:</span> <span class="s">'Baton Rouge'</span><span class="p">,</span> <span class="s">'Maine'</span><span class="p">:</span> <span class="s">'Augusta'</span><span class="p">,</span> <span class="s">'Maryland'</span><span class="p">:</span> <span class="s">'Annapolis'</span><span class="p">,</span> <span class="s">'Massachusetts'</span><span class="p">:</span> <span class="s">'Boston'</span><span class="p">,</span> <span class="s">'Michigan'</span><span class="p">:</span> <span class="s">'Lansing'</span><span class="p">,</span> <span class="s">'Minnesota'</span><span class="p">:</span> <span class="s">'Saint Paul'</span><span class="p">,</span> <span class="s">'Mississippi'</span><span class="p">:</span> <span class="s">'Jackson'</span><span class="p">,</span> <span class="s">'Missouri'</span><span class="p">:</span> <span class="s">'Jefferson City'</span><span class="p">,</span> <span class="s">'Montana'</span><span class="p">:</span> <span class="s">'Helena'</span><span class="p">,</span> <span class="s">'Nebraska'</span><span class="p">:</span> <span class="s">'Lincoln'</span><span class="p">,</span> <span class="s">'Nevada'</span><span class="p">:</span> <span class="s">'Carson City'</span><span class="p">,</span> <span class="s">'New Hampshire'</span><span class="p">:</span> <span class="s">'Concord'</span><span class="p">,</span> <span class="s">'New Jersey'</span><span class="p">:</span> <span class="s">'Trenton'</span><span class="p">,</span> <span class="s">'New Mexico'</span><span class="p">:</span> <span class="s">'Santa Fe'</span><span class="p">,</span> <span class="s">'New York'</span><span class="p">:</span> <span class="s">'Albany'</span><span class="p">,</span> <span class="s">'North Carolina'</span><span class="p">:</span> <span class="s">'Raleigh'</span><span class="p">,</span>
+<span class="s">'North Dakota'</span><span class="p">:</span> <span class="s">'Bismarck'</span><span class="p">,</span> <span class="s">'Ohio'</span><span class="p">:</span> <span class="s">'Columbus'</span><span class="p">,</span> <span class="s">'Oklahoma'</span><span class="p">:</span> <span class="s">'Oklahoma City'</span><span class="p">,</span> <span class="s">'Oregon'</span><span class="p">:</span> <span class="s">'Salem'</span><span class="p">,</span> <span class="s">'Pennsylvania'</span><span class="p">:</span> <span class="s">'Harrisburg'</span><span class="p">,</span> <span class="s">'Rhode Island'</span><span class="p">:</span> <span class="s">'Providence'</span><span class="p">,</span> <span class="s">'South Carolina'</span><span class="p">:</span> <span class="s">'Columbia'</span><span class="p">,</span> <span class="s">'South Dakota'</span><span class="p">:</span> <span class="s">'Pierre'</span><span class="p">,</span> <span class="s">'Tennessee'</span><span class="p">:</span> <span class="s">'Nashville'</span><span class="p">,</span> <span class="s">'Texas'</span><span class="p">:</span> <span class="s">'Austin'</span><span class="p">,</span> <span class="s">'Utah'</span><span class="p">:</span> <span class="s">'Salt Lake City'</span><span class="p">,</span> <span class="s">'Vermont'</span><span class="p">:</span> <span class="s">'Montpelier'</span><span class="p">,</span> <span class="s">'Virginia'</span><span class="p">:</span> <span class="s">'Richmond'</span><span class="p">,</span> <span class="s">'Washington'</span><span class="p">:</span> <span class="s">'Olympia'</span><span class="p">,</span> <span class="s">'West Virginia'</span><span class="p">:</span> <span class="s">'Charleston'</span><span class="p">,</span> <span class="s">'Wisconsin'</span><span class="p">:</span> <span class="s">'Madison'</span><span class="p">,</span> <span class="s">'Wyoming'</span><span class="p">:</span> <span class="s">'Cheyenne'</span><span class="p">}</span>
+
+<span class="c1"># 循环35次 因为要出35分试卷
+</span><span class="k">for</span> <span class="n">quizNum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">):</span>
+    <span class="n">quizFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'capitalsquiz%s.txt'</span> <span class="o">%</span> <span class="p">(</span><span class="n">quizNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s">'w'</span><span class="p">)</span>
+    <span class="n">answerKeyFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'capitalsquiz_answers%s.txt'</span> <span class="o">%</span> <span class="p">(</span><span class="n">quizNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s">'w'</span><span class="p">)</span>
+    <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Name:</span><span class="se">\n\n</span><span class="s">Date:</span><span class="se">\n\n</span><span class="s">Period:</span><span class="se">\n\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="s">' '</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span> <span class="o">+</span> <span class="s">'State Capitals Quiz (Form %s)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">quizNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="c1"># 获取字典 keys
+</span>    <span class="n">states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">capitals</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="c1"># 用于将一个列表中的元素打乱。
+</span>    <span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+
+    <span class="c1"># 每份试卷有50道题目
+</span>    <span class="k">for</span> <span class="n">questionNum</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="c1"># Get right and wrong answers.
+</span>        <span class="n">correctAnswer</span> <span class="o">=</span> <span class="n">capitals</span><span class="p">[</span><span class="n">states</span><span class="p">[</span><span class="n">questionNum</span><span class="p">]]</span>
+        <span class="c1"># 获取答案列表
+</span>        <span class="n">wrongAnswers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">capitals</span><span class="p">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="c1"># 删除正确的答案选项
+</span>        <span class="k">del</span> <span class="n">wrongAnswers</span><span class="p">[</span><span class="n">wrongAnswers</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="n">correctAnswer</span><span class="p">)]</span>
+        <span class="c1"># 从错误的答案选项随机选出3个错误的答案
+</span>        <span class="n">wrongAnswers</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">wrongAnswers</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># 给当前题目设置答案集合
+</span>        <span class="n">answerOptions</span> <span class="o">=</span> <span class="n">wrongAnswers</span> <span class="o">+</span> <span class="p">[</span><span class="n">correctAnswer</span><span class="p">]</span>
+        <span class="c1"># 打乱 答案顺序
+</span>        <span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">answerOptions</span><span class="p">)</span>
+        <span class="c1"># 在试卷文件 写入 题号 以及题目
+</span>        <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'%s. What is the capital of %s?</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">questionNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span><span class="n">states</span><span class="p">[</span><span class="n">questionNum</span><span class="p">]))</span>
+        <span class="c1"># 在试卷文件 写入答案选项
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">' %s. %s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="s">'ABCD'</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">answerOptions</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">quizFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+        <span class="c1"># 把正确答案的题号以及正确答案写入答案文件
+</span>        <span class="n">answerKeyFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'%s. %s</span><span class="se">\n</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">questionNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'ABCD'</span><span class="p">[</span>
+        <span class="n">answerOptions</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="n">correctAnswer</span><span class="p">)]))</span>
+
+    <span class="c1"># 关闭试卷文件
+</span>    <span class="n">quizFile</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># 关闭答案文件
+</span>    <span class="n">answerKeyFile</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<h4 id="项目-多重剪贴板">项目： 多重剪贴板</h4>
+
+<p><code class="language-plaintext highlighter-rouge">.pyw</code> 扩展名意味着 Python 运行该程序时，不会显示终端窗口。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+# mcb.pyw - Saves and loads pieces of text to the clipboard.
+#  Usage: py.exe mcb.pyw save &lt;keyword&gt; - Saves clipboard to keyword.
+#         py.exe mcb.pyw &lt;keyword&gt; - Loads keyword to clipboard.
+#         py.exe mcb.pyw list - Loads all keywords to clipboard.
+</span><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
+<span class="c1"># .pyw 扩展名意味着 Python 运行该程序时，不会显示终端窗口
+</span>
+<span class="c1"># 进入工作目录
+</span><span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python/mcb'</span><span class="p">)</span>
+<span class="c1"># 打印当前工作目录
+</span><span class="k">print</span><span class="p">(</span><span class="s">"当前工作目录为 %s"</span><span class="o">%</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">()))</span>
+
+<span class="c1"># shelve是一额简单的数据存储方案，他只有一个函数就是open()，这个函数接收一个参数就是文件名，然后返回一个shelf对象，你可以用他来存储东西，就可以简单的把他当作一个字典，当你存储完毕的时候，就调用close函数来关闭
+</span>
+<span class="c1"># 建立一个存储容器
+</span><span class="n">mcbShelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
+
+<span class="c1"># 判断参数有几个，
+</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="c1"># 判断第2个参数是否为save
+</span>    <span class="k">if</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'save'</span> <span class="p">:</span>
+        <span class="c1"># 把粘贴板的值保存在 mcbShelf
+</span>        <span class="n">mcbShelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
+    <span class="k">elif</span>  <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'del'</span> <span class="p">:</span>
+        <span class="c1"># 删除关键字对应的值
+</span>        <span class="n">mcbShelf</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
+        <span class="c1"># 把容器中保存的key 填充到粘贴板
+</span>        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mcbShelf</span><span class="p">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mcbShelf</span><span class="p">:</span>
+        <span class="c1"># 根据传的参数，把容器中对应key的值取出来放置在粘贴板中
+</span>        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mcbShelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="c1"># 关闭
+</span><span class="n">mcbShelf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+<h4 id="组织文件">组织文件</h4>
+<h5 id="shutil-模块">shutil 模块</h5>
+<ul>
+  <li>shutil.copy(source, destination)
+    <ol>
+      <li>将路径 source 处的文件复制到路径 destination 处的文件夹(source 和 destination 都是字符串)</li>
+      <li>如果 destination 是一个文件名，它将 作为被复制文件的新名字。</li>
+      <li>该函数返回一个字符串，表示被复制文件的路径。</li>
+    </ol>
+  </li>
+  <li>shutil.copytree(source, destination)
+    <ol>
+      <li>将路径source处的文件 夹，包括它的所有文件和子文件夹，复制到路径 destination 处的文件夹。</li>
+      <li>source 和 destination 参数都是字符串。</li>
+      <li>该函数返回一个字符串，是新复制的文件夹的路径。</li>
+    </ol>
+  </li>
+  <li>shutil.move(source, destination)
+    <ol>
+      <li>将路径 source 处的文件夹移动到路径 destination，并返回新位置的绝对路径的字符串。</li>
+      <li>如果 destination 指向一个文件夹，source 文件将移动到 destination 中，并保持 原来的文件名。</li>
+      <li>destination 路径也可以指定一个文件名。source 文件被移动 并改名。</li>
+    </ol>
+  </li>
+  <li>用 os.unlink(path)将删除 path 处的文件。</li>
+  <li>调用 os.rmdir(path)将删除 path 处的文件夹。该文件夹必须为空，其中没有任
+何文件和文件夹。</li>
+  <li>调用 shutil.rmtree(path)将删除 path 处的文件夹，它包含的所有文件和文件夹都会被删除。</li>
+  <li>os.walk()函数 被传入一个字符串值，即一个文件夹的路径。你可以在一个 for 循环语句中使用 os.walk()函数，遍历目录树，就像使用 range()函数遍历一个范围的 数字一样。
+    <ol>
+      <li>当前文件夹名称的字符串。</li>
+      <li>当前文件夹中子文件夹的字符串的列表。</li>
+      <li>当前文件夹中文件的字符串的列表。</li>
+    </ol>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">for</span> <span class="n">folderName</span><span class="p">,</span> <span class="n">subfolders</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python'</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'The current folder is '</span> <span class="o">+</span> <span class="n">folderName</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">subfolder</span> <span class="ow">in</span> <span class="n">subfolders</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'SUBFOLDER OF '</span> <span class="o">+</span> <span class="n">folderName</span> <span class="o">+</span> <span class="s">': '</span> <span class="o">+</span> <span class="n">subfolder</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'FILE INSIDE '</span> <span class="o">+</span> <span class="n">folderName</span> <span class="o">+</span> <span class="s">': '</span><span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">''</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="zipfile-模块">zipfile 模块</h5>
+
+<h6 id="读取-zip-文件">读取 ZIP 文件</h6>
+
+<pre><code class="language-Python"># -*- coding: UTF-8 -*-
+import os,zipfile
+
+os.chdir('/Users/Yunis/Desktop/学习/Python/zipfile')
+exampleZip = zipfile.ZipFile('t.txt.zip')
+# 获取压缩文件集合
+print(exampleZip.namelist())
+# 获取指定文件信息
+spamInfo = exampleZip.getinfo('t.txt')
+# 文件真实大小
+print(spamInfo.file_size)
+# 文件压缩后的大小
+print(spamInfo.compress_size)
+exampleZip.close()
+</code></pre>
+<h5 id="从-zip-文件中解压缩">从 ZIP 文件中解压缩</h5>
+<ul>
+  <li>extractall()
+    <ul>
+      <li>extractall()方法从 ZIP 文件中解压缩所有文件和文件夹</li>
+      <li>可以向 extractall()传递的一个文件夹名称，它将文件解压缩到那个文件夹，而不是当前工作 目录。</li>
+    </ul>
+  </li>
+  <li>extract()
+    <ul>
+      <li>extract()方法从 ZIP 文件中解压缩单个文件</li>
+      <li>传递给 extract()的字符串，必须匹配 namelist()返回的字符串列表中的一个。</li>
+      <li>extract()传递第二个参数，将文件解压缩到指定的文件夹，而不是当 前工作目录。如果第二个参数指定的文件夹不存在，Python 就会创建它。</li>
+      <li>extract() 的返回值是被压缩后文件的绝对路径。</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">os</span><span class="p">,</span><span class="n">zipfile</span>
+<span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python/zipfile'</span><span class="p">)</span>
+<span class="n">exampleZip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">'t.txt.zip'</span><span class="p">)</span>
+<span class="c1"># 解压缩所用文件和文件夹 'Yunis' 为路径参数，表示解压缩到这个路径，参数为空表示解压缩到当前路径
+# exampleZip.extractall('Yunis')
+# 解压缩 单个't.txt' 文件到 'SSY' 路径下，路径为空解压到当前路径
+</span><span class="n">exampleZip</span><span class="p">.</span><span class="n">extract</span><span class="p">(</span><span class="s">'t.txt'</span><span class="p">,</span><span class="s">'SSY'</span><span class="p">)</span>
+<span class="n">exampleZip</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h5 id="创建和添加到-zip-文件">创建和添加到 ZIP 文件</h5>
+
+<p>要创建你自己的压缩 ZIP 文件，必须以“写模式”打开 ZipFile 对象，即传入’w’ 作为第二个参数(这类似于向 open()函数传入’w’，以写模式打开一个文本文件)。</p>
+
+<p><code class="language-plaintext highlighter-rouge">exampleZip = zipfile.ZipFile('t.txt.zip','w')</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">os</span><span class="p">,</span><span class="n">zipfile</span>
+<span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python/zipfile'</span><span class="p">)</span>
+<span class="c1"># 创建压缩文件
+</span><span class="n">newZip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s">'new.zip'</span><span class="p">,</span><span class="s">'w'</span><span class="p">)</span>
+<span class="c1"># 把 t.txt 文件 写入 压缩文件内 compress_type ：压缩方式
+</span><span class="n">newZip</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'t.txt'</span><span class="p">,</span> <span class="n">compress_type</span><span class="o">=</span><span class="n">zipfile</span><span class="p">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+<span class="n">newZip</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="将带有美国风格日期的文件改名为欧洲风格日期">将带有美国风格日期的文件改名为欧洲风格日期</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">shutil</span><span class="p">,</span><span class="n">os</span><span class="p">,</span><span class="n">re</span>
+
+<span class="k">def</span> <span class="nf">renameDatesInpath</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="c1"># 获取文件路径下的文件集合
+</span>    <span class="c1"># print(path)
+</span>    <span class="c1"># 创建正则表达式
+</span>    <span class="n">datePattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'^(.*?)((0|1)\d)-((0|1|2|3)\d)-((19|20)\d\d)(.*?)$'</span><span class="p">)</span>
+
+    <span class="c1"># 获取文件路径下的文件集合
+</span>    <span class="k">for</span> <span class="n">amerFilename</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="c1"># 正则表达式对象匹配结果
+</span>        <span class="c1"># Regex 对象的 search()方法查找传入的字符串，寻找该正则表达式的所有匹配。如 果字符串中没有找到该正则表达式模式，search()方法将返回 None。如果找到了该模式， search()方法将返回一个 Match 对象。Match 对象有一个 group()方法，它返回被查找字 符串中实际匹配的文本
+</span>        <span class="n">mo</span> <span class="o">=</span> <span class="n">datePattern</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">amerFilename</span><span class="p">)</span>
+        <span class="c1"># 如果这个文件没有匹配，开始匹配下个文件
+</span>        <span class="k">if</span> <span class="n">mo</span> <span class="o">==</span> <span class="bp">None</span> <span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="c1"># re.compile(r'^(.*?)((0|1)\d)-((0|1|2|3)\d)-((19|20)\d\d)(.*?)$')
+</span>        <span class="c1"># group index
+</span>        <span class="c1"># datePattern = re.compile(r'^(1)((2)3)-((4)5)-((6)7)(8)$')
+</span>
+        <span class="c1"># 获取 Match 对象 对应的字符串
+</span>        <span class="n">beforePart</span> <span class="o">=</span> <span class="n">mo</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">monthPart</span> <span class="o">=</span> <span class="n">mo</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">dayPart</span> <span class="o">=</span> <span class="n">mo</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">yearPart</span> <span class="o">=</span> <span class="n">mo</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">afterPart</span> <span class="o">=</span> <span class="n">mo</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="c1"># 组成新的文件名
+</span>        <span class="n">euroFilename</span> <span class="o">=</span> <span class="n">beforePart</span> <span class="o">+</span> <span class="n">dayPart</span> <span class="o">+</span> <span class="s">'-'</span> <span class="o">+</span> <span class="n">monthPart</span> <span class="o">+</span> <span class="s">'-'</span> <span class="o">+</span> <span class="n">yearPart</span> <span class="o">+</span> <span class="n">afterPart</span>
+
+
+        <span class="n">absWorkingDir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">amerFilename</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">absWorkingDir</span><span class="p">,</span> <span class="n">amerFilename</span><span class="p">)</span>
+        <span class="n">euroFilename</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">absWorkingDir</span><span class="p">,</span> <span class="n">euroFilename</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Renaming "%s" to "%s"...'</span> <span class="o">%</span> <span class="p">(</span><span class="n">amerFilename</span><span class="p">,</span> <span class="n">euroFilename</span><span class="p">))</span>
+        <span class="n">shutil</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="n">amerFilename</span><span class="p">,</span> <span class="n">euroFilename</span><span class="p">)</span> <span class="c1"># uncomment after testing
+</span>
+<span class="n">renameDatesInpath</span><span class="p">(</span><span class="s">'/Users/Yunis/Desktop/学习/Python/date'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h4 id="从-web-抓取信息">从 Web 抓取信息</h4>
+
+<p>使用 <code class="language-plaintext highlighter-rouge">requests</code> 下载文件，并保存到硬盘。</p>
+
+<ol>
+  <li>调用 requests.get()下载该文件。</li>
+  <li>用’wb’调用 open()，以写二进制的方式打开一个新文件。</li>
+  <li>利用 Respose 对象的 iter_content()方法做循环。</li>
+  <li>在每次迭代中调用 write()，将内容写入该文件。</li>
+  <li>调用 close()关闭该文件。</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: UTF-8 -*-
+</span><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span><span class="n">os</span><span class="p">,</span><span class="n">sys</span>
+
+<span class="n">currentFilePath</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">webFilePath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">currentFilePath</span><span class="p">,</span> <span class="s">"file"</span><span class="p">)</span>
+<span class="n">os</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">webFilePath</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"http://static.open-open.com/lib/uploadImg/20160623/20160623173015_416.png"</span><span class="p">)</span>
+<span class="n">playFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'python.jpg'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+    <span class="n">playFile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="n">playFile</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<h5 id="用-beautifulsoup-模块解析-html">用 BeautifulSoup 模块解析 HTML</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>传递给 select()方法的选择器</strong></th>
+      <th><strong>将匹配…</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('div')</code></td>
+      <td>所有名为<code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>的元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('#author')</code></td>
+      <td>带有 <code class="language-plaintext highlighter-rouge">id</code> 属性为 <code class="language-plaintext highlighter-rouge">author</code> 的元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('.notice')</code></td>
+      <td>所有使用 <code class="language-plaintext highlighter-rouge">CSS class</code> 属性名为 <code class="language-plaintext highlighter-rouge">notice</code> 的元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('div span')</code></td>
+      <td>所有在<code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>元素之内的<code class="language-plaintext highlighter-rouge">&lt;span&gt;</code>元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('div &gt; span')</code></td>
+      <td>所有直接在<code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>元素之内的<code class="language-plaintext highlighter-rouge">&lt;span&gt;</code>元素，中间没有其他元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('input[name]')</code></td>
+      <td>所有名为<code class="language-plaintext highlighter-rouge">&lt;input&gt;</code>，并有一个 <code class="language-plaintext highlighter-rouge">name</code> 属性，其值无所谓的元素</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">soup.select('input[type="button"]')</code></td>
+      <td>所有名为<code class="language-plaintext highlighter-rouge">&lt;input&gt;</code>，并有一个 <code class="language-plaintext highlighter-rouge">type</code> 属性，其值为 <code class="language-plaintext highlighter-rouge">button</code> 的元素</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>这段代码将带有 id="author"的元素，从示例 HTML 中找出来
+
+elems = exampleSoup.select('#author')
+</code></pre></div></div>
+
+<h4 id="im-feeling-lucky-百度-查找">“I’m Feeling Lucky” 百度 查找</h4>
+
+<p><a href="https://yunissong.github.io/2017/10/26/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E6%A0%B9%E6%8D%AE%E8%BE%93%E5%85%A5%E5%85%B3%E9%94%AE%E5%AD%97%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B5/">Python小工具-根据输入关键字自动打开百度搜索结果的第一页</a></p>
+
+<h4 id="项目下载所有-xkcd-漫画">项目:下载所有 XKCD 漫画</h4>
+
+<p><a href="https://yunissong.github.io/2017/10/27/Python%E5%B0%8F%E5%B7%A5%E5%85%B7-%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89XKCD%E6%BC%AB%E7%94%BB/">下载所有 XKCD 漫画</a></p>
+
+:ET

@@ -1,0 +1,112 @@
+I"�<h1 id="命令行软件">命令行软件</h1>
+<blockquote>
+  <p><a href="https://segmentfault.com/a/1190000009728316">命令行神器推荐</a>这篇文章总结的很全。</p>
+</blockquote>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mac</code> 下安装命令行软件 使用 <code class="language-plaintext highlighter-rouge">brew install</code>，譬如 安装 <code class="language-plaintext highlighter-rouge">tree</code> ，就是 <code class="language-plaintext highlighter-rouge">brew install tree</code>。</li>
+</ul>
+
+<h4 id="tree"><code class="language-plaintext highlighter-rouge">tree</code></h4>
+
+<p>列出文件层级</p>
+
+<p><img src="/media/15046854241597/shell_tree.jpg" alt="" /></p>
+
+<h4 id="shellcheck"><code class="language-plaintext highlighter-rouge">shellcheck</code></h4>
+
+<p>检查脚本的错误</p>
+
+<p><img src="/media/15046854241597/15046866221935.jpg" alt="" /></p>
+
+<h4 id="thefuck"><code class="language-plaintext highlighter-rouge">thefuck</code></h4>
+<p>安装后，记得替换别名</p>
+
+<p><code class="language-plaintext highlighter-rouge">alias fuck='eval $(thefuck $(fc -ln -1)); history -r'</code></p>
+
+<p><img src="/media/15046854241597/15046870856588.jpg" alt="" /></p>
+
+<h4 id="cloc"><code class="language-plaintext highlighter-rouge">cloc</code></h4>
+
+<p>代码统计神器</p>
+
+<p><img src="/media/15046854241597/15046872073389.jpg" alt="" /></p>
+
+<h4 id="cowsay"><code class="language-plaintext highlighter-rouge">cowsay</code></h4>
+
+<p>额，其实就是个恶趣味，挺有趣的。</p>
+
+<p><img src="/media/15046854241597/15046872820303.jpg" alt="" /></p>
+
+<h4 id="figlet"><code class="language-plaintext highlighter-rouge">figlet</code></h4>
+
+<p>将输入字符转换成艺术字体。
+<code class="language-plaintext highlighter-rouge">figlet "Y u n i s"</code>
+<img src="/media/15046854241597/WX20171023-150731@2x.png" alt="" /></p>
+
+<h4 id="bwm-ng"><code class="language-plaintext highlighter-rouge">bwm-ng</code></h4>
+
+<p>实时网速查看
+<code class="language-plaintext highlighter-rouge">bwm-ng  -d</code>
+<img src="/media/15046854241597/WX20171023-150816@2x.png" alt="" /></p>
+
+<h4 id="htop"><code class="language-plaintext highlighter-rouge">htop</code></h4>
+
+<p>进程管理软件
+<code class="language-plaintext highlighter-rouge">htop</code>
+<img src="/media/15046854241597/WX20171023-150840@2x.png" alt="" /></p>
+
+<h4 id="tldr"><code class="language-plaintext highlighter-rouge">tldr</code></h4>
+<p>命令行文档.
+安装：<code class="language-plaintext highlighter-rouge">sudo npm install -g tldr</code></p>
+<blockquote>
+  <p>我使用 <code class="language-plaintext highlighter-rouge">brew</code> 安装的无法使用。。。</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ tldr cat
+</code></pre></div></div>
+
+<p><img src="/media/15046854241597/WX20171030-162228@2x.png" alt="" /></p>
+
+<h4 id="musicbox"><code class="language-plaintext highlighter-rouge">musicbox</code></h4>
+<p>网易云音乐命令行版本.
+安装：<code class="language-plaintext highlighter-rouge">pip install NetEase-MusicBox</code></p>
+
+<p>使用：<code class="language-plaintext highlighter-rouge">musicbox</code></p>
+
+<p><img src="/media/15046854241597/WX20171030-163038@2x.png" alt="" /></p>
+
+<h4 id="pypinyin"><code class="language-plaintext highlighter-rouge">pypinyin</code></h4>
+
+<p>获取汉字拼音，有时候挺有用的。</p>
+
+<p>安装：<code class="language-plaintext highlighter-rouge">pip install pypinyin</code></p>
+
+<p>使用：<code class="language-plaintext highlighter-rouge">pypinyin</code></p>
+
+<p><img src="/media/15046854241597/WX20171030-163334@2x.png" alt="" /></p>
+
+<h4 id="cheat"><code class="language-plaintext highlighter-rouge">Cheat</code></h4>
+
+<p>命令行文档.
+安装：<code class="language-plaintext highlighter-rouge">pip install Cheat</code>
+使用：<code class="language-plaintext highlighter-rouge">Cheat tree</code></p>
+
+<p><img src="/media/15046854241597/WX20171030-164139@2x.png" alt="" /></p>
+
+<h4 id="lolcat"><code class="language-plaintext highlighter-rouge">lolcat</code></h4>
+
+<p>彩色显示文本.
+安装：<code class="language-plaintext highlighter-rouge">gem install lolcat</code>
+使用：<code class="language-plaintext highlighter-rouge">cowsay "Yunis" | lolcat</code>
+<img src="/media/15046854241597/WX20180107-203506@2x.png" alt="" /></p>
+
+<h4 id="isearch"><code class="language-plaintext highlighter-rouge">iSearch</code></h4>
+
+<p>命令行查单词记单词工具.
+安装：<code class="language-plaintext highlighter-rouge">pip install iSearch</code>
+使用：<code class="language-plaintext highlighter-rouge">s sun</code></p>
+
+<p><img src="/media/15046854241597/iSearch.png" alt="" /></p>
+
+:ET

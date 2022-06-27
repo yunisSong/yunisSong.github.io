@@ -1,0 +1,430 @@
+I"��<h1 id="aspects源码浅析">Aspects源码浅析</h1>
+<p><img src="/media/Aspects/Aspects.png" alt="思维导图" /></p>
+
+<p><a href="https://github.com/steipete/Aspects">Aspects</a> 可以很方便的让我们 hook 要执行的方法，可以很方便的在方法执行前，执行后来执行我们的操作，也可以替换原方法的实现。</p>
+
+<blockquote>
+  <p>Delightful, simple library for aspect oriented programming in Objective-C and Swift.</p>
+</blockquote>
+
+<p>实现原理简单的说就是，通过动态创建子类、动态修改子类方法的实现，将原类的类型指向子类，从而将原来的方法的实现指向了子类的方法实现，可以方便的观察方法的执行情况。跟系统实现 KVO 的原理一样。
+π
+比如 hook A 类的 xxx 方法，实现原理大致就是：</p>
+
+<ol>
+  <li>动态创建类 <code class="language-plaintext highlighter-rouge">A</code> 的子类 <code class="language-plaintext highlighter-rouge">B</code> (<code class="language-plaintext highlighter-rouge">A__Aspects_</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">B</code> 动态添加方法 <code class="language-plaintext highlighter-rouge">aspects_xxx</code> 方法，<code class="language-plaintext highlighter-rouge">aspects_xxx</code> 的实现指向原来的 <code class="language-plaintext highlighter-rouge">xxx</code> 方法</li>
+  <li><code class="language-plaintext highlighter-rouge">B</code> 替换 <code class="language-plaintext highlighter-rouge">forwardInvocation:</code> 实现为 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">B</code> 替换 原有的 <code class="language-plaintext highlighter-rouge">xxx</code> 实现为 <code class="language-plaintext highlighter-rouge">_objc_msgForward</code></li>
+  <li>将 <code class="language-plaintext highlighter-rouge">A</code> 的类型设置为 <code class="language-plaintext highlighter-rouge">B</code> 。</li>
+  <li>当调用 <code class="language-plaintext highlighter-rouge">xxx</code> 时，这个时候回 <code class="language-plaintext highlighter-rouge">A</code> 的类型已经被设置为 <code class="language-plaintext highlighter-rouge">B</code> ，会向 <code class="language-plaintext highlighter-rouge">B</code> 的方法列表里面查找 <code class="language-plaintext highlighter-rouge">xxx</code> 的实现。这个时候 <code class="language-plaintext highlighter-rouge">xxx</code> 在 <code class="language-plaintext highlighter-rouge">B</code> 中已经被替换为 <code class="language-plaintext highlighter-rouge">_objc_msgForward</code>，进入消息转发流程，<code class="language-plaintext highlighter-rouge">forwardInvocation:</code>，<code class="language-plaintext highlighter-rouge">forwardInvocation:</code>的实现被替换为<code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code>。最终会进入 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code> 来处理。</li>
+</ol>
+
+<p>关于消息转发的流程我这边在这里有一个简单的总结：<a href="https://yunissong.github.io/2018/12/25/Objective-C-%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF%E4%B8%8E%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91/">Objective-C 中的消息与消息转发</a></p>
+
+<h3 id="简单使用">简单使用</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Aspects</code> 的 API 封装的非常简洁，对外暴露了两个方法。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectToken</span><span class="o">&gt;</span><span class="p">)</span><span class="nf">aspect_hookSelector</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">selector</span>
+                           <span class="nf">withOptions</span><span class="p">:(</span><span class="n">AspectOptions</span><span class="p">)</span><span class="nv">options</span>
+                            <span class="nf">usingBlock</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">block</span>
+                                 <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+<span class="c1">/// Adds a block of code before/instead/after the current `selector` for a specific instance.</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectToken</span><span class="o">&gt;</span><span class="p">)</span><span class="nf">aspect_hookSelector</span><span class="p">:(</span><span class="n">SEL</span><span class="p">)</span><span class="nv">selector</span>
+                           <span class="nf">withOptions</span><span class="p">:(</span><span class="n">AspectOptions</span><span class="p">)</span><span class="nv">options</span>
+                            <span class="nf">usingBlock</span><span class="p">:(</span><span class="n">id</span><span class="p">)</span><span class="nv">block</span>
+                                 <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p>分别 hook 实例方法和类方法。
+使用起来非常简单</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">[</span><span class="n">testController</span> <span class="nf">aspect_hookSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nf">viewWillDisappear</span><span class="p">:)</span> <span class="n">withOptions</span><span class="o">:</span><span class="mi">0</span> <span class="n">usingBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">AspectInfo</span><span class="o">&gt;</span> <span class="n">info</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">animated</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">UIViewController</span> <span class="o">*</span><span class="n">controller</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span> <span class="nf">instance</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">isBeingDismissed</span> <span class="o">||</span> <span class="n">controller</span><span class="p">.</span><span class="n">isMovingFromParentViewController</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">[[[</span><span class="n">UIAlertView</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithTitle</span><span class="p">:</span><span class="s">@"Popped"</span> <span class="nf">message</span><span class="p">:</span><span class="s">@"Hello from Aspects"</span> <span class="nf">delegate</span><span class="p">:</span><span class="nb">nil</span> <span class="nf">cancelButtonTitle</span><span class="p">:</span><span class="nb">nil</span> <span class="n">otherButtonTitles</span><span class="o">:</span><span class="s">@"Ok"</span><span class="p">,</span> <span class="nb">nil</span><span class="p">]</span> <span class="n">show</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="n">error</span><span class="o">:</span><span class="nb">NULL</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h3 id="源码分析">源码分析</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Aspects</code> hook 方法最终都会进入一个叫做 <code class="language-plaintext highlighter-rouge">aspect_add</code> 的方法。
+<code class="language-plaintext highlighter-rouge">aspect_add</code> 大体做的事情有三件。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">aspect_performLocked</code> 加锁保证线程安全。</li>
+  <li><code class="language-plaintext highlighter-rouge">aspect_isSelectorAllowedAndTrack</code> 判断是否允许 hook</li>
+  <li><code class="language-plaintext highlighter-rouge">aspect_prepareClassAndHookSelector</code> 动态创建原有类的子类和替换原有方法实现来达到 hook 的目的。</li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">aspect_performLocked</code> 就略去不谈，我们主要分析下下面两个方法的实现。</p>
+
+<h3 id="aspect_isselectorallowedandtrack"><code class="language-plaintext highlighter-rouge">aspect_isSelectorAllowedAndTrack</code></h3>
+<h4 id="1-判断-hook-的方法是否为系统方法">1. 判断 hook 的方法是否为系统方法。</h4>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">pred</span><span class="p">;</span>
+    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pred</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">disallowedSelectorList</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSet</span> <span class="nf">setWithObjects</span><span class="p">:</span><span class="s">@"retain"</span><span class="p">,</span> <span class="s">@"release"</span><span class="p">,</span> <span class="s">@"autorelease"</span><span class="p">,</span> <span class="s">@"forwardInvocation:"</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Check against the blacklist.</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">selectorName</span> <span class="o">=</span> <span class="n">NSStringFromSelector</span><span class="p">(</span><span class="n">selector</span><span class="p">);</span>
+    <span class="c1">//判断是否是上面的几个方法，如果是，不跟踪。retain、release 等</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">disallowedSelectorList</span> <span class="nf">containsObject</span><span class="p">:</span><span class="n">selectorName</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">errorDescription</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"Selector %@ is blacklisted."</span><span class="p">,</span> <span class="n">selectorName</span><span class="p">];</span>
+        <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorSelectorBlacklisted</span><span class="p">,</span> <span class="n">errorDescription</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+<p>判断是否是 <code class="language-plaintext highlighter-rouge">@"retain"</code>, <code class="language-plaintext highlighter-rouge">@"release"</code>, <code class="language-plaintext highlighter-rouge">@"autorelease"</code>, <code class="language-plaintext highlighter-rouge">@"forwardInvocation:"</code> 方法，如果是这几个方法，返回 <code class="language-plaintext highlighter-rouge">NO</code> ，不进行 hook。</p>
+
+<h4 id="2-判断-hook-类型">2. 判断 hook 类型。</h4>
+
+<p>通过位运算快速计算出 hook 类型。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">AspectOptions</span> <span class="n">position</span> <span class="o">=</span> <span class="n">options</span><span class="o">&amp;</span><span class="n">AspectPositionFilter</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define AspectPositionFilter 0x07
+</span>
+<span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">AspectOptions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">AspectPositionAfter</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>            <span class="c1">/// Called after the original implementation (default)</span>
+    <span class="n">AspectPositionInstead</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>            <span class="c1">/// Will replace the original implementation.</span>
+    <span class="n">AspectPositionBefore</span>  <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>            <span class="c1">/// Called before the original implementation.</span>
+    
+    <span class="n">AspectOptionAutomaticRemoval</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span> <span class="c1">/// Will remove the hook after the first execution.</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="n">AspectPositionFilter</span> <span class="o">==</span> <span class="mh">0x07</span> <span class="err">转为为二进制位</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0111</span>
+     <span class="n">AspectOptions</span> <span class="err">选项值分别为</span> <span class="mi">0</span><span class="err">、</span><span class="mi">1</span><span class="err">、</span><span class="mi">2</span><span class="err">、</span><span class="mi">8</span><span class="err">，</span>
+     <span class="n">AspectOptionAutomaticRemoval</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>  <span class="err">就是</span><span class="mi">1</span> <span class="err">的二进制左移</span><span class="mi">3</span><span class="err">位</span> <span class="err">变成</span> <span class="mi">8</span>
+
+     <span class="err">这样可以快速的计算出当前选项值。</span>
+     
+     <span class="err">转为二进制</span>
+     <span class="n">AspectPositionAfter</span>            <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+     <span class="n">AspectPositionInstead</span>          <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0001</span>
+     <span class="n">AspectPositionBefore</span>           <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0010</span>
+     <span class="n">AspectOptionAutomaticRemoval</span>   <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mi">1000</span>
+     
+    <span class="err">上面这个几个值</span> <span class="err">分别于</span> <span class="n">AspectPositionFilter</span> <span class="err">进行</span> <span class="o">&amp;</span> <span class="err">位运算后等到值</span>
+     
+     <span class="n">AspectPositionAfter</span>          <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>         <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+     <span class="n">AspectPositionInstead</span>        <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>         <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0001</span>
+     <span class="n">AspectPositionBefore</span>         <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>         <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0010</span>
+     <span class="n">AspectOptionAutomaticRemoval</span> <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>         <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+
+     
+     <span class="k">if</span> <span class="p">(</span><span class="n">aspect</span><span class="p">.</span><span class="n">options</span> <span class="o">&amp;</span> <span class="n">AspectOptionAutomaticRemoval</span><span class="p">)</span> <span class="err">可以计算出</span> <span class="err">这里是为了计算出那些是运行后就移除的。</span>
+     
+     <span class="n">AspectPositionAfter</span>          <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>             <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+     <span class="n">AspectPositionInstead</span>        <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>             <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+     <span class="n">AspectPositionBefore</span>         <span class="o">&amp;</span><span class="n">AspectPositionFilter</span>             <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span>
+     <span class="n">AspectOptionAutomaticRemoval</span> <span class="o">&amp;</span><span class="n">AspectOptionAutomaticRemoval</span>     <span class="mo">0000</span> <span class="mo">0000</span> <span class="mo">0000</span> <span class="mi">1000</span>
+     
+</code></pre></div></div>
+
+<h4 id="3-如果要-hook-dealloc-方法">3. 如果要 hook <code class="language-plaintext highlighter-rouge">dealloc</code> 方法。</h4>
+
+<p>如果要 hook <code class="language-plaintext highlighter-rouge">dealloc</code> 方法，只能在方法执行前 hook。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">if</span> <span class="p">([</span><span class="n">selectorName</span> <span class="nf">isEqualToString</span><span class="p">:</span><span class="s">@"dealloc"</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">position</span> <span class="o">!=</span> <span class="n">AspectPositionBefore</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">errorDesc</span> <span class="o">=</span> <span class="s">@"AspectPositionBefore is the only valid position when hooking dealloc."</span><span class="p">;</span>
+        <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorSelectorDeallocPosition</span><span class="p">,</span> <span class="n">errorDesc</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="4-判断当前类是否相应要-hook-的方法">4. 判断当前类是否相应要 hook 的方法</h4>
+
+<p>判断当前类是否相应要 hook 的方法，如果不响应，返回 <code class="language-plaintext highlighter-rouge">NO</code>。</p>
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">self</span> <span class="nf">respondsToSelector</span><span class="p">:</span><span class="n">selector</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">class</span> <span class="nf">instancesRespondToSelector</span><span class="p">:</span><span class="n">selector</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">errorDesc</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"Unable to find selector -[%@ %@]."</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">class</span><span class="p">),</span> <span class="n">selectorName</span><span class="p">];</span>
+        <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorDoesNotRespondToSelector</span><span class="p">,</span> <span class="n">errorDesc</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="5-判断是否为类对象">5. 判断是否为类对象</h4>
+<p>如果不是类对象，就是实例对象，直接 返回 <code class="language-plaintext highlighter-rouge">YES</code>。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class_isMetaClass</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">self</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     <span class="n">class_isMetaClass</span> <span class="err">判断是不是</span> <span class="n">MetaClass</span>
+     <span class="n">object_getClass</span> <span class="err">当参数传入的是一个实例对象的时候，返回类对象，当参数传入的是一个类对象的时候，返回一个元类对象（</span><span class="n">MetaClass</span><span class="err">）</span>
+     <span class="n">class_isMetaClass</span>
+     <span class="n">Class</span> <span class="n">cla1</span> <span class="o">=</span> <span class="n">object_getClass</span><span class="p">([</span><span class="n">UIView</span> <span class="nf">new</span><span class="p">]);</span>
+     <span class="n">Class</span> <span class="n">cla2</span> <span class="o">=</span> <span class="n">object_getClass</span><span class="p">([</span><span class="n">UIView</span> <span class="nf">class</span><span class="p">]);</span>
+     
+     <span class="n">NSLog</span><span class="p">(</span><span class="s">@" %@ %d"</span><span class="p">,</span><span class="n">cla1</span><span class="p">,</span><span class="n">class_isMetaClass</span><span class="p">(</span><span class="n">cla1</span><span class="p">));</span><span class="c1">//UIView 0</span>
+     <span class="n">NSLog</span><span class="p">(</span><span class="s">@" %@ %d"</span><span class="p">,</span><span class="n">cla2</span><span class="p">,</span><span class="n">class_isMetaClass</span><span class="p">(</span><span class="n">cla2</span><span class="p">));</span><span class="c1">//UIView 1</span>
+     
+     <span class="n">class_isMetaClass</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="err">就是判断</span> <span class="n">self</span> <span class="err">是不是类对象，如果是类对象进入</span> <span class="err">分支，如果是实例对象，返回</span> <span class="nb">YES</span>
+</code></pre></div></div>
+
+<p>如果是类对象，进入分支。</p>
+
+<h4 id="6判断子类是否已经-hook-改方法">6.判断子类是否已经 hook 改方法</h4>
+
+<p>从全局的字典里面取出当前类相关联的 <code class="language-plaintext highlighter-rouge">AspectTracker</code>，判断子类是否已经 hook 过改方法。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">if</span> <span class="p">(</span><span class="n">class_isMetaClass</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">self</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">Class</span> <span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">class</span><span class="p">];</span>
+        <span class="c1">//全局缓存的字典 key是class；value是AspectTracker实例</span>
+        <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">swizzledClassesDict</span> <span class="o">=</span> <span class="n">aspect_getSwizzledClassesDict</span><span class="p">();</span>
+        <span class="n">Class</span> <span class="n">currentClass</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nf">class</span><span class="p">];</span>
+
+        <span class="n">AspectTracker</span> <span class="o">*</span><span class="n">tracker</span> <span class="o">=</span> <span class="n">swizzledClassesDict</span><span class="p">[</span><span class="nf">currentClass</span><span class="p">];</span>
+        <span class="c1">//判断子类是否已经 hook，如果子类已经 hook ，提示子类已经 hook了，返回 NO</span>
+        <span class="k">if</span> <span class="p">([</span><span class="n">tracker</span> <span class="nf">subclassHasHookedSelectorName</span><span class="p">:</span><span class="n">selectorName</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">NSSet</span> <span class="o">*</span><span class="n">subclassTracker</span> <span class="o">=</span> <span class="p">[</span><span class="n">tracker</span> <span class="nf">subclassTrackersHookingSelectorName</span><span class="p">:</span><span class="n">selectorName</span><span class="p">];</span>
+            <span class="n">NSSet</span> <span class="o">*</span><span class="n">subclassNames</span> <span class="o">=</span> <span class="p">[</span><span class="n">subclassTracker</span> <span class="nf">valueForKey</span><span class="p">:</span><span class="s">@"trackedClassName"</span><span class="p">];</span>
+            <span class="n">NSString</span> <span class="o">*</span><span class="n">errorDescription</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"Error: %@ already hooked subclasses: %@. A method can only be hooked once per class hierarchy."</span><span class="p">,</span> <span class="n">selectorName</span><span class="p">,</span> <span class="n">subclassNames</span><span class="p">];</span>
+            <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorSelectorAlreadyHookedInClassHierarchy</span><span class="p">,</span> <span class="n">errorDescription</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+        <span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">subclassHasHookedSelectorName</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">selectorName</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">selectorNamesToSubclassTrackers</span><span class="p">[</span><span class="nf">selectorName</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="7-判断父类是否已经-hook-改方法">7. 判断父类是否已经 hook 改方法</h4>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+    <span class="c1">//获取 AspectTracker</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">swizzledClassesDict</span><span class="p">[</span><span class="nf">currentClass</span><span class="p">];</span>
+    <span class="c1">//判断 AspectTracker 已经 hook 的方法是否包含要 hook 的方法名</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">tracker</span><span class="p">.</span><span class="n">selectorNames</span> <span class="nf">containsObject</span><span class="p">:</span><span class="n">selectorName</span><span class="p">])</span> <span class="p">{</span>
+        <span class="c1">//如果是当前类，返回 YES ，可以对当前类再次进行 hook。</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">klass</span> <span class="o">==</span> <span class="n">currentClass</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Already modified and topmost!</span>
+            <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//不一致的话，返回 NO，报错已经 在 父类 HOOK 过了，保证一个继承链上只能 hook 一个类</span>
+        <span class="n">NSString</span> <span class="o">*</span><span class="n">errorDescription</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"Error: %@ already hooked in %@. A method can only be hooked once per class hierarchy."</span><span class="p">,</span> <span class="n">selectorName</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">(</span><span class="n">currentClass</span><span class="p">)];</span>
+        <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorSelectorAlreadyHookedInClassHierarchy</span><span class="p">,</span> <span class="n">errorDescription</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">currentClass</span> <span class="o">=</span> <span class="n">class_getSuperclass</span><span class="p">(</span><span class="n">currentClass</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>判断继承链上向父类查找是否已经有类 hook 这个方法了。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">Class</span> <span class="n">currentClass</span>      <span class="o">=</span> <span class="n">object_getClass</span><span class="p">([</span><span class="n">UITableViewCell</span> <span class="nf">class</span><span class="p">]);</span>
+ <span class="n">NSLog</span><span class="p">(</span><span class="s">@"currentClass == %@"</span><span class="p">,</span><span class="n">currentClass</span><span class="p">);</span><span class="c1">//UITableViewCell</span>
+ <span class="k">do</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"class_getSuperclass == %@"</span><span class="p">,</span><span class="n">currentClass</span><span class="p">);</span>
+    <span class="c1">//UITableViewCell</span>
+    <span class="c1">//UIView</span>
+    <span class="c1">//UIResponder</span>
+    <span class="c1">//NSObject</span>
+    <span class="c1">//NSObject</span>
+ <span class="p">}</span> <span class="k">while</span> <span class="p">((</span><span class="n">currentClass</span> <span class="o">=</span> <span class="n">class_getSuperclass</span><span class="p">(</span><span class="n">currentClass</span><span class="p">)));</span>
+            
+</code></pre></div></div>
+<p>当已经找到继承链的顶端后，class_getSuperclass 获取的数据为 null ，跳出循环。</p>
+
+<h4 id="8-在当前类的继承链上标识-hook-关系">8. 在当前类的继承链上标识 hook 关系。</h4>
+<p>如果当前类的继承链上都没有 hook 过改方法，在当前类的继承链上标识 hook 关系。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">do</span> <span class="p">{</span>
+        <span class="c1">//从全局缓存的字典中获取 AspectTracker</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="n">swizzledClassesDict</span><span class="p">[</span><span class="nf">currentClass</span><span class="p">];</span>
+        <span class="c1">//如果 AspectTracker 为空</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tracker</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 根据 currentClass 生成 AspectTracker 实例，并缓存在全局的字典里</span>
+            <span class="n">tracker</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AspectTracker</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithTrackedClass</span><span class="p">:</span><span class="n">currentClass</span><span class="p">];</span>
+            <span class="n">swizzledClassesDict</span><span class="p">[(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span><span class="p">)</span><span class="nf">currentClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">tracker</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">subclassTracker</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//如果 subclassTracker 存在 tracker 的根据 selectorName 存储的 set 中，添加subclassTracker</span>
+            <span class="p">[</span><span class="n">tracker</span> <span class="nf">addSubclassTracker</span><span class="p">:</span><span class="n">subclassTracker</span> <span class="nf">hookingSelectorName</span><span class="p">:</span><span class="n">selectorName</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 把 selectorName 放入已经 hook 的集合里面</span>
+            <span class="p">[</span><span class="n">tracker</span><span class="p">.</span><span class="n">selectorNames</span> <span class="nf">addObject</span><span class="p">:</span><span class="n">selectorName</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="c1">// All superclasses get marked as having a subclass that is modified.</span>
+        <span class="n">subclassTracker</span> <span class="o">=</span> <span class="n">tracker</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">while</span> <span class="p">((</span><span class="n">currentClass</span> <span class="o">=</span> <span class="n">class_getSuperclass</span><span class="p">(</span><span class="n">currentClass</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<h3 id="aspect_prepareclassandhookselector"><code class="language-plaintext highlighter-rouge">aspect_prepareClassAndHookSelector</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">aspect_prepareClassAndHookSelector</code> 主要做了三件事情。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">aspect_hookClass</code>  动态的创建 当前类的子类，并交换 <code class="language-plaintext highlighter-rouge">forwardInvocation:</code>、<code class="language-plaintext highlighter-rouge">class</code> 方法的实现</li>
+  <li><code class="language-plaintext highlighter-rouge">aspect_isMsgForwardIMP</code>，判断当前调用的方法是否是 <code class="language-plaintext highlighter-rouge">_objc_msgForward</code> 的实现，如果是，跳过。</li>
+  <li>态的替换原方法的实现 <code class="language-plaintext highlighter-rouge">class_addMethod</code>。<code class="language-plaintext highlighter-rouge">class_replaceMethod</code> 动。</li>
+</ol>
+
+<h4 id="1-aspect_hookclass">1. <code class="language-plaintext highlighter-rouge">aspect_hookClass</code></h4>
+
+<p>动态的创建当前类的子类,并返回创建的子类，并交换 <code class="language-plaintext highlighter-rouge">forwardInvocation</code>、<code class="language-plaintext highlighter-rouge">class</code> 方法的实现。</p>
+
+<h5 id="1-判断是否已经hook过">1. 判断是否已经hook过</h5>
+<p>判断当前类是否已经被 hook 过</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">([</span><span class="n">className</span> <span class="nf">hasSuffix</span><span class="p">:</span><span class="n">AspectsSubclassSuffix</span><span class="p">])</span> <span class="p">{</span>
+</code></pre></div></div>
+<p>如果已经hook 过，直接返回 <code class="language-plaintext highlighter-rouge">object_getClass(self)</code> 获取的类型，也就是动态创建的子类。</p>
+
+<h5 id="2-判断是否是类对象">2. 判断是否是类对象</h5>
+
+<p>如果是类对象，<code class="language-plaintext highlighter-rouge">aspect_swizzleForwardInvocation</code> 替换 <code class="language-plaintext highlighter-rouge">forwardInvocation</code> 的实现为 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code></p>
+
+<h5 id="3-判断当前类名称是否一致">3. 判断当前类名称是否一致</h5>
+<p>如果是<code class="language-plaintext highlighter-rouge"> self.class </code>和 <code class="language-plaintext highlighter-rouge">object_getClass(self)</code> 获取的类型不一致，有可能进行了 KVO 操作，<code class="language-plaintext highlighter-rouge">aspect_swizzleForwardInvocation</code> 替换 <code class="language-plaintext highlighter-rouge">forwardInvocation</code> 的实现为 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code></p>
+<h5 id="4-动态创建当前类的子类">4. 动态创建当前类的子类</h5>
+<p>如果上面的判断都不成立，就是一个实例对象，且没有被KVO。动态创建子类，原有类后面拼接 <code class="language-plaintext highlighter-rouge">AspectsSubclassSuffix</code> 作为新的类名，并且替换子类的 <code class="language-plaintext highlighter-rouge">forwardInvocation:</code> 、<code class="language-plaintext highlighter-rouge">-(Class)class</code>、<code class="language-plaintext highlighter-rouge">+(Class)class</code>方法。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">subclassName</span> <span class="o">=</span> <span class="p">[</span><span class="n">className</span> <span class="nf">stringByAppendingString</span><span class="p">:</span><span class="n">AspectsSubclassSuffix</span><span class="p">].</span><span class="n">UTF8String</span><span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">subclassName</span> <span class="o">=</span> <span class="p">[</span><span class="n">className</span> <span class="nf">stringByAppendingString</span><span class="p">:</span><span class="n">AspectsSubclassSuffix</span><span class="p">].</span><span class="n">UTF8String</span><span class="p">;</span>
+<span class="c1">//创建 subclassName 的类，他的父类为 baseClass（原来的类）</span>
+<span class="n">subclass</span> <span class="o">=</span> <span class="n">objc_allocateClassPair</span><span class="p">(</span><span class="n">baseClass</span><span class="p">,</span> <span class="n">subclassName</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="c1">//如果创建失败，报错。</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">subclass</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">errrorDesc</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"objc_allocateClassPair failed to allocate class %s."</span><span class="p">,</span> <span class="n">subclassName</span><span class="p">];</span>
+    <span class="n">AspectError</span><span class="p">(</span><span class="n">AspectErrorFailedToAllocateClassPair</span><span class="p">,</span> <span class="n">errrorDesc</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//交换子类的 ForwardInvocation 方法</span>
+<span class="n">aspect_swizzleForwardInvocation</span><span class="p">(</span><span class="n">subclass</span><span class="p">);</span>
+<span class="c1">// 交换实例方法 class 方法的实现</span>
+<span class="n">aspect_hookedGetClass</span><span class="p">(</span><span class="n">subclass</span><span class="p">,</span> <span class="n">statedClass</span><span class="p">);</span>
+<span class="c1">// 交换类方法 class 方法的实现</span>
+<span class="n">aspect_hookedGetClass</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">subclass</span><span class="p">),</span> <span class="n">statedClass</span><span class="p">);</span>
+<span class="c1">//注册子类</span>
+<span class="n">objc_registerClassPair</span><span class="p">(</span><span class="n">subclass</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h6 id="aspect_swizzleforwardinvocation"><code class="language-plaintext highlighter-rouge">aspect_swizzleForwardInvocation</code></h6>
+
+<p>为新创建的子类替换 <code class="language-plaintext highlighter-rouge">forwardInvocation:</code> 实现，方法的实现指向  <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code>。添加 <code class="language-plaintext highlighter-rouge">__aspects_forwardInvocation:</code>方法，方法的实现指向 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code>，</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="kt">void</span> <span class="nf">aspect_swizzleForwardInvocation</span><span class="p">(</span><span class="n">Class</span> <span class="n">klass</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSCParameterAssert</span><span class="p">(</span><span class="n">klass</span><span class="p">);</span>
+    <span class="c1">// If there is no method, replace will act like class_addMethod.</span>
+    <span class="c1">//替换 forwardInvocation 方法是实现</span>
+    <span class="n">IMP</span> <span class="n">originalImplementation</span> <span class="o">=</span> <span class="n">class_replaceMethod</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="k">@selector</span><span class="p">(</span><span class="n">forwardInvocation</span><span class="o">:</span><span class="p">),</span> <span class="p">(</span><span class="n">IMP</span><span class="p">)</span><span class="n">__ASPECTS_ARE_BEING_CALLED__</span><span class="p">,</span> <span class="s">"v@:@"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">originalImplementation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//将方法的实现 originalImplementation 对应的SEL设置为 AspectsForwardInvocationSelectorName</span>
+        <span class="n">class_addMethod</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">NSSelectorFromString</span><span class="p">(</span><span class="n">AspectsForwardInvocationSelectorName</span><span class="p">),</span> <span class="n">originalImplementation</span><span class="p">,</span> <span class="s">"v@:@"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">AspectLog</span><span class="p">(</span><span class="s">@"Aspects: %@ is now aspect aware."</span><span class="p">,</span> <span class="n">NSStringFromClass</span><span class="p">(</span><span class="n">klass</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h6 id="aspect_hookedgetclass"><code class="language-plaintext highlighter-rouge">aspect_hookedGetClass</code></h6>
+
+<p>修改子类的 <code class="language-plaintext highlighter-rouge">-(Class)class</code>、<code class="language-plaintext highlighter-rouge">+(Class)class</code>方法，使其返回父类的类型。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="kt">void</span> <span class="nf">aspect_hookedGetClass</span><span class="p">(</span><span class="n">Class</span> <span class="n">class</span><span class="p">,</span> <span class="n">Class</span> <span class="n">statedClass</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSCParameterAssert</span><span class="p">(</span><span class="n">class</span><span class="p">);</span>
+    <span class="n">NSCParameterAssert</span><span class="p">(</span><span class="n">statedClass</span><span class="p">);</span>
+    <span class="c1">//获取 class 方法的实现</span>
+	<span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">class_getInstanceMethod</span><span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="k">@selector</span><span class="p">(</span><span class="n">class</span><span class="p">));</span>
+	<span class="n">IMP</span> <span class="n">newIMP</span> <span class="o">=</span> <span class="n">imp_implementationWithBlock</span><span class="p">(</span><span class="o">^</span><span class="p">(</span><span class="n">id</span> <span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">statedClass</span><span class="p">;</span>
+	<span class="p">});</span>
+	<span class="c1">//替换class 方法的实现为  newIMP，返回 statedClass(父类) 的类型</span>
+	<span class="n">class_replaceMethod</span><span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="k">@selector</span><span class="p">(</span><span class="n">class</span><span class="p">),</span> <span class="n">newIMP</span><span class="p">,</span> <span class="n">method_getTypeEncoding</span><span class="p">(</span><span class="n">method</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h6 id="objc_registerclasspair"><code class="language-plaintext highlighter-rouge">objc_registerClassPair</code></h6>
+<p>注册子类</p>
+
+<h5 id="5-设置原有对象类型">5. 设置原有对象类型</h5>
+
+<p>把 <code class="language-plaintext highlighter-rouge">self</code> 的类型指向 动态创建的子类。</p>
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">object_setClass</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">subclass</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="2-aspect_ismsgforwardimp">2. <code class="language-plaintext highlighter-rouge">aspect_isMsgForwardIMP</code></h4>
+
+<p>判断当前要 hook 的方法是否是 <code class="language-plaintext highlighter-rouge">_objc_msgForward</code> 或者 <code class="language-plaintext highlighter-rouge">_objc_msgForward_stret</code></p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">BOOL</span> <span class="nf">aspect_isMsgForwardIMP</span><span class="p">(</span><span class="n">IMP</span> <span class="n">impl</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">impl</span> <span class="o">==</span> <span class="n">_objc_msgForward</span>
+<span class="cp">#if !defined(__arm64__)
+</span>    <span class="o">||</span> <span class="n">impl</span> <span class="o">==</span> <span class="p">(</span><span class="n">IMP</span><span class="p">)</span><span class="n">_objc_msgForward_stret</span>
+<span class="cp">#endif
+</span>    <span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h4 id="3-动态添加方法并且替换原方法的实现">3. 动态添加方法并且替换原方法的实现</h4>
+
+<p>动态添加方法并且替换原方法的实现</p>
+
+<h5 id="1-获取原方法签名为原方法添加前缀">1. 获取原方法签名，为原方法添加前缀</h5>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">typeEncoding</span> <span class="o">=</span> <span class="n">method_getTypeEncoding</span><span class="p">(</span><span class="n">targetMethod</span><span class="p">);</span>
+<span class="n">SEL</span> <span class="n">aliasSelector</span> <span class="o">=</span> <span class="n">aspect_aliasForSelector</span><span class="p">(</span><span class="n">selector</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">SEL</span> <span class="nf">aspect_aliasForSelector</span><span class="p">(</span><span class="n">SEL</span> <span class="n">selector</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSCParameterAssert</span><span class="p">(</span><span class="n">selector</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">NSSelectorFromString</span><span class="p">([</span><span class="n">AspectsMessagePrefix</span> <span class="nf">stringByAppendingFormat</span><span class="p">:</span><span class="s">@"_%@"</span><span class="p">,</span> <span class="n">NSStringFromSelector</span><span class="p">(</span><span class="n">selector</span><span class="p">)]);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="2-动态添加方法">2. 动态添加方法</h5>
+<p>判断当前子类不响应新拼接的方法名。添加新创建的方法名到新类方法列表中。方法的实现指向原有的方法。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__unused</span> <span class="n">BOOL</span> <span class="n">addedAlias</span> <span class="o">=</span> <span class="n">class_addMethod</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">aliasSelector</span><span class="p">,</span> <span class="n">method_getImplementation</span><span class="p">(</span><span class="n">targetMethod</span><span class="p">),</span> <span class="n">typeEncoding</span><span class="p">);</span>
+
+</code></pre></div></div>
+<h5 id="3将原有放方法实现替换">3.将原有放方法实现替换</h5>
+<p>将原有的方法实现 替换为 <code class="language-plaintext highlighter-rouge">_objc_msgForward</code> 。每次调用 这个方法，就进行了消息转发，相当用调用 <code class="language-plaintext highlighter-rouge">forwardInvocation：</code>，上面 <code class="language-plaintext highlighter-rouge">forwardInvocation:</code> 已经被替换为 <code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code> 方法.</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">class_replaceMethod</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">aspect_getMsgForwardIMP</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">),</span> <span class="n">typeEncoding</span><span class="p">);</span>
+
+</code></pre></div></div>
+
+<h3 id="__aspects_are_being_called__"><code class="language-plaintext highlighter-rouge">__ASPECTS_ARE_BEING_CALLED__</code></h3>
+<p>最终hook的方法会进入这个方法中。</p>
+
+<h4 id="1-获取要调用方法名">1. 获取要调用方法名</h4>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取调用方法名</span>
+<span class="n">SEL</span> <span class="n">originalSelector</span> <span class="o">=</span> <span class="n">invocation</span><span class="p">.</span><span class="n">selector</span><span class="p">;</span>
+<span class="c1">//获取 交换后 的方法名</span>
+<span class="n">SEL</span> <span class="n">aliasSelector</span> <span class="o">=</span> <span class="n">aspect_aliasForSelector</span><span class="p">(</span><span class="n">invocation</span><span class="p">.</span><span class="n">selector</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="2-通过方法名获取要调用的方法的集合">2. 通过方法名获取要调用的方法的集合</h4>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取 实例消息发送者的集合</span>
+<span class="n">AspectsContainer</span> <span class="o">*</span><span class="n">objectContainer</span> <span class="o">=</span> <span class="n">objc_getAssociatedObject</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">aliasSelector</span><span class="p">);</span>
+<span class="c1">//获取 类方法消息发送者 的集合</span>
+<span class="n">AspectsContainer</span> <span class="o">*</span><span class="n">classContainer</span> <span class="o">=</span> <span class="n">aspect_getContainerForClass</span><span class="p">(</span><span class="n">object_getClass</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">aliasSelector</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="3-按顺序执行回调和方法">3. 按顺序执行回调和方法</h4>
+<ol>
+  <li>先便利 <code class="language-plaintext highlighter-rouge">AspectsContainer</code> 存储的 <code class="language-plaintext highlighter-rouge">beforeAspects</code> 数组，执行里面存储的 <code class="language-plaintext highlighter-rouge">block</code>；</li>
+  <li>然后便利 <code class="language-plaintext highlighter-rouge">insteadAspects</code> 数组，执行里面存储的 <code class="language-plaintext highlighter-rouge">block</code>；</li>
+  <li>如果 <code class="language-plaintext highlighter-rouge">insteadAspects</code> 数组为空，执行 <code class="language-plaintext highlighter-rouge">aliasSelector</code> 方法。<code class="language-plaintext highlighter-rouge">aliasSelector</code> 这个时候指向了原来方法的实现；</li>
+  <li>然后便利 <code class="language-plaintext highlighter-rouge">afterAspects</code> 数组，执行里面存储的 <code class="language-plaintext highlighter-rouge">block</code>；</li>
+  <li><code class="language-plaintext highlighter-rouge">block</code> 执行的过程中，会判断类型是否为 <code class="language-plaintext highlighter-rouge">AspectOptionAutomaticRemoval</code>，如果是，将改选项加入到一个数组中，在方法执行后，解除 hook 关系；</li>
+  <li>如果没有找到 <code class="language-plaintext highlighter-rouge">aliasSelector</code>，通过 <code class="language-plaintext highlighter-rouge">doesNotRecognizeSelector</code> 抛出一个异常。</li>
+</ol>
+
+<hr />
+
+<p>到这里，大致过了一遍 <code class="language-plaintext highlighter-rouge">Aspects</code> 的代码，但是这仅仅是粗略的过了一遍，还有很多细节可以继续扣下去。这里做个记录。</p>
+
+<p><a href="https://yunissong.github.io/2019/06/12/NSInvocation%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8block/">NSInvocation如何调用block</a></p>
+:ET

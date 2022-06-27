@@ -1,0 +1,59 @@
+I"<h1 id="uitableviewcell嵌套uicollectionview布局">UITableViewCell嵌套UICollectionView布局</h1>
+
+<p>开发中经常遇到 cell 嵌套九宫格展示图片之类的需求，类似于下面的情况。</p>
+
+<p><img src="/media/15743256429556/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-21%20at%2016.39.36.png" alt="Simulator Screen Shot - iPhone 11 Pro Max - 2019-11-21 at 16.39.36" /></p>
+
+<p>最简单的办法就是 cell 里面嵌套 collectionView，具体的做法是：</p>
+
+<p>在 <code class="language-plaintext highlighter-rouge">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</code> 的代理方法里面这样处理。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    <span class="n">OrderDetailsIntentionTableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nf">dequeueReusableCellWithIdentifier</span><span class="p">:</span><span class="s">@"OrderDetailsIntentionTableViewCell"</span> <span class="nf">forIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">cell</span> <span class="nf">configModel</span><span class="p">:</span><span class="n">model</span><span class="p">];</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">tableView</span><span class="p">.</span><span class="n">bounds</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">cell</span> <span class="nf">layoutIfNeeded</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">cell</span><span class="p">.</span><span class="n">collectionView</span> <span class="nf">reloadData</span><span class="p">];</span>
+    <span class="c1">//heightConstraint 为内嵌的 collectionView 高度约束</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">heightConstraint</span><span class="p">.</span><span class="n">constant</span> <span class="o">=</span> <span class="n">cell</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">collectionViewLayout</span><span class="p">.</span><span class="n">collectionViewContentSize</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+
+</code></pre></div></div>
+
+<p>在 <code class="language-plaintext highlighter-rouge">OrderDetailsIntentionTableViewCell</code> 里面这样设置 <code class="language-plaintext highlighter-rouge">collectionView</code>。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    
+    <span class="n">UICollectionViewLeftAlignedLayout</span> <span class="o">*</span><span class="n">flowLayout</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UICollectionViewLeftAlignedLayout</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="n">flowLayout</span><span class="p">.</span><span class="n">minimumLineSpacing</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">flowLayout</span><span class="p">.</span><span class="n">minimumInteritemSpacing</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">flowLayout</span><span class="p">.</span><span class="n">sectionInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span><span class="c1">//top, left, bottom, right</span>
+    
+    <span class="n">self</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">collectionViewLayout</span> <span class="o">=</span> <span class="n">flowLayout</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">clearColor</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">collectionView</span><span class="p">.</span><span class="n">scrollEnabled</span> <span class="o">=</span> <span class="nb">NO</span><span class="p">;</span>
+    
+</code></pre></div></div>
+
+<p>这样写也行</p>
+
+<pre><code class="language-Swift">	DispatchQueue.main.async(execute: {
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(MAXFLOAT).priority(666)
+			}
+			self.collectionView.reloadData()
+			self.collectionView.layoutIfNeeded()
+
+			let height = self.collectionView.collectionViewLayout.collectionViewContentSize.height
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(height).priority(666)
+			}
+			self.collectionView.SSY.parentTableView()?.beginUpdates()
+			self.collectionView.SSY.parentTableView()?.endUpdates()
+
+		})
+</code></pre>
+:ET

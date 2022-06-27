@@ -1,0 +1,98 @@
+I"�"<h1 id="ios-11iphone-xxcode9适配">iOS 11、iPhone X、Xcode9适配</h1>
+
+<p>遇到的问题</p>
+
+<h3 id="1-启动图变形">1 启动图变形。</h3>
+<p><img src="/media/15059019605960/%E5%90%AF%E5%8A%A8%E5%9B%BE%E5%8F%98%E5%BD%A2.png" alt="启动图变形" /></p>
+
+<p>项目采用的是 <code class="language-plaintext highlighter-rouge">LaunchScreen.storyboard</code> 当启动视图，<code class="language-plaintext highlighter-rouge">LaunchScreen.storyboard</code>里面加载一个图片填充了整个视图，由于之前的 <code class="language-plaintext highlighter-rouge">iPhone</code> 宽高比例差别不到，也就没有注意到图片的变形，今天 在 <code class="language-plaintext highlighter-rouge">iPhone X</code> 上图片变形严重。
+解决方案：</p>
+
+<ol>
+  <li>使用 <code class="language-plaintext highlighter-rouge">LaunchImage</code>，但是美工需要切各个不同 <code class="language-plaintext highlighter-rouge">iPhone</code> 的图片。</li>
+  <li>使用 <code class="language-plaintext highlighter-rouge">LaunchScreen.storyboard</code>，重新设置 图片的约束。设置left、right、top与视图相同，比例设置为原图片比例。然后视图背景设置为与图片边框相同的背景。</li>
+</ol>
+
+<h3 id="2-导航视图上移被-刘海遮挡">2 导航视图上移，被 刘海遮挡</h3>
+
+<p><img src="/media/15059019605960/15059020743807.jpg" alt="" />
+<img src="/media/15059019605960/15059020905209.jpg" alt="" />
+<img src="/media/15059019605960/15059021153942.jpg" alt="" /></p>
+
+<p>我们项目中的导航视图都是自定义的导航视图，所以会出现这样的问题。
+这个解决起来就简单粗暴了。
+判断 手机型号，然后重新设置视图高度。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#import "UIDevice+SYHelp.h"
+</span>
+<span class="k">@implementation</span> <span class="nc">UIDevice</span> <span class="p">(</span><span class="nl">SYHelp</span><span class="p">)</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isiPhoneX</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">([</span><span class="n">UIScreen</span> <span class="nf">mainScreen</span><span class="p">].</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">==</span> <span class="mi">812</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+
+<span class="p">}</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isiOS11</span>
+<span class="p">{</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">version</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIDevice</span> <span class="nf">currentDevice</span><span class="p">].</span><span class="n">systemVersion</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">version</span><span class="p">.</span><span class="n">floatValue</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre></div></div>
+<h3 id="3-mjrefresh-视图不隐藏">3 MJRefresh 视图不隐藏</h3>
+<p><img src="/media/15059019605960/15059023075980.jpg" alt="" /></p>
+
+<p>这个解决方法就是判断手机型号和系统版本号，然后让视图上移。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">BOOL</span> <span class="n">isIphoneX</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIDevice</span> <span class="nf">isiPhoneX</span><span class="p">];</span>
+    <span class="n">BOOL</span> <span class="n">isiOS11</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIDevice</span> <span class="nf">isiOS11</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">mainScrollView</span> <span class="nf">mas_makeConstraints</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">MASConstraintMaker</span> <span class="o">*</span><span class="n">make</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isiOS11</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">make</span><span class="p">.</span><span class="n">left</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">bottom</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">isIphoneX</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span> <span class="mi">44</span><span class="p">);</span><span class="c1">//兼容mj bug</span>
+            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                <span class="n">make</span><span class="p">.</span><span class="n">top</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">offset</span><span class="p">(</span><span class="o">-</span> <span class="mi">20</span><span class="p">);</span><span class="c1">//兼容mj bug</span>
+            <span class="p">}</span>
+        <span class="p">}</span><span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">make</span><span class="p">.</span><span class="n">edges</span><span class="p">.</span><span class="n">equalTo</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+
+        <span class="p">}</span>
+  
+    <span class="p">}];</span>
+</code></pre></div></div>
+<p>或者也可以使用最新版的 <code class="language-plaintext highlighter-rouge">MJRefresh</code> 也许作者已经适配了 <code class="language-plaintext highlighter-rouge">iOS 11</code>。</p>
+
+<h3 id="4-保存图片到本地闪退">4 保存图片到本地闪退</h3>
+
+<p>iOS 11 如果需要保存图片到相片库中，需要在 info.plist 中增加新的参数 ：<code class="language-plaintext highlighter-rouge">NSPhotoLibraryAddUsageDescription</code>,否则保存图片时会闪退。苹果对用户的隐私权限要求越来越严格了。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSPhotoLibraryAddUsageDescription key with a string value explaining to the user how the app uses this data.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;key&gt;NSPhotoLibraryAddUsageDescription&lt;/key&gt;
+    &lt;string&gt;是否允许此App为您添加图片？&lt;/string&gt;
+</code></pre></div></div>
+<h3 id="xcode-9">Xcode 9</h3>
+
+<p>目前使用 <code class="language-plaintext highlighter-rouge">Xcode 9</code> 没有发现有特殊需要修改的地方。</p>
+
+<p>使用半天的感受：</p>
+
+<ol>
+  <li>代码提示更烂了，感觉还不如 8，有时候输入回车键不会自动填充大括号了。</li>
+  <li>使用起来略卡。</li>
+  <li>支持多开模拟器，安装app 也很方便，直接把 <code class="language-plaintext highlighter-rouge">.app</code> 文件拖拽就可以安装。</li>
+</ol>
+
+<h3>–</h3>
+<p>总体来说，我们的项目适配的工作量还是很小的，我用了一个下午把两个工程的适配都做好了，主要是我们工程中大量的采用 <code class="language-plaintext highlighter-rouge">H5</code> 页面，适配的工作没有那么大。</p>
+
+:ET

@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>三十一</title>
+    <description>潜心修行中。</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 27 Jun 2022 15:52:40 +0800</pubDate>
+    <lastBuildDate>Mon, 27 Jun 2022 15:52:40 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.2</generator>
+    
+      <item>
+        <title>githubPages搭建的博客不能刷新</title>
+        <description>&lt;h1 id=&quot;githubpages搭建的博客不能刷新&quot;&gt;githubPages搭建的博客不能刷新&lt;/h1&gt;
+
+&lt;p&gt;最近零星的修改了一下博客的一些小东西，发现没有生效，就排查了下原因，发现 jekyll 触发编译的时候就出现了问题。&lt;/p&gt;
+
+&lt;p&gt;具体看下面的图片，红色标记的地方就是编译失败的操作。
+&lt;img src=&quot;../media/githubpages/action-error.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;点进去可以看到具体的错误原因。
+&lt;img src=&quot;../media/githubpages/error.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;看到具体的错误愿意，去找到这个源文件修复。
+&lt;img src=&quot;../media/githubpages/error-des.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/06/27/githubPages%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%88%B7%E6%96%B0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/06/27/githubPages%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%88%B7%E6%96%B0/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Swift 中如何让子类必须重写父类方法</title>
+        <description>&lt;h1 id=&quot;swift-中如何让子类必须重写父类方法&quot;&gt;Swift 中如何让子类必须重写父类方法&lt;/h1&gt;
+
+&lt;p&gt;如何让子类必须实现父类中的方法呢？
+有一种方法是结合 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol(BaseMustMethod)&lt;/code&gt; 和 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;父类(BaseTableViewController)&lt;/code&gt; 来实现。&lt;/p&gt;
+
+&lt;p&gt;首先先实现一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;父类(BaseTableViewController)&lt;/code&gt;，然后 写一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol(BaseMustMethod)&lt;/code&gt; ，把子类必须写的方法放入到 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol(BaseMustMethod)&lt;/code&gt; 中。&lt;/p&gt;
+
+&lt;p&gt;然后 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;typealias&lt;/code&gt; 一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;类型（BaseTableViewCtr）&lt;/code&gt; 同时遵守 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;父类(BaseTableViewController)&lt;/code&gt; 和  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol(BaseMustMethod)&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;这样 遵守 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BaseTableViewCtr&lt;/code&gt; 的类，就同时继承了 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;父类(BaseTableViewController)&lt;/code&gt;，还必须实现 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protocol(BaseMustMethod)&lt;/code&gt; 规定的方法。&lt;/p&gt;
+
+&lt;p&gt;如下：&lt;/p&gt;
+
+&lt;p&gt;父类&lt;/p&gt;
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;protocol&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseMustMethod&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loadNewDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;typealias&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseTableViewCtr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseTableViewController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseMustMethod&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseTableViewController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;viewDidLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;guard&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;ctr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as?&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseTableViewCtr&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;ctr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;loadNewDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;子类&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TestBase1ViewController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;BaseTableViewCtr&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;extension&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;TestBase1ViewController&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loadNewDate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 25 Feb 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/02/25/Swift%E4%B8%AD%E5%A6%82%E4%BD%95%E8%AE%A9%E5%AD%90%E7%B1%BB%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99%E7%88%B6%E7%B1%BB%E6%96%B9%E6%B3%95/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/02/25/Swift%E4%B8%AD%E5%A6%82%E4%BD%95%E8%AE%A9%E5%AD%90%E7%B1%BB%E5%BF%85%E9%A1%BB%E9%87%8D%E5%86%99%E7%88%B6%E7%B1%BB%E6%96%B9%E6%B3%95/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>2020与2021</title>
+        <description>&lt;h1 id=&quot;2020与2021&quot;&gt;2020与2021&lt;/h1&gt;
+&lt;h3 id=&quot;2020&quot;&gt;2020&lt;/h3&gt;
+&lt;h4 id=&quot;生活感悟&quot;&gt;生活感悟&lt;/h4&gt;
+&lt;p&gt;今年因为家里多了一个小朋友，感觉时间过得飞快和充实。
+也因为疫情的原因，工作以来在家里呆了最久的时间，也算是一种因祸得福了吧，多了好多时间陪伴家人。
+也许是因为在一起的时间久了，和谭老板开始有一定的争吵了，需要改进。
+满姐已经 满一岁了，在马上一岁一个月的时间，突然会走路了。
+看着小家伙迈出的第一步，家里人都很兴奋。
+小家伙又要开启对世界新的感悟和认知了，开始可以用脚步丈量世界了。&lt;/p&gt;
+
+&lt;p&gt;父母的身体不如以前了，我爸脸上的皮肤明显的有老态了，以前爬塘朗山跟玩的一样，今年爬山都爬不到山顶了，觉的有点累。我妈也是身体小毛病不断，不是上火牙疼，就是大便不顺畅，还经常睡不着觉。&lt;/p&gt;
+
+&lt;h4 id=&quot;年初定下的目标&quot;&gt;年初定下的目标&lt;/h4&gt;
+&lt;p&gt;2020 年初的时候定下了一个目标，学会 java ，对服务端开发能上手。
+然后断断续续的又定下了许多小目标，每周一道算法题、每周翻译一篇英文文章、每周弄懂一个自己不熟悉的知识点。
+减肥到 150 斤。&lt;/p&gt;
+&lt;h4 id=&quot;结果&quot;&gt;结果&lt;/h4&gt;
+&lt;p&gt;所有的事情都是开了个头，全部都没有坚持下来。&lt;/p&gt;
+&lt;h4 id=&quot;反思&quot;&gt;反思&lt;/h4&gt;
+&lt;p&gt;所有的事情做起来都没有规划，也没有监督机制。下一步应该学会如何学习、如何保证进度。&lt;/p&gt;
+&lt;h3 id=&quot;2021&quot;&gt;2021&lt;/h3&gt;
+&lt;h3 id=&quot;目标&quot;&gt;目标&lt;/h3&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;学会制定计划并监督执行，学会如何学习，建立良好的习惯。&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;学会 java ，对服务端开发能上手。。&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;减肥到 150 斤。&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;带着家人去外地出去玩一次。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 30 Dec 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/12/30/2020%E4%B8%8E2021/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/12/30/2020%E4%B8%8E2021/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>脚本小工具</title>
+        <description>&lt;h1 id=&quot;脚本小工具&quot;&gt;脚本小工具&lt;/h1&gt;
+
+&lt;p&gt;记录平时想到的可以使用脚本来完成的任务。&lt;/p&gt;
+
+&lt;h3 id=&quot;切换壁纸&quot;&gt;切换壁纸&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/feiqihang/p/5076573.html&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#!/bin/sh
+#提取壁纸图片URL(支持重定向)
+
+url=$(expr &quot;$(curl -L -e '; auto' https://www.bing.com/?mkt=zh-CN |grep g_img=)&quot; : &quot;.*g_img={url:\&quot;\(.*\)\&quot;};.*&quot;)
+
+#去除url中的斜杠“\”
+url=&quot;http://www.bing.com${url//\\/}&quot;
+#替换&amp;amp;符号
+url=${url/\u0026/&amp;amp;}
+echo $url
+#提取图片名称
+filename=$(expr &quot;$url&quot; : &quot;.*id=\(.*\)&amp;amp;rf=.*&quot;)
+#本地图片地址-当前用户下缺省图片目录
+localpath=&quot;/Users/$USER/Desktop/shell/pic/$filename&quot;
+#下载图片至本地
+curl -o $localpath $url
+#调用Finder应用切换桌面壁纸
+osascript -e &quot;tell application \&quot;Finder\&quot; to set desktop picture to POSIX file \&quot;$localpath\&quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;学习到的新知识&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# expr 'STRING : REGEX'
+#      执行模式匹配。两端参数会转换为字符格式，且第二个参数被视为正则表达式(GNU基本正则)，它默认会隐含前缀&quot;^&quot;。随后将第一个参数和正则模式做匹配。
+#      如果匹配成功，且REGEX使用了'\('和'\)'，则此表达式返回匹配到的，如果未使用'\('和'\)'，则返回匹配的字符数。
+#      如果匹配失败，如果REGEX中使用了'\('和'\)'，则此表达式返回空字符串，否则返回为0。
+#      只有第一个'\(...\)'会引用返回的值；其余的'\(...\)'只在正则表达式分组时有意义。
+#      在正则表达式中，'\+'，'\?'和'\|'分表代表匹配一个或多个，0个或1个以及两端任选其一的意思。
+
+# url=$(expr Yunis123456789SSy : '.*Yunis\(.*\)SSy.*')
+# echo $url 123456789
+#
+# url2=$(expr abcde : 'ab\(.*\)')
+# echo $url2 cde
+
+
+# curl -L 跟随重定向 默认不跟随
+#   -e参数用来设置 HTTP 的标头Referer，表示请求的来源。
+#   -e ';auto' 告诉它在跟踪重定向响应时传送Referer头信息
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;查找文件&quot;&gt;查找文件&lt;/h3&gt;
+</description>
+        <pubDate>Thu, 24 Dec 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/12/24/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%B7%A5%E5%85%B7/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/12/24/%E8%84%9A%E6%9C%AC%E5%B0%8F%E5%B7%A5%E5%85%B7/</guid>
+        
+        <category>Shell</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>mysql练习</title>
+        <description>&lt;h1 id=&quot;mysql练习&quot;&gt;mysql练习&lt;/h1&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CREATE DATABASE YunisDB1;
+use YunisDB1;
+
+-- position 职务
+-- department 部门
+-- salary 工资
+create table positionTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	name varchar(10),
+	namedesc varchar(100)
+);
+create table departmentTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	name varchar(10),
+	loc  varchar(20)
+);
+create table salaryTab (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	low_salary double(8,1),
+	high_salary double(8,1)
+);
+create table emp (
+	id int PRIMARY KEY AUTO_INCREMENT,
+	leader int,
+	name varchar(10),
+	salary double(8,1),
+	department int,
+	position int,
+	CONSTRAINT emp_position foreign key (position) REFERENCES positionTab(id) ,
+	CONSTRAINT emp_department foreign key (department) REFERENCES departmentTab(id)
+);
+
+/* 
+drop table department;
+drop table salary;
+drop table position; 
+drop table salaryTab;
+*/
+INSERT into positionTab values (null,&quot;客户端开发&quot;,&quot;负责iOS、安卓系统的软件开发&quot;);
+INSERT into positionTab values (null,&quot;服务端开发&quot;,&quot;负责后台接口的软件开发&quot;);
+INSERT into positionTab values (null,&quot;web客户端开发&quot;,&quot;负责浏览器的软件开发&quot;);
+INSERT into positionTab values (null,&quot;项目经理&quot;,&quot;统筹管理项目进度&quot;);
+INSERT into positionTab values (null,&quot;销售&quot;,&quot;销售软件&quot;);
+INSERT into positionTab values (null,&quot;运维&quot;,&quot;维护软件的日常运行&quot;);
+INSERT into positionTab values (null,&quot;boss&quot;,&quot;公司拥有者&quot;);
+
+select * from positionTab;
+
+/*
+1	客户端开发	负责iOS、安卓系统的软件开发
+2	服务端开发	负责后台接口的软件开发
+3	web客户端开发	负责浏览器的软件开发
+4	项目经理	统筹管理项目进度
+5	销售	销售软件
+6	运维	维护软件的日常运行
+7	boss	公司拥有者
+*/
+
+INSERT into departmentTab values (null,&quot;研发部&quot;,&quot;南山&quot;);
+INSERT into departmentTab values (null,&quot;市场部&quot;,&quot;前海&quot;);
+INSERT into departmentTab values (null,&quot;运维部&quot;,&quot;后海&quot;);
+INSERT into departmentTab values (null,&quot;战略部&quot;,&quot;深圳湾&quot;);
+
+select * from departmentTab;
+/* 
+1	研发部	南山
+2	市场部	前海
+3	运维部	后海 
+4  战略部 深圳湾
+*/
+
+INSERT into salaryTab values (null,0,5000);
+INSERT into salaryTab values (null,5001,10000);
+INSERT into salaryTab values (null,10001,20000);
+INSERT into salaryTab values (null,20001,30000);
+
+select * from salaryTab;
+
+/* 
+1	0.0	5000.0
+2	5001.0	10000.0
+3	10001.0	20000.0
+4	20001.0	30000.0 
+*/
+
+/* 	id int PRIMARY KEY AUTO_INCREMENT,
+	leader int,
+	name varchar(10),
+	salary double(8,1),
+	department int,
+	position int, */
+	
+INSERT into emp values (null,8,&quot;李三&quot;,6000,1,1) ;
+
+INSERT into emp values 
+	(null,8,&quot;王五&quot;,11000,1,1) ,
+	(null,8,&quot;赵四&quot;,4890,1,1) ,
+	(null,8,&quot;巨能改&quot;,14300,3,6) ,
+	(null,8,&quot;聚能吹&quot;,9000,2,5) ,
+	(null,8,&quot;java&quot;,22000,1,2) ,
+	(null,8,&quot;vue&quot;,6990,1,3) ,
+	(null,10,&quot;leader&quot;,28000,1,4) ,
+	(null,8,&quot;iOSER&quot;,22000,1,1) ,
+	(null,null,&quot;老板&quot;,3000,4,7) ,
+	(null,8,&quot;AndroidER&quot;,15000,1,1) ;
+
+
+select * from emp;
+/* 
+1	8	李三	6000.0	1	1
+2	8	王五	11000.0	1	1
+3	8	赵四	4890.0	1	1
+4	8	巨能改	14300.0	3	6
+5	8	聚能吹	9000.0	2	5
+6	8	java	22000.0	1	2
+7	8	vue	6990.0	1	3
+8	10	leader	28000.0	1	4
+9	8	iOSER	22000.0	1	1
+10	NULL	老板	3000.0	4	7
+11	8	AndroidER	15000.0	1	1 
+*/
+
+-- 查询所有的员工信息，查询员工编号、姓名、工资、职位名称、职位描述
+
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`
+FROM 
+	emp t1,positionTab t2
+WHERE 
+	t1.`position`= t2.`id`;
+	
+	
+-- 查询员工编号、姓名、工资、职位名称、职位描述、 部门名称、部门位置；
+	
+	
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`, t3.`name`,t3.`loc`
+FROM 
+	emp t1,positionTab t2,`departmentTab` t3
+WHERE 
+	t1.`position`= t2.`id` AND t1.`department` = t3.`id`;
+	
+	
+-- 查询员工姓名、工资、工资等级
+	
+SELECT
+	t1.`name`,t1.`salary`,t2.`id`
+FROM 
+	emp t1,salaryTab t2
+WHERE 
+	t1.`salary` BETWEEN t2.`low_salary` AND t2.`high_salary`;
+	
+	
+	
+-- 查询员工编号、姓名、工资、职位名称、职位描述、 部门名称、部门位置、工资等级；
+
+
+SELECT
+	t1.id,t1.`name`,t1.`salary`,t2.`name`,t2.`namedesc`, t3.`name`,t3.`loc`,t4.`id`
+FROM 
+	emp t1,positionTab t2,`departmentTab` t3,salaryTab t4
+WHERE 
+	t1.`position`= t2.`id` 
+	AND t1.`department` = t3.`id` 
+	AND t1.`salary` BETWEEN t4.`low_salary` AND t4.`high_salary`;
+	
+-- 查询出部门标号、部门名称、部门位置、部门人数
+SELECT
+	t2.id,t2.`name`,t2.`loc`,count(t1.`id`)
+FROM 
+	emp t1,(SELECT * FROM departmentTab) t2
+WHERE 
+	t1.`department` = t2.`id`
+group by t1.`department`;
+
+-- 查询出所有员工的姓名已经直接上级的姓名，没有领导的员工也需要查询
+
+SELECT
+	t1.id,t1.`name`,t2.`id`,t2.`name`
+FROM 
+	emp t1 LEFT JOIN emp t2
+ON
+	t1.`leader` = t2.`id`;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 03 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/03/mysql%E7%BB%83%E4%B9%A0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/03/mysql%E7%BB%83%E4%B9%A0/</guid>
+        
+        <category>SQL</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>mysql学习</title>
+        <description>&lt;h1 id=&quot;mysql学习&quot;&gt;mysql学习&lt;/h1&gt;
+&lt;h3 id=&quot;安装数据库&quot;&gt;安装数据库&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+brew install mysql@5.7
+
+brew tap homebrew/services
+
+brew services start mysql@5.7
+
+//如果报错
+brew update
+
+
+brew services list
+
+brew link mysql@5.7 --force
+
+echo 'export PATH=&quot;/usr/local/opt/mysql@5.7/bin:$PATH&quot;' &amp;gt;&amp;gt; ~/.zshrc
+export LDFLAGS=&quot;-L/usr/local/opt/mysql@5.7/lib&quot;
+export CPPFLAGS=&quot;-I/usr/local/opt/mysql@5.7/include&quot;
+
+
+
+
+brew services start mysql@5.7
+brew services stop  mysql@5.7
+
+
+update user set authentication_string=password('Ssy198800!') where user='root';
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;操作数据库&quot;&gt;操作数据库&lt;/h3&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;显示所有的数据库
+show databases;
+
+如果 db1 数据库 存在，删除 db1；
+drop database  if exists db1;
+
+查询正在使用的数据库
+select database();
+
+使用数据库 db1
+use db1;
+
+修改db1 的字符集
+alter database db1 character set utf8;
+
+显示 db1 的创建信息
+show create database db1;
+
+如果 db1 不存在的话，创建 db1 字符集为 utf-8
+create database if not exists db1 character set utf8;
+quit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;操作表&quot;&gt;操作表&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;显示当前使用的数据库里面包含的表
+show tables;
+
+显示 user 表的表结构
+desc user;
+
+创建表的基本语法
+create table user (
+    id int,
+    name varchar(32),
+    age int,
+    score double(5,2),  -- 最大值为 999.99
+    birthday date, -- yyyy-MM-dd
+    creatTime timestamp, -- yyyy-MM-dd HH:mm:ss 
+);
+
+复制表 把 Student 复制一份，命名Wie stu
+create table stu like Student
+
+
+删除 Student
+drop table Student
+
+如果 Student 表存在，删除 Student；
+drop table  if exists Student;
+
+查看表 stu2 的创建信息
+show create table stu2;
+
+修改表名称 把表  Stu1 修改名称为 Stu2
+alter table Stu1 rename to Stu2
+ 
+修改表字符集,把 stu2 表的字符集修改为 utf-8
+alter table stu2 character set utf8;
+
+
+添加一列,在 stu2 的表中 新增一列 名为 gender、类型为 int 、长度为 1 位的列。
+alter table stu2 add gender int(1);
+
+修改列名称 类型,将表 stu2中列名为  gender1 修改为 sex，类型修改为 字符串，长度为 20；
+alter table stu2 change gender1 sex varchar(20);
+
+
+只修改类的类型,将表 stu2中列名为 sex 列，类型修改为 int ，长度为 1；
+alter table stu2 modify sex int(1);
+
+
+删除列 删除 stu2 表中的 sex 列。
+alter table stu2 drop sex;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;操作表中的数据&quot;&gt;操作表中的数据&lt;/h3&gt;
+
+&lt;h4 id=&quot;添加数据&quot;&gt;添加数据&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;insert  into 表名(列名1，列名2,列名3) values (值1,值2,值3);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;insert  into 表名 values (值1,值2,值3);&lt;/code&gt; 要对应表中所用的列的值。&lt;/p&gt;
+
+&lt;p&gt;eg :&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;INSERT into stu2 values (2,&quot;李三&quot;,25,88.5,&quot;2015-05-11&quot;,null,1);&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;列名和值要一一对应，如果表后面没有添加列名，则默认给所有的列添加值。
+除了数字类型外，其他类型的值需要用引号包裹起来。&lt;/p&gt;
+&lt;h4 id=&quot;删除数据&quot;&gt;删除数据&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;delete from 表名 [where 条件];&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;eg : &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;delete  from stu2 where id=1;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;如果不加条件，会删除表中的所有数据。&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;delete  from stu2;&lt;/code&gt;（不推荐用做删除表，因为这个操作是表中有多少数据就进行多少次删除操作。）&lt;/p&gt;
+
+&lt;p&gt;//删除  stu2  所有数据
+truncate table stu2;&lt;/p&gt;
+
+&lt;h4 id=&quot;修改数据&quot;&gt;修改数据&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;update 表名 set 列名1=值1,列名2=值2， [where 条件]&lt;/code&gt;
+如果 不加任何条件，则会将表中所有记录全部修改。&lt;/p&gt;
+
+&lt;h3 id=&quot;查询表中的数据&quot;&gt;查询表中的数据&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from 表名&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&quot;查询语句&quot;&gt;查询语句&lt;/h4&gt;
+&lt;h5 id=&quot;基础查询&quot;&gt;基础查询&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select name,age from stu2;&lt;/code&gt; 查询 name ，age 字段&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;select 
+	name, -- 姓名
+	age  -- 年龄
+from 
+	stu2; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;去重 DISTINCT
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select DISTINCT name from stu2;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;结果相加 (+) 并且设置别名(as 可以用空格代替)，
+计算列的结果可以使用 四则运算符，一般只计算数值型的值。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select age as &quot;年纪&quot;,gender as &quot;性别&quot;, ifnull(age,0)+ifnull(gender,0) as &quot;虽然不合理但是我就是想这么加&quot; from stu2;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15986275685334/15988675786356.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;条件查询-where&quot;&gt;条件查询 where&lt;/h5&gt;
+
+&lt;p&gt;where 后面跟查询条件&lt;/p&gt;
+
+&lt;p&gt;运算符&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;=&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;gt;=&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;=&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;&amp;gt;&lt;/code&gt; 不等于,跟 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;!= &lt;/code&gt;一样的意义。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;between...and&lt;/code&gt; 在什么什么之间&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;in(集合)&lt;/code&gt; 在集合内部的范围&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;like&lt;/code&gt; 模糊查询，占位符 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt; 单个任意字符，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%&lt;/code&gt;多个任意字符&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is null&lt;/code&gt; 值为空&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is not null&lt;/code&gt; 值不为空&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;and / &amp;amp;&amp;amp;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;or / ||&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;not / !&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;select * from stu2 where age &amp;gt;= 25; 
+select * from stu2 where age = 25; 
+select * from stu2 where age != 25; 
+select * from stu2 where age &amp;lt;&amp;gt; 25; 
+select * from stu2 where age &amp;gt;= 25 &amp;amp;&amp;amp; age &amp;lt; 40; 
+select * from stu2 where age &amp;gt;= 25 and age &amp;lt; 40; 
+select * from stu2 where age BETWEEN 25 and 40; 
+select * from stu2 where age = 25 || age = 28; 
+select * from stu2 where age = 25 or age = 28; 
+select * from stu2 where age in (25,28); 
+select * from stu2 where score is null;
+select * from stu2 where score is not null;
+-- 姓名第一字为 王 的 数据
+select * from stu2 where name like '王%';
+-- 姓名第二字为 三 的 数据
+select * from stu2 where name like '_三%';
+-- 姓名为三个字的人
+select * from stu2 where name like '___';
+-- 姓名中包含王的人
+select * from stu2 where name like '%王%';
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;排序查询&quot;&gt;排序查询&lt;/h5&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;order by 子句 &lt;/code&gt;
+eg: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 order by id;&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 order by id DESC;&lt;/code&gt;
+排序方式不写，默认升序排列（ASC）。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;order by 排序字段1 排序方式1,排序字段2 排序方式2, ...&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;排序方式
+    1. 升序（ASC） 默认
+    2. 降序（DESC）降序&lt;/p&gt;
+
+&lt;p&gt;按照 score 排序 如果值一样，按照 id 排序;只有第一排序条件结果一样的时候，才采用后面的排序条件。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 order by score ASC,id ASC;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;聚合函数&quot;&gt;聚合函数&lt;/h5&gt;
+&lt;p&gt;将一列数据作为一个整体，进行一个纵向的计算。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;count&lt;/code&gt; 计算数量&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;max&lt;/code&gt; 计算最大值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;min&lt;/code&gt; 计算最小值&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sum&lt;/code&gt; 求和&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;avg&lt;/code&gt; 计算平均值&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;eg:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select count(name)  from stu2;&lt;/code&gt; 计算 name 有多少个字段 ,不计算 null 值。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select count(ifnull(name,&quot;&quot;))  from stu2;&lt;/code&gt; 计算 name 有多少个字段 ,如果值为 null，&lt;/p&gt;
+
+&lt;h5 id=&quot;分组查询&quot;&gt;分组查询&lt;/h5&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;group by gender&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;分组之后查询的字段只能是分组的字段或者聚合函数。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select gender,avg(score),max(score),COUNT(id) from stu2 group by gender;
+&lt;/code&gt;
+&lt;img src=&quot;/media/15986275685334/15988649965857.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;按照  gender 分组；查询 平均值avg ，最大值max ，最小值min ，人数 COUNT 分组；score 值低于 80 的不参与分组。
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select gender,avg(score),max(score),min(score),COUNT(id) from stu2 where  score&amp;gt;80 group by gender;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15986275685334/15988653538933.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;– 按照  gender 分组；查询 平均值avg ，最大值max ，最小值min ，人数 COUNT 分组；score 值低于 80 的不参与分组。
+– 分组之后人数大于两个人
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select gender,avg(score),max(score),min(score),COUNT(id) from stu2 where  score&amp;gt;80 group by gender having count(id)&amp;gt;2;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15986275685334/15988654534219.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;为聚合函数取别名
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select gender,avg(score),max(score),min(score),COUNT(id) as studentNumber from stu2 where  score&amp;gt;80 group by gender having studentNumber&amp;gt;2;&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;COUNT(id) as studentNumber&lt;/code&gt;，将 聚合函数(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;COUNT(id) &lt;/code&gt;)设置为别名 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;studentNumber&lt;/code&gt;,当做后面的查询条件用。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;where&lt;/code&gt; 在分组查询之间进行限定，不可进行聚合函数判断&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;having&lt;/code&gt; 在分组之后进行限定，可以进行聚合函数判断&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;分页查询&quot;&gt;分页查询&lt;/h5&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;limit 开始的索引 每页查询的条数&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;– 查询第1页，每页查询2个
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 limit 0,2; &lt;/code&gt;
+– 查询第2页，每页查询2个
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 limit 2,2; &lt;/code&gt;
+– 查询第3页，每页查询2个
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select * from stu2 limit 4,2; &lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15986275685334/15988665228583.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;开始的索引 = (当前的页码 - 1) * 每页显示的个数&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;约束&quot;&gt;约束&lt;/h4&gt;
+&lt;p&gt;对表中的数据进行限定，保证数据的正确性、有效性和完整性。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;主键约束 primary key&lt;/li&gt;
+  &lt;li&gt;非空约束 not null&lt;/li&gt;
+  &lt;li&gt;唯一约束 unique&lt;/li&gt;
+  &lt;li&gt;外键约束 foreign key&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-- 约束
+-- 非空约束
+-- 创建表时添加非空约束
+CREATE TABLE Person (
+	id int,
+	name VARCHAR(20) NOT NULL -- name 非空
+);
+
+-- 删除 非空的约束
+ALTER TABLE `Person` MODIFY name VARCHAR(10);
+
+-- 添加 非空的约束
+ALTER TABLE `Person` MODIFY name VARCHAR(10) NOT NULL;
+
+
+-- 唯一约束
+-- 创建表时添加唯一约束
+CREATE TABLE Person1 (
+	id int UNIQUE, -- 添加唯一约束
+	name VARCHAR(20)
+);
+
+-- 添加 唯一的约束
+ALTER TABLE `Person1` MODIFY name VARCHAR(10) UNIQUE;
+
+-- 删除 唯一的约束
+ALTER TABLE `Person1` DROP INDEX name ;
+
+
+-- 主键约束
+-- 注意：
+-- 含义：非空且唯一。
+-- 一张表只能有一个字段为主键.
+
+-- 主键约束
+-- 创建表时添加主键约束
+CREATE TABLE Person2 (
+	id int PRIMARY KEY, -- 添加主键约束
+	name VARCHAR(20)
+);
+
+-- 删除主键约束
+ALTER TABLE Person2 DROP PRIMARY KEY;
+
+-- 添加 主键约束
+ALTER TABLE `Person2` MODIFY id int PRIMARY KEY;
+
+
+-- 主键约束 自动增长 ：如果某一列是数值类型的，使用 auto_increment 可以完成值的自动增长。
+
+-- 创建表时添加主键约束 并且完成自动增长
+CREATE TABLE Person3 (
+	id int PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20),
+);
+
+-- 删除 自动增长
+ALTER TABLE `Person3` MODIFY id int;
+
+-- 添加 自动增长
+ALTER TABLE `Person3` MODIFY id int auto_increment;
+
+select * from Person3;
+
+INSERT INTO Person3 values(null, &quot;李三&quot;);
+
+
+-- 外键约束 foreign key
+
+-- 创建时添加外键
+CREATE TABLE Address (
+	address_id INT PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20)
+);
+
+CREATE TABLE Person4 (
+	id int PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20),
+	address INT,
+	CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id) -- 关联 Address 表中的  address_id 
+);
+
+-- 删除外键
+ALTER TABLE Person4 DROP foreign key person3_location;
+
+-- 创建表以后 添加外键 
+ALTER TABLE Person4 ADD CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id);
+
+INSERT INTO Address values(null, &quot;南山&quot;);
+INSERT INTO Address values(null, &quot;福田&quot;);
+INSERT INTO Address values(null, &quot;前海&quot;);
+select * from Address;
+
+INSERT INTO Person4 values(null, &quot;李三&quot;,1);
+
+INSERT INTO Person4 values(null, &quot;李四&quot;,2);
+
+INSERT INTO Person4 values(null, &quot;王五&quot;,3);
+
+
+select * from Person4;
+select * from Address;
+
+-- 添加外键 设置 级联操作 ON UPDATE CASCADE 更新关联  ON  DELETE CASCADE 删除关联
+ALTER TABLE Person4 ADD CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id) ON UPDATE CASCADE ON  DELETE CASCADE;
+
+update stu2 set age=45 where id=1;
+update address  set `address_id` = 5 where name=&quot;南山&quot;;
+delete  from Address where address_id=2;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;多表之间的关系&quot;&gt;多表之间的关系&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;多表之间的关系
+    &lt;ul&gt;
+      &lt;li&gt;一对一
+        &lt;ol&gt;
+          &lt;li&gt;如 人和身份证，一个人只能有一个身份证，一个身份证也只能对应一个人。&lt;/li&gt;
+          &lt;li&gt;操作：可以在任意一方添加外键指向另一方的主键，并且保证外键值唯一（unique）。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;一对多、多对一
+        &lt;ol&gt;
+          &lt;li&gt;如 部门和员工的关系。 一个部门有多个员工，一个员工只能对应一个部门。&lt;/li&gt;
+          &lt;li&gt;操作：在多的一方（员工）建立外键指向一的一方（部门）的主键。（在员工表中建立外键指向部门表的主键）&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;多对多
+        &lt;ol&gt;
+          &lt;li&gt;学生和课程之间的关系。一个学生可以选择很多门课程，一门课程也能被许多学生选择。&lt;/li&gt;
+          &lt;li&gt;操作：多对多关系的实现，需要借助第三张中间表，中间表至少包含两个字段，分别指向两张表的主键。这两个字段分别作为外键指向两张表的主键。这两个字段叫做联合主键。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;范式&quot;&gt;范式&lt;/h4&gt;
+&lt;h5 id=&quot;第一范式&quot;&gt;第一范式&lt;/h5&gt;
+&lt;h5 id=&quot;第二范式&quot;&gt;第二范式&lt;/h5&gt;
+&lt;h5 id=&quot;第三范式&quot;&gt;第三范式&lt;/h5&gt;
+&lt;h4 id=&quot;数据库的备份和还原&quot;&gt;数据库的备份和还原&lt;/h4&gt;
+
+&lt;h3 id=&quot;多表查询&quot;&gt;多表查询&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-- 内连接查询
+-- 使用隐式内连接查询
+
+SELECT * FROM Person4,Address WHERE Person4.`Address` = Address.`address_id`;
+
+SELECT Person4.name ,Address.`name` FROM Person4,Address WHERE Person4.`Address` = Address.`address_id`;
+
+SELECT 
+		p.`name` &quot;姓名&quot;,
+		a.`name` &quot;地址&quot;
+FROM
+		Person4 p,Address a 
+WHERE 
+		p.`address` = a.`address_id`;
+
+
+
+
+-- 显式内连接
+
+-- 语法 ： SELECT 字段列表 FROM 表名1 INNER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 语法 ： SELECT 字段列表 FROM 表名1 JOIN 表名2 ON 表名1.id = 表名2.id;
+
+
+SELECT 
+		p.`name` &quot;姓名&quot;,
+		a.`name` &quot;地址&quot;
+FROM
+		Person4 p INNER JOIN Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+
+SELECT 
+		p.`name` &quot;姓名&quot;,
+		a.`name` &quot;地址&quot;
+FROM
+		Person4 p JOIN Address a 
+ON 
+		p.`address` = a.`address_id`;
+
+
+
+
+-- 外连接查询
+
+-- 左外连接 语法 ： SELECT 字段列表 FROM 表名1 LEFT OUTER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 左外连接 语法 ： SELECT 字段列表 FROM 表名1 LEFT  JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 左外连接 查询的是左表所有的数据以及交集部分。
+
+
+-- 右外连接
+-- 右外连接 语法 ： SELECT 字段列表 FROM 表名1 RIGHT OUTER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 右外连接 语法 ： SELECT 字段列表 FROM 表名1 RIGHT  JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 右外连接 查询的是右表所有的数据以及交集部分。
+
+INSERT INTO Person4 values(null, &quot;王老实&quot;,NULL);
+INSERT INTO Address values(null, &quot;宝安&quot;);
+
+select * from Person4;
+/*
+1	李三	5
+3	王五	3
+5	李四	6
+6	王老实	NULL
+*/
+
+
+select * from Address;
+/*
+3	前海
+5	南山
+6	后海
+7	宝安
+*/
+
+SELECT 
+		p.`name` &quot;姓名&quot;,
+		a.`name` &quot;地址&quot;
+FROM
+		Person4 p 
+LEFT JOIN 
+		Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+/*
+
+王五	前海
+李三	南山
+李四	后海
+王老实	NULL
+
+*/
+		
+		
+		
+		
+SELECT 
+		p.`name` &quot;姓名&quot;,
+		a.`name` &quot;地址&quot;
+FROM
+		Person4 p 
+RIGHT JOIN 
+		Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+		
+/*
+李三	南山
+王五	前海
+李四	后海
+NULL	宝安
+*/
+		
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 31 Aug 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/08/31/mysql%E5%AD%A6%E4%B9%A0/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/08/31/mysql%E5%AD%A6%E4%B9%A0/</guid>
+        
+        <category>SQL</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Lambda表达式addThen的理解</title>
+        <description>&lt;h1 id=&quot;lambda表达式addthen的理解&quot;&gt;Lambda表达式addThen的理解&lt;/h1&gt;
+
+&lt;p&gt;先定义一个接口类&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public interface   SYInterface {
+	
+	int add(int a);
+	
+	default SYInterface addThen(SYInterface after)
+	{
+		return (s) -&amp;gt; {
+			int a = add(s);
+			return after.add(a);
+		};
+//   或者
+//		return s-&amp;gt; {
+//			return after.add(add(s));
+//		};
+	}
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;测试类里面&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class SYAddThenDemo {
+	public static void main(String[] args) {
+		
+		SYInterface s1 = a -&amp;gt; a + 2 ;
+		SYInterface s2 = a -&amp;gt; a + 3 ;
+
+		test1(a -&amp;gt; a + 100);
+		test2(s -&amp;gt;  s + 16,s -&amp;gt;  s + 1);
+		
+		test1(s1);
+		test2(s1,s2);
+		
+	}
+	static void test1(SYInterface ic)
+	{
+		int r = ic.add(15);
+		System.out.println(r);
+
+	}
+	static void test2(SYInterface s1,SYInterface s2)
+	{
+	// int a = s1.addThen(s2).add(15);
+		SYInterface c3 =  s1.addThen(s2);
+		int r1 = c3.add(15);
+		System.out.println(r1);
+	}
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;每次看到这段代码我都是一脸懵逼 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int a = s1.addThen(s2).add(15);&lt;/code&gt;，为什么它会先调用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s1&lt;/code&gt; 的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt; 方法，然后调用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;s2&lt;/code&gt; 的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt; 方法。
+天资愚钝，思考了一晚上和一个上午，终于理解了，现在记录下推导过程，以防后面再次迷糊。&lt;/p&gt;
+
+&lt;p&gt;先来看一段代码&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	test1(new SYInterface() {
+		@Override
+		public int add(int a) {
+			
+			return a + 15;
+		}
+	});
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里使用了匿名类来实现，没什么问题，当 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test1&lt;/code&gt; 方法里面 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SYInterface ic&lt;/code&gt; 调用 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ic.add()&lt;/code&gt; 的时候就是调用 匿名类里面的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add&lt;/code&gt; 方法。&lt;/p&gt;
+
+&lt;p&gt;根据规则，我们可以把匿名类这段实现修改为：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    test1(a -&amp;gt; a + 15);
+    
+    其实就是
+    SYInterface ic = a -&amp;gt; a + 15;
+    test1(ic);
+    然后当 ic 调用 add 的时候，其实就是 调用 a + 15;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这段具体的规则就不讲了，继续往下&lt;/p&gt;
+
+&lt;p&gt;上面的理解以后，我们调用接口 SYInterface 的 add 方法的时候，其实就是调用&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int add(int a) {
+    return a + 15
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后我们看下 addThen 的实现&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	default SYInterface addThen(SYInterface after)
+	{
+		return (s) -&amp;gt; {
+			int a = add(s);
+			return after.add(a);
+		};
+//   或者
+//		return s-&amp;gt; {
+//			return after.add(add(s));
+//		};
+	}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;是传入一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SYInterface&lt;/code&gt; 参数返回一个 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SYInterface&lt;/code&gt; 的结果。
+所以 伪代码&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; SYInterface s1 = a -&amp;gt; a + 2 ;
+ SYInterface s2 = a -&amp;gt; a + 3 ;
+ 
+ s1.add(5) = {
+ 	return 5 + 2;
+ }
+ s2.add(5) = {
+ 	return 5 + 3;
+ }
+ 
+ SYInterface c3 = s1.addThen(s2) = s -&amp;gt; {
+	  int a = s1.add(s);
+	  reurn s2.add(a);
+  }	 
+  
+  所以 c3.add(15) 等于 调用了 
+  {
+  		//s = 15
+  		int a = s1.add(s);
+	  	reurn s2.add(a);
+  }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/Lambda_Java/Lambda.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 25 Aug 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/08/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8FaddThen%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/08/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8FaddThen%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+        
+        <category>Java</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>MAC 常用软件</title>
+        <description>&lt;h1 id=&quot;mac-常用软件&quot;&gt;MAC 常用软件&lt;/h1&gt;
+
+&lt;h3 id=&quot;snap&quot;&gt;Snap&lt;/h3&gt;
+&lt;p&gt;快速启动软件的工具。&lt;/p&gt;
+
+&lt;h3 id=&quot;tadam&quot;&gt;Tadam&lt;/h3&gt;
+&lt;p&gt;简洁的番茄时钟。&lt;/p&gt;
+
+&lt;h3 id=&quot;magnet&quot;&gt;Magnet&lt;/h3&gt;
+
+&lt;p&gt;快速修改程序窗口大小的工具&lt;/p&gt;
+
+&lt;h3 id=&quot;bartender&quot;&gt;Bartender&lt;/h3&gt;
+
+&lt;p&gt;状态栏美化小工具，可以自定义隐藏或显示应用小图标。&lt;/p&gt;
+
+&lt;h3 id=&quot;alfred&quot;&gt;Alfred&lt;/h3&gt;
+&lt;p&gt;神器&lt;/p&gt;
+
+&lt;h3 id=&quot;v2rayx&quot;&gt;V2RayX&lt;/h3&gt;
+&lt;p&gt;梯子。&lt;/p&gt;
+&lt;h3 id=&quot;iterm2&quot;&gt;iTerm2&lt;/h3&gt;
+&lt;p&gt;好用好看的终端工具。&lt;/p&gt;
+
+&lt;h3 id=&quot;mweb&quot;&gt;MWeb&lt;/h3&gt;
+
+&lt;p&gt;好用个 Markdown 文本编辑器。&lt;/p&gt;
+
+&lt;h3 id=&quot;go2shell&quot;&gt;Go2Shell&lt;/h3&gt;
+
+&lt;p&gt;方便的在终端打开当前文件路径的小工具。&lt;/p&gt;
+
+&lt;h3 id=&quot;pikka&quot;&gt;Pikka&lt;/h3&gt;
+&lt;p&gt;取色小工具。&lt;/p&gt;
+
+&lt;h3 id=&quot;mindnode&quot;&gt;MindNode&lt;/h3&gt;
+&lt;p&gt;脑图应用。&lt;/p&gt;
+
+&lt;h3 id=&quot;esjsonformatformac&quot;&gt;ESJsonFormatForMac&lt;/h3&gt;
+
+&lt;p&gt;json 转 model 工具。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 08 Jul 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/07/08/MAC-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/08/MAC-%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>发哨子的人</title>
+        <description>&lt;h1 id=&quot;发哨子的人&quot;&gt;发哨子的人&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/other/发哨子的人.jpg&quot; alt=&quot;发哨子的人&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 11 Mar 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/03/11/%E5%8F%91%E5%93%A8%E5%AD%90%E7%9A%84%E4%BA%BA/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/03/11/%E5%8F%91%E5%93%A8%E5%AD%90%E7%9A%84%E4%BA%BA/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>UITableViewCell嵌套UICollectionView布局</title>
+        <description>&lt;h1 id=&quot;uitableviewcell嵌套uicollectionview布局&quot;&gt;UITableViewCell嵌套UICollectionView布局&lt;/h1&gt;
+
+&lt;p&gt;开发中经常遇到 cell 嵌套九宫格展示图片之类的需求，类似于下面的情况。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/media/15743256429556/Simulator%20Screen%20Shot%20-%20iPhone%2011%20Pro%20Max%20-%202019-11-21%20at%2016.39.36.png&quot; alt=&quot;Simulator Screen Shot - iPhone 11 Pro Max - 2019-11-21 at 16.39.36&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;最简单的办法就是 cell 里面嵌套 collectionView，具体的做法是：&lt;/p&gt;
+
+&lt;p&gt;在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&lt;/code&gt; 的代理方法里面这样处理。&lt;/p&gt;
+
+&lt;div class=&quot;language-objective_c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+    &lt;span class=&quot;n&quot;&gt;OrderDetailsIntentionTableViewCell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dequeueReusableCellWithIdentifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&quot;OrderDetailsIntentionTableViewCell&quot;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;forIndexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indexPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;configModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tableView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;layoutIfNeeded&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;reloadData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//heightConstraint 为内嵌的 collectionView 高度约束&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heightConstraint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constant&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionViewLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionViewContentSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OrderDetailsIntentionTableViewCell&lt;/code&gt; 里面这样设置 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;collectionView&lt;/code&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;language-objective_c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    
+    &lt;span class=&quot;n&quot;&gt;UICollectionViewLeftAlignedLayout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flowLayout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UICollectionViewLeftAlignedLayout&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;flowLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumLineSpacing&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;flowLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumInteritemSpacing&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;flowLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sectionInset&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIEdgeInsetsMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//top, left, bottom, right&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionViewLayout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flowLayout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backgroundColor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UIColor&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;clearColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataSource&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delegate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;collectionView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scrollEnabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样写也行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-Swift&quot;&gt;	DispatchQueue.main.async(execute: {
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(MAXFLOAT).priority(666)
+			}
+			self.collectionView.reloadData()
+			self.collectionView.layoutIfNeeded()
+
+			let height = self.collectionView.collectionViewLayout.collectionViewContentSize.height
+			self.collectionView.snp.updateConstraints { (make) in
+				make.edges.equalToSuperview().inset(UIEdgeInsets.init(top: 5, left: 10, bottom: 5, right: 10))
+				make.height.equalTo(height).priority(666)
+			}
+			self.collectionView.SSY.parentTableView()?.beginUpdates()
+			self.collectionView.SSY.parentTableView()?.endUpdates()
+
+		})
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+        <pubDate>Thu, 21 Nov 2019 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2019/11/21/UITableViewCell%E5%B5%8C%E5%A5%97UICollectionView%E5%B8%83%E5%B1%80/</link>
+        <guid isPermaLink="true">http://localhost:4000/2019/11/21/UITableViewCell%E5%B5%8C%E5%A5%97UICollectionView%E5%B8%83%E5%B1%80/</guid>
+        
+        <category>iOS</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

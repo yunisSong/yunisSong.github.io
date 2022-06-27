@@ -1,0 +1,98 @@
+I"�<h1 id="输入框切换键盘卡顿的解决办法">输入框切换键盘卡顿的解决办法</h1>
+
+<p>今天开发碰到一个问题：
+有两个输入框，一个输入手机号码、一个输入验证码。
+客户要求：手机号输入框输入满11位时，切换到验证码输入框。</p>
+
+<p>很常见的需求，也很好解决,观察输入框内容的变化，然后切换键盘响应：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//监听位数</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">field</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="c1">//输入框取消响应</span>
+            <span class="p">[</span><span class="n">field</span> <span class="nf">resignFirstResponder</span><span class="p">];</span>
+            <span class="c1">//验证码输入框 响应键盘</span>
+            <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">codeField</span> <span class="nf">becomeFirstResponder</span><span class="p">];</span>
+
+        <span class="p">});</span>
+     <span class="p">}</span>
+</code></pre></div></div>
+
+<p>很愉快的提交了代码，但是测试的小伙伴告诉我，键盘切换的时间有卡顿。？？？？一脸懵逼！！</p>
+
+<p>这也会卡？</p>
+
+<p>然后想到了是不是因为动画引起的问题？
+更改如下：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//监听位数</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">field</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+            <span class="p">[</span><span class="n">UIView</span> <span class="nf">performWithoutAnimation</span><span class="p">:</span><span class="o">^</span><span class="p">{</span>
+                <span class="c1">//输入框取消响应</span>
+                <span class="p">[</span><span class="n">field</span> <span class="nf">resignFirstResponder</span><span class="p">];</span>
+                <span class="c1">//验证码输入框 响应键盘</span>
+                <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">codeField</span> <span class="nf">becomeFirstResponder</span><span class="p">];</span>
+            <span class="p">}];</span>
+        <span class="p">});</span>
+     <span class="p">}</span>
+</code></pre></div></div>
+
+<p>还是不行，是在没有办法了，最后搜索到这样一个答案：
+<a href="https://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8?answertab=votes#tab-top">stackoverflow</a></p>
+
+<blockquote>
+  <p>A responder object only becomes the first responder if the current responder can resign first-responder status (canResignFirstResponder) and the new responder can become first responder.
+You may call this method to make a responder object such as a view the first responder. However, you should only call it on that view if it is part of a view hierarchy. If the view’s window property holds a UIWindow object, it has been installed in a view hierarchy; if it returns nil, the view is detached from any hierarchy.</p>
+</blockquote>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">txtAddNew</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">becomeFirstResponder</span><span class="p">)</span> <span class="nf">withObject</span><span class="p">:</span><span class="nb">nil</span> <span class="n">afterDelay</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>心想这样总可以了吧。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">[</span><span class="n">field</span> <span class="nf">resignFirstResponder</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">codeField</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">becomeFirstResponder</span><span class="p">)</span> <span class="nf">withObject</span><span class="p">:</span><span class="nb">nil</span> <span class="n">afterDelay</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+
+</code></pre></div></div>
+
+<p>。。。
+还是不行。。</p>
+
+<p>最后把    <code class="language-plaintext highlighter-rouge">[field resignFirstResponder];</code> 这样代码注释掉才可以。</p>
+
+<p>最终版本：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//监听位数</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">field</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//切换键盘响应</span>
+        <span class="c1">//解决切换键盘卡顿</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">codeField</span> <span class="nf">performSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">becomeFirstResponder</span><span class="p">)</span> <span class="nf">withObject</span><span class="p">:</span><span class="nb">nil</span> <span class="n">afterDelay</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+     <span class="p">}</span>
+</code></pre></div></div>
+
+<p>猜测应该是键盘所在的 <code class="language-plaintext highlighter-rouge">window</code> 切换导致的这个问题。</p>
+
+<p>如果先取消第一个输入框的响应，再让第二个输入框响应， 这样的话会先把当前键盘所在的 <code class="language-plaintext highlighter-rouge">window</code> 销毁，然后创建新的 <code class="language-plaintext highlighter-rouge">window</code>，就会导致卡顿。</p>
+
+<p>如果不先取消第一个键盘的响应，就不会销毁 window 也不会创建新的 window ，就不会卡顿。有时间了写个 demo 验证下。</p>
+
+<p>好尴尬，在模拟器上测试。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:07.888 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:07.889 TestBecomeFirstResponder[14397:582182] 
+
+
+
+
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc841cd70
+2017-07-08 17:45:08.973 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc85b2630
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 窗口 = 0x7f8cc847e910
+2017-07-08 17:45:08.974 TestBecomeFirstResponder[14397:582182] 
+</code></pre></div></div>
+
+<p>窗口都没有变化。。。这让老夫如何是好！</p>
+
+:ET

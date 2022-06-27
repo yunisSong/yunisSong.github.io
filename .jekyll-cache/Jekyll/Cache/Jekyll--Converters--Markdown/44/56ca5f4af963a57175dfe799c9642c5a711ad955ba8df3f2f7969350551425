@@ -1,0 +1,25 @@
+I"t<h1 id="mac切换默认的python版本">MAC切换默认的Python版本</h1>
+
+<h3 id="使用-系统默认的-bash">使用 系统默认的 bash</h3>
+<p>参见 这个链接：http://blog.csdn.net/a704901117/article/details/69262428?locationNum=15&amp;fps=1</p>
+<h3 id="使用-iterm">使用 iTerm</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ <span class="nb">cd</span> ~
+➜  ~ <span class="nb">ls</span> <span class="nt">-a</span>
+➜  ~ open .zshrc
+</code></pre></div></div>
+
+<p>然后添加 <code class="language-plaintext highlighter-rouge">if which pyenv &gt; /dev/null; then eval "$(pyenv init -)"; fi</code> 到打开的文本。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  ~ source  .zshrc
+➜  ~ python
+Python 3.5.2 (default, Oct 29 2016, 22:48:09)
+[GCC 4.2.1 Compatible Apple LLVM 7.0.2 (clang-700.1.81)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; exit()
+KeyboardInterrupt
+&gt;&gt;&gt;
+</code></pre></div></div>
+
+<p>就切换到 3.5版本了。</p>
+
+:ET

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="潜心修行中。">
+    <meta name="keywords"  content="iOS,Python,swift 初学者">
+    <meta name="theme-color" content="#000000">
+
+    <title>mysql学习 - 三十一的博客 | Yunis Blog</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="http://localhost:4000/2020/08/31/mysql%E5%AD%A6%E4%B9%A0/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/yunisPic.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">三十一</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    var __HuxNav__ = {
+        close: function(){
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+
+    // Bind Event
+    $toggle.addEventListener('click', function(e){
+        if ($navbar.className.indexOf('in') > 0) {
+            __HuxNav__.close()
+        }else{
+            __HuxNav__.open()
+        }
+    })
+
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from 
+     * $toggle/$collapse will break global delegation.
+     * 
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close HuxNav.  
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == $toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        __HuxNav__.close();
+    })
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-nextgen-web-pwa.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/post-bg-nextgen-web-pwa.jpg')
+    }
+
+    
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, 0.3);
+    }
+    
+</style>
+<div id="YunisTestImage" class="SYYImageDiss">
+    <img id="SSYLargeImage" class="animate-scale0" src=""></div>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#SQL" title="SQL">SQL</a>
+                        
+                    </div>
+                    <h1>mysql学习</h1>
+                    
+                    
+                    <h2 class="subheading">在不断填坑中前进。。</h2>
+                    
+                    <span class="meta">Posted by 三十一 on August 31, 2020</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h1 id="mysql学习">mysql学习</h1>
+<h3 id="安装数据库">安装数据库</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+brew install mysql@5.7
+
+brew tap homebrew/services
+
+brew services start mysql@5.7
+
+//如果报错
+brew update
+
+
+brew services list
+
+brew link mysql@5.7 --force
+
+echo 'export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"' &gt;&gt; ~/.zshrc
+export LDFLAGS="-L/usr/local/opt/mysql@5.7/lib"
+export CPPFLAGS="-I/usr/local/opt/mysql@5.7/include"
+
+
+
+
+brew services start mysql@5.7
+brew services stop  mysql@5.7
+
+
+update user set authentication_string=password('Ssy198800!') where user='root';
+</code></pre></div></div>
+<h3 id="操作数据库">操作数据库</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>显示所有的数据库
+show databases;
+
+如果 db1 数据库 存在，删除 db1；
+drop database  if exists db1;
+
+查询正在使用的数据库
+select database();
+
+使用数据库 db1
+use db1;
+
+修改db1 的字符集
+alter database db1 character set utf8;
+
+显示 db1 的创建信息
+show create database db1;
+
+如果 db1 不存在的话，创建 db1 字符集为 utf-8
+create database if not exists db1 character set utf8;
+quit
+</code></pre></div></div>
+
+<h3 id="操作表">操作表</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>显示当前使用的数据库里面包含的表
+show tables;
+
+显示 user 表的表结构
+desc user;
+
+创建表的基本语法
+create table user (
+    id int,
+    name varchar(32),
+    age int,
+    score double(5,2),  -- 最大值为 999.99
+    birthday date, -- yyyy-MM-dd
+    creatTime timestamp, -- yyyy-MM-dd HH:mm:ss 
+);
+
+复制表 把 Student 复制一份，命名Wie stu
+create table stu like Student
+
+
+删除 Student
+drop table Student
+
+如果 Student 表存在，删除 Student；
+drop table  if exists Student;
+
+查看表 stu2 的创建信息
+show create table stu2;
+
+修改表名称 把表  Stu1 修改名称为 Stu2
+alter table Stu1 rename to Stu2
+ 
+修改表字符集,把 stu2 表的字符集修改为 utf-8
+alter table stu2 character set utf8;
+
+
+添加一列,在 stu2 的表中 新增一列 名为 gender、类型为 int 、长度为 1 位的列。
+alter table stu2 add gender int(1);
+
+修改列名称 类型,将表 stu2中列名为  gender1 修改为 sex，类型修改为 字符串，长度为 20；
+alter table stu2 change gender1 sex varchar(20);
+
+
+只修改类的类型,将表 stu2中列名为 sex 列，类型修改为 int ，长度为 1；
+alter table stu2 modify sex int(1);
+
+
+删除列 删除 stu2 表中的 sex 列。
+alter table stu2 drop sex;
+
+</code></pre></div></div>
+
+<h3 id="操作表中的数据">操作表中的数据</h3>
+
+<h4 id="添加数据">添加数据</h4>
+
+<p><code class="language-plaintext highlighter-rouge">insert  into 表名(列名1，列名2,列名3) values (值1,值2,值3);</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">insert  into 表名 values (值1,值2,值3);</code> 要对应表中所用的列的值。</p>
+
+<p>eg :<code class="language-plaintext highlighter-rouge">INSERT into stu2 values (2,"李三",25,88.5,"2015-05-11",null,1);</code></p>
+
+<p>列名和值要一一对应，如果表后面没有添加列名，则默认给所有的列添加值。
+除了数字类型外，其他类型的值需要用引号包裹起来。</p>
+<h4 id="删除数据">删除数据</h4>
+
+<p><code class="language-plaintext highlighter-rouge">delete from 表名 [where 条件];</code></p>
+
+<p>eg : <code class="language-plaintext highlighter-rouge">delete  from stu2 where id=1;</code></p>
+
+<p>如果不加条件，会删除表中的所有数据。<code class="language-plaintext highlighter-rouge">delete  from stu2;</code>（不推荐用做删除表，因为这个操作是表中有多少数据就进行多少次删除操作。）</p>
+
+<p>//删除  stu2  所有数据
+truncate table stu2;</p>
+
+<h4 id="修改数据">修改数据</h4>
+<p><code class="language-plaintext highlighter-rouge">update 表名 set 列名1=值1,列名2=值2， [where 条件]</code>
+如果 不加任何条件，则会将表中所有记录全部修改。</p>
+
+<h3 id="查询表中的数据">查询表中的数据</h3>
+
+<p><code class="language-plaintext highlighter-rouge">select * from 表名</code></p>
+<h4 id="查询语句">查询语句</h4>
+<h5 id="基础查询">基础查询</h5>
+<p><code class="language-plaintext highlighter-rouge">select name,age from stu2;</code> 查询 name ，age 字段</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select 
+	name, -- 姓名
+	age  -- 年龄
+from 
+	stu2; 
+</code></pre></div></div>
+
+<p>去重 DISTINCT
+<code class="language-plaintext highlighter-rouge">select DISTINCT name from stu2;</code></p>
+
+<p>结果相加 (+) 并且设置别名(as 可以用空格代替)，
+计算列的结果可以使用 四则运算符，一般只计算数值型的值。
+<code class="language-plaintext highlighter-rouge">select age as "年纪",gender as "性别", ifnull(age,0)+ifnull(gender,0) as "虽然不合理但是我就是想这么加" from stu2;</code></p>
+
+<p><img src="/media/15986275685334/15988675786356.jpg" alt="" /></p>
+
+<h5 id="条件查询-where">条件查询 where</h5>
+
+<p>where 后面跟查询条件</p>
+
+<p>运算符</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;=</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&gt;=</code></li>
+  <li><code class="language-plaintext highlighter-rouge">=</code></li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;&gt;</code> 不等于,跟 <code class="language-plaintext highlighter-rouge">!= </code>一样的意义。</li>
+  <li><code class="language-plaintext highlighter-rouge">between...and</code> 在什么什么之间</li>
+  <li><code class="language-plaintext highlighter-rouge">in(集合)</code> 在集合内部的范围</li>
+  <li><code class="language-plaintext highlighter-rouge">like</code> 模糊查询，占位符 <code class="language-plaintext highlighter-rouge">-</code> 单个任意字符，<code class="language-plaintext highlighter-rouge">%</code>多个任意字符</li>
+  <li><code class="language-plaintext highlighter-rouge">is null</code> 值为空</li>
+  <li><code class="language-plaintext highlighter-rouge">is not null</code> 值不为空</li>
+  <li><code class="language-plaintext highlighter-rouge">and / &amp;&amp;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">or / ||</code></li>
+  <li><code class="language-plaintext highlighter-rouge">not / !</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select * from stu2 where age &gt;= 25; 
+select * from stu2 where age = 25; 
+select * from stu2 where age != 25; 
+select * from stu2 where age &lt;&gt; 25; 
+select * from stu2 where age &gt;= 25 &amp;&amp; age &lt; 40; 
+select * from stu2 where age &gt;= 25 and age &lt; 40; 
+select * from stu2 where age BETWEEN 25 and 40; 
+select * from stu2 where age = 25 || age = 28; 
+select * from stu2 where age = 25 or age = 28; 
+select * from stu2 where age in (25,28); 
+select * from stu2 where score is null;
+select * from stu2 where score is not null;
+-- 姓名第一字为 王 的 数据
+select * from stu2 where name like '王%';
+-- 姓名第二字为 三 的 数据
+select * from stu2 where name like '_三%';
+-- 姓名为三个字的人
+select * from stu2 where name like '___';
+-- 姓名中包含王的人
+select * from stu2 where name like '%王%';
+</code></pre></div></div>
+
+<h5 id="排序查询">排序查询</h5>
+
+<p><code class="language-plaintext highlighter-rouge">order by 子句 </code>
+eg: <code class="language-plaintext highlighter-rouge">select * from stu2 order by id;</code>,<code class="language-plaintext highlighter-rouge">select * from stu2 order by id DESC;</code>
+排序方式不写，默认升序排列（ASC）。</p>
+
+<p><code class="language-plaintext highlighter-rouge">order by 排序字段1 排序方式1,排序字段2 排序方式2, ...</code></p>
+
+<p>排序方式
+    1. 升序（ASC） 默认
+    2. 降序（DESC）降序</p>
+
+<p>按照 score 排序 如果值一样，按照 id 排序;只有第一排序条件结果一样的时候，才采用后面的排序条件。
+<code class="language-plaintext highlighter-rouge">select * from stu2 order by score ASC,id ASC;</code></p>
+
+<h5 id="聚合函数">聚合函数</h5>
+<p>将一列数据作为一个整体，进行一个纵向的计算。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">count</code> 计算数量</li>
+  <li><code class="language-plaintext highlighter-rouge">max</code> 计算最大值</li>
+  <li><code class="language-plaintext highlighter-rouge">min</code> 计算最小值</li>
+  <li><code class="language-plaintext highlighter-rouge">sum</code> 求和</li>
+  <li><code class="language-plaintext highlighter-rouge">avg</code> 计算平均值</li>
+</ol>
+
+<p>eg:</p>
+
+<p><code class="language-plaintext highlighter-rouge">select count(name)  from stu2;</code> 计算 name 有多少个字段 ,不计算 null 值。
+<code class="language-plaintext highlighter-rouge">select count(ifnull(name,""))  from stu2;</code> 计算 name 有多少个字段 ,如果值为 null，</p>
+
+<h5 id="分组查询">分组查询</h5>
+
+<p><code class="language-plaintext highlighter-rouge">group by gender</code></p>
+
+<p>分组之后查询的字段只能是分组的字段或者聚合函数。
+<code class="language-plaintext highlighter-rouge">select gender,avg(score),max(score),COUNT(id) from stu2 group by gender;
+</code>
+<img src="/media/15986275685334/15988649965857.jpg" alt="" /></p>
+
+<p>按照  gender 分组；查询 平均值avg ，最大值max ，最小值min ，人数 COUNT 分组；score 值低于 80 的不参与分组。
+<code class="language-plaintext highlighter-rouge">select gender,avg(score),max(score),min(score),COUNT(id) from stu2 where  score&gt;80 group by gender;</code></p>
+
+<p><img src="/media/15986275685334/15988653538933.jpg" alt="" /></p>
+
+<p>– 按照  gender 分组；查询 平均值avg ，最大值max ，最小值min ，人数 COUNT 分组；score 值低于 80 的不参与分组。
+– 分组之后人数大于两个人
+<code class="language-plaintext highlighter-rouge">select gender,avg(score),max(score),min(score),COUNT(id) from stu2 where  score&gt;80 group by gender having count(id)&gt;2;</code></p>
+
+<p><img src="/media/15986275685334/15988654534219.jpg" alt="" /></p>
+
+<p>为聚合函数取别名
+<code class="language-plaintext highlighter-rouge">select gender,avg(score),max(score),min(score),COUNT(id) as studentNumber from stu2 where  score&gt;80 group by gender having studentNumber&gt;2;</code>
+<code class="language-plaintext highlighter-rouge">COUNT(id) as studentNumber</code>，将 聚合函数(<code class="language-plaintext highlighter-rouge">COUNT(id) </code>)设置为别名 <code class="language-plaintext highlighter-rouge">studentNumber</code>,当做后面的查询条件用。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">where</code> 在分组查询之间进行限定，不可进行聚合函数判断</li>
+  <li><code class="language-plaintext highlighter-rouge">having</code> 在分组之后进行限定，可以进行聚合函数判断</li>
+</ul>
+
+<h5 id="分页查询">分页查询</h5>
+<p><code class="language-plaintext highlighter-rouge">limit 开始的索引 每页查询的条数</code></p>
+
+<p>– 查询第1页，每页查询2个
+<code class="language-plaintext highlighter-rouge">select * from stu2 limit 0,2; </code>
+– 查询第2页，每页查询2个
+<code class="language-plaintext highlighter-rouge">select * from stu2 limit 2,2; </code>
+– 查询第3页，每页查询2个
+<code class="language-plaintext highlighter-rouge">select * from stu2 limit 4,2; </code></p>
+
+<p><img src="/media/15986275685334/15988665228583.jpg" alt="" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">开始的索引 = (当前的页码 - 1) * 每页显示的个数</code></p>
+
+<h4 id="约束">约束</h4>
+<p>对表中的数据进行限定，保证数据的正确性、有效性和完整性。</p>
+
+<ul>
+  <li>主键约束 primary key</li>
+  <li>非空约束 not null</li>
+  <li>唯一约束 unique</li>
+  <li>外键约束 foreign key</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- 约束
+-- 非空约束
+-- 创建表时添加非空约束
+CREATE TABLE Person (
+	id int,
+	name VARCHAR(20) NOT NULL -- name 非空
+);
+
+-- 删除 非空的约束
+ALTER TABLE `Person` MODIFY name VARCHAR(10);
+
+-- 添加 非空的约束
+ALTER TABLE `Person` MODIFY name VARCHAR(10) NOT NULL;
+
+
+-- 唯一约束
+-- 创建表时添加唯一约束
+CREATE TABLE Person1 (
+	id int UNIQUE, -- 添加唯一约束
+	name VARCHAR(20)
+);
+
+-- 添加 唯一的约束
+ALTER TABLE `Person1` MODIFY name VARCHAR(10) UNIQUE;
+
+-- 删除 唯一的约束
+ALTER TABLE `Person1` DROP INDEX name ;
+
+
+-- 主键约束
+-- 注意：
+-- 含义：非空且唯一。
+-- 一张表只能有一个字段为主键.
+
+-- 主键约束
+-- 创建表时添加主键约束
+CREATE TABLE Person2 (
+	id int PRIMARY KEY, -- 添加主键约束
+	name VARCHAR(20)
+);
+
+-- 删除主键约束
+ALTER TABLE Person2 DROP PRIMARY KEY;
+
+-- 添加 主键约束
+ALTER TABLE `Person2` MODIFY id int PRIMARY KEY;
+
+
+-- 主键约束 自动增长 ：如果某一列是数值类型的，使用 auto_increment 可以完成值的自动增长。
+
+-- 创建表时添加主键约束 并且完成自动增长
+CREATE TABLE Person3 (
+	id int PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20),
+);
+
+-- 删除 自动增长
+ALTER TABLE `Person3` MODIFY id int;
+
+-- 添加 自动增长
+ALTER TABLE `Person3` MODIFY id int auto_increment;
+
+select * from Person3;
+
+INSERT INTO Person3 values(null, "李三");
+
+
+-- 外键约束 foreign key
+
+-- 创建时添加外键
+CREATE TABLE Address (
+	address_id INT PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20)
+);
+
+CREATE TABLE Person4 (
+	id int PRIMARY KEY auto_increment, -- 添加主键约束
+	name VARCHAR(20),
+	address INT,
+	CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id) -- 关联 Address 表中的  address_id 
+);
+
+-- 删除外键
+ALTER TABLE Person4 DROP foreign key person3_location;
+
+-- 创建表以后 添加外键 
+ALTER TABLE Person4 ADD CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id);
+
+INSERT INTO Address values(null, "南山");
+INSERT INTO Address values(null, "福田");
+INSERT INTO Address values(null, "前海");
+select * from Address;
+
+INSERT INTO Person4 values(null, "李三",1);
+
+INSERT INTO Person4 values(null, "李四",2);
+
+INSERT INTO Person4 values(null, "王五",3);
+
+
+select * from Person4;
+select * from Address;
+
+-- 添加外键 设置 级联操作 ON UPDATE CASCADE 更新关联  ON  DELETE CASCADE 删除关联
+ALTER TABLE Person4 ADD CONSTRAINT person3_location foreign key (address) REFERENCES Address(address_id) ON UPDATE CASCADE ON  DELETE CASCADE;
+
+update stu2 set age=45 where id=1;
+update address  set `address_id` = 5 where name="南山";
+delete  from Address where address_id=2;
+</code></pre></div></div>
+
+<h4 id="多表之间的关系">多表之间的关系</h4>
+<ol>
+  <li>多表之间的关系
+    <ul>
+      <li>一对一
+        <ol>
+          <li>如 人和身份证，一个人只能有一个身份证，一个身份证也只能对应一个人。</li>
+          <li>操作：可以在任意一方添加外键指向另一方的主键，并且保证外键值唯一（unique）。</li>
+        </ol>
+      </li>
+      <li>一对多、多对一
+        <ol>
+          <li>如 部门和员工的关系。 一个部门有多个员工，一个员工只能对应一个部门。</li>
+          <li>操作：在多的一方（员工）建立外键指向一的一方（部门）的主键。（在员工表中建立外键指向部门表的主键）</li>
+        </ol>
+      </li>
+      <li>多对多
+        <ol>
+          <li>学生和课程之间的关系。一个学生可以选择很多门课程，一门课程也能被许多学生选择。</li>
+          <li>操作：多对多关系的实现，需要借助第三张中间表，中间表至少包含两个字段，分别指向两张表的主键。这两个字段分别作为外键指向两张表的主键。这两个字段叫做联合主键。</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="范式">范式</h4>
+<h5 id="第一范式">第一范式</h5>
+<h5 id="第二范式">第二范式</h5>
+<h5 id="第三范式">第三范式</h5>
+<h4 id="数据库的备份和还原">数据库的备份和还原</h4>
+
+<h3 id="多表查询">多表查询</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- 内连接查询
+-- 使用隐式内连接查询
+
+SELECT * FROM Person4,Address WHERE Person4.`Address` = Address.`address_id`;
+
+SELECT Person4.name ,Address.`name` FROM Person4,Address WHERE Person4.`Address` = Address.`address_id`;
+
+SELECT 
+		p.`name` "姓名",
+		a.`name` "地址"
+FROM
+		Person4 p,Address a 
+WHERE 
+		p.`address` = a.`address_id`;
+
+
+
+
+-- 显式内连接
+
+-- 语法 ： SELECT 字段列表 FROM 表名1 INNER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 语法 ： SELECT 字段列表 FROM 表名1 JOIN 表名2 ON 表名1.id = 表名2.id;
+
+
+SELECT 
+		p.`name` "姓名",
+		a.`name` "地址"
+FROM
+		Person4 p INNER JOIN Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+
+SELECT 
+		p.`name` "姓名",
+		a.`name` "地址"
+FROM
+		Person4 p JOIN Address a 
+ON 
+		p.`address` = a.`address_id`;
+
+
+
+
+-- 外连接查询
+
+-- 左外连接 语法 ： SELECT 字段列表 FROM 表名1 LEFT OUTER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 左外连接 语法 ： SELECT 字段列表 FROM 表名1 LEFT  JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 左外连接 查询的是左表所有的数据以及交集部分。
+
+
+-- 右外连接
+-- 右外连接 语法 ： SELECT 字段列表 FROM 表名1 RIGHT OUTER JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 右外连接 语法 ： SELECT 字段列表 FROM 表名1 RIGHT  JOIN 表名2 ON 表名1.id = 表名2.id;
+-- 右外连接 查询的是右表所有的数据以及交集部分。
+
+INSERT INTO Person4 values(null, "王老实",NULL);
+INSERT INTO Address values(null, "宝安");
+
+select * from Person4;
+/*
+1	李三	5
+3	王五	3
+5	李四	6
+6	王老实	NULL
+*/
+
+
+select * from Address;
+/*
+3	前海
+5	南山
+6	后海
+7	宝安
+*/
+
+SELECT 
+		p.`name` "姓名",
+		a.`name` "地址"
+FROM
+		Person4 p 
+LEFT JOIN 
+		Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+/*
+
+王五	前海
+李三	南山
+李四	后海
+王老实	NULL
+
+*/
+		
+		
+		
+		
+SELECT 
+		p.`name` "姓名",
+		a.`name` "地址"
+FROM
+		Person4 p 
+RIGHT JOIN 
+		Address a 
+ON 
+		p.`address` = a.`address_id`;
+		
+		
+/*
+李三	南山
+王五	前海
+李四	后海
+NULL	宝安
+*/
+		
+</code></pre></div></div>
+
+
+                <hr style="visibility: hidden;">
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/08/25/Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8FaddThen%E7%9A%84%E7%90%86%E8%A7%A3/" data-toggle="tooltip" data-placement="top" title="Lambda表达式addThen的理解">
+                        Previous<br>
+                        <span>Lambda表达式addThen的理解</span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/09/03/mysql%E7%BB%83%E4%B9%A0/" data-toggle="tooltip" data-placement="top" title="mysql练习">
+                        Next<br>
+                        <span>mysql练习</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+
+
+                
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+            </div>
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="24">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#GCD" title="GCD" rel="2">
+                                    GCD
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#源码" title="源码" rel="2">
+                                    源码
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#内功" title="内功" rel="8">
+                                    内功
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Shell" title="Shell" rel="4">
+                                    Shell
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="6">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#工具" title="工具" rel="2">
+                                    工具
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#SQL" title="SQL" rel="2">
+                                    SQL
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://sindrilin.com/">sindri的小巢</a></li>
+                    
+                        <li><a href="https://onevcat.com/#blog">onevcat</a></li>
+                    
+                        <li><a href="https://objccn.io/issues/">ObjC 中国</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                        <li><a href="http://blog.sunnyxx.com/">我就叫Sunny怎么了</a></li>
+                    
+                        <li><a href="https://github.com/nixzhu/dev-blog">nixzhu</a></li>
+                    
+                        <li><a href="http://draveness.me/">Draveness</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "yunissong";
+    var disqus_identifier = "/2020/08/31/mysql学习";
+    var disqus_url = "http://localhost:4000/2020/08/31/mysql%E5%AD%A6%E4%B9%A0/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/iOSSurf">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/yunisSong">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 三十一 2022
+                    <br>
+                    Theme by <a href="http://huangxuan.me/">Hux Blog</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=huxpro&repo=huxpro.github.io&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+<script src="/js/yunisPic.js "></script>
+
+
+<!-- Service Worker -->
+
+<script type="text/javascript">
+    if(navigator.serviceWorker){
+        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {console.log('Service Worker Registered. ', registration)})
+            .catch((error) => {console.log('ServiceWorker registration failed: ', error)})
+    }
+</script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+     - https://github.com/jneen/rouge/wiki/list-of-supported-languages-and-lexers
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async('/js/jquery.tagcloud.js',function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-96835471-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Hux to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

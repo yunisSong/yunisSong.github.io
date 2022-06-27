@@ -1,0 +1,118 @@
+I"�-<h1 id="使用脚本统计svn代码修改数">使用脚本统计SVN代码修改数</h1>
+
+<p>今天老大让统计自己这一段写的代码量，之前因为是写的新功能，所有的文件都是新增的比较好统计，使用了 <code class="language-plaintext highlighter-rouge">cloc</code> 来统计了代码的总量，最近的修改都是修补一些bug，没怎么大模块的提交代码，都是小小的修修补补，不可能每一次提交都去看下修改的代码行数的，作为一个程序员，还是习惯性的在网上看看前辈们是怎么统计代码的，最后找到了一个工具来统计自己修改的代码数量。脚本如下：
+原脚本地址：<a href="http://blog.csdn.net/kittyboy0001/article/details/24362045">使用svn命令统计两次上线之间的代码行数，以及不同作者的代码行数</a></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/bash</span>
+<span class="c"># 计算有效变更代码量的脚本</span>
+<span class="c"># 包括注释，但不包括新增的空行</span>
+version<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">OS</span><span class="o">=</span><span class="sb">`</span><span class="nb">uname</span> <span class="nt">-o</span><span class="sb">`</span>
+    <span class="nb">echo</span> <span class="s2">"svn_counter (</span><span class="nv">$OS</span><span class="s2">) 0.0.1"</span>
+<span class="o">}</span>
+
+
+usage<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">"usage: svn_counter [-t SVN_REPOSITORY_URL] [-s START_REVISION]"</span>
+    <span class="nb">echo</span> <span class="s2">"                      [-e END_REVISION] [-u USER_NAME]"</span>
+    <span class="nb">echo</span> <span class="s2">"                      [-p PASSWD]"</span>
+    <span class="nb">echo</span> <span class="s2">"       svn_counter [-v|-h]"</span>
+    <span class="nb">echo
+    echo</span> <span class="s2">"        -t,                 目标SVN库地址"</span>
+    <span class="nb">echo</span> <span class="s2">"        -s,                 起始修订号"</span>
+    <span class="nb">echo</span> <span class="s2">"        -e,                 结束修订号"</span>
+    <span class="nb">echo</span> <span class="s2">"        -a,                 提交作者"</span>
+    <span class="nb">echo</span> <span class="s2">"        -u,                 svn帐号"</span>
+    <span class="nb">echo</span> <span class="s2">"        -p,                 svn密码"</span>
+    <span class="nb">echo</span> <span class="s2">"        -h,                 帮助"</span>
+    <span class="nb">echo</span> <span class="s2">"        -v,                 版本信息"</span>
+<span class="o">}</span>
+
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-lt</span> 1 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span>usage
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+
+while </span><span class="nb">getopts</span> <span class="s2">"t:s:e:a:u:p:vh"</span> opt<span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$opt</span> <span class="k">in
+        </span>t<span class="p">)</span> <span class="nv">target</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        s<span class="p">)</span> <span class="nv">start_revision</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        e<span class="p">)</span> <span class="nv">end_revision</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        a<span class="p">)</span> <span class="nv">author</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        u<span class="p">)</span> <span class="nv">user</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        p<span class="p">)</span> <span class="nv">passwd</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="p">;;</span>
+        v<span class="p">)</span> version<span class="p">;</span> <span class="nb">exit </span>1<span class="p">;;</span>
+        h<span class="p">)</span> usage<span class="p">;</span> <span class="nb">exit </span>1<span class="p">;;</span>
+    <span class="k">esac</span>
+<span class="k">done
+
+
+if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="nv">$target</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"请输入目标SVN库地址!"</span>
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+
+if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="nv">$start_revision</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"请输入起始修订号!"</span>
+    <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+
+
+
+<span class="c">#SVN_CMD='/home/work/local/svn/bin/svn'</span>
+<span class="nv">SVN_CMD</span><span class="o">=</span><span class="s1">'svn'</span>
+
+
+<span class="nv">TEMPFILE</span><span class="o">=</span>temp_diff.log
+<span class="nv">USERNAME</span><span class="o">=</span><span class="k">${</span><span class="nv">user</span><span class="k">}</span>
+<span class="nv">PASSWD</span><span class="o">=</span><span class="k">${</span><span class="nv">passwd</span><span class="k">}</span>
+<span class="nv">TOTAL</span><span class="o">=</span>0
+
+
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="nv">$author</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="nv">$end_revision</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">${</span><span class="nv">SVN_CMD</span><span class="k">}</span> diff <span class="nt">-r</span><span class="nv">$start_revision</span> <span class="nv">$target</span> <span class="nt">--username</span> <span class="nv">$USERNAME</span> <span class="nt">--password</span> <span class="nv">$PASSWD</span> <span class="o">&gt;</span> <span class="nv">$TEMPFILE</span>
+    <span class="k">else</span>
+        <span class="k">${</span><span class="nv">SVN_CMD</span><span class="k">}</span> diff <span class="nt">-r</span><span class="nv">$start_revision</span>:<span class="nv">$end_revision</span> <span class="nv">$target</span> <span class="nt">--username</span> <span class="nv">$USERNAME</span> <span class="nt">--password</span> <span class="nv">$PASSWD</span> <span class="o">&gt;</span> <span class="nv">$TEMPFILE</span>
+    <span class="k">fi</span>
+
+
+    <span class="c">#去掉含空格的空行</span>
+    <span class="nv">TOTAL</span><span class="o">=</span><span class="sb">`</span><span class="nb">grep</span> <span class="s2">"^+"</span> <span class="nv">$TEMPFILE</span> | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s2">"^+++"</span> | <span class="nb">sed</span> <span class="s1">'s/^.//'</span>| <span class="nb">sed </span>s/[[:space:]]//g |sed <span class="s1">'/^$/d'</span>|wc <span class="nt">-l</span><span class="sb">`</span>
+    <span class="c">#没有去掉有的空行</span>
+    <span class="c">#TOTAL=`grep "^+" $TEMPFILE|grep -v "^+++"|sed 's/^.//'|sed '/^$/d'|wc -l`</span>
+
+    <span class="nb">rm</span> <span class="nt">-fr</span> <span class="nv">$TEMPFILE</span>
+    <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$TOTAL</span><span class="s2">"</span>
+<span class="k">else
+    if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="nv">$end_revision</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nv">revs</span><span class="o">=</span><span class="sb">`</span><span class="k">${</span><span class="nv">SVN_CMD</span><span class="k">}</span> log <span class="nt">-q</span> <span class="nv">$target</span>  <span class="nt">-r</span> <span class="nv">$start_revision</span>:HEAD <span class="nt">--username</span> <span class="nv">$USERNAME</span> <span class="nt">--password</span> <span class="nv">$PASSWD</span> |awk <span class="s1">'{print \$1,\$3}'</span>| <span class="nb">grep</span>  <span class="k">${</span><span class="nv">author</span><span class="k">}</span>| <span class="nb">awk</span> <span class="s1">'{print \$1}'</span><span class="sb">`</span>
+    <span class="k">else
+        </span><span class="nv">revs</span><span class="o">=</span><span class="sb">`</span><span class="k">${</span><span class="nv">SVN_CMD</span><span class="k">}</span> log <span class="nt">-q</span> <span class="nv">$target</span>  <span class="nt">-r</span> <span class="nv">$start_revision</span>:<span class="nv">$end_revision</span> <span class="nt">--username</span> <span class="nv">$USERNAME</span> <span class="nt">--password</span> <span class="nv">$PASSWD</span> |awk <span class="s1">'{print \$1,\$3}'</span>| <span class="nb">grep</span>  <span class="k">${</span><span class="nv">author</span><span class="k">}</span>| <span class="nb">awk</span> <span class="s1">'{print \$1}'</span><span class="sb">`</span>
+    <span class="k">fi
+    for </span>rev <span class="k">in</span> <span class="k">${</span><span class="nv">revs</span><span class="k">}</span><span class="p">;</span><span class="k">do
+        </span><span class="nv">rev</span><span class="o">=</span><span class="k">${</span><span class="nv">rev</span>:1<span class="k">}</span>
+        <span class="nv">last_rev</span><span class="o">=</span><span class="k">$((</span>rev-1<span class="k">))</span>
+
+
+        <span class="k">${</span><span class="nv">SVN_CMD</span><span class="k">}</span> diff <span class="nt">-r</span><span class="k">${</span><span class="nv">last_rev</span><span class="k">}</span>:<span class="k">${</span><span class="nv">rev</span><span class="k">}</span> <span class="nv">$target</span> <span class="nt">--username</span> <span class="nv">$USERNAME</span> <span class="nt">--password</span> <span class="nv">$PASSWD</span>  <span class="o">&gt;</span> <span class="nv">$TEMPFILE</span>
+        <span class="nv">count</span><span class="o">=</span><span class="sb">`</span><span class="nb">grep</span> <span class="s2">"^+"</span> <span class="nv">$TEMPFILE</span> | <span class="nb">grep</span> <span class="nt">-v</span> <span class="s2">"^+++"</span> | <span class="nb">sed</span> <span class="s1">'s/^.//'</span>| <span class="nb">sed </span>s/[[:space:]]//g |sed <span class="s1">'/^$/d'</span>|wc <span class="nt">-l</span><span class="sb">`</span>
+        <span class="nv">TOTAL</span><span class="o">=</span><span class="k">$((</span>TOTAL+count<span class="k">))</span>
+        <span class="nb">rm</span> <span class="nt">-rf</span> <span class="nv">$TEMPFILE</span>
+    <span class="k">done
+    </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$TOTAL</span><span class="s2">"</span>
+<span class="k">fi</span>
+
+</code></pre></div></div>
+
+<p>试用了一下，使用就比较简单了，统计的也比较准，记录下如何使用。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh countCode.sh -t 要统计的代码SVN地址 -s 起始版本号 -e 结束版本号 -a 要统计那个用户的代码量 -u 用户名 -p 密码
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">countCode.sh</code> 为保存上面那段代码的文件名称。</p>
+
+:ET

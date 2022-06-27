@@ -1,0 +1,67 @@
+I"o&<h1 id="如果做一个展示进度的刻度盘">如果做一个展示进度的刻度盘</h1>
+
+<p>先上效果图：</p>
+
+<p><img src="/img/in-post/Pane/Pane0.png" alt="" />
+<img src="/img/in-post/Pane/Pane17.png" alt="" />
+<img src="/img/in-post/Pane/PaneAngle.png" alt="" />
+<img src="/img/in-post/Pane/PaneAngle70.png" alt="" /></p>
+
+<h3 id="1如何绘制弧形间隔的刻度线">1，如何绘制弧形间隔的刻度线。</h3>
+<p>首先是如何绘制一个连续的弧形的线条，这个很简单：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">UIBezierPath</span> <span class="o">*</span><span class="n">tickPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="nf">bezierPathWithArcCenter</span><span class="p">:</span><span class="n">cneter</span> <span class="nf">radius</span><span class="p">:</span><span class="n">radius</span> <span class="o">-</span> <span class="mi">12</span> <span class="n">startAngle</span><span class="o">:</span><span class="n">startAngle</span> <span class="n">endAngle</span><span class="o">:</span><span class="n">endAngle</span> <span class="n">clockwise</span><span class="o">:</span><span class="nb">YES</span><span class="p">];</span>
+    <span class="n">CAShapeLayer</span> <span class="o">*</span><span class="n">perLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAShapeLayer</span> <span class="nf">layer</span><span class="p">];</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">strokeColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">;;</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">fillColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="nf">clearColor</span><span class="p">].</span><span class="n">CGColor</span><span class="p">;</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">allowsEdgeAntialiasing</span><span class="o">=</span><span class="nb">YES</span><span class="p">;</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">contentsScale</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIScreen</span> <span class="nf">mainScreen</span><span class="p">].</span><span class="n">scale</span><span class="p">;</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">lineWidth</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">.</span><span class="mi">6</span><span class="p">;</span>
+    <span class="n">perLayer</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">tickPath</span><span class="p">.</span><span class="n">CGPath</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">layer</span> <span class="nf">addSublayer</span><span class="p">:</span><span class="n">perLayer</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>其实带有间隔的刻度线原理是跟这个一致的，我们只需要想着每个分割的刻度是一个连续的圆弧线，只不过它的 <code class="language-plaintext highlighter-rouge">startAngle</code> 和 <code class="language-plaintext highlighter-rouge">endAngle</code> 差值很小。然后外面其实的一段段的绘制一个个 <code class="language-plaintext highlighter-rouge">CAShapeLayer</code> 的弧线。</p>
+
+<p>具体的代码就是：</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">CGPoint</span> <span class="n">cneter</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">center</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">radius</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">radius</span><span class="p">;</span>
+    <span class="n">CGFloat</span> <span class="n">perAngle</span> <span class="o">=</span> <span class="p">(</span><span class="n">endAngle</span> <span class="k">-</span> <span class="n">startAngle</span><span class="p">)</span><span class="o">/</span><span class="n">scaleLineCount</span><span class="p">;</span>
+    <span class="n">UIColor</span> <span class="o">*</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">normalColor</span><span class="p">;</span>
+    <span class="c1">//绘制最外围刻度列表</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">NSInteger</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="n">scaleLineCount</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CGFloat</span> <span class="n">startAngel</span> <span class="o">=</span> <span class="p">(</span><span class="n">startAngle</span><span class="o">+</span> <span class="n">perAngle</span> <span class="o">*</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">CGFloat</span> <span class="n">endAngel</span>   <span class="o">=</span> <span class="n">startAngel</span> <span class="o">+</span> <span class="n">perAngle</span><span class="o">/</span><span class="mi">5</span><span class="p">;</span>
+        <span class="n">UIBezierPath</span> <span class="o">*</span><span class="n">tickPath</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIBezierPath</span> <span class="nf">bezierPathWithArcCenter</span><span class="p">:</span><span class="n">cneter</span> <span class="nf">radius</span><span class="p">:</span><span class="n">radius</span> <span class="n">startAngle</span><span class="o">:</span><span class="n">startAngel</span> <span class="n">endAngle</span><span class="o">:</span><span class="n">endAngel</span> <span class="n">clockwise</span><span class="o">:</span><span class="nb">YES</span><span class="p">];</span>
+        <span class="n">CAShapeLayer</span> <span class="o">*</span><span class="n">perLayer</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAShapeLayer</span> <span class="nf">layer</span><span class="p">];</span>
+        <span class="n">perLayer</span><span class="p">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">strokeColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">;;</span>
+        <span class="n">perLayer</span><span class="p">.</span><span class="n">allowsEdgeAntialiasing</span><span class="o">=</span><span class="nb">YES</span><span class="p">;</span>
+        <span class="n">perLayer</span><span class="p">.</span><span class="n">contentsScale</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIScreen</span> <span class="nf">mainScreen</span><span class="p">].</span><span class="n">scale</span><span class="p">;</span>
+        <span class="n">perLayer</span><span class="p">.</span><span class="n">lineWidth</span>   <span class="o">=</span> <span class="n">scaleLineWidth</span><span class="p">;</span>
+        <span class="n">perLayer</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">tickPath</span><span class="p">.</span><span class="n">CGPath</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">layer</span> <span class="nf">addSublayer</span><span class="p">:</span><span class="n">perLayer</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">layerViewsArray</span> <span class="nf">addObject</span><span class="p">:</span><span class="n">perLayer</span><span class="p">];</span>
+
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>其中 <code class="language-plaintext highlighter-rouge">scaleLineCount</code> 是要分成多少刻度。</p>
+
+<h3 id="2如何给进度加上动画">2，如何给进度加上动画</h3>
+<p>动画就简单粗暴了，一个个修改 <code class="language-plaintext highlighter-rouge">CAShapeLayer</code> 的背景色。</p>
+
+<div class="language-objective_c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CAShapeLayer</span> <span class="o">*</span><span class="n">perLayer</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">layerViewsArray</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="nf">index</span><span class="p">];</span>
+<span class="n">perLayer</span><span class="p">.</span><span class="n">strokeColor</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">hightColor</span><span class="p">.</span><span class="n">CGColor</span><span class="p">;;</span>
+<span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">layerHeightViewsArray</span> <span class="nf">addObject</span><span class="p">:</span><span class="n">perLayer</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h3 id="3加个动画怎么了">3，加个动画怎么了</h3>
+
+<p><img src="/img/in-post/GIF/Pane.gif" alt="" /></p>
+
+<hr />
+
+<p>demo  已上传 <a href="https://github.com/yunisSong/SYPanView/tree/master">SYPanView</a></p>
+
+:ET
