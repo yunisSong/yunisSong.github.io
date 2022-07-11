@@ -21,7 +21,7 @@ github_username: yunisSong
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
 permalink: pretty
-# paginate: 10
+paginate: 10
 exclude:
   [
     "less",
@@ -35,10 +35,7 @@ anchorjs: true # if you want to customize anchor. check out line:181 of `post.ht
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
-# gems: [jekyll-paginate]
-
-plugins:
-  - jekyll-stickyposts
+gems: [jekyll-paginate]
 
 # Markdown settings
 # replace redcarpet to kramdown,
