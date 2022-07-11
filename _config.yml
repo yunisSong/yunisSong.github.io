@@ -35,7 +35,10 @@ anchorjs: true # if you want to customize anchor. check out line:181 of `post.ht
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate, jekyll-stickyposts]
+gems: [jekyll-paginate]
+
+plugins:
+  - jekyll-stickyposts
 
 # Markdown settings
 # replace redcarpet to kramdown,
