@@ -5,37 +5,37 @@ header-img: img/tag-bg.jpg
 email: 32963965@qq.com
 description: "潜心修行中。"
 keyword: "iOS,Python,swift 初学者"
-url: "https://yunissong.github.io/"              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-
-
+url: "https://yunissong.github.io/" # your host, for absolute URL
+baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 
 # SNS settings
 RSS: false
-weibo_username:     iOSSurf
+weibo_username: iOSSurf
 #zhihu_username:     huxpro
-github_username:    yunisSong
+github_username: yunisSong
 #twitter_username:  huxpro
 #facebook_username:  huxpro
 # linkedin_username:  firstname-lastname-idxxxx
-
-
 
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
 permalink: pretty
 paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
-anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
-
-
+exclude:
+  [
+    "less",
+    "node_modules",
+    "Gruntfile.js",
+    "package.json",
+    "README.md",
+    "README.zh.md",
+  ]
+anchorjs: true # if you want to customize anchor. check out line:181 of `post.html`
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
-
-
+gems: [jekyll-paginate, jekyll-stickyposts]
 
 # Markdown settings
 # replace redcarpet to kramdown,
@@ -44,11 +44,8 @@ gems: [jekyll-paginate]
 markdown: kramdown
 
 kramdown:
-    input: GFM                            # use Github Flavored Markdown !important
-    syntax_highlighter: rouge
-
-
-
+  input: GFM # use Github Flavored Markdown !important
+  syntax_highlighter: rouge
 
 # Disqus settings
 disqus_username: yunissong
@@ -58,68 +55,35 @@ disqus_username: yunissong
 # Share component is depend on Comment so we can NOT use share only.
 #duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
-
-
-
 # Analytics settings
-# Baidu Analytics 
+# Baidu Analytics
 # ba_track_id: [your track id]
 
 # Google Analytics
-ga_track_id: 'UA-96835471-1'            # Format: UA-xxxxxx-xx
+ga_track_id: "UA-96835471-1" # Format: UA-xxxxxx-xx
 ga_domain: auto
 
-
-
 # Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
+sidebar: true # whether or not using Sidebar.
 sidebar-about-description: "大龄码农的进修之路。"
-sidebar-avatar: /img/xiaoman.jpeg     # use absolute URL, seeing it's used in both `/` and `/about/`
-
-
+sidebar-avatar: /img/xiaoman.jpeg # use absolute URL, seeing it's used in both `/` and `/about/`
 
 # Featured Tags
-featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
-
-
+featured-tags: true # whether or not using Feature-Tags
+featured-condition-size: 1 # A tag will be featured if the size of it is more than this condition value
 
 # Progressive Web Apps
 chrome-tab-theme-color: "#000000"
 service-worker: true
 
-
-
 # Friends
-friends: [
-   {
-       title: "sindri的小巢",
-       href: "http://sindrilin.com/"
-   },
-    {
-       title: "onevcat",
-       href: "https://onevcat.com/#blog"
-   },
-    {
-       title: "ObjC 中国",
-       href: "https://objccn.io/issues/"
-   },
-    {
-       title: "Draveness",
-       href: "http://draveness.me/"
-   },
-    {
-       title: "我就叫Sunny怎么了",
-       href: "http://blog.sunnyxx.com/"
-   },
-   {
-       title: "nixzhu",
-       href: "https://github.com/nixzhu/dev-blog"
-   },
-    {
-       title: "Draveness",
-       href: "http://draveness.me/"
-   },
-
-        
-]
+friends:
+  [
+    { title: "sindri的小巢", href: "http://sindrilin.com/" },
+    { title: "onevcat", href: "https://onevcat.com/#blog" },
+    { title: "ObjC 中国", href: "https://objccn.io/issues/" },
+    { title: "Draveness", href: "http://draveness.me/" },
+    { title: "我就叫Sunny怎么了", href: "http://blog.sunnyxx.com/" },
+    { title: "nixzhu", href: "https://github.com/nixzhu/dev-blog" },
+    { title: "Draveness", href: "http://draveness.me/" },
+  ]
