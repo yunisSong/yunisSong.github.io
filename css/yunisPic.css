@@ -1,19 +1,43 @@
 @keyframes zoom {
-    from {transform: scale(0.1)}
-    to {transform: scale(1)}
+    from {
+        transform: scale(0.1)
+    }
+
+    to {
+        transform: scale(1)
+    }
 }
+
 @keyframes diss {
-    from {transform: scale(1)}
-    to {transform: scale(0.1)}
+    from {
+        transform: scale(1)
+    }
+
+    to {
+        transform: scale(0.1)
+    }
 }
+
 @keyframes opacity-css {
-    from {transform: opacity(0)}
-    to {transform:  opacity(1)}
+    from {
+        transform: opacity(0)
+    }
+
+    to {
+        transform: opacity(1)
+    }
 }
+
 @keyframes opacity1-css {
-    from {transform: opacity(1)}
-    to {transform:  opacity(0)}
+    from {
+        transform: opacity(1)
+    }
+
+    to {
+        transform: opacity(0)
+    }
 }
+
 .defaultImageStyle {
     position: fixed;
     display: flex;
@@ -27,6 +51,7 @@
     right: 0;
     background: rgba(0, 0, 0, 0.55);
 }
+
 .SYYImageShow {
     position: fixed;
     display: flex;
@@ -44,10 +69,11 @@
     /* scale: 1; */
     /* transition: height 0.6s ease-out;
     transition: opacity 0.6s ease-out; */
-    transition: all 0.35s  ease-in;
+    transition: all 0.35s ease-in;
 
 
 }
+
 .SYYImageDiss {
     pointer-events: none;
     position: fixed;
@@ -61,10 +87,10 @@
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.55);
-    
+
     /* scale: 0; */
     opacity: 0;
-    transition: all 0.35s  ease-out;
+    transition: all 0.35s ease-out;
 
     /* transition: width 0.6s ease-out;
     transition: height 0.6s ease-out;
@@ -84,18 +110,19 @@
 
 
 #SSYLargeImage {
-    scale: 0;
     width: 100%;
     max-height: 100%;
-    
+
     transition: all 0.35s;
     object-fit: contain;
     /* max-width: 100%; */
 }
+
 .animate-scale0 {
     scale: 0;
     transform: scale(0);
 }
+
 .animate-scale1 {
     scale: 1;
     transform: scale(1);
