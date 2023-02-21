@@ -1,17 +1,34 @@
 $(function() {
+    function MouseWheel(e) {
+        ///对img按下鼠标滚路，阻止视窗滚动
+        e = e || window.event;
+        if (e.stopPropagation) e.stopPropagation();
+        else e.cancelBubble = true;
+        if (e.preventDefault) e.preventDefault();
+        else e.returnValue = false;
+
+        //其他代码
+    }
+
     $('p img').click(function () {
         let imageStr = document.querySelector("#YunisTestImage").getAttribute("class");
         console.log(`${imageStr}`);
         $("#SSYLargeImage").attr({ "src": "" });
         if (`${imageStr}` == "SYYImageDiss") {
             showBigImage($(this).attr("src"))
+            $(this).onmousewheel = MouseWheel
         }else {
             removeBigPic ()
         }
     
-        $(document).bind('mousewheel', () => {return false;});
+
 
     });
+
+
+   
+
+    
     function  showBigImage(imgPath) {
         $("#YunisTestImage").removeClass('SYYImageDiss');
         $("#YunisTestImage").addClass('SYYImageShow');
