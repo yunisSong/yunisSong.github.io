@@ -20,9 +20,6 @@ $(function () {
       showBigImage($(this).attr("src"));
       //   $(this).onmousewheel = MouseWheel;
       //   $(document).off("mousewheel", "**");
-      $(document).bind("mousewheel", function (event, delta) {
-        return false;
-      });
     } else {
       removeBigPic();
     }
@@ -36,6 +33,9 @@ $(function () {
     $("#SSYLargeImage").removeClass("animate-scale0");
 
     $("html,body").addClass("none-scroll"); //下层不可滑动
+    $(document).bind("mousewheel", function (event, delta) {
+      return false;
+    });
   }
 
   function removeBigPic() {
