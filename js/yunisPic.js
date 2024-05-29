@@ -26,7 +26,7 @@ $(function () {
     $("#SSYLargeImage").removeClass("animate-scale0");
 
     $("html,body").addClass("none-scroll"); //下层不可滑动
-    $(document).addEventListener("wheel", mouseWheel, { passive: false });
+    document.addEventListener("wheel", mouseWheel, { passive: false });
   }
 
   function removeBigPic() {
@@ -36,8 +36,8 @@ $(function () {
     $("#SSYLargeImage").addClass("animate-scale0");
     $("html,body").removeClass("none-scroll");
 
-    $(document).unbind("mousewheel");
-    $(document).removeEventListener("wheel", mouseWheel, { passive: false });
+    // $(document).unbind("mousewheel");
+    document.removeEventListener("wheel", mouseWheel, { passive: false });
   }
 
   $("#YunisTestImage").click(function () {
