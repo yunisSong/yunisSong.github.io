@@ -1,13 +1,6 @@
 $(function () {
-  function MouseWheel(e) {
-    ///对img按下鼠标滚路，阻止视窗滚动
-    e = e || window.event;
-    if (e.stopPropagation) e.stopPropagation();
-    else e.cancelBubble = true;
-    if (e.preventDefault) e.preventDefault();
-    else e.returnValue = false;
-
-    //其他代码
+  function mouseWheel(e) {
+    e.preventDefault();
   }
 
   $("p img").click(function () {
@@ -33,13 +26,7 @@ $(function () {
     $("#SSYLargeImage").removeClass("animate-scale0");
 
     $("html,body").addClass("none-scroll"); //下层不可滑动
-    $(document).bind(
-      "wheel",
-      function (event) {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
+    $(document).addEventListener("wheel", mouseWheel, { passive: false });
   }
 
   function removeBigPic() {
@@ -50,6 +37,7 @@ $(function () {
     $("html,body").removeClass("none-scroll");
 
     $(document).unbind("mousewheel");
+    $(document).removeEventListener("wheel", mouseWheel, { passive: false });
   }
 
   $("#YunisTestImage").click(function () {
