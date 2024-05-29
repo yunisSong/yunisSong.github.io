@@ -33,9 +33,13 @@ $(function () {
     $("#SSYLargeImage").removeClass("animate-scale0");
 
     $("html,body").addClass("none-scroll"); //下层不可滑动
-    $(document).bind("mousewheel", function (event, delta) {
-      return false;
-    });
+    $(document).bind(
+      "wheel",
+      function (event) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
   }
 
   function removeBigPic() {
