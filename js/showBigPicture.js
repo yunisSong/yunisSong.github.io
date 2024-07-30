@@ -76,6 +76,7 @@ $(function () {
         : getAllImageSrc()[currentImgIndex - 1];
 
     $("#SSYLargeImage").attr({ src: prevImg });
+    showImageIndex();
   });
 
   // 下一张按钮点击事件
@@ -91,7 +92,22 @@ $(function () {
         ? getAllImageSrc()[0]
         : getAllImageSrc()[currentImgIndex + 1];
     $("#SSYLargeImage").attr({ src: nextImg });
+    showImageIndex();
   });
+  // 显示图片顺序
+  function showImageIndex() {
+    let currentImgIndex = getAllImageSrc().indexOf(
+      $("#SSYLargeImage").attr("src")
+    );
+    // $("#SSYLargeImageIndex").text(
+    //   currentImgIndex + 1 + "/" + getAllImageSrc().length
+    // );
+    $(".currentIndex").text(currentImgIndex + 1);
+
+    $(".totalIndex").text("/ " + getAllImageSrc().length);
+  }
+
+  // ����图片��序
   // 键盘响应事件
   $(document).keydown(function (event) {
     if (!isShowBigPic) {

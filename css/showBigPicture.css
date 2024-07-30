@@ -78,3 +78,15 @@
 .active {
   opacity: 1;
 }
+
+#SSYLargeImageIndex {
+  position: absolute;
+  z-index: 10000;
+  bottom: 0;
+  color: white;
+}
+.currentIndex {
+  color: red;
+}
+.totalIndex {
+}
