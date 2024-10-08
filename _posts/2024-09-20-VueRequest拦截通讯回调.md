@@ -70,7 +70,7 @@ export default function interceptorRequest(
 
 完整代码
 
-``` TS
+``` js
 
 import type { Options } from 'vue-request'
 
